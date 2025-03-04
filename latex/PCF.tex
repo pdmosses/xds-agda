@@ -1,0 +1,238 @@
+% easychair.tex,v 3.5 2017/03/15
+
+%\documentclass{easychair}
+%\documentclass[EPiC]{easychair}
+%\documentclass[EPiCempty]{easychair}
+%\documentclass[debug]{easychair}
+%\documentclass[verbose]{easychair}
+%\documentclass[notimes]{easychair}
+%\documentclass[withtimes]{easychair}
+\documentclass[a4paper]{easychair}
+%\documentclass[letterpaper]{easychair}
+
+%\usepackage{doc}
+
+% use this if you have a long article and want to create an index
+% \usepackage{makeidx}
+
+% In order to save space or manage large tables or figures in a
+% landcape-like text, you can use the rotating and pdflscape
+% packages. Uncomment the desired from the below.
+%
+% \usepackage{rotating}
+% \usepackage{pdflscape}
+
+\usepackage[T1]{fontenc}
+\usepackage{microtype}
+\DisableLigatures[-]{encoding = T1, family = tt* }
+
+\usepackage{multicol}
+
+\usepackage{doi}
+
+\input{agda-macros}
+\AgdaNoSpaceAroundCode{}
+
+%\makeindex
+
+%% Front Matter
+%%
+% Regular title as in the article class.
+%
+\title{Denotational Semantics of PCF in Agda \\[2ex]
+\normalsize DRAFT (\today)}
+
+% Authors are joined by \and. Their affiliations are given by \inst, which indexes
+% into the list defined using \institute
+%
+\author{
+Peter D. Mosses%\inst{1}\inst{2}
+}
+
+% Institutes for affiliations are also joined by \and,
+\institute{
+  Delft University of Technology, The Netherlands
+  \\
+  \email{p.d.mosses@tudelft.nl}
+\\
+   Swansea University, United Kingdom
+%   \\
+%   \email{p.d.mosses@swansea.ac.uk}
+ }
+
+%  \authorrunning{} has to be set for the shorter version of the authors' names;
+% otherwise a warning will be rendered in the running heads. When processed by
+% EasyChair, this command is mandatory: a document without \authorrunning
+% will be rejected by EasyChair
+
+\authorrunning{Peter Mosses}
+
+% \titlerunning{} has to be set to either the main title or its shorter
+% version for the running heads. When processed by
+% EasyChair, this command is mandatory: a document without \titlerunning
+% will be rejected by EasyChair
+
+\titlerunning{Denotational Semantics of PCF}
+
+\begin{document}
+
+\maketitle
+
+\begin{abstract}
+In synthetic domain theory, all sets are predomains, domains are pointed sets, and functions are implicitly continuous.
+The denotational semantics of PCF (Plotkin's version) presented here illustrates how it might look if synthetic domain theory can be implemented in Agda.
+Currently, the code uses unsatisfiable postulates as a work-around, to allow Agda to type-check the definitions.
+
+The Agda source code used to generate this document is currently available only in a private repository,
+but will soon be made public.
+\end{abstract}
+
+
+\bigskip\hrule\bigskip
+
+
+\input{PCF/All}
+\clearpage
+\input{PCF/Domain-Notation}
+\clearpage
+\input{PCF/Types}
+\clearpage
+\input{PCF/Constants}
+\clearpage
+\input{PCF/Variables}
+\clearpage
+\input{PCF/Environments}
+\clearpage
+\input{PCF/Terms}
+\clearpage
+\input{PCF/Checks}
+
+\bibliographystyle{ACM-Reference-Format}
+%\bibliography{PCF}
+
+\end{document}
+
+
+
+
+\begin{abstract}
+  This is a progress report on ideas for improving support for Scott–Strachey denotational semantics in Agda.
+  It starts by recalling relevant features of denotational semantics and Agda.
+  It then 
+  \end{abstract}
+  
+\section{Introduction}
+
+## Domains in Denotational Semantics
+
+In the Scott–Strachey style of denotational semantics:
+
+- types of denotations are (Scott-)domains;
+- domains are cpos with least elements, and can be defined recursively;
+- denotations are defined in λ-notation, and functions are continuous;
+- the isomorphisms between domains and their definitions are left implicit.
+
+## Domains in Agda
+
+In Agda, the [DomainTheory] modules from the [TypeTopology] library provide
+well-developed support for domains.
+
+- Domains `D` are tuples `(⟪D⟫, ⊥, _⊑_, axioms)` where:
+  
+  - `⟪D⟫` is a type of elements,
+  - `⊥` is a distinguished element of `⟪D⟫`,
+  - `_⊑_` is a partial order on `⟪D⟫`, and
+  - `axioms` prove that `(⟪D⟫, _⊑_)` is a directed-complete poset (dcpo)
+    with `⊥` least.
+
+- Continuous functions `c` from domain `D` to domain `E`  are pairs
+  `(f, axioms)` where:
+
+  - `f` is an underlying function from `⟪D⟫` to `⟪E⟫`, and
+  - `axioms` prove that `f` preserves limits of directed sets.
+
+- Domains are defined recursively as bilimits of diagrams.
+
+- Elements of domains are defined in λ-notation, where:
+
+  - λ-abstractions need to be paired with continuity proofs,
+  - applications need to select the underlying functions, and
+  - the isomorphisms between domains and their definitions are explicit.
+
+## Example: PCF
+
+> PCF is a call-by-name simply-typed λ-calculus equipped with one or two base
+> types (usually natural numbers and Booleans) and a fixed point combinator.
+> In essence, PCF is the simplest lazy, purely functional programming language.
+> ([PLS Lab])
+
+PCF and its denotational semantics were originally defined by Dana Scott in 1969
+([Scott 1993]) including combinators (`S`, `K`) instead of λ-abstraction.
+Gordon Plotkin subsequently defined a denotational semantics for PCF including 
+λ-abstraction ([Plotkin 1977]).
+
+A direct transcription of Plotkin's definition to Agda is available in this
+repo at [PCF.Plotkin.Semantics] (see also the [generated PDF]). The code
+imports various modules from the [standard Agda library v2.1], and typechecks
+with Agda v2.6.4.3 using the (blatantly unsafe) workarounds and postulates in
+the [Domains] module.
+
+Many authors have defined denotational semantics for PCF ([PLS Lab]). Recently,
+Tom de Jong has given a definition in Agda ([DomainTheory.ScottModelOfPCF])
+based on the [DomainTheory] modules from the [TypeTopology] library. The syntax
+follows ([Scott 1993]) by including combinators instead of λ-abstraction.
+
+De Jong's semantics of PCF was extended to PCF with variables and λ-abstraction
+by Brendan Hart in a final year project supervised by Martín Escardó and
+De Jong ([Hart 2020]).[^1] Hart used De Bruin indices for variables.
+
+[^1]: Both De Jong and Hart deviate slightly from Scott's original semantics
+    of the predecessor function by defining it to return zero when applied to
+    zero, instead of being undefined.
+
+De Jong has also given an example of how to defined a domain recursively, see
+[DomainTheory.Bilimits.Dinfinity].
+
+The definitions of the denotations of PCF terms given by De Jong and Hart
+show the notational overhead that arises in Agda when using the [DomainTheory]
+modules, compared to the definitions given by Scott and Plotkin.
+
+## Extending Agda with Scott-domains
+
+The purpose of this repo is to experiment with extending Agda to allow
+denotational semantics to be defined more straightforwardly.
+
+The main idea is to distinguish between declarations of types that correspond
+to domains and declarations of ordinary types – e.g., by introducing a universe
+(hierarchy) for domains.
+
+A domain type would implicitly be a cpo, with built-in notation for its partial
+order and least element. A type that corresponds to the domain of continuous 
+functions from a domain to itself would also have a least fixed-point function.
+
+The meaning of a definition in the proposed extension of Agda might be given by
+translation to standard Agda, together with import of [DomainTheory] modules
+from the [TypeTopology] library. Constructing the required continuity proofs
+for λ-abstractions automatically could be challenging.
+
+An alternative approach might be to typecheck code in the extension using
+Agda's support for reflection and meta-programming.
+
+Advice and suggestions are welcome, e.g., by posting to the repo [Discussions].
+
+Peter Mosses <p.d.mosses@tudelft.nl>
+
+[PLS Lab]: https://www.pls-lab.org/PCF "Web page"
+[Scott 1993]: https://doi.org/10.1016/0304-3975(93)90095-B "TCS paper DOI"
+[Plotkin 1977]: https://doi.org/10.1016/0304-3975(77)90044-5 "TCS paper DOI"
+[PCF.Plotkin.Semantics]: PCF/Plotkin/Semantics.lagda "Agda module"
+[Generated PDF]: latex/PCF.pdf "PDF generated by Agda"
+[Domains]: Domains.lagda "Agda module"
+[standard Agda library version 2.1]: https://agda.github.io/agda-stdlib/v2.1 "Agda library"
+[DomainTheory]: https://www.cs.bham.ac.uk/~mhe/TypeTopology/DomainTheory.index.html "Agda modules"
+[TypeTopology]: https://www.cs.bham.ac.uk/~mhe/TypeTopology "Agda library"
+[DomainTheory.ScottModelOfPCF]: https://martinescardo.github.io/TypeTopology/DomainTheory.ScottModelOfPCF.ScottModelOfPCF.html "Agda module"
+[Hart 2020]: https://github.com/BrendanHart/Investigating-Properties-of-PCF "GitHub repo"
+[DomainTheory.Bilimits.Dinfinity]: https://martinescardo.github.io/TypeTopology/DomainTheory.Bilimits.Dinfinity.html  "Agda module"
+[Discussions]: https://github.com/pdmosses/ds-agda/discussions
+\section{Agda Code}
