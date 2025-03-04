@@ -1,7 +1,7 @@
 site_name: Denotational Semantics in Agda
-site_url: https://pdmosses.github.io/ds-agda/
-repo_name: pdmosses/ds-agda
-repo_url: https://github.com/pdmosses/ds-agda
+site_url: https://pdmosses.github.io/xds-agda/
+repo_name: pdmosses/xds-agda
+repo_url: https://github.com/pdmosses/xds-agda
 
 use_directory_urls: false
 
@@ -62,7 +62,6 @@ theme:
 extra_css:
   - stylesheets/Agda.css
   - stylesheets/wide.css
-
 
 plugins:
 - search
