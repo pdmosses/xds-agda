@@ -2,19 +2,13 @@
 
 > Experiments with Agda support for Scott–Strachey denotational semantics.
 
-Complete:
+## Examples
+
+Complete examples of denotational semantics definitions in Agda:
 
 - [Untyped λ-calculus](ULC/index.md)
 - [PCF](PCF/index.md)
-
-Pending:
-
-- Scheme
-
-# Denotational Semantics in Agda
-
-Copied from the [README](https://github.com/pdmosses/xds-agda/blob/main/README.md)
-in the [GitHub repository](https://github.com/pdmosses/xds-agda/):
+- [Scheme](Scheme/index.md)
 
 ## Domains in Denotational Semantics
 
@@ -57,9 +51,14 @@ well-developed support for domains.
 The purpose of this repo is to experiment with extending Agda to allow
 denotational semantics to be defined more straightforwardly.
 
+The current examples presented here illustrate how denotational semantics might
+be defined in Agda.
+However, the examples currently use *unsatisfiable postulates* to allow Agda to
+type-check the definitions.
+
 ### Adding a Universe of Domains
 
-The idea is to distinguish between declarations of types that correspond
+One idea is to distinguish between declarations of types that correspond
 to domains and declarations of ordinary types – e.g., by introducing a universe
 (hierarchy) for domains.
 

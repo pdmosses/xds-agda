@@ -25,12 +25,21 @@ nav:
     - PCF/PCF.Terms.md
     - PCF/PCF.Environments.md
     - PCF/PCF.Checks.md
+  - Scheme:
+    - Scheme/index.md
+    - Scheme/Scheme.Domain-Notation.md
+    - Scheme/Scheme.Abstract-Syntax.md
+    - Scheme/Scheme.Domain-Equations.md
+    - Scheme/Scheme.Auxiliary-Functions.md
+    - Scheme/Scheme.Semantic-Functions.md
 
 not_in_nav: |
   ULC/html
   ULC/*.md
   PCF/html
   PCF/*.md
+  Scheme/html
+  Scheme/*.md
 
 theme:
   name: material
@@ -62,6 +71,7 @@ theme:
 extra_css:
   - stylesheets/Agda.css
   - stylesheets/wide.css
+
 
 plugins:
 - search
