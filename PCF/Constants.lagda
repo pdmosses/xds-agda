@@ -14,15 +14,15 @@ open import PCF.Types
 -- Syntax
 
 data ℒ : Types → Set where
-  tt  : ℒ o
-  ff  : ℒ o
-  ⊃ᵢ  : ℒ (o ⇒ ι ⇒ ι ⇒ ι)
-  ⊃ₒ  : ℒ (o ⇒ o ⇒ o ⇒ o)
-  Y   : {σ : Types} → ℒ ((σ ⇒ σ) ⇒ σ)
-  k   : (n : Nat) → ℒ ι
-  +1′ : ℒ (ι ⇒ ι)
-  -1′ : ℒ (ι ⇒ ι)
-  Z   : ℒ (ι ⇒ o)
+  tt   : ℒ o
+  ff   : ℒ o
+  ⊃ᵢ   : ℒ (o ⇒ ι ⇒ ι ⇒ ι)
+  ⊃ₒ   : ℒ (o ⇒ o ⇒ o ⇒ o)
+  Y    : {σ : Types} → ℒ ((σ ⇒ σ) ⇒ σ)
+  k    : (n : Nat) → ℒ ι
+  +1′  : ℒ (ι ⇒ ι)
+  -1′  : ℒ (ι ⇒ ι)
+  Z    : ℒ (ι ⇒ o)
 
 variable c : ℒ σ
 
