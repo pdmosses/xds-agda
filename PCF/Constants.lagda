@@ -7,7 +7,7 @@ open import Agda.Builtin.Nat
   using (Nat; _+_; _-_; _==_)
 
 open import PCF.Domain-Notation
-  using (η; _♯; fix; ⊥; _⟶⊥_,_)
+  using (η; _♯; fix; ⊥; _⟶_,_)
 open import PCF.Types
   using (Types; o; ι; _⇒_; σ; 𝒟)
 
@@ -32,8 +32,8 @@ variable c : ℒ σ
 
 𝒜⟦ tt   ⟧ =  η true
 𝒜⟦ ff   ⟧ =  η false
-𝒜⟦ ⊃ᵢ   ⟧ =  _⟶⊥_,_
-𝒜⟦ ⊃ₒ   ⟧ =  _⟶⊥_,_
+𝒜⟦ ⊃ᵢ   ⟧ =  _⟶_,_
+𝒜⟦ ⊃ₒ   ⟧ =  _⟶_,_
 𝒜⟦ Y    ⟧ =  fix
 𝒜⟦ k n  ⟧ =  η n
 𝒜⟦ +1′  ⟧ =  (λ n → η (n + 1)) ♯

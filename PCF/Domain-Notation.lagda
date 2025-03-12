@@ -42,16 +42,16 @@ S +⊥  = 𝕃 S
 
 -- McCarthy conditional
 
--- t ⟶⊥ d₁ , d₂ : D  (t : Bool +⊥ ; d₁, d₂ : D)
+-- t ⟶ d₁ , d₂ : D  (t : Bool +⊥ ; d₁, d₂ : D)
 
 open import Data.Bool.Base
   using (Bool; true; false; if_then_else_) public
 
 postulate
-  _⟶⊥_,_ : {D : Domain} → Bool +⊥ → D → D → D
+  _⟶_,_ : {D : Domain} → Bool +⊥ → D → D → D
 
   -- Properties
-  true-cond    : ∀ {D} {d₁ d₂ : D} → (η true ⟶⊥ d₁ , d₂)  ≡ d₁
-  false-cond   : ∀ {D} {d₁ d₂ : D} → (η false ⟶⊥ d₁ , d₂) ≡ d₂
-  bottom-cond  : ∀ {D} {d₁ d₂ : D} → (⊥ ⟶⊥ d₁ , d₂)       ≡ ⊥
+  true-cond    : ∀ {D} {d₁ d₂ : D} → (η true ⟶ d₁ , d₂)  ≡ d₁
+  false-cond   : ∀ {D} {d₁ d₂ : D} → (η false ⟶ d₁ , d₂) ≡ d₂
+  bottom-cond  : ∀ {D} {d₁ d₂ : D} → (⊥ ⟶ d₁ , d₂)       ≡ ⊥
 \end{code}

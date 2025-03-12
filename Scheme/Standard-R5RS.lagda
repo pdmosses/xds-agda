@@ -4,7 +4,7 @@
 
 Conversion from plain text copy of PDF preview to Agda:
 
--[x] Replace `→` by `⟶⊥` in conditionals
+-[x] Replace `→` by `⟶` in conditionals
 -[x] Replace ` . ` by ` → ` in λ s
 -[x] Replace `.` by `·` in abstract syntax
 -[x] Replace `(...)` by `⦅...⦆` and separate args by `␣` in abstract syntax
@@ -37,7 +37,7 @@ s↓k     kth member of the sequence s (1-based)
 #s      length of sequence s
 s§t     concatenation of sequences s and t
 s†k     drop the first k members of sequence s
-t⟶⊥a,b   McCarthy conditional "if t then a else b"
+t⟶a,b   McCarthy conditional "if t then a else b"
 ρ[x/i]  substitution "ρ with x for i"
 x in D  injection of x into domain D
 x|D     projection of x to domain D
@@ -128,7 +128,7 @@ Exp ⟶  K | I | ⦅ E₀ ␣ E⋆ ⦆
 ℰ⟦ K ⟧ = λ ρ κ → send (𝒦⟦ K ⟧) κ
 
 ℰ⟦ I ⟧ = λ ρ κ → hold (lookup ρ I)
-                      (single (λ ϵ → ϵ = undefined ⟶⊥
+                      (single (λ ϵ → ϵ = undefined ⟶
                                          wrong "undefined variable" ,
                                        send ϵ κ))
 
@@ -140,9 +140,9 @@ Exp ⟶  K | I | ⦅ E₀ ␣ E⋆ ⦆
 
 ℰ⟦ ⦅lambda␣⦅ I⋆ ⦆ Γ⋆ ␣ E₀ ⦆ ⟧ =
   λ ρ κ → λ σ → 
-    new σ ∈ 𝐋 ⟶⊥
+    new σ ∈ 𝐋 ⟶
         send (⟨ new σ | 𝐋 ,
-                λ ϵ⋆ κ′ → # ϵ⋆ = # I⋆ ⟶⊥
+                λ ϵ⋆ κ′ → # ϵ⋆ = # I⋆ ⟶
                               tievals (λ α⋆ → (λ ρ′ → 𝒞⟦ Γ⋆ ⟧ ρ′ (ℰ⟦ E₀ ⟧ ρ′ κ′))
                                               (extends ρ I⋆ α⋆))
                                       ϵ⋆ ,
@@ -154,9 +154,9 @@ Exp ⟶  K | I | ⦅ E₀ ␣ E⋆ ⦆
 
 ℰ⟦ ⦅lambda␣⦅ I⋆ · I ⦆ Γ⋆ ␣ E₀ ⦆ ⟧ =
   λ ρ κ → λ σ → 
-    new σ ∈ 𝐋 ⟶⊥
+    new σ ∈ 𝐋 ⟶
         send (⟨ new σ | 𝐋 ,
-                λ ϵ⋆ κ′ → # ϵ⋆ ≥ # I⋆ ⟶⊥
+                λ ϵ⋆ κ′ → # ϵ⋆ ≥ # I⋆ ⟶
                               tievalsrest
                                 (λ α⋆ → (λ ρ′ → 𝒞⟦ Γ⋆ ⟧ ρ′ (ℰ⟦ E₀ ⟧ ρ′ κ′))
                                         (extends ρ (I⋆ § ⟨ I ⟩) α⋆))
@@ -170,11 +170,11 @@ Exp ⟶  K | I | ⦅ E₀ ␣ E⋆ ⦆
 ℰ⟦ ⦅lambda I ␣ Γ⋆ ␣ E₀ ⦆ ⟧ = ℰ⟦ ⦅lambda ⦅ · I ⦆ Γ⋆ ␣ E₀ ⦆ ⟧
 
 ℰ⟦ ⦅if E₀ ␣ E₁ ␣ E₂ ⦆ ⟧ =
-  λ ρ κ → ℰ⟦ E₀ ⟧ ρ (single (λ ϵ → truish ϵ ⟶⊥ ℰ⟦ E₁ ⟧ ρ κ ,
+  λ ρ κ → ℰ⟦ E₀ ⟧ ρ (single (λ ϵ → truish ϵ ⟶ ℰ⟦ E₁ ⟧ ρ κ ,
                                      ℰ⟦ E₂ ⟧ ρ κ))
 
 ℰ⟦ ⦅if E₀ ␣ E₁ ⦆ ⟧ =
-  λ ρ κ → ℰ⟦ E₀ ⟧ ρ (single (λ ϵ → truish ϵ ⟶⊥ ℰ⟦ E₁ ⟧ ρ κ ,
+  λ ρ κ → ℰ⟦ E₀ ⟧ ρ (single (λ ϵ → truish ϵ ⟶ ℰ⟦ E₁ ⟧ ρ κ ,
                                      send unspecified κ))
 
 -- Here and elsewhere, any expressed value other than `undefined`
@@ -200,7 +200,7 @@ lookup = λ ρ I → ρ I
 
 extends : 𝐔 → Ide⋆ → 𝐋⋆ → 𝐔
 extends =
-  λ ρ I⋆ α⋆ → # I⋆ = 0 ⟶⊥ ρ ,
+  λ ρ I⋆ α⋆ → # I⋆ = 0 ⟶ ρ ,
                 extends (ρ [ (α⋆ ↓ 1) / (I⋆ ↓ 1) ]) (I⋆ † 1) (α⋆ † 1)
 
 wrong : 𝐗 → 𝐂  -- implementation-dependent
@@ -210,7 +210,7 @@ send = λ ϵ κ → κ ⟨ ϵ ⟩
 
 single : (𝐄 → 𝐂) → 𝐊
 single =
-λ ψ ϵ⋆ →  # ϵ⋆ = 1 ⟶⊥ ψ (ϵ⋆ ↓ 1) ,
+λ ψ ϵ⋆ →  # ϵ⋆ = 1 ⟶ ψ (ϵ⋆ ↓ 1) ,
             wrong "wrong number of return values"
 
 new : 𝐒 → (𝐋 + {error})  -- implementation-dependent
@@ -226,8 +226,8 @@ update = λ α ϵ σ → σ [ ⟨ ϵ , true ⟩ / α ]
 
 tievals : (𝐋⋆ → 𝐂) → 𝐄⋆ → 𝐂
 tievals =
-  λ ψ ϵ⋆ σ → # ϵ⋆ = 0 ⟶⊥ ψ ⟨⟩ σ ,
-                new σ ∈ 𝐋 ⟶⊥ tievals (λ α⋆ → ψ (⟨ new σ | 𝐋 ⟩ § α⋆))
+  λ ψ ϵ⋆ σ → # ϵ⋆ = 0 ⟶ ψ ⟨⟩ σ ,
+                new σ ∈ 𝐋 ⟶ tievals (λ α⋆ → ψ (⟨ new σ | 𝐋 ⟩ § α⋆))
                                     (ϵ⋆ † 1)
                                     (update (new σ | 𝐋) (ϵ⋆ ↓ 1) σ) ,
               wrong "out of memory" σ
@@ -237,12 +237,12 @@ tievalsrest =
   λ ψ ϵ⋆ ν → list (dropfirst ϵ⋆ ν)
                   (single (λ ϵ → tievals ψ ((takefirst ϵ⋆ ν) § ⟨ ϵ ⟩)))
 
-dropfirst = λ l n → n = 0 ⟶⊥ l , dropfirst (l † 1) (n − 1)
+dropfirst = λ l n → n = 0 ⟶ l , dropfirst (l † 1) (n − 1)
 
-takefirst = λ l n → n = 0 ⟶⊥ ⟨⟩ , ⟨l ↓ 1⟩ § (takefirst (l † 1) (n − 1))
+takefirst = λ l n → n = 0 ⟶ ⟨⟩ , ⟨l ↓ 1⟩ § (takefirst (l † 1) (n − 1))
 
 truish : 𝐄 → 𝐓
-truish = λ ϵ → ϵ = false ⟶⊥ false , true
+truish = λ ϵ → ϵ = false ⟶ false , true
 
 permute : Exp⋆ → Exp⋆  -- implementation-dependent
 
@@ -250,27 +250,27 @@ unpermute : 𝐄⋆ → 𝐄⋆  -- inverse of permute
 
 applicate : 𝐄 → 𝐄⋆ → 𝐊 → 𝐂
 applicate =
-  λ ϵ ϵ⋆ κ → ϵ ∈ 𝐅 ⟶⊥ (ϵ | 𝐅 ↓ 2) ϵ⋆ κ , wrong "bad procedure"
+  λ ϵ ϵ⋆ κ → ϵ ∈ 𝐅 ⟶ (ϵ | 𝐅 ↓ 2) ϵ⋆ κ , wrong "bad procedure"
 
 onearg : (𝐄 → 𝐊 → 𝐂) → (𝐄⋆ → 𝐊 → 𝐂)
 onearg =
-  λ ζ ϵ⋆ κ → # ϵ⋆ = 1 ⟶⊥ ζ (ϵ⋆ ↓ 1) κ ,
+  λ ζ ϵ⋆ κ → # ϵ⋆ = 1 ⟶ ζ (ϵ⋆ ↓ 1) κ ,
                wrong "wrong number of arguments"
 
 twoarg : (𝐄 → 𝐄 → 𝐊 → 𝐂) → (𝐄⋆ → 𝐊 → 𝐂)
 twoarg =
-  λ ζ ϵ⋆ κ → # ϵ⋆ = 2 ⟶⊥ ζ (ϵ⋆ ↓ 1) (ϵ⋆ ↓ 2) κ ,
+  λ ζ ϵ⋆ κ → # ϵ⋆ = 2 ⟶ ζ (ϵ⋆ ↓ 1) (ϵ⋆ ↓ 2) κ ,
                wrong "wrong number of arguments"
 
 list : 𝐄⋆ → 𝐊 → 𝐂
 list =
-  λ ϵ⋆ κ → # ϵ⋆ = 0 ⟶⊥ send null κ ,
+  λ ϵ⋆ κ → # ϵ⋆ = 0 ⟶ send null κ ,
              list (ϵ⋆ † 1) (single (λ ϵ → cons ⟨ ϵ⋆ ↓ 1 , ϵ ⟩ κ))
 
 cons : 𝐄⋆ → 𝐊 → 𝐂
 cons =
-  twoarg (λ ϵ₁ ϵ₂ κ σ → new σ ∈ 𝐋 ⟶⊥
-                            (λ σ′ → new σ′ ∈ 𝐋 ⟶⊥
+  twoarg (λ ϵ₁ ϵ₂ κ σ → new σ ∈ 𝐋 ⟶
+                            (λ σ′ → new σ′ ∈ 𝐋 ⟶
                                         send (⟨ new σ | 𝐋 , new σ′ | 𝐋 , true ⟩
                                               in 𝐄)
                                             κ

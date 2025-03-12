@@ -26,7 +26,7 @@ data Misc      :  Set where    false true null undefined unspecified : Misc
 -- Domain isomorphisms
 
 open import Function
-  using (Inverse; _↔_) public
+  using (_↔_) public
 
 postulate
   𝐅            :  Domain       -- procedure values
@@ -45,7 +45,7 @@ postulate instance
   iso-𝐂        : 𝐂  ↔  (𝐒 → 𝐀)
   iso-𝐊        : 𝐊  ↔  (𝐄 ⋆ → 𝐂)
 
-open Inverse {{ ... }}
+open Function.Inverse {{ ... }}
   renaming (to to ▻ ; from to ◅ ) public
   -- iso-D : D ↔ D′ declares ▻ : D → D′ and ◅ : D′ → D
 \end{code}
