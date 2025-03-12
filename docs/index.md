@@ -10,6 +10,9 @@ Complete examples of denotational semantics definitions in Agda:
 - [PCF](PCF/index.md)
 - [Scheme](Scheme/index.md)
 
+See also a summary of the representation of conventional denotational semantics
+[meta-notation](meta-notation.md) in Agda.
+
 ## Domains in Denotational Semantics
 
 In the Scott–Strachey style of denotational semantics:
