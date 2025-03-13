@@ -15,11 +15,11 @@ open import PCF.Environments
 data Terms : Types → Set where
   𝑉     : {σ   : Types} → 𝒱 σ → Terms σ                      -- variables
   𝐿     : {σ   : Types} → ℒ σ → Terms σ                      -- constants
-  _˜_   : {σ τ : Types} → Terms (σ ⇒ τ) → Terms σ → Terms τ  -- application
-  ƛ_˜_  : {σ τ : Types} → 𝒱 σ → Terms τ → Terms (σ ⇒ τ)      -- λ-abstraction
+  _␣_   : {σ τ : Types} → Terms (σ ⇒ τ) → Terms σ → Terms τ  -- application
+  ƛ_␣_  : {σ τ : Types} → 𝒱 σ → Terms τ → Terms (σ ⇒ τ)      -- λ-abstraction
 
 variable M N : Terms σ
-infixl 20 _˜_
+infixl 20 _␣_
 
 -- Semantics
 
@@ -27,6 +27,6 @@ infixl 20 _˜_
 
 𝒜′⟦ 𝑉 α      ⟧ ρ = ρ ⟦ α ⟧
 𝒜′⟦ 𝐿 c      ⟧ ρ = 𝒜⟦ c ⟧
-𝒜′⟦ M ˜ N    ⟧ ρ = 𝒜′⟦ M ⟧ ρ (𝒜′⟦ N ⟧ ρ) 
-𝒜′⟦ ƛ α ˜ M  ⟧ ρ = λ x → 𝒜′⟦ M ⟧ (ρ [ x / α ])
+𝒜′⟦ M ␣ N    ⟧ ρ = 𝒜′⟦ M ⟧ ρ (𝒜′⟦ N ⟧ ρ) 
+𝒜′⟦ ƛ α ␣ M  ⟧ ρ = λ x → 𝒜′⟦ M ⟧ (ρ [ x / α ])
 \end{code}
