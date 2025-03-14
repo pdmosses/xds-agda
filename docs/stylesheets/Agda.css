@@ -40,7 +40,8 @@
 .Agda a[href]:hover { background-color: #B4EEB4 }
 .Agda [href].hover-highlight { background-color: #B4EEB4; }
 
-[data-md-color-scheme="slate"] pre.Agda {
+[data-md-color-scheme="slate"] pre.Agda,
+[data-md-color-scheme="slate"] td.Agda {
   color: hsla(200, 18%, 26%, 1);
   background-color: hsla(180, 0%, 87%, 1);
   filter: invert(100%) hue-rotate(180deg);
@@ -50,7 +51,7 @@
   color: hsla(60, 30%, 96%, 1);  */
 
   /* PLFA: */
-  Aspects.
+  /* Aspects. */
   .Comment       { color: #b64343 }
   .Keyword       { color: #ce8133 }
   .String        { color: #B22222 }
