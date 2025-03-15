@@ -14,7 +14,7 @@ Com            = Exp   -- commands
 data Exp where
   con                : Con → Exp                        -- K
   ide                : Ide → Exp                        -- I
-  ⦅_⦆                : Exp * → Exp                      -- (E₀ E*)
+  ⦅_␣_⦆              : Exp → Exp * → Exp                -- (E₀ E*)
   ⦅lambda␣⦅_⦆_␣_⦆    : Ide * → Com * → Exp → Exp        -- (lambda (I*) Γ* E₀)
   ⦅lambda␣⦅_·_⦆_␣_⦆  : Ide * → Ide → Com * → Exp → Exp  -- (lambda (I* . I) Γ* E₀)
   ⦅lambda_␣_␣_⦆      : Ide → Com * → Exp → Exp          -- (lambda I Γ* E₀)
