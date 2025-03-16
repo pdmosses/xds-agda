@@ -51,10 +51,10 @@
 \AgdaSymbol{→}\AgdaSpace{}%
 \AgdaPostulate{𝐂}\<%
 \\
-\>[0]\AgdaOperator{\AgdaFunction{ℰ*⟦\AgdaUnderscore{}⟧}}%
+\>[0]\AgdaOperator{\AgdaFunction{ℰ⋆⟦\AgdaUnderscore{}⟧}}%
 \>[7]\AgdaSymbol{:}\AgdaSpace{}%
 \AgdaDatatype{Exp}\AgdaSpace{}%
-\AgdaOperator{\AgdaFunction{*}}\AgdaSpace{}%
+\AgdaOperator{\AgdaFunction{⋆′}}\AgdaSpace{}%
 \AgdaSymbol{→}\AgdaSpace{}%
 \AgdaPostulate{𝐔}\AgdaSpace{}%
 \AgdaSymbol{→}\AgdaSpace{}%
@@ -62,10 +62,10 @@
 \AgdaSymbol{→}\AgdaSpace{}%
 \AgdaPostulate{𝐂}\<%
 \\
-\>[0]\AgdaOperator{\AgdaFunction{𝒞*⟦\AgdaUnderscore{}⟧}}%
+\>[0]\AgdaOperator{\AgdaFunction{𝒞⋆⟦\AgdaUnderscore{}⟧}}%
 \>[7]\AgdaSymbol{:}\AgdaSpace{}%
 \AgdaFunction{Com}\AgdaSpace{}%
-\AgdaOperator{\AgdaFunction{*}}\AgdaSpace{}%
+\AgdaOperator{\AgdaFunction{⋆′}}\AgdaSpace{}%
 \AgdaSymbol{→}\AgdaSpace{}%
 \AgdaPostulate{𝐔}\AgdaSpace{}%
 \AgdaSymbol{→}\AgdaSpace{}%
@@ -135,9 +135,9 @@
 \\[\AgdaEmptyExtraSkip]%
 \>[0]\AgdaComment{--\ Non-compositional:}\<%
 \\
-\>[0]\AgdaComment{--\ ℰ⟦\ ⦅\ E₀\ ␣\ E*\ ⦆\ ⟧\ =}\<%
+\>[0]\AgdaComment{--\ ℰ⟦\ ⦅\ E₀\ ␣\ E⋆\ ⦆\ ⟧\ =}\<%
 \\
-\>[0]\AgdaComment{--\ \ \ λ\ ρ\ κ\ →\ ℰ*⟦\ permute\ (⟨\ E₀\ ⟩\ §\ E*\ )\ ⟧}\<%
+\>[0]\AgdaComment{--\ \ \ λ\ ρ\ κ\ →\ ℰ⋆⟦\ permute\ (⟨\ E₀\ ⟩\ §\ E⋆\ )\ ⟧}\<%
 \\
 \>[0]\AgdaComment{--\ \ \ \ \ \ \ \ \ \ \ ρ}\<%
 \\
@@ -151,7 +151,7 @@
 \AgdaOperator{\AgdaInductiveConstructor{⦅}}\AgdaSpace{}%
 \AgdaBound{E₀}\AgdaSpace{}%
 \AgdaOperator{\AgdaInductiveConstructor{␣}}\AgdaSpace{}%
-\AgdaBound{E*}\AgdaSpace{}%
+\AgdaBound{E⋆}\AgdaSpace{}%
 \AgdaOperator{\AgdaInductiveConstructor{⦆}}\AgdaSpace{}%
 \AgdaOperator{\AgdaFunction{⟧}}\AgdaSpace{}%
 \AgdaSymbol{=}\AgdaSpace{}%
@@ -171,8 +171,8 @@
 \AgdaSymbol{→}\<%
 \\
 \>[2][@{}l@{\AgdaIndent{0}}]%
-\>[4]\AgdaOperator{\AgdaFunction{ℰ*⟦}}\AgdaSpace{}%
-\AgdaBound{E*}\AgdaSpace{}%
+\>[4]\AgdaOperator{\AgdaFunction{ℰ⋆⟦}}\AgdaSpace{}%
+\AgdaBound{E⋆}\AgdaSpace{}%
 \AgdaOperator{\AgdaFunction{⟧}}\AgdaSpace{}%
 \AgdaBound{ρ}\AgdaSpace{}%
 \AgdaSymbol{(}\AgdaField{◅}\AgdaSpace{}%
@@ -190,9 +190,9 @@
 \\[\AgdaEmptyExtraSkip]%
 \>[0]\AgdaOperator{\AgdaFunction{ℰ⟦}}%
 \>[106I]\AgdaOperator{\AgdaInductiveConstructor{⦅lambda␣⦅}}\AgdaSpace{}%
-\AgdaBound{I*}\AgdaSpace{}%
+\AgdaBound{I⋆}\AgdaSpace{}%
 \AgdaOperator{\AgdaInductiveConstructor{⦆}}\AgdaSpace{}%
-\AgdaBound{Γ*}\AgdaSpace{}%
+\AgdaBound{Γ⋆}\AgdaSpace{}%
 \AgdaOperator{\AgdaInductiveConstructor{␣}}\AgdaSpace{}%
 \AgdaBound{E₀}\AgdaSpace{}%
 \AgdaOperator{\AgdaInductiveConstructor{⦆}}\AgdaSpace{}%
@@ -234,7 +234,7 @@
 \>[136I]\AgdaBound{ϵ⋆}\AgdaSpace{}%
 \AgdaOperator{\AgdaFunction{==⊥}}\AgdaSpace{}%
 \AgdaFunction{\#′}\AgdaSpace{}%
-\AgdaBound{I*}\AgdaSymbol{)}\AgdaSpace{}%
+\AgdaBound{I⋆}\AgdaSymbol{)}\AgdaSpace{}%
 \AgdaOperator{\AgdaPostulate{⟶}}\<%
 \\
 \>[136I][@{}l@{\AgdaIndent{0}}]%
@@ -247,8 +247,8 @@
 \>[143I]\AgdaSymbol{(λ}\AgdaSpace{}%
 \AgdaBound{ρ′}\AgdaSpace{}%
 \AgdaSymbol{→}\AgdaSpace{}%
-\AgdaOperator{\AgdaFunction{𝒞*⟦}}\AgdaSpace{}%
-\AgdaBound{Γ*}\AgdaSpace{}%
+\AgdaOperator{\AgdaFunction{𝒞⋆⟦}}\AgdaSpace{}%
+\AgdaBound{Γ⋆}\AgdaSpace{}%
 \AgdaOperator{\AgdaFunction{⟧}}\AgdaSpace{}%
 \AgdaBound{ρ′}\AgdaSpace{}%
 \AgdaSymbol{(}\AgdaOperator{\AgdaFunction{ℰ⟦}}\AgdaSpace{}%
@@ -260,7 +260,7 @@
 \>[.][@{}l@{}]\<[143I]%
 \>[38]\AgdaSymbol{(}\AgdaFunction{extends}\AgdaSpace{}%
 \AgdaBound{ρ}\AgdaSpace{}%
-\AgdaBound{I*}\AgdaSpace{}%
+\AgdaBound{I⋆}\AgdaSpace{}%
 \AgdaBound{α⋆}\AgdaSymbol{))}\<%
 \\
 %
@@ -300,11 +300,11 @@
 \begin{code}%
 \>[0]\AgdaOperator{\AgdaFunction{ℰ⟦}}%
 \>[170I]\AgdaOperator{\AgdaInductiveConstructor{⦅lambda␣⦅}}\AgdaSpace{}%
-\AgdaBound{I*}\AgdaSpace{}%
+\AgdaBound{I⋆}\AgdaSpace{}%
 \AgdaOperator{\AgdaInductiveConstructor{·}}\AgdaSpace{}%
 \AgdaBound{I}\AgdaSpace{}%
 \AgdaOperator{\AgdaInductiveConstructor{⦆}}\AgdaSpace{}%
-\AgdaBound{Γ*}\AgdaSpace{}%
+\AgdaBound{Γ⋆}\AgdaSpace{}%
 \AgdaOperator{\AgdaInductiveConstructor{␣}}\AgdaSpace{}%
 \AgdaBound{E₀}\AgdaSpace{}%
 \AgdaOperator{\AgdaInductiveConstructor{⦆}}\AgdaSpace{}%
@@ -346,7 +346,7 @@
 \>[202I]\AgdaBound{ϵ⋆}\AgdaSpace{}%
 \AgdaOperator{\AgdaFunction{>=⊥}}\AgdaSpace{}%
 \AgdaFunction{\#′}\AgdaSpace{}%
-\AgdaBound{I*}\AgdaSymbol{)}\AgdaSpace{}%
+\AgdaBound{I⋆}\AgdaSymbol{)}\AgdaSpace{}%
 \AgdaOperator{\AgdaPostulate{⟶}}\<%
 \\
 \>[.][@{}l@{}]\<[202I]%
@@ -359,8 +359,8 @@
 \AgdaSymbol{(λ}\AgdaSpace{}%
 \AgdaBound{ρ′}\AgdaSpace{}%
 \AgdaSymbol{→}\AgdaSpace{}%
-\AgdaOperator{\AgdaFunction{𝒞*⟦}}\AgdaSpace{}%
-\AgdaBound{Γ*}\AgdaSpace{}%
+\AgdaOperator{\AgdaFunction{𝒞⋆⟦}}\AgdaSpace{}%
+\AgdaBound{Γ⋆}\AgdaSpace{}%
 \AgdaOperator{\AgdaFunction{⟧}}\AgdaSpace{}%
 \AgdaBound{ρ′}\AgdaSpace{}%
 \AgdaSymbol{(}\AgdaOperator{\AgdaFunction{ℰ⟦}}\AgdaSpace{}%
@@ -372,7 +372,7 @@
 %
 \>[30]\AgdaSymbol{(}\AgdaFunction{extends}\AgdaSpace{}%
 \AgdaBound{ρ}\AgdaSpace{}%
-\AgdaSymbol{(}\AgdaBound{I*}\AgdaSpace{}%
+\AgdaSymbol{(}\AgdaBound{I⋆}\AgdaSpace{}%
 \AgdaOperator{\AgdaFunction{§′}}\AgdaSpace{}%
 \AgdaSymbol{(}\AgdaSpace{}%
 \AgdaNumber{1}\AgdaSpace{}%
@@ -387,7 +387,7 @@
 %
 \>[30]\AgdaSymbol{(}\AgdaPostulate{η}\AgdaSpace{}%
 \AgdaSymbol{(}\AgdaFunction{\#′}\AgdaSpace{}%
-\AgdaBound{I*}\AgdaSymbol{))}\AgdaSpace{}%
+\AgdaBound{I⋆}\AgdaSymbol{))}\AgdaSpace{}%
 \AgdaOperator{\AgdaPostulate{,}}\<%
 \\
 \>[24][@{}l@{\AgdaIndent{0}}]%
@@ -423,7 +423,7 @@
 \\[\AgdaEmptyExtraSkip]%
 \>[0]\AgdaComment{--\ Non-compositional:}\<%
 \\
-\>[0]\AgdaComment{--\ ℰ⟦\ ⦅lambda\ I\ ␣\ Γ*\ ␣\ E₀\ ⦆\ ⟧\ =\ ℰ⟦\ ⦅lambda\ ⦅\ ·\ I\ ⦆\ Γ*\ ␣\ E₀\ ⦆\ ⟧}\<%
+\>[0]\AgdaComment{--\ ℰ⟦\ ⦅lambda\ I\ ␣\ Γ⋆\ ␣\ E₀\ ⦆\ ⟧\ =\ ℰ⟦\ ⦅lambda\ ⦅\ ·\ I\ ⦆\ Γ⋆\ ␣\ E₀\ ⦆\ ⟧}\<%
 \\
 %
 \\[\AgdaEmptyExtraSkip]%
@@ -431,7 +431,7 @@
 \>[244I]\AgdaOperator{\AgdaInductiveConstructor{⦅lambda}}\AgdaSpace{}%
 \AgdaBound{I}\AgdaSpace{}%
 \AgdaOperator{\AgdaInductiveConstructor{␣}}\AgdaSpace{}%
-\AgdaBound{Γ*}\AgdaSpace{}%
+\AgdaBound{Γ⋆}\AgdaSpace{}%
 \AgdaOperator{\AgdaInductiveConstructor{␣}}\AgdaSpace{}%
 \AgdaBound{E₀}\AgdaSpace{}%
 \AgdaOperator{\AgdaInductiveConstructor{⦆}}\AgdaSpace{}%
@@ -478,8 +478,8 @@
 \>[276I]\AgdaSymbol{(λ}\AgdaSpace{}%
 \AgdaBound{ρ′}\AgdaSpace{}%
 \AgdaSymbol{→}\AgdaSpace{}%
-\AgdaOperator{\AgdaFunction{𝒞*⟦}}\AgdaSpace{}%
-\AgdaBound{Γ*}\AgdaSpace{}%
+\AgdaOperator{\AgdaFunction{𝒞⋆⟦}}\AgdaSpace{}%
+\AgdaBound{Γ⋆}\AgdaSpace{}%
 \AgdaOperator{\AgdaFunction{⟧}}\AgdaSpace{}%
 \AgdaBound{ρ′}\AgdaSpace{}%
 \AgdaSymbol{(}\AgdaOperator{\AgdaFunction{ℰ⟦}}\AgdaSpace{}%
@@ -656,11 +656,11 @@
 \\
 %
 \\[\AgdaEmptyExtraSkip]%
-\>[0]\AgdaComment{--\ ℰ*⟦\AgdaUnderscore{}⟧\ \ :\ Exp\ *\ →\ 𝐔\ →\ 𝐊\ →\ 𝐂}\<%
+\>[0]\AgdaComment{--\ ℰ⋆⟦\AgdaUnderscore{}⟧\ \ :\ Exp\ ⋆′\ →\ 𝐔\ →\ 𝐊\ →\ 𝐂}\<%
 \\
 %
 \\[\AgdaEmptyExtraSkip]%
-\>[0]\AgdaOperator{\AgdaFunction{ℰ*⟦}}\AgdaSpace{}%
+\>[0]\AgdaOperator{\AgdaFunction{ℰ⋆⟦}}\AgdaSpace{}%
 \AgdaNumber{0}\AgdaSpace{}%
 \AgdaOperator{\AgdaInductiveConstructor{,}}\AgdaSpace{}%
 \AgdaSymbol{\AgdaUnderscore{}}\AgdaSpace{}%
@@ -678,17 +678,17 @@
 \\[\AgdaEmptyExtraSkip]%
 \>[0]\AgdaComment{--\ Cannot\ split\ on\ argument\ of\ non-datatype\ Exp\ \textasciicircum{}\ suc\ n:}\<%
 \\
-\>[0]\AgdaComment{--\ ℰ*⟦\ suc\ n\ ,\ E\ ,\ Es\ ⟧\ =\ λ\ ρ\ κ\ →}\<%
+\>[0]\AgdaComment{--\ ℰ⋆⟦\ suc\ n\ ,\ E\ ,\ Es\ ⟧\ =\ λ\ ρ\ κ\ →}\<%
 \\
 \>[0]\AgdaComment{--\ \ \ ℰ⟦\ E\ ⟧\ ρ\ (single\ (λ\ ϵ₀\ →}\<%
 \\
-\>[0]\AgdaComment{--\ \ \ \ \ ℰ*⟦\ n\ ,\ Es\ ⟧\ ρ\ (◅\ λ\ ϵ⋆\ →}\<%
+\>[0]\AgdaComment{--\ \ \ \ \ ℰ⋆⟦\ n\ ,\ Es\ ⟧\ ρ\ (◅\ λ\ ϵ⋆\ →}\<%
 \\
 \>[0]\AgdaComment{--\ \ \ \ \ \ \ ▻\ κ\ (⟨\ ϵ₀\ ⟩\ §\ ϵ⋆))))}\<%
 \\
 %
 \\[\AgdaEmptyExtraSkip]%
-\>[0]\AgdaOperator{\AgdaFunction{ℰ*⟦}}\AgdaSpace{}%
+\>[0]\AgdaOperator{\AgdaFunction{ℰ⋆⟦}}\AgdaSpace{}%
 \AgdaNumber{1}\AgdaSpace{}%
 \AgdaOperator{\AgdaInductiveConstructor{,}}\AgdaSpace{}%
 \AgdaBound{E}\AgdaSpace{}%
@@ -717,7 +717,7 @@
 \\
 %
 \\[\AgdaEmptyExtraSkip]%
-\>[0]\AgdaOperator{\AgdaFunction{ℰ*⟦}}\AgdaSpace{}%
+\>[0]\AgdaOperator{\AgdaFunction{ℰ⋆⟦}}\AgdaSpace{}%
 \AgdaInductiveConstructor{suc}\AgdaSpace{}%
 \AgdaSymbol{(}\AgdaInductiveConstructor{suc}\AgdaSpace{}%
 \AgdaBound{n}\AgdaSymbol{)}\AgdaSpace{}%
@@ -743,7 +743,7 @@
 \AgdaSymbol{→}\<%
 \\
 \>[2][@{}l@{\AgdaIndent{0}}]%
-\>[4]\AgdaOperator{\AgdaFunction{ℰ*⟦}}\AgdaSpace{}%
+\>[4]\AgdaOperator{\AgdaFunction{ℰ⋆⟦}}\AgdaSpace{}%
 \AgdaInductiveConstructor{suc}\AgdaSpace{}%
 \AgdaBound{n}\AgdaSpace{}%
 \AgdaOperator{\AgdaInductiveConstructor{,}}\AgdaSpace{}%
@@ -766,11 +766,11 @@
 \\
 %
 \\[\AgdaEmptyExtraSkip]%
-\>[0]\AgdaComment{--\ 𝒞*⟦\AgdaUnderscore{}⟧\ \ :\ Com\ *\ →\ 𝐔\ →\ 𝐂\ →\ 𝐂}\<%
+\>[0]\AgdaComment{--\ 𝒞⋆⟦\AgdaUnderscore{}⟧\ \ :\ Com\ ⋆′\ →\ 𝐔\ →\ 𝐂\ →\ 𝐂}\<%
 \\
 %
 \\[\AgdaEmptyExtraSkip]%
-\>[0]\AgdaOperator{\AgdaFunction{𝒞*⟦}}\AgdaSpace{}%
+\>[0]\AgdaOperator{\AgdaFunction{𝒞⋆⟦}}\AgdaSpace{}%
 \AgdaNumber{0}\AgdaSpace{}%
 \AgdaOperator{\AgdaInductiveConstructor{,}}\AgdaSpace{}%
 \AgdaSymbol{\AgdaUnderscore{}}\AgdaSpace{}%
@@ -784,7 +784,7 @@
 \\
 %
 \\[\AgdaEmptyExtraSkip]%
-\>[0]\AgdaOperator{\AgdaFunction{𝒞*⟦}}\AgdaSpace{}%
+\>[0]\AgdaOperator{\AgdaFunction{𝒞⋆⟦}}\AgdaSpace{}%
 \AgdaNumber{1}\AgdaSpace{}%
 \AgdaOperator{\AgdaInductiveConstructor{,}}\AgdaSpace{}%
 \AgdaBound{Γ}\AgdaSpace{}%
@@ -806,7 +806,7 @@
 \\
 %
 \\[\AgdaEmptyExtraSkip]%
-\>[0]\AgdaOperator{\AgdaFunction{𝒞*⟦}}\AgdaSpace{}%
+\>[0]\AgdaOperator{\AgdaFunction{𝒞⋆⟦}}\AgdaSpace{}%
 \AgdaInductiveConstructor{suc}\AgdaSpace{}%
 \AgdaSymbol{(}\AgdaInductiveConstructor{suc}\AgdaSpace{}%
 \AgdaBound{n}\AgdaSymbol{)}\AgdaSpace{}%
@@ -832,7 +832,7 @@
 \AgdaSymbol{→}\<%
 \\
 \>[2][@{}l@{\AgdaIndent{0}}]%
-\>[4]\AgdaOperator{\AgdaFunction{𝒞*⟦}}\AgdaSpace{}%
+\>[4]\AgdaOperator{\AgdaFunction{𝒞⋆⟦}}\AgdaSpace{}%
 \AgdaInductiveConstructor{suc}\AgdaSpace{}%
 \AgdaBound{n}\AgdaSpace{}%
 \AgdaOperator{\AgdaInductiveConstructor{,}}\AgdaSpace{}%

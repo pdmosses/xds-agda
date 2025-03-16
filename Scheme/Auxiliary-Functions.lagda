@@ -19,13 +19,13 @@ _[_/_] : 𝐔 → 𝐋 → Ide → 𝐔
 lookup : 𝐔 → Ide → 𝐋
 lookup = λ ρ I → ▻ ρ I
 
-extends : 𝐔 → Ide * → 𝐋 ⋆ → 𝐔
+extends : 𝐔 → Ide ⋆′ → 𝐋 ⋆ → 𝐔
 extends = fix λ extends′ →
-  λ ρ I* α⋆ →
-    η (#′ I* == 0) ⟶ ρ ,
-      ( ( ( (λ I → λ I*′ →
-              extends′ (ρ [ (α⋆ ↓ 1) / I ]) I*′ (α⋆ † 1)) ♯)
-          (I* ↓′ 1)) ♯) (I* †′ 1)
+  λ ρ I⋆′ α⋆ →
+    η (#′ I⋆′ == 0) ⟶ ρ ,
+      ( ( ( (λ I → λ I⋆′′ →
+              extends′ (ρ [ (α⋆ ↓ 1) / I ]) I⋆′′ (α⋆ † 1)) ♯)
+          (I⋆′ ↓′ 1)) ♯) (I⋆′ †′ 1)
 
 postulate
   wrong : String → 𝐂
@@ -107,7 +107,7 @@ misc-undefined (inj-𝐌 μ)  = ((λ { undefined → η true ; _ → η false })
 misc-undefined (inj₁ _)    = η false
 misc-undefined (inj₂ _)    = η false
 
--- permute    : Exp * → Exp *  -- implementation-dependent
+-- permute    : Exp ⋆′ → Exp ⋆′  -- implementation-dependent
 -- unpermute  : 𝐄 ⋆ → 𝐄 ⋆      -- inverse of permute
 
 applicate : 𝐄 → 𝐄 ⋆ → 𝐊 → 𝐂
