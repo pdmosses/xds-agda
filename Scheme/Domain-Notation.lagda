@@ -10,7 +10,7 @@ open import Relation.Binary.PropositionalEquality.Core
 Predomain  = Set
 Domain     = Set
 variable
-  P    : Predomain
+  P Q  : Predomain
   D E  : Domain
 
 -- Domains are pointed
@@ -26,7 +26,7 @@ postulate
 -- Fixed points of endofunctions on function domains
 
 postulate
-  fix       : {D : Domain} → (D → D) → D
+  fix       : ∀ {D : Domain} → (D → D) → D
 
   -- Properties
   fix-fix   : ∀ {D} (f : D → D) →
@@ -39,8 +39,8 @@ postulate
 
 postulate
   𝕃         : Predomain → Domain
-  η         : {P : Predomain} → P → 𝕃 P
-  _♯        : {P : Predomain} {D : Domain} → (P → D) → (𝕃 P → D)
+  η         : ∀ {P} → P → 𝕃 P
+  _♯        : ∀ {P} {D : Domain} → (P → D) → (𝕃 P → D)
 
   -- Properties
   elim-♯-η  : ∀ {P D} (f : P → D) (p : P)  →
@@ -60,8 +60,8 @@ S +⊥  = 𝕃 S
 
 open import Agda.Builtin.Nat
   using (_==_; _<_) public
-open import Data.Nat.Base as Nat
-  using (ℕ; suc; pred) public
+open import Data.Nat.Base
+  using (ℕ; suc; NonZero; pred) public
 open import Data.Bool.Base
   using (Bool) public
 
@@ -106,7 +106,7 @@ open import Data.Sum.Base
 -- Finite sequences
 
 open import Data.Vec.Recursive
-  using (_^_; []; append) public
+  using (_^_; []) public
 open import Agda.Builtin.Sigma
   using (Σ)
 
@@ -115,32 +115,34 @@ open import Agda.Builtin.Sigma
 -- P *    = (P ^ 0) + ... + (P ^ n) + ...
 -- (n, p₁ , ... , pₙ) : P *
 
-_*   : Set → Set
+_*   : Predomain → Predomain
 P *  = Σ ℕ (P ^_)
 
--- #′ S * : ℕ
+-- #′ P * : ℕ
 
-#′ : {S : Set} → S * → ℕ
+#′ : ∀ {P} → P * → ℕ
 #′ (n , _) = n
 
-_::′_ : ∀ {P : Set} → P → P * → P *
+_::′_ : ∀ {P} → P → P * → P *
 p ::′ (0      , ps) = (1 , p)
 p ::′ (suc n  , ps) = (suc (suc n) , p , ps)
 
-_↓′_ : ∀ {P : Set} → P * → ℕ → 𝕃 P
+_↓′_ : ∀ {P} → P * → (n : ℕ) → .{{_ : NonZero n}} → 𝕃 P
 (1            , p)       ↓′ 1            = η p
 (suc (suc n)  , p , ps)  ↓′ 1            = η p
 (suc (suc n)  , p , ps)  ↓′ suc (suc i)  = (suc n , ps) ↓′ suc i
 (_            , _)       ↓′ _            = ⊥
 
-_†′_ : ∀ {P : Set} → P * → ℕ → 𝕃 (P *)
+_†′_ : ∀ {P} → P * → (n : ℕ) → .{{_ : NonZero n}} → 𝕃 (P *)
 (1            , p)       †′ 1            = η (0 , [])
 (suc (suc n)  , p , ps)  †′ 1            = η (suc n , ps)
 (suc (suc n)  , p , ps)  †′ suc (suc i)  = (suc n , ps) †′ suc i
 (_            , _)       †′ _            = ⊥
 
-_§′_ : ∀ {P : Set} → P * → P * → P *
-(m , pm) §′ (n , pn) = ((m Nat.+ n) , append m n pm pn)
+_§′_ : ∀ {P} → P * → P * → P *
+(0 , _) §′ p* = p*
+(1 , p) §′ p* = p ::′ p*
+(suc (suc n) , p , ps) §′ p* = p ::′ ((suc n , ps) §′ p*)
 
 -- Sequence domains
 -- D ⋆ = 𝕃 ((D ^ 0) + ... + (D ^ n) + ...)
@@ -173,14 +175,14 @@ d⋆₁ § d⋆₂ = ((λ p*₁ → ((λ p*₂ → η (p*₁ §′ p*₂)) ♯) 
 open import Function
   using (id; _∘_) public
 
--- d⋆ ↓ k : 𝕃 D  (k ≥ 1; k < # d⋆)
+-- d⋆ ↓ k : D  (k ≥ 1; k < # d⋆)
 
-_↓_ : ∀ {D} → D ⋆ → ℕ → D
+_↓_ : ∀ {D} → D ⋆ → (n : ℕ) → .{{_ : NonZero n}} → D
 d⋆ ↓ n = (id ♯) (((λ p* → p* ↓′ n) ♯) d⋆)
 
 -- d⋆ † k : D ⋆  (k ≥ 1)
 
-_†_ : ∀ {D} → D ⋆ → ℕ → D ⋆
+_†_ : ∀ {D} → D ⋆ → (n : ℕ) → .{{_ : NonZero n}} → D ⋆
 d⋆ † n = (id ♯) (((λ p* → η (p* †′ n)) ♯) d⋆)
 
 ------------------------------------------------------------------------

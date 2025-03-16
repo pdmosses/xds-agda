@@ -4,15 +4,16 @@ module Scheme.Auxiliary-Functions where
 
 open import Scheme.Domain-Notation
 open import Scheme.Domain-Equations
-open import Scheme.Abstract-Syntax
-  using (Ide)
+open import Scheme.Abstract-Syntax using (Ide)
+
+open import Data.Nat.Base
+  using (NonZero; pred) public
 
 -- 7.2.4. Auxiliary functions
 
 postulate _==ᴵ_ : Ide → Ide → Bool
 
 _[_/_] : 𝐔 → 𝐋 → Ide → 𝐔
--- ρ [ α / I ] overrides ρ with the binding of I to α
 ρ [ α / I ] = ◅ λ I′ → if I ==ᴵ I′ then α else ▻ ρ I′
 
 lookup : 𝐔 → Ide → 𝐋
@@ -42,7 +43,6 @@ single =
 postulate
   new : 𝐒 → 𝕃 (𝐋 + 𝐗)
 -- new : 𝐒 → (𝐋 + {error}) -- implementation-dependent
--- unclear why R5RS uses an undeclared value instead of 𝐗
 
 hold : 𝐋 → 𝐊 → 𝐂
 hold = λ α κ → ◅ λ σ → ▻ (send (▻ σ α ↓1) κ) σ
