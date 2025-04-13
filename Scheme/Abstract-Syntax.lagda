@@ -16,7 +16,7 @@ data Exp where
   ide                : Ide → Exp                          -- I
   ⦅_␣_⦆              : Exp → Exp ⋆′ → Exp                 -- (E₀ E⋆′)
   ⦅lambda␣⦅_⦆_␣_⦆    : Ide ⋆′ → Com ⋆′ → Exp → Exp        -- (lambda (I⋆′) Γ⋆′ E₀)
-  ⦅lambda␣⦅_·_⦆_␣_⦆  : Ide ⋆′ → Ide → Com ⋆′ → Exp → Exp  -- (lambda (I⋆′ . I) Γ⋆′ E₀)
+  ⦅lambda␣⦅_·_⦆_␣_⦆  : Ide ⋆′ → Ide → Com ⋆′ → Exp → Exp  -- (lambda (I⋆′.I) Γ⋆′ E₀)
   ⦅lambda_␣_␣_⦆      : Ide → Com ⋆′ → Exp → Exp           -- (lambda I Γ⋆′ E₀)
   ⦅if_␣_␣_⦆          : Exp → Exp → Exp → Exp              -- (if E₀ E₁ E₂)
   ⦅if_␣_⦆            : Exp → Exp → Exp                    -- (if E₀ E₁)

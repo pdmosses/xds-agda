@@ -27,7 +27,7 @@ postulate
 postulate
   𝕃         : Set → Domain
   η         : {P : Set} → P → 𝕃 P
-  _♯        : {P : Set} {D : Domain} → (P → D) → (𝕃 P → D)
+  _♯        : {P : Set}{D : Domain} → (P → D) → (𝕃 P → D)
 
   -- Properties
   elim-♯-η  : ∀ {P D} (f : P → D) (p : P)  →
