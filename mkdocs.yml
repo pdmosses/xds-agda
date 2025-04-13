@@ -9,38 +9,36 @@ nav:
   - index.md
   - meta-notation.md
   - Untyped λ-calculus:
-    - ULC/index.md
-    - ULC/ULC.All.md
-    - ULC/ULC.Variables.md
-    - ULC/ULC.Terms.md
-    - ULC/ULC.Domains.md
-    - ULC/ULC.Environments.md
-    - ULC/ULC.Semantics.md
-    - ULC/ULC.Checks.md
+    - ULC.md
+    - md/ULC.All.md
+    - md/ULC.Variables.md
+    - md/ULC.Terms.md
+    - md/ULC.Domains.md
+    - md/ULC.Environments.md
+    - md/ULC.Semantics.md
+    - md/ULC.Checks.md
   - PCF:
-    - PCF/index.md
-    - PCF/PCF.Domain-Notation.md
-    - PCF/PCF.Types.md
-    - PCF/PCF.Constants.md
-    - PCF/PCF.Variables.md
-    - PCF/PCF.Terms.md
-    - PCF/PCF.Environments.md
-    - PCF/PCF.Checks.md
+    - PCF.md
+    - md/PCF.All.md
+    - md/PCF.Domain-Notation.md
+    - md/PCF.Types.md
+    - md/PCF.Constants.md
+    - md/PCF.Variables.md
+    - md/PCF.Terms.md
+    - md/PCF.Environments.md
+    - md/PCF.Checks.md
   - Scheme:
-    - Scheme/index.md
-    - Scheme/Scheme.Domain-Notation.md
-    - Scheme/Scheme.Abstract-Syntax.md
-    - Scheme/Scheme.Domain-Equations.md
-    - Scheme/Scheme.Auxiliary-Functions.md
-    - Scheme/Scheme.Semantic-Functions.md
+    - Scheme.md
+    - md/Scheme.All.md
+    - md/Scheme.Domain-Notation.md
+    - md/Scheme.Abstract-Syntax.md
+    - md/Scheme.Domain-Equations.md
+    - md/Scheme.Auxiliary-Functions.md
+    - md/Scheme.Semantic-Functions.md
 
 not_in_nav: |
-  ULC/html
-  ULC/*.md
-  PCF/html
-  PCF/*.md
-  Scheme/html
-  Scheme/*.md
+  html
+  md/*.md
 
 theme:
   name: material

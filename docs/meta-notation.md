@@ -4,9 +4,11 @@ This page summarises the current representation of conventional Scott--Strachey
 style denotational semantics meta-notation in Agda.
 
 For an introduction to the Agda language, see the [Agda docs] or the
-[Agda Wikipedia page]. 
+[Agda Wikipedia page].
 
-## Abstract Syntax
+## Summary
+
+### Abstract Syntax
 
 The context-free grammars conventionally used to specify abstract syntax in
 denotational semantics correspond to inductive datatype definitions in Agda,
@@ -34,7 +36,7 @@ injections between (data)types need to be explicit.
 A type can be left unspecified by declaring it as a postulate
 (or a module parameter) in Agda.
 
-## Domain Equations
+### Domain Equations
 
 A flat domain is defined by equating it to a lifted set,
 which is written **`S +⊥`** or **`𝕃 S`** in Agda.
@@ -67,7 +69,7 @@ definitions are left implicit.
 The isomorphisms need to be specified explicitly in Agda -- both when defining
 domains and when defining elements of domains in λ-notation.
 
-## Semantic Functions
+### Semantic Functions
 
 Declarations and definitions of semantic functions that map abstract syntax to
 domains of denotations are defined straightforwardly in Agda, by specifying
@@ -80,7 +82,7 @@ semantic functions are inductive (primitive recursive).
 Agda checks that the semantic equations cover all abstract syntax constructors,
 and warns about any overlapping equations.
 
-## Auxiliary Functions
+### Auxiliary Functions
 
 Conventional denotational semantic definitions often define auxiliary functions
 for use when defining denotations in semantic equations.
@@ -91,7 +93,7 @@ termination check.
 Auxiliary functions need to be declared before they are first used, so their
 declarations should precede the definitions of semantic functions.
 
-## λ-Notation
+### λ-Notation
 
 In conventional denotational semantics, functions defined in λ-notation between
 domains are always continuous.
@@ -111,7 +113,7 @@ Regarding lexical structure, the conventional notation for λ-abstractions
 **`λx.y`** is written **`λ x → y`** in Agda, and adjacent bound variables need
 to be separated by spaces.
 
-## Modules
+### Modules
 
 Currently, the examples of denotational definitions presented here are
 independent, and there is some duplication of declarations of notation for
