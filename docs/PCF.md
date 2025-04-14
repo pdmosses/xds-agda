@@ -51,7 +51,7 @@ illustrate the notational overhead that arises in Agda when using the
 [Plotkin 1977]: https://doi.org/10.1016/0304-3975(77)90044-5 "TCS paper DOI"
 [PCF Domains]: https://github.com/pdmosses/xds-agda/blob/main/PCF/Domains.lagda "Agda module"
 [DomainTheory]: https://martinescardo.github.io/TypeTopology/DomainTheory.index.html "Agda modules"
-[TypeTopology]: https://martinescardo.github.io/TypeTopology "Agda library"
+[TypeTopology]: https://martinescardo.github.io/TypeTopology/ "Agda library"
 [DomainTheory.ScottModelOfPCF]: https://martinescardo.github.io/TypeTopology/DomainTheory.ScottModelOfPCF.ScottModelOfPCF.html "Agda module"
 [Hart 2020]: https://github.com/BrendanHart/Investigating-Properties-of-PCF "GitHub repo"
 [DomainTheory.Bilimits.Dinfinity]: https://martinescardo.github.io/TypeTopology/DomainTheory.Bilimits.Dinfinity.html  "Agda module"

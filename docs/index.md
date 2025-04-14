@@ -117,7 +117,7 @@ Peter Mosses <p.d.mosses@tudelft.nl>
 
 [standard Agda library version 2.1]: https://agda.github.io/agda-stdlib/v2.1 "Agda library"
 [DomainTheory]: https://martinescardo.github.io/TypeTopology/DomainTheory.index.html "Agda modules"
-[TypeTopology]: https://martinescardo.github.io/TypeTopology "Agda library"
+[TypeTopology]: https://martinescardo.github.io/TypeTopology/ "Agda library"
 [DomainTheory.Bilimits.Dinfinity]: https://martinescardo.github.io/TypeTopology/DomainTheory.Bilimits.Dinfinity.html  "Agda module"
 [Formalizing Synthetic Domain Theory]: https://doi.org/10.1023/A:1006258506401 "JAR paper DOI"
 [Lego]: https://www.dcs.ed.ac.uk/home/lego/ "Web page"
