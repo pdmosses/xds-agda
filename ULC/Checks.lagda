@@ -12,6 +12,8 @@ open import ULC.Terms
 open import ULC.Environments
 open import ULC.Semantics
 
+open import Relation.Binary.PropositionalEquality.Core using (refl; sym; cong)
+
 open Inverse using (inverseˡ; inverseʳ)
 
 to-from : (f : D∞ → D∞)  → to (from f) ≡ f
@@ -21,6 +23,10 @@ to-from f = inverseˡ iso refl
 from-to f = inverseʳ iso refl
 
 {-# REWRITE to-from from-to #-}
+
+postulate to-⊥ : to ⊥ ≡ ⊥
+from-⊥ : from ⊥ ≡ ⊥
+from-⊥ = cong from (sym to-⊥)
 
 -- The following proofs are potentially unsound, due to unsafe postulates.
 
