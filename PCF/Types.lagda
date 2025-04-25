@@ -7,7 +7,7 @@ open import Agda.Builtin.Nat
   using (Nat)
 
 open import PCF.Domain-Notation
-  using (Domain; _+⊥)
+  using (_+⊥)
 
 -- Syntax
 
@@ -22,7 +22,7 @@ infixr 1 _⇒_
 
 -- Semantics 𝒟
 
-𝒟 : Types → Domain
+𝒟 : Types → Set  -- Set should be a sort of domains
 
 𝒟 ι        = Nat  +⊥
 𝒟 o        = Bool +⊥

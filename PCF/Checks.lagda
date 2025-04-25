@@ -8,7 +8,7 @@ module PCF.Checks where
 open import Data.Bool.Base 
 open import Agda.Builtin.Nat
 open import Relation.Binary.PropositionalEquality.Core
-  using (_≡_; refl)
+  using (_≡_; refl; cong-app)
 
 open import PCF.Domain-Notation
 open import PCF.Types
@@ -17,8 +17,11 @@ open import PCF.Variables
 open import PCF.Environments
 open import PCF.Terms
 
-postulate
-  {-# REWRITE fix-app elim-♯-η elim-♯-⊥ true-cond false-cond #-} 
+fix-app  : ∀ {P D} (f : (P → D) → (P → D)) (p : P) →
+              fix f p ≡ f (fix f) p
+fix-app  = λ f → cong-app (fix-fix f) 
+
+{-# REWRITE fix-app elim-♯-η elim-♯-⊥ true-cond false-cond #-} 
 
 -- Constants
 pattern 𝑁 n    = 𝐿 (k n)
