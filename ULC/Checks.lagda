@@ -42,6 +42,18 @@ check-const :
         (var x 0) ⟧ ≡ ⟦ var x 42 ⟧
 check-const = refl 
 
+
+
+
+
+
+
+
+
+
+
+
+
 -- (λx0.x0 x0)(λx0.x0 x0) = ...
 -- check-divergence :
 --   ⟦ app (lam (x 0) (app (var x 0) (var x 0))) 
