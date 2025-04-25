@@ -5,10 +5,9 @@ open import Relation.Binary.PropositionalEquality.Core
   using (_≡_; refl) public
 
 ------------------------------------------------------------------------
--- Agda requires Predomain and Domain to be sorts
 
-Predomain  = Set
-Domain     = Set
+Predomain  = Set  -- Predomain should be a sort of predomains
+Domain     = Set  -- Domain should be a sort of domains
 variable
   P Q  : Predomain
   D E  : Domain
@@ -29,10 +28,7 @@ postulate
   fix       : ∀ {D : Domain} → (D → D) → D
 
   -- Properties
-  fix-fix   : ∀ {D} (f : D → D) →
-               fix f ≡ f (fix f)
-  fix-app   : ∀ {P D} (f : (P → D) → (P → D)) (p : P) →
-               fix f p ≡ f (fix f) p
+  fix-fix   : ∀ {D} (f : D → D) → fix f ≡ f (fix f)
 
 ------------------------------------------------------------------------
 -- Lifted domains
@@ -43,10 +39,8 @@ postulate
   _♯        : ∀ {P} {D : Domain} → (P → D) → (𝕃 P → D)
 
   -- Properties
-  elim-♯-η  : ∀ {P D} (f : P → D) (p : P)  →
-                (f ♯) (η p) ≡ f p
-  elim-♯-⊥  : ∀ {P D} (f : P → D) →
-                (f ♯) ⊥ ≡ ⊥
+  elim-♯-η  : ∀ {P D} (f : P → D) (p : P) →  (f ♯) (η p)  ≡ f p
+  elim-♯-⊥  : ∀ {P D} (f : P → D) →          (f ♯) ⊥      ≡ ⊥
 \end{code}
 \clearpage
 \begin{code}
