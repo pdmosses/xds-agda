@@ -27,7 +27,7 @@ Gordon Plotkin subsequently defined a denotational semantics for PCF including
 
 A direct transcription of Plotkin's definition to Agda is available in this repo.
 The code imports various modules from the [standard Agda library v2.1], and
-typechecks with Agda v2.6.4.3.
+typechecks with Agda v2.7.0.1.
 
 Many authors have defined denotational semantics for PCF ([PLS Lab]). Recently,
 Tom de Jong has given a definition in Agda ([DomainTheory.ScottModelOfPCF])
