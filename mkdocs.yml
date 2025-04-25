@@ -52,7 +52,7 @@ theme:
       scheme: slate
       toggle:
         icon: material/lightbulb-outline
-        name: Switch to light mode
+        name: Switch to auto mode
     - media: "(prefers-color-scheme)"
       toggle:
         icon: material/lightbulb-auto
@@ -68,7 +68,8 @@ theme:
     # - toc.integrate
 
 extra_css:
-  - stylesheets/Agda.css
+  - stylesheets/Agda-md.css
+  - stylesheets/Agda-md-dark.css
   - stylesheets/wide.css
 
 
