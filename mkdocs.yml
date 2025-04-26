@@ -68,10 +68,9 @@ theme:
     # - toc.integrate
 
 extra_css:
+  - stylesheets/Agda-material.css
   - stylesheets/Agda-md.css
   - stylesheets/Agda-md-dark.css
-  - stylesheets/wide.css
-
 
 plugins:
 - search
