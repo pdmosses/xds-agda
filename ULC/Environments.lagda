@@ -6,7 +6,6 @@ open import ULC.Domains
 open import Data.Bool using (if_then_else_)
 
 Env = Var → D∞
--- the initial environment for a closed term is λ v → ⊥
 
 variable ρ : Env
 

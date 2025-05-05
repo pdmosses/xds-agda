@@ -9,26 +9,21 @@ module ULC.Checks where
 open import ULC.Domains
 open import ULC.Variables
 open import ULC.Terms
-open import ULC.Environments
 open import ULC.Semantics
 
-open import Relation.Binary.PropositionalEquality.Core using (refl; sym; cong)
-
+open import Relation.Binary.PropositionalEquality using (refl)
 open Inverse using (inverseˡ; inverseʳ)
 
-to-from : (f : D∞ → D∞)  → to (from f) ≡ f
-from-to : (d : D∞)       → from (to d) ≡ d
+to-from : ∀{f}  →  to (from f)  ≡ f
+from-to : ∀{d}  →  from (to d)  ≡ d
 
-to-from f = inverseˡ iso refl
-from-to f = inverseʳ iso refl
+to-from  = inverseˡ iso refl
+from-to  = inverseʳ iso refl
 
-{-# REWRITE to-from from-to #-}
+{-# REWRITE to-from #-}
 
-postulate to-⊥ : to ⊥ ≡ ⊥
-from-⊥ : from ⊥ ≡ ⊥
-from-⊥ = cong from (sym to-⊥)
-
--- The following proofs are potentially unsound, due to unsafe postulates.
+-- The following proofs are potentially unsound,
+-- due to rewriting using the postulated iso
 
 -- (λx1.x1)x42 = x42
 check-id :
@@ -41,18 +36,6 @@ check-const :
   ⟦ app (lam (x 1) (var x 42))
         (var x 0) ⟧ ≡ ⟦ var x 42 ⟧
 check-const = refl 
-
-
-
-
-
-
-
-
-
-
-
-
 
 -- (λx0.x0 x0)(λx0.x0 x0) = ...
 -- check-divergence :
@@ -83,4 +66,4 @@ check-free :
                (var x 2)))
         (var x 42) ⟧ ≡ ⟦ var x 42 ⟧
 check-free = refl
-\end{code}
+\end{code} 
