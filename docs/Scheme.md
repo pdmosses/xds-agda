@@ -3,7 +3,7 @@ hide:
   - toc
 ---
 
-# Core Scheme
+# Core Scheme (R5RS)
 
 **[md/Scheme.All](md/Scheme.All.md)** is the root of a section of this website showing
 an Agda formalization of the denotational semantics of Core Scheme,

@@ -6,7 +6,7 @@
 <a id="90" class="Keyword">open</a> <a id="95" class="Keyword">import</a> <a id="102" href="ULC.Domains.html" class="Module">ULC.Domains</a>
 <a id="114" class="Keyword">open</a> <a id="119" class="Keyword">import</a> <a id="126" href="ULC.Environments.html" class="Module">ULC.Environments</a>
 
-<a id="⟦_⟧"></a><a id="144" href="ULC.Semantics.html#144" class="Function Operator">⟦_⟧</a> <a id="148" class="Symbol">:</a> <a id="150" href="ULC.Terms.html#70" class="Datatype">Exp</a> <a id="154" class="Symbol">→</a> <a id="156" href="ULC.Environments.html#140" class="Function">Env</a> <a id="160" class="Symbol">→</a> <a id="162" href="ULC.Domains.html#167" class="Postulate">D∞</a>
+<a id="⟦_⟧"></a><a id="144" href="ULC.Semantics.html#144" class="Function Operator">⟦_⟧</a> <a id="148" class="Symbol">:</a> <a id="150" href="ULC.Terms.html#70" class="Datatype">Exp</a> <a id="154" class="Symbol">→</a> <a id="156" href="ULC.Environments.html#140" class="Function">Env</a> <a id="160" class="Symbol">→</a> <a id="162" href="ULC.Domains.html#153" class="Postulate">D∞</a>
 <a id="165" class="Comment">-- ⟦ e ⟧ ρ is the value of e with ρ giving the values of free variables </a>
 
 <a id="239" href="ULC.Semantics.html#144" class="Function Operator">⟦</a> <a id="241" href="ULC.Terms.html#88" class="InductiveConstructor Operator">var</a>  <a id="246" href="ULC.Semantics.html#246" class="Bound">v</a>      <a id="253" href="ULC.Semantics.html#144" class="Function Operator">⟧</a> <a id="255" href="ULC.Semantics.html#255" class="Bound">ρ</a>  <a id="258" class="Symbol">=</a> <a id="260" href="ULC.Semantics.html#255" class="Bound">ρ</a> <a id="262" href="ULC.Semantics.html#246" class="Bound">v</a>

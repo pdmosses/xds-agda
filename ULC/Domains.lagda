@@ -6,9 +6,10 @@ open import Function
 open Inverse {{ ... }}
   using (to; from) public
 
-postulate   -- unsound!
+postulate
   D∞ : Set
-  instance  iso : D∞ ↔ (D∞ → D∞)
+postulate
+  instance iso : D∞ ↔ (D∞ → D∞)
 
 variable d : D∞
 \end{code} 

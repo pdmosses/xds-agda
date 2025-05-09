@@ -3,7 +3,7 @@ hide:
   - toc
 ---
 
-# PCF
+# PCF (Plotkin 1977)
 
 **[md/PCF.All](md/PCF.All.md)** is the root of a section of this website showing
 an Agda formalization of the denotational semantics of the PCF language.

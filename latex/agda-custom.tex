@@ -10,7 +10,7 @@
 % For drafting inline use of Agda symbols:
 
 %\newcommand{\AgdaInline}[2][]{{\setlength\fboxsep{0pt}\colorbox{mygray}{\strut\AgdaFontStyle{#1}\strut}}}
-\renewcommand{\AgdaRef}[2][]{{\setlength\fboxsep{0pt}\colorbox{mygray}{\strut\AgdaFontStyle{#2}\strut}}}
+%\renewcommand{\AgdaRef}[2][]{{\setlength\fboxsep{0pt}\colorbox{mygray}{\strut\AgdaFontStyle{#2}\strut}}}
 %\renewcommand{\AgdaRef}[2][]{\textcolor{AgdaBound}{\AgdaFontStyle{#2}}}
 %\renewenvironment{AgdaAlign}{}{}
 %\renewcommand{\AgdaCodeStyle}{\small}
@@ -18,24 +18,21 @@
 
 % For suppressing color boxes that indicate warnings and errors:
 
-\renewcommand{\AgdaUnsolvedMeta}      [1]{#1}
-%    {\AgdaFontStyle{\colorbox{AgdaUnsolvedMeta}{#1}}}
-\renewcommand{\AgdaUnsolvedConstraint}[1]{#1}
-%    {\AgdaFontStyle{\colorbox{AgdaUnsolvedConstraint}{#1}}}
-\renewcommand{\AgdaTerminationProblem}[1]{#1}
-%    {\AgdaFontStyle{\colorbox{AgdaTerminationProblem}{#1}}}
-\renewcommand{\AgdaIncompletePattern} [1]{#1}
-%	{\colorbox{AgdaIncompletePattern}{#1}}
-\renewcommand{\AgdaErrorWarning}      [1]{#1}
-%	{\colorbox{AgdaErrorWarning}{#1}}
-\renewcommand{\AgdaError}             [1]{#1}
-%    {\textcolor{AgdaError}{\AgdaFontStyle{\underline{#1}}}}
-
+% \renewcommand{\AgdaUnsolvedMeta}      [1]{#1}
+% %    {\AgdaFontStyle{\colorbox{AgdaUnsolvedMeta}{#1}}}
+% \renewcommand{\AgdaUnsolvedConstraint}[1]{#1}
+% %    {\AgdaFontStyle{\colorbox{AgdaUnsolvedConstraint}{#1}}}
+% \renewcommand{\AgdaTerminationProblem}[1]{#1}
+% %    {\AgdaFontStyle{\colorbox{AgdaTerminationProblem}{#1}}}
+% \renewcommand{\AgdaIncompletePattern} [1]{#1}
+% %	{\colorbox{AgdaIncompletePattern}{#1}}
+% \renewcommand{\AgdaErrorWarning}      [1]{#1}
+% %	{\colorbox{AgdaErrorWarning}{#1}}
+% \renewcommand{\AgdaError}             [1]{#1}
+% %    {\textcolor{AgdaError}{\AgdaFontStyle{\underline{#1}}}}
 
 % Fonts for math symbols
 
-%\usepackage{alphabeta} 
-%\usepackage{sansmathfonts} % requires OT1 fontenc
 \usepackage[bb=bboldx]{mathalpha}
 \usepackage{bm}
 \usepackage{stmaryrd}
@@ -47,7 +44,6 @@
 \renewcommand{\AgdaCommentFontStyle}[1]{\texttt{\small#1}}
 \renewcommand{\AgdaBoundFontStyle}[1]{\textsf{#1}}
 
-
 % This handles the translation of unicode to latex:
 
 \usepackage{ucs}
@@ -57,7 +53,6 @@
 
 \newcommand{\newucsmath}[3]{\newunicodechar{#1}{\ensuremath{#2{#3}}}}
 
-% \newucsmath {→} \mathnormal \rightarrow
 \newucsmath {⇒} \mathnormal \Rightarrow
 \newucsmath {⟶} \mathnormal \longrightarrow
 \newucsmath {↔} \mathnormal \leftrightarrow
@@ -83,6 +78,7 @@
 \newucsmath {⊤} \mathnormal \top
 \newucsmath {′} \mathnormal {'}
 \newucsmath {″} \mathnormal {''}
+\newucsmath {∞} \mathnormal {\scriptstyle\infty}
 
 % GREEK LETTERS
 
@@ -130,7 +126,6 @@
 
 \newcommand{\newucssub}[2]{\newunicodechar{#1}{\ensuremath{{}_#2}}}
 
-\newucssub {∞} \infty
 \newucssub {₀} 0
 \newucssub {₁} 1
 \newucssub {₂} 2
@@ -164,7 +159,6 @@
 
 \newucstext {∙} \textbf {.}
 \newucstext {＋} \textbf {+}
-% \newucstext {–} \textbf {--}
 
 \newucstext {𝐀} \textbf A
 \newucstext {𝐂} \textbf C

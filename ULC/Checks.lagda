@@ -14,13 +14,13 @@ open import ULC.Semantics
 open import Relation.Binary.PropositionalEquality using (refl)
 open Inverse using (inverseˡ; inverseʳ)
 
-to-from : ∀{f}  →  to (from f)  ≡ f
-from-to : ∀{d}  →  from (to d)  ≡ d
+to-from-elim : ∀ {f}  →  to (from f)  ≡ f
+to-from-elim  = inverseˡ iso refl
 
-to-from  = inverseˡ iso refl
-from-to  = inverseʳ iso refl
+from-to-elim : ∀ {d}  →  from (to d)  ≡ d
+from-to-elim  = inverseʳ iso refl
 
-{-# REWRITE to-from #-}
+{-# REWRITE to-from-elim #-}
 
 -- The following proofs are potentially unsound,
 -- due to rewriting using the postulated iso

@@ -8,7 +8,7 @@ use_directory_urls: false
 nav:
   - index.md
   - meta-notation.md
-  - Untyped λ-calculus:
+  - ULC:
     - ULC.md
     - md/ULC.All.md
     - md/ULC.Variables.md
