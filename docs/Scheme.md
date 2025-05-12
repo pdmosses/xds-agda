@@ -1,8 +1,3 @@
----
-hide:
-  - toc
----
-
 # Core Scheme (R5RS)
 
 **[md/Scheme.All](md/Scheme.All.md)** is the root of a section of this website showing

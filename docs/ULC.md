@@ -1,8 +1,3 @@
----
-hide:
-  - toc
----
-
 # Untyped λ-calculus
 
 **[md/ULC.All](md/ULC.All.md)** is the root of a section of this website showing
