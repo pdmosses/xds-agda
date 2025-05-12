@@ -6,9 +6,9 @@
 
 Complete examples of denotational semantics definitions in Agda:
 
-- [Untyped λ-calculus](md/ULC.All.md)
-- [PCF](md/PCF.All.md)
-- [Scheme](md/Scheme.All.md)
+- [Untyped λ-calculus](ULC.md)
+- [PCF](PCF.md)
+- [Scheme](Scheme.md)
 
 See also an incomplete draft of the representation of conventional denotational semantics
 [meta-notation](meta-notation.md) in Agda.
