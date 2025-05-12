@@ -1,0 +1,1375 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+        <link rel="canonical" href="https://pdmosses.github.io/xds-agda/md/Relation.Binary.PropositionalEquality.Core.html">
+      
+      
+      
+      
+      <link rel="icon" href="../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.6.13">
+    
+    
+      
+        <title>Relation.Binary.PropositionalEquality.Core - Denotational Semantics in Agda</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.342714a4.min.css">
+      
+        
+        <link rel="stylesheet" href="../assets/stylesheets/palette.06af60db.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../stylesheets/Agda-material.css">
+    
+      <link rel="stylesheet" href="../stylesheets/Agda-md.css">
+    
+      <link rel="stylesheet" href="../stylesheets/Agda-md-dark.css">
+    
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow md-header--lifted" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../index.html" title="Denotational Semantics in Agda" class="md-header__button md-logo" aria-label="Denotational Semantics in Agda" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Denotational Semantics in Agda
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Relation.Binary.PropositionalEquality.Core
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 2a7 7 0 0 0-7 7c0 2.38 1.19 4.47 3 5.74V17a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1v-2.26c1.81-1.27 3-3.36 3-5.74a7 7 0 0 0-7-7M9 21a1 1 0 0 0 1 1h4a1 1 0 0 0 1-1v-1H9z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to auto mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to auto mode" for="__palette_2" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 2a7 7 0 0 1 7 7c0 2.38-1.19 4.47-3 5.74V17a1 1 0 0 1-1 1H9a1 1 0 0 1-1-1v-2.26C6.19 13.47 5 11.38 5 9a7 7 0 0 1 7-7M9 21v-1h6v1a1 1 0 0 1-1 1h-4a1 1 0 0 1-1-1m3-17a5 5 0 0 0-5 5c0 2.05 1.23 3.81 3 4.58V16h4v-2.42c1.77-.77 3-2.53 3-4.58a5 5 0 0 0-5-5"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme)" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_2">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9 2C5.13 2 2 5.13 2 9c0 2.38 1.19 4.47 3 5.74V17c0 .55.45 1 1 1h6c.55 0 1-.45 1-1v-2.26c1.81-1.27 3-3.36 3-5.74 0-3.87-3.13-7-7-7M6 21c0 .55.45 1 1 1h4c.55 0 1-.45 1-1v-1H6zm13-8h-2l-3.2 9h1.9l.7-2h3.2l.7 2h1.9zm-2.15 5.65L18 15l1.15 3.65z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/pdmosses/xds-agda" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.7.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81"/></svg>
+  </div>
+  <div class="md-source__repository">
+    pdmosses/xds-agda
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+    
+      
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../index.html" class="md-tabs__link">
+        
+  
+  
+    
+  
+  About
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../meta-notation.html" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Meta-notation
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../ULC.html" class="md-tabs__link">
+          
+  
+  
+    
+  
+  ULC
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../PCF.html" class="md-tabs__link">
+          
+  
+  
+    
+  
+  PCF
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../Scheme.html" class="md-tabs__link">
+          
+  
+  
+    
+  
+  Scheme
+
+        </a>
+      </li>
+    
+  
+
+      
+    </ul>
+  </div>
+</nav>
+    
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../index.html" title="Denotational Semantics in Agda" class="md-nav__button md-logo" aria-label="Denotational Semantics in Agda" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    Denotational Semantics in Agda
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/pdmosses/xds-agda" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.7.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81"/></svg>
+  </div>
+  <div class="md-source__repository">
+    pdmosses/xds-agda
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../index.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    About
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../meta-notation.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Meta-notation
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    ULC
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            ULC
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ULC.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Untyped λ-calculus
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ULC.All.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    ULC.All
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ULC.Variables.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    ULC.Variables
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ULC.Terms.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    ULC.Terms
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ULC.Domains.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    ULC.Domains
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ULC.Environments.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    ULC.Environments
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ULC.Semantics.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    ULC.Semantics
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ULC.Checks.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    ULC.Checks
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    PCF
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            PCF
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../PCF.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    PCF (Plotkin 1977)
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="PCF.All.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    PCF.All
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="PCF.Domain-Notation.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    PCF.Domain Notation
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="PCF.Types.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    PCF.Types
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="PCF.Constants.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    PCF.Constants
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="PCF.Variables.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    PCF.Variables
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="PCF.Terms.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    PCF.Terms
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="PCF.Environments.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    PCF.Environments
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="PCF.Checks.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    PCF.Checks
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Scheme
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            Scheme
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Scheme.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Core Scheme (R5RS)
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Scheme.All.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Scheme.All
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Scheme.Domain-Notation.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Scheme.Domain Notation
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Scheme.Abstract-Syntax.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Scheme.Abstract Syntax
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Scheme.Domain-Equations.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Scheme.Domain Equations
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Scheme.Auxiliary-Functions.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Scheme.Auxiliary Functions
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Scheme.Semantic-Functions.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Scheme.Semantic Functions
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+  
+
+
+  <h1>Relation.Binary.PropositionalEquality.Core</h1>
+
+<pre class="Agda"><a id="1" class="Comment">------------------------------------------------------------------------</a>
+<a id="74" class="Comment">-- The Agda standard library</a>
+<a id="103" class="Comment">--</a>
+<a id="106" class="Comment">-- Propositional equality</a>
+<a id="132" class="Comment">--</a>
+<a id="135" class="Comment">-- This file contains some core definitions which are re-exported by</a>
+<a id="204" class="Comment">-- Relation.Binary.PropositionalEquality.</a>
+<a id="246" class="Comment">------------------------------------------------------------------------</a>
+
+<a id="320" class="Symbol">{-#</a> <a id="324" class="Keyword">OPTIONS</a> <a id="332" class="Pragma">--cubical-compatible</a> <a id="353" class="Pragma">--safe</a> <a id="360" class="Symbol">#-}</a>
+
+<a id="365" class="Keyword">module</a> <a id="372" href="Relation.Binary.PropositionalEquality.Core.html" class="Module">Relation.Binary.PropositionalEquality.Core</a> <a id="415" class="Keyword">where</a>
+
+<a id="422" class="Keyword">open</a> <a id="427" class="Keyword">import</a> <a id="434" href="Data.Product.Base.html" class="Module">Data.Product.Base</a> <a id="452" class="Keyword">using</a> <a id="458" class="Symbol">(</a><a id="459" href="Agda.Builtin.Sigma.html#235" class="InductiveConstructor Operator">_,_</a><a id="462" class="Symbol">)</a>
+<a id="464" class="Keyword">open</a> <a id="469" class="Keyword">import</a> <a id="476" href="Function.Base.html" class="Module">Function.Base</a> <a id="490" class="Keyword">using</a> <a id="496" class="Symbol">(</a><a id="497" href="Function.Base.html#1115" class="Function Operator">_∘_</a><a id="500" class="Symbol">)</a>
+<a id="502" class="Keyword">open</a> <a id="507" class="Keyword">import</a> <a id="514" href="Level.html" class="Module">Level</a>
+<a id="520" class="Keyword">open</a> <a id="525" class="Keyword">import</a> <a id="532" href="Relation.Binary.Core.html" class="Module">Relation.Binary.Core</a>
+<a id="553" class="Keyword">open</a> <a id="558" class="Keyword">import</a> <a id="565" href="Relation.Binary.Definitions.html" class="Module">Relation.Binary.Definitions</a>
+<a id="593" class="Keyword">open</a> <a id="598" class="Keyword">import</a> <a id="605" href="Relation.Nullary.Negation.Core.html" class="Module">Relation.Nullary.Negation.Core</a> <a id="636" class="Keyword">using</a> <a id="642" class="Symbol">(</a><a id="643" href="Relation.Nullary.Negation.Core.html#658" class="Function Operator">¬_</a><a id="645" class="Symbol">)</a>
+
+<a id="648" class="Keyword">private</a>
+  <a id="658" class="Keyword">variable</a>
+    <a id="671" href="Relation.Binary.PropositionalEquality.Core.html#671" class="Generalizable">a</a> <a id="673" href="Relation.Binary.PropositionalEquality.Core.html#673" class="Generalizable">b</a> <a id="675" href="Relation.Binary.PropositionalEquality.Core.html#675" class="Generalizable">ℓ</a> <a id="677" class="Symbol">:</a> <a id="679" href="Agda.Primitive.html#742" class="Postulate">Level</a>
+    <a id="689" href="Relation.Binary.PropositionalEquality.Core.html#689" class="Generalizable">A</a> <a id="691" href="Relation.Binary.PropositionalEquality.Core.html#691" class="Generalizable">B</a> <a id="693" href="Relation.Binary.PropositionalEquality.Core.html#693" class="Generalizable">C</a> <a id="695" class="Symbol">:</a> <a id="697" href="Agda.Primitive.html#388" class="Primitive">Set</a> <a id="701" href="Relation.Binary.PropositionalEquality.Core.html#671" class="Generalizable">a</a>
+
+<a id="704" class="Comment">------------------------------------------------------------------------</a>
+<a id="777" class="Comment">-- Propositional equality</a>
+
+<a id="804" class="Keyword">open</a> <a id="809" class="Keyword">import</a> <a id="816" href="Agda.Builtin.Equality.html" class="Module">Agda.Builtin.Equality</a> <a id="838" class="Keyword">public</a>
+
+<a id="846" class="Keyword">infix</a> <a id="852" class="Number">4</a> <a id="854" href="Relation.Binary.PropositionalEquality.Core.html#858" class="Function Operator">_≢_</a>
+<a id="_≢_"></a><a id="858" href="Relation.Binary.PropositionalEquality.Core.html#858" class="Function Operator">_≢_</a> <a id="862" class="Symbol">:</a> <a id="864" class="Symbol">{</a><a id="865" href="Relation.Binary.PropositionalEquality.Core.html#865" class="Bound">A</a> <a id="867" class="Symbol">:</a> <a id="869" href="Agda.Primitive.html#388" class="Primitive">Set</a> <a id="873" href="Relation.Binary.PropositionalEquality.Core.html#671" class="Generalizable">a</a><a id="874" class="Symbol">}</a> <a id="876" class="Symbol">→</a> <a id="878" href="Relation.Binary.Core.html#896" class="Function">Rel</a> <a id="882" href="Relation.Binary.PropositionalEquality.Core.html#865" class="Bound">A</a> <a id="884" href="Relation.Binary.PropositionalEquality.Core.html#671" class="Generalizable">a</a>
+<a id="886" href="Relation.Binary.PropositionalEquality.Core.html#886" class="Bound">x</a> <a id="888" href="Relation.Binary.PropositionalEquality.Core.html#858" class="Function Operator">≢</a> <a id="890" href="Relation.Binary.PropositionalEquality.Core.html#890" class="Bound">y</a> <a id="892" class="Symbol">=</a> <a id="894" href="Relation.Nullary.Negation.Core.html#658" class="Function Operator">¬</a> <a id="896" href="Relation.Binary.PropositionalEquality.Core.html#886" class="Bound">x</a> <a id="898" href="Agda.Builtin.Equality.html#150" class="Datatype Operator">≡</a> <a id="900" href="Relation.Binary.PropositionalEquality.Core.html#890" class="Bound">y</a>
+
+<a id="903" class="Comment">------------------------------------------------------------------------</a>
+<a id="976" class="Comment">-- Pointwise equality</a>
+
+<a id="999" class="Keyword">infix</a> <a id="1005" class="Number">4</a> <a id="1007" href="Relation.Binary.PropositionalEquality.Core.html#1012" class="Function Operator">_≗_</a>
+
+<a id="_≗_"></a><a id="1012" href="Relation.Binary.PropositionalEquality.Core.html#1012" class="Function Operator">_≗_</a> <a id="1016" class="Symbol">:</a> <a id="1018" class="Symbol">(</a><a id="1019" href="Relation.Binary.PropositionalEquality.Core.html#1019" class="Bound">f</a> <a id="1021" href="Relation.Binary.PropositionalEquality.Core.html#1021" class="Bound">g</a> <a id="1023" class="Symbol">:</a> <a id="1025" href="Relation.Binary.PropositionalEquality.Core.html#689" class="Generalizable">A</a> <a id="1027" class="Symbol">→</a> <a id="1029" href="Relation.Binary.PropositionalEquality.Core.html#691" class="Generalizable">B</a><a id="1030" class="Symbol">)</a> <a id="1032" class="Symbol">→</a> <a id="1034" href="Agda.Primitive.html#388" class="Primitive">Set</a> <a id="1038" class="Symbol">_</a>
+<a id="1040" href="Relation.Binary.PropositionalEquality.Core.html#1012" class="Function Operator">_≗_</a> <a id="1044" class="Symbol">{</a><a id="1045" class="Argument">A</a> <a id="1047" class="Symbol">=</a> <a id="1049" href="Relation.Binary.PropositionalEquality.Core.html#1049" class="Bound">A</a><a id="1050" class="Symbol">}</a> <a id="1052" class="Symbol">{</a><a id="1053" class="Argument">B</a> <a id="1055" class="Symbol">=</a> <a id="1057" href="Relation.Binary.PropositionalEquality.Core.html#1057" class="Bound">B</a><a id="1058" class="Symbol">}</a> <a id="1060" href="Relation.Binary.PropositionalEquality.Core.html#1060" class="Bound">f</a> <a id="1062" href="Relation.Binary.PropositionalEquality.Core.html#1062" class="Bound">g</a> <a id="1064" class="Symbol">=</a> <a id="1066" class="Symbol">∀</a> <a id="1068" href="Relation.Binary.PropositionalEquality.Core.html#1068" class="Bound">x</a> <a id="1070" class="Symbol">→</a> <a id="1072" href="Relation.Binary.PropositionalEquality.Core.html#1060" class="Bound">f</a> <a id="1074" href="Relation.Binary.PropositionalEquality.Core.html#1068" class="Bound">x</a> <a id="1076" href="Agda.Builtin.Equality.html#150" class="Datatype Operator">≡</a> <a id="1078" href="Relation.Binary.PropositionalEquality.Core.html#1062" class="Bound">g</a> <a id="1080" href="Relation.Binary.PropositionalEquality.Core.html#1068" class="Bound">x</a>
+
+
+<a id="1084" class="Comment">------------------------------------------------------------------------</a>
+<a id="1157" class="Comment">-- A variant of `refl` where the argument is explicit</a>
+
+<a id="1212" class="Keyword">pattern</a> <a id="erefl"></a><a id="1220" href="Relation.Binary.PropositionalEquality.Core.html#1220" class="InductiveConstructor">erefl</a> <a id="1226" href="Relation.Binary.PropositionalEquality.Core.html#1240" class="Bound">x</a> <a id="1228" class="Symbol">=</a> <a id="1230" href="Agda.Builtin.Equality.html#207" class="InductiveConstructor">refl</a> <a id="1235" class="Symbol">{</a><a id="1236" class="Argument">x</a> <a id="1238" class="Symbol">=</a> <a id="1240" href="Relation.Binary.PropositionalEquality.Core.html#1240" class="Bound">x</a><a id="1241" class="Symbol">}</a>
+
+<a id="1244" class="Comment">------------------------------------------------------------------------</a>
+<a id="1317" class="Comment">-- Congruence lemmas</a>
+
+<a id="cong"></a><a id="1339" href="Relation.Binary.PropositionalEquality.Core.html#1339" class="Function">cong</a> <a id="1344" class="Symbol">:</a> <a id="1346" class="Symbol">∀</a> <a id="1348" class="Symbol">(</a><a id="1349" href="Relation.Binary.PropositionalEquality.Core.html#1349" class="Bound">f</a> <a id="1351" class="Symbol">:</a> <a id="1353" href="Relation.Binary.PropositionalEquality.Core.html#689" class="Generalizable">A</a> <a id="1355" class="Symbol">→</a> <a id="1357" href="Relation.Binary.PropositionalEquality.Core.html#691" class="Generalizable">B</a><a id="1358" class="Symbol">)</a> <a id="1360" class="Symbol">{</a><a id="1361" href="Relation.Binary.PropositionalEquality.Core.html#1361" class="Bound">x</a> <a id="1363" href="Relation.Binary.PropositionalEquality.Core.html#1363" class="Bound">y</a><a id="1364" class="Symbol">}</a> <a id="1366" class="Symbol">→</a> <a id="1368" href="Relation.Binary.PropositionalEquality.Core.html#1361" class="Bound">x</a> <a id="1370" href="Agda.Builtin.Equality.html#150" class="Datatype Operator">≡</a> <a id="1372" href="Relation.Binary.PropositionalEquality.Core.html#1363" class="Bound">y</a> <a id="1374" class="Symbol">→</a> <a id="1376" href="Relation.Binary.PropositionalEquality.Core.html#1349" class="Bound">f</a> <a id="1378" href="Relation.Binary.PropositionalEquality.Core.html#1361" class="Bound">x</a> <a id="1380" href="Agda.Builtin.Equality.html#150" class="Datatype Operator">≡</a> <a id="1382" href="Relation.Binary.PropositionalEquality.Core.html#1349" class="Bound">f</a> <a id="1384" href="Relation.Binary.PropositionalEquality.Core.html#1363" class="Bound">y</a>
+<a id="1386" href="Relation.Binary.PropositionalEquality.Core.html#1339" class="Function">cong</a> <a id="1391" href="Relation.Binary.PropositionalEquality.Core.html#1391" class="Bound">f</a> <a id="1393" href="Agda.Builtin.Equality.html#207" class="InductiveConstructor">refl</a> <a id="1398" class="Symbol">=</a> <a id="1400" href="Agda.Builtin.Equality.html#207" class="InductiveConstructor">refl</a>
+
+<a id="cong′"></a><a id="1406" href="Relation.Binary.PropositionalEquality.Core.html#1406" class="Function">cong′</a> <a id="1412" class="Symbol">:</a> <a id="1414" class="Symbol">∀</a> <a id="1416" class="Symbol">{</a><a id="1417" href="Relation.Binary.PropositionalEquality.Core.html#1417" class="Bound">f</a> <a id="1419" class="Symbol">:</a> <a id="1421" href="Relation.Binary.PropositionalEquality.Core.html#689" class="Generalizable">A</a> <a id="1423" class="Symbol">→</a> <a id="1425" href="Relation.Binary.PropositionalEquality.Core.html#691" class="Generalizable">B</a><a id="1426" class="Symbol">}</a> <a id="1428" href="Relation.Binary.PropositionalEquality.Core.html#1428" class="Bound">x</a> <a id="1430" class="Symbol">→</a> <a id="1432" href="Relation.Binary.PropositionalEquality.Core.html#1417" class="Bound">f</a> <a id="1434" href="Relation.Binary.PropositionalEquality.Core.html#1428" class="Bound">x</a> <a id="1436" href="Agda.Builtin.Equality.html#150" class="Datatype Operator">≡</a> <a id="1438" href="Relation.Binary.PropositionalEquality.Core.html#1417" class="Bound">f</a> <a id="1440" href="Relation.Binary.PropositionalEquality.Core.html#1428" class="Bound">x</a>
+<a id="1442" href="Relation.Binary.PropositionalEquality.Core.html#1406" class="Function">cong′</a> <a id="1448" class="Symbol">_</a> <a id="1450" class="Symbol">=</a> <a id="1452" href="Agda.Builtin.Equality.html#207" class="InductiveConstructor">refl</a>
+
+<a id="icong"></a><a id="1458" href="Relation.Binary.PropositionalEquality.Core.html#1458" class="Function">icong</a> <a id="1464" class="Symbol">:</a> <a id="1466" class="Symbol">∀</a> <a id="1468" class="Symbol">{</a><a id="1469" href="Relation.Binary.PropositionalEquality.Core.html#1469" class="Bound">f</a> <a id="1471" class="Symbol">:</a> <a id="1473" href="Relation.Binary.PropositionalEquality.Core.html#689" class="Generalizable">A</a> <a id="1475" class="Symbol">→</a> <a id="1477" href="Relation.Binary.PropositionalEquality.Core.html#691" class="Generalizable">B</a><a id="1478" class="Symbol">}</a> <a id="1480" class="Symbol">{</a><a id="1481" href="Relation.Binary.PropositionalEquality.Core.html#1481" class="Bound">x</a> <a id="1483" href="Relation.Binary.PropositionalEquality.Core.html#1483" class="Bound">y</a><a id="1484" class="Symbol">}</a> <a id="1486" class="Symbol">→</a> <a id="1488" href="Relation.Binary.PropositionalEquality.Core.html#1481" class="Bound">x</a> <a id="1490" href="Agda.Builtin.Equality.html#150" class="Datatype Operator">≡</a> <a id="1492" href="Relation.Binary.PropositionalEquality.Core.html#1483" class="Bound">y</a> <a id="1494" class="Symbol">→</a> <a id="1496" href="Relation.Binary.PropositionalEquality.Core.html#1469" class="Bound">f</a> <a id="1498" href="Relation.Binary.PropositionalEquality.Core.html#1481" class="Bound">x</a> <a id="1500" href="Agda.Builtin.Equality.html#150" class="Datatype Operator">≡</a> <a id="1502" href="Relation.Binary.PropositionalEquality.Core.html#1469" class="Bound">f</a> <a id="1504" href="Relation.Binary.PropositionalEquality.Core.html#1483" class="Bound">y</a>
+<a id="1506" href="Relation.Binary.PropositionalEquality.Core.html#1458" class="Function">icong</a> <a id="1512" class="Symbol">=</a> <a id="1514" href="Relation.Binary.PropositionalEquality.Core.html#1339" class="Function">cong</a> <a id="1519" class="Symbol">_</a>
+
+<a id="icong′"></a><a id="1522" href="Relation.Binary.PropositionalEquality.Core.html#1522" class="Function">icong′</a> <a id="1529" class="Symbol">:</a> <a id="1531" class="Symbol">∀</a> <a id="1533" class="Symbol">{</a><a id="1534" href="Relation.Binary.PropositionalEquality.Core.html#1534" class="Bound">f</a> <a id="1536" class="Symbol">:</a> <a id="1538" href="Relation.Binary.PropositionalEquality.Core.html#689" class="Generalizable">A</a> <a id="1540" class="Symbol">→</a> <a id="1542" href="Relation.Binary.PropositionalEquality.Core.html#691" class="Generalizable">B</a><a id="1543" class="Symbol">}</a> <a id="1545" href="Relation.Binary.PropositionalEquality.Core.html#1545" class="Bound">x</a> <a id="1547" class="Symbol">→</a> <a id="1549" href="Relation.Binary.PropositionalEquality.Core.html#1534" class="Bound">f</a> <a id="1551" href="Relation.Binary.PropositionalEquality.Core.html#1545" class="Bound">x</a> <a id="1553" href="Agda.Builtin.Equality.html#150" class="Datatype Operator">≡</a> <a id="1555" href="Relation.Binary.PropositionalEquality.Core.html#1534" class="Bound">f</a> <a id="1557" href="Relation.Binary.PropositionalEquality.Core.html#1545" class="Bound">x</a>
+<a id="1559" href="Relation.Binary.PropositionalEquality.Core.html#1522" class="Function">icong′</a> <a id="1566" class="Symbol">_</a> <a id="1568" class="Symbol">=</a> <a id="1570" href="Agda.Builtin.Equality.html#207" class="InductiveConstructor">refl</a>
+
+<a id="cong₂"></a><a id="1576" href="Relation.Binary.PropositionalEquality.Core.html#1576" class="Function">cong₂</a> <a id="1582" class="Symbol">:</a> <a id="1584" class="Symbol">∀</a> <a id="1586" class="Symbol">(</a><a id="1587" href="Relation.Binary.PropositionalEquality.Core.html#1587" class="Bound">f</a> <a id="1589" class="Symbol">:</a> <a id="1591" href="Relation.Binary.PropositionalEquality.Core.html#689" class="Generalizable">A</a> <a id="1593" class="Symbol">→</a> <a id="1595" href="Relation.Binary.PropositionalEquality.Core.html#691" class="Generalizable">B</a> <a id="1597" class="Symbol">→</a> <a id="1599" href="Relation.Binary.PropositionalEquality.Core.html#693" class="Generalizable">C</a><a id="1600" class="Symbol">)</a> <a id="1602" class="Symbol">{</a><a id="1603" href="Relation.Binary.PropositionalEquality.Core.html#1603" class="Bound">x</a> <a id="1605" href="Relation.Binary.PropositionalEquality.Core.html#1605" class="Bound">y</a> <a id="1607" href="Relation.Binary.PropositionalEquality.Core.html#1607" class="Bound">u</a> <a id="1609" href="Relation.Binary.PropositionalEquality.Core.html#1609" class="Bound">v</a><a id="1610" class="Symbol">}</a> <a id="1612" class="Symbol">→</a> <a id="1614" href="Relation.Binary.PropositionalEquality.Core.html#1603" class="Bound">x</a> <a id="1616" href="Agda.Builtin.Equality.html#150" class="Datatype Operator">≡</a> <a id="1618" href="Relation.Binary.PropositionalEquality.Core.html#1605" class="Bound">y</a> <a id="1620" class="Symbol">→</a> <a id="1622" href="Relation.Binary.PropositionalEquality.Core.html#1607" class="Bound">u</a> <a id="1624" href="Agda.Builtin.Equality.html#150" class="Datatype Operator">≡</a> <a id="1626" href="Relation.Binary.PropositionalEquality.Core.html#1609" class="Bound">v</a> <a id="1628" class="Symbol">→</a> <a id="1630" href="Relation.Binary.PropositionalEquality.Core.html#1587" class="Bound">f</a> <a id="1632" href="Relation.Binary.PropositionalEquality.Core.html#1603" class="Bound">x</a> <a id="1634" href="Relation.Binary.PropositionalEquality.Core.html#1607" class="Bound">u</a> <a id="1636" href="Agda.Builtin.Equality.html#150" class="Datatype Operator">≡</a> <a id="1638" href="Relation.Binary.PropositionalEquality.Core.html#1587" class="Bound">f</a> <a id="1640" href="Relation.Binary.PropositionalEquality.Core.html#1605" class="Bound">y</a> <a id="1642" href="Relation.Binary.PropositionalEquality.Core.html#1609" class="Bound">v</a>
+<a id="1644" href="Relation.Binary.PropositionalEquality.Core.html#1576" class="Function">cong₂</a> <a id="1650" href="Relation.Binary.PropositionalEquality.Core.html#1650" class="Bound">f</a> <a id="1652" href="Agda.Builtin.Equality.html#207" class="InductiveConstructor">refl</a> <a id="1657" href="Agda.Builtin.Equality.html#207" class="InductiveConstructor">refl</a> <a id="1662" class="Symbol">=</a> <a id="1664" href="Agda.Builtin.Equality.html#207" class="InductiveConstructor">refl</a>
+
+<a id="cong-app"></a><a id="1670" href="Relation.Binary.PropositionalEquality.Core.html#1670" class="Function">cong-app</a> <a id="1679" class="Symbol">:</a> <a id="1681" class="Symbol">∀</a> <a id="1683" class="Symbol">{</a><a id="1684" href="Relation.Binary.PropositionalEquality.Core.html#1684" class="Bound">A</a> <a id="1686" class="Symbol">:</a> <a id="1688" href="Agda.Primitive.html#388" class="Primitive">Set</a> <a id="1692" href="Relation.Binary.PropositionalEquality.Core.html#671" class="Generalizable">a</a><a id="1693" class="Symbol">}</a> <a id="1695" class="Symbol">{</a><a id="1696" href="Relation.Binary.PropositionalEquality.Core.html#1696" class="Bound">B</a> <a id="1698" class="Symbol">:</a> <a id="1700" href="Relation.Binary.PropositionalEquality.Core.html#1684" class="Bound">A</a> <a id="1702" class="Symbol">→</a> <a id="1704" href="Agda.Primitive.html#388" class="Primitive">Set</a> <a id="1708" href="Relation.Binary.PropositionalEquality.Core.html#673" class="Generalizable">b</a><a id="1709" class="Symbol">}</a> <a id="1711" class="Symbol">{</a><a id="1712" href="Relation.Binary.PropositionalEquality.Core.html#1712" class="Bound">f</a> <a id="1714" href="Relation.Binary.PropositionalEquality.Core.html#1714" class="Bound">g</a> <a id="1716" class="Symbol">:</a> <a id="1718" class="Symbol">(</a><a id="1719" href="Relation.Binary.PropositionalEquality.Core.html#1719" class="Bound">x</a> <a id="1721" class="Symbol">:</a> <a id="1723" href="Relation.Binary.PropositionalEquality.Core.html#1684" class="Bound">A</a><a id="1724" class="Symbol">)</a> <a id="1726" class="Symbol">→</a> <a id="1728" href="Relation.Binary.PropositionalEquality.Core.html#1696" class="Bound">B</a> <a id="1730" href="Relation.Binary.PropositionalEquality.Core.html#1719" class="Bound">x</a><a id="1731" class="Symbol">}</a> <a id="1733" class="Symbol">→</a>
+           <a id="1746" href="Relation.Binary.PropositionalEquality.Core.html#1712" class="Bound">f</a> <a id="1748" href="Agda.Builtin.Equality.html#150" class="Datatype Operator">≡</a> <a id="1750" href="Relation.Binary.PropositionalEquality.Core.html#1714" class="Bound">g</a> <a id="1752" class="Symbol">→</a> <a id="1754" class="Symbol">(</a><a id="1755" href="Relation.Binary.PropositionalEquality.Core.html#1755" class="Bound">x</a> <a id="1757" class="Symbol">:</a> <a id="1759" href="Relation.Binary.PropositionalEquality.Core.html#1684" class="Bound">A</a><a id="1760" class="Symbol">)</a> <a id="1762" class="Symbol">→</a> <a id="1764" href="Relation.Binary.PropositionalEquality.Core.html#1712" class="Bound">f</a> <a id="1766" href="Relation.Binary.PropositionalEquality.Core.html#1755" class="Bound">x</a> <a id="1768" href="Agda.Builtin.Equality.html#150" class="Datatype Operator">≡</a> <a id="1770" href="Relation.Binary.PropositionalEquality.Core.html#1714" class="Bound">g</a> <a id="1772" href="Relation.Binary.PropositionalEquality.Core.html#1755" class="Bound">x</a>
+<a id="1774" href="Relation.Binary.PropositionalEquality.Core.html#1670" class="Function">cong-app</a> <a id="1783" href="Agda.Builtin.Equality.html#207" class="InductiveConstructor">refl</a> <a id="1788" href="Relation.Binary.PropositionalEquality.Core.html#1788" class="Bound">x</a> <a id="1790" class="Symbol">=</a> <a id="1792" href="Agda.Builtin.Equality.html#207" class="InductiveConstructor">refl</a>
+
+<a id="1798" class="Comment">------------------------------------------------------------------------</a>
+<a id="1871" class="Comment">-- Properties of _≡_</a>
+
+<a id="sym"></a><a id="1893" href="Relation.Binary.PropositionalEquality.Core.html#1893" class="Function">sym</a> <a id="1897" class="Symbol">:</a> <a id="1899" href="Relation.Binary.Definitions.html#1491" class="Function">Symmetric</a> <a id="1909" class="Symbol">{</a><a id="1910" class="Argument">A</a> <a id="1912" class="Symbol">=</a> <a id="1914" href="Relation.Binary.PropositionalEquality.Core.html#689" class="Generalizable">A</a><a id="1915" class="Symbol">}</a> <a id="1917" href="Agda.Builtin.Equality.html#150" class="Datatype Operator">_≡_</a>
+<a id="1921" href="Relation.Binary.PropositionalEquality.Core.html#1893" class="Function">sym</a> <a id="1925" href="Agda.Builtin.Equality.html#207" class="InductiveConstructor">refl</a> <a id="1930" class="Symbol">=</a> <a id="1932" href="Agda.Builtin.Equality.html#207" class="InductiveConstructor">refl</a>
+
+<a id="trans"></a><a id="1938" href="Relation.Binary.PropositionalEquality.Core.html#1938" class="Function">trans</a> <a id="1944" class="Symbol">:</a> <a id="1946" href="Relation.Binary.Definitions.html#2007" class="Function">Transitive</a> <a id="1957" class="Symbol">{</a><a id="1958" class="Argument">A</a> <a id="1960" class="Symbol">=</a> <a id="1962" href="Relation.Binary.PropositionalEquality.Core.html#689" class="Generalizable">A</a><a id="1963" class="Symbol">}</a> <a id="1965" href="Agda.Builtin.Equality.html#150" class="Datatype Operator">_≡_</a>
+<a id="1969" href="Relation.Binary.PropositionalEquality.Core.html#1938" class="Function">trans</a> <a id="1975" href="Agda.Builtin.Equality.html#207" class="InductiveConstructor">refl</a> <a id="1980" href="Relation.Binary.PropositionalEquality.Core.html#1980" class="Bound">eq</a> <a id="1983" class="Symbol">=</a> <a id="1985" href="Relation.Binary.PropositionalEquality.Core.html#1980" class="Bound">eq</a>
+
+<a id="subst"></a><a id="1989" href="Relation.Binary.PropositionalEquality.Core.html#1989" class="Function">subst</a> <a id="1995" class="Symbol">:</a> <a id="1997" href="Relation.Binary.Definitions.html#5859" class="Function">Substitutive</a> <a id="2010" class="Symbol">{</a><a id="2011" class="Argument">A</a> <a id="2013" class="Symbol">=</a> <a id="2015" href="Relation.Binary.PropositionalEquality.Core.html#689" class="Generalizable">A</a><a id="2016" class="Symbol">}</a> <a id="2018" href="Agda.Builtin.Equality.html#150" class="Datatype Operator">_≡_</a> <a id="2022" href="Relation.Binary.PropositionalEquality.Core.html#675" class="Generalizable">ℓ</a>
+<a id="2024" href="Relation.Binary.PropositionalEquality.Core.html#1989" class="Function">subst</a> <a id="2030" href="Relation.Binary.PropositionalEquality.Core.html#2030" class="Bound">P</a> <a id="2032" href="Agda.Builtin.Equality.html#207" class="InductiveConstructor">refl</a> <a id="2037" href="Relation.Binary.PropositionalEquality.Core.html#2037" class="Bound">p</a> <a id="2039" class="Symbol">=</a> <a id="2041" href="Relation.Binary.PropositionalEquality.Core.html#2037" class="Bound">p</a>
+
+<a id="subst₂"></a><a id="2044" href="Relation.Binary.PropositionalEquality.Core.html#2044" class="Function">subst₂</a> <a id="2051" class="Symbol">:</a> <a id="2053" class="Symbol">∀</a> <a id="2055" class="Symbol">(</a><a id="2056" href="Relation.Binary.PropositionalEquality.Core.html#2056" class="Bound Operator">_∼_</a> <a id="2060" class="Symbol">:</a> <a id="2062" href="Relation.Binary.Core.html#780" class="Function">REL</a> <a id="2066" href="Relation.Binary.PropositionalEquality.Core.html#689" class="Generalizable">A</a> <a id="2068" href="Relation.Binary.PropositionalEquality.Core.html#691" class="Generalizable">B</a> <a id="2070" href="Relation.Binary.PropositionalEquality.Core.html#675" class="Generalizable">ℓ</a><a id="2071" class="Symbol">)</a> <a id="2073" class="Symbol">{</a><a id="2074" href="Relation.Binary.PropositionalEquality.Core.html#2074" class="Bound">x</a> <a id="2076" href="Relation.Binary.PropositionalEquality.Core.html#2076" class="Bound">y</a> <a id="2078" href="Relation.Binary.PropositionalEquality.Core.html#2078" class="Bound">u</a> <a id="2080" href="Relation.Binary.PropositionalEquality.Core.html#2080" class="Bound">v</a><a id="2081" class="Symbol">}</a> <a id="2083" class="Symbol">→</a> <a id="2085" href="Relation.Binary.PropositionalEquality.Core.html#2074" class="Bound">x</a> <a id="2087" href="Agda.Builtin.Equality.html#150" class="Datatype Operator">≡</a> <a id="2089" href="Relation.Binary.PropositionalEquality.Core.html#2076" class="Bound">y</a> <a id="2091" class="Symbol">→</a> <a id="2093" href="Relation.Binary.PropositionalEquality.Core.html#2078" class="Bound">u</a> <a id="2095" href="Agda.Builtin.Equality.html#150" class="Datatype Operator">≡</a> <a id="2097" href="Relation.Binary.PropositionalEquality.Core.html#2080" class="Bound">v</a> <a id="2099" class="Symbol">→</a> <a id="2101" href="Relation.Binary.PropositionalEquality.Core.html#2074" class="Bound">x</a> <a id="2103" href="Relation.Binary.PropositionalEquality.Core.html#2056" class="Bound Operator">∼</a> <a id="2105" href="Relation.Binary.PropositionalEquality.Core.html#2078" class="Bound">u</a> <a id="2107" class="Symbol">→</a> <a id="2109" href="Relation.Binary.PropositionalEquality.Core.html#2076" class="Bound">y</a> <a id="2111" href="Relation.Binary.PropositionalEquality.Core.html#2056" class="Bound Operator">∼</a> <a id="2113" href="Relation.Binary.PropositionalEquality.Core.html#2080" class="Bound">v</a>
+<a id="2115" href="Relation.Binary.PropositionalEquality.Core.html#2044" class="Function">subst₂</a> <a id="2122" class="Symbol">_</a> <a id="2124" href="Agda.Builtin.Equality.html#207" class="InductiveConstructor">refl</a> <a id="2129" href="Agda.Builtin.Equality.html#207" class="InductiveConstructor">refl</a> <a id="2134" href="Relation.Binary.PropositionalEquality.Core.html#2134" class="Bound">p</a> <a id="2136" class="Symbol">=</a> <a id="2138" href="Relation.Binary.PropositionalEquality.Core.html#2134" class="Bound">p</a>
+
+<a id="resp"></a><a id="2141" href="Relation.Binary.PropositionalEquality.Core.html#2141" class="Function">resp</a> <a id="2146" class="Symbol">:</a> <a id="2148" class="Symbol">∀</a> <a id="2150" class="Symbol">(</a><a id="2151" href="Relation.Binary.PropositionalEquality.Core.html#2151" class="Bound">P</a> <a id="2153" class="Symbol">:</a> <a id="2155" href="Relation.Binary.PropositionalEquality.Core.html#689" class="Generalizable">A</a> <a id="2157" class="Symbol">→</a> <a id="2159" href="Agda.Primitive.html#388" class="Primitive">Set</a> <a id="2163" href="Relation.Binary.PropositionalEquality.Core.html#675" class="Generalizable">ℓ</a><a id="2164" class="Symbol">)</a> <a id="2166" class="Symbol">→</a> <a id="2168" href="Relation.Binary.PropositionalEquality.Core.html#2151" class="Bound">P</a> <a id="2170" href="Relation.Binary.Definitions.html#5083" class="Function Operator">Respects</a> <a id="2179" href="Agda.Builtin.Equality.html#150" class="Datatype Operator">_≡_</a>
+<a id="2183" href="Relation.Binary.PropositionalEquality.Core.html#2141" class="Function">resp</a> <a id="2188" href="Relation.Binary.PropositionalEquality.Core.html#2188" class="Bound">P</a> <a id="2190" href="Agda.Builtin.Equality.html#207" class="InductiveConstructor">refl</a> <a id="2195" href="Relation.Binary.PropositionalEquality.Core.html#2195" class="Bound">p</a> <a id="2197" class="Symbol">=</a> <a id="2199" href="Relation.Binary.PropositionalEquality.Core.html#2195" class="Bound">p</a>
+
+<a id="respˡ"></a><a id="2202" href="Relation.Binary.PropositionalEquality.Core.html#2202" class="Function">respˡ</a> <a id="2208" class="Symbol">:</a> <a id="2210" class="Symbol">∀</a> <a id="2212" class="Symbol">(</a><a id="2213" href="Relation.Binary.PropositionalEquality.Core.html#2213" class="Bound">∼</a> <a id="2215" class="Symbol">:</a> <a id="2217" href="Relation.Binary.Core.html#896" class="Function">Rel</a> <a id="2221" href="Relation.Binary.PropositionalEquality.Core.html#689" class="Generalizable">A</a> <a id="2223" href="Relation.Binary.PropositionalEquality.Core.html#675" class="Generalizable">ℓ</a><a id="2224" class="Symbol">)</a> <a id="2226" class="Symbol">→</a> <a id="2228" href="Relation.Binary.PropositionalEquality.Core.html#2213" class="Bound">∼</a> <a id="2230" href="Relation.Binary.Definitions.html#5404" class="Function Operator">Respectsˡ</a> <a id="2240" href="Agda.Builtin.Equality.html#150" class="Datatype Operator">_≡_</a>
+<a id="2244" href="Relation.Binary.PropositionalEquality.Core.html#2202" class="Function">respˡ</a> <a id="2250" href="Relation.Binary.PropositionalEquality.Core.html#2250" class="Bound Operator">_∼_</a> <a id="2254" href="Agda.Builtin.Equality.html#207" class="InductiveConstructor">refl</a> <a id="2259" href="Relation.Binary.PropositionalEquality.Core.html#2259" class="Bound">x∼y</a> <a id="2263" class="Symbol">=</a> <a id="2265" href="Relation.Binary.PropositionalEquality.Core.html#2259" class="Bound">x∼y</a>
+
+<a id="respʳ"></a><a id="2270" href="Relation.Binary.PropositionalEquality.Core.html#2270" class="Function">respʳ</a> <a id="2276" class="Symbol">:</a> <a id="2278" class="Symbol">∀</a> <a id="2280" class="Symbol">(</a><a id="2281" href="Relation.Binary.PropositionalEquality.Core.html#2281" class="Bound">∼</a> <a id="2283" class="Symbol">:</a> <a id="2285" href="Relation.Binary.Core.html#896" class="Function">Rel</a> <a id="2289" href="Relation.Binary.PropositionalEquality.Core.html#689" class="Generalizable">A</a> <a id="2291" href="Relation.Binary.PropositionalEquality.Core.html#675" class="Generalizable">ℓ</a><a id="2292" class="Symbol">)</a> <a id="2294" class="Symbol">→</a> <a id="2296" href="Relation.Binary.PropositionalEquality.Core.html#2281" class="Bound">∼</a> <a id="2298" href="Relation.Binary.Definitions.html#5239" class="Function Operator">Respectsʳ</a> <a id="2308" href="Agda.Builtin.Equality.html#150" class="Datatype Operator">_≡_</a>
+<a id="2312" href="Relation.Binary.PropositionalEquality.Core.html#2270" class="Function">respʳ</a> <a id="2318" href="Relation.Binary.PropositionalEquality.Core.html#2318" class="Bound Operator">_∼_</a> <a id="2322" href="Agda.Builtin.Equality.html#207" class="InductiveConstructor">refl</a> <a id="2327" href="Relation.Binary.PropositionalEquality.Core.html#2327" class="Bound">x∼y</a> <a id="2331" class="Symbol">=</a> <a id="2333" href="Relation.Binary.PropositionalEquality.Core.html#2327" class="Bound">x∼y</a>
+
+<a id="resp₂"></a><a id="2338" href="Relation.Binary.PropositionalEquality.Core.html#2338" class="Function">resp₂</a> <a id="2344" class="Symbol">:</a> <a id="2346" class="Symbol">∀</a> <a id="2348" class="Symbol">(</a><a id="2349" href="Relation.Binary.PropositionalEquality.Core.html#2349" class="Bound">∼</a> <a id="2351" class="Symbol">:</a> <a id="2353" href="Relation.Binary.Core.html#896" class="Function">Rel</a> <a id="2357" href="Relation.Binary.PropositionalEquality.Core.html#689" class="Generalizable">A</a> <a id="2359" href="Relation.Binary.PropositionalEquality.Core.html#675" class="Generalizable">ℓ</a><a id="2360" class="Symbol">)</a> <a id="2362" class="Symbol">→</a> <a id="2364" href="Relation.Binary.PropositionalEquality.Core.html#2349" class="Bound">∼</a> <a id="2366" href="Relation.Binary.Definitions.html#5567" class="Function Operator">Respects₂</a> <a id="2376" href="Agda.Builtin.Equality.html#150" class="Datatype Operator">_≡_</a>
+<a id="2380" href="Relation.Binary.PropositionalEquality.Core.html#2338" class="Function">resp₂</a> <a id="2386" href="Relation.Binary.PropositionalEquality.Core.html#2386" class="Bound Operator">_∼_</a> <a id="2390" class="Symbol">=</a> <a id="2392" href="Relation.Binary.PropositionalEquality.Core.html#2270" class="Function">respʳ</a> <a id="2398" href="Relation.Binary.PropositionalEquality.Core.html#2386" class="Bound Operator">_∼_</a> <a id="2402" href="Agda.Builtin.Sigma.html#235" class="InductiveConstructor Operator">,</a> <a id="2404" href="Relation.Binary.PropositionalEquality.Core.html#2202" class="Function">respˡ</a> <a id="2410" href="Relation.Binary.PropositionalEquality.Core.html#2386" class="Bound Operator">_∼_</a>
+
+<a id="2415" class="Comment">------------------------------------------------------------------------</a>
+<a id="2488" class="Comment">-- Properties of _≢_</a>
+
+<a id="≢-sym"></a><a id="2510" href="Relation.Binary.PropositionalEquality.Core.html#2510" class="Function">≢-sym</a> <a id="2516" class="Symbol">:</a> <a id="2518" href="Relation.Binary.Definitions.html#1491" class="Function">Symmetric</a> <a id="2528" class="Symbol">{</a><a id="2529" class="Argument">A</a> <a id="2531" class="Symbol">=</a> <a id="2533" href="Relation.Binary.PropositionalEquality.Core.html#689" class="Generalizable">A</a><a id="2534" class="Symbol">}</a> <a id="2536" href="Relation.Binary.PropositionalEquality.Core.html#858" class="Function Operator">_≢_</a>
+<a id="2540" href="Relation.Binary.PropositionalEquality.Core.html#2510" class="Function">≢-sym</a> <a id="2546" href="Relation.Binary.PropositionalEquality.Core.html#2546" class="Bound">x≢y</a> <a id="2550" class="Symbol">=</a>  <a id="2553" href="Relation.Binary.PropositionalEquality.Core.html#2546" class="Bound">x≢y</a> <a id="2557" href="Function.Base.html#1115" class="Function Operator">∘</a> <a id="2559" href="Relation.Binary.PropositionalEquality.Core.html#1893" class="Function">sym</a>
+</pre>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      <script id="__config" type="application/json">{"base": "..", "features": ["content.code.copy", "navigation.expand", "navigation.indexes", "navigation.tabs", "navigation.tabs.sticky", "navigation.top"], "search": "../assets/javascripts/workers/search.d50fe291.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.13a4f30d.min.js"></script>
+      
+    
+  </body>
+</html>

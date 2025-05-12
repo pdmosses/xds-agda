@@ -1,0 +1,1422 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+        <link rel="canonical" href="https://pdmosses.github.io/xds-agda/md/Function.Metric.Bundles.html">
+      
+      
+      
+      
+      <link rel="icon" href="../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.6.13">
+    
+    
+      
+        <title>Function.Metric.Bundles - Denotational Semantics in Agda</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.342714a4.min.css">
+      
+        
+        <link rel="stylesheet" href="../assets/stylesheets/palette.06af60db.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../stylesheets/Agda-material.css">
+    
+      <link rel="stylesheet" href="../stylesheets/Agda-md.css">
+    
+      <link rel="stylesheet" href="../stylesheets/Agda-md-dark.css">
+    
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow md-header--lifted" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../index.html" title="Denotational Semantics in Agda" class="md-header__button md-logo" aria-label="Denotational Semantics in Agda" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Denotational Semantics in Agda
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Function.Metric.Bundles
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 2a7 7 0 0 0-7 7c0 2.38 1.19 4.47 3 5.74V17a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1v-2.26c1.81-1.27 3-3.36 3-5.74a7 7 0 0 0-7-7M9 21a1 1 0 0 0 1 1h4a1 1 0 0 0 1-1v-1H9z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to auto mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to auto mode" for="__palette_2" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 2a7 7 0 0 1 7 7c0 2.38-1.19 4.47-3 5.74V17a1 1 0 0 1-1 1H9a1 1 0 0 1-1-1v-2.26C6.19 13.47 5 11.38 5 9a7 7 0 0 1 7-7M9 21v-1h6v1a1 1 0 0 1-1 1h-4a1 1 0 0 1-1-1m3-17a5 5 0 0 0-5 5c0 2.05 1.23 3.81 3 4.58V16h4v-2.42c1.77-.77 3-2.53 3-4.58a5 5 0 0 0-5-5"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme)" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_2">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9 2C5.13 2 2 5.13 2 9c0 2.38 1.19 4.47 3 5.74V17c0 .55.45 1 1 1h6c.55 0 1-.45 1-1v-2.26c1.81-1.27 3-3.36 3-5.74 0-3.87-3.13-7-7-7M6 21c0 .55.45 1 1 1h4c.55 0 1-.45 1-1v-1H6zm13-8h-2l-3.2 9h1.9l.7-2h3.2l.7 2h1.9zm-2.15 5.65L18 15l1.15 3.65z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/pdmosses/xds-agda" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.7.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81"/></svg>
+  </div>
+  <div class="md-source__repository">
+    pdmosses/xds-agda
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+    
+      
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../index.html" class="md-tabs__link">
+        
+  
+  
+    
+  
+  About
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../meta-notation.html" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Meta-notation
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../ULC.html" class="md-tabs__link">
+          
+  
+  
+    
+  
+  ULC
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../PCF.html" class="md-tabs__link">
+          
+  
+  
+    
+  
+  PCF
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../Scheme.html" class="md-tabs__link">
+          
+  
+  
+    
+  
+  Scheme
+
+        </a>
+      </li>
+    
+  
+
+      
+    </ul>
+  </div>
+</nav>
+    
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../index.html" title="Denotational Semantics in Agda" class="md-nav__button md-logo" aria-label="Denotational Semantics in Agda" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    Denotational Semantics in Agda
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/pdmosses/xds-agda" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.7.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81"/></svg>
+  </div>
+  <div class="md-source__repository">
+    pdmosses/xds-agda
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../index.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    About
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../meta-notation.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Meta-notation
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    ULC
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            ULC
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ULC.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Untyped λ-calculus
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ULC.All.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    ULC.All
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ULC.Variables.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    ULC.Variables
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ULC.Terms.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    ULC.Terms
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ULC.Domains.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    ULC.Domains
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ULC.Environments.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    ULC.Environments
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ULC.Semantics.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    ULC.Semantics
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ULC.Checks.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    ULC.Checks
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    PCF
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            PCF
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../PCF.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    PCF (Plotkin 1977)
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="PCF.All.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    PCF.All
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="PCF.Domain-Notation.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    PCF.Domain Notation
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="PCF.Types.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    PCF.Types
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="PCF.Constants.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    PCF.Constants
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="PCF.Variables.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    PCF.Variables
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="PCF.Terms.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    PCF.Terms
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="PCF.Environments.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    PCF.Environments
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="PCF.Checks.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    PCF.Checks
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Scheme
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            Scheme
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Scheme.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Core Scheme (R5RS)
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Scheme.All.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Scheme.All
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Scheme.Domain-Notation.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Scheme.Domain Notation
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Scheme.Abstract-Syntax.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Scheme.Abstract Syntax
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Scheme.Domain-Equations.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Scheme.Domain Equations
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Scheme.Auxiliary-Functions.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Scheme.Auxiliary Functions
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Scheme.Semantic-Functions.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Scheme.Semantic Functions
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+  
+
+
+  <h1>Function.Metric.Bundles</h1>
+
+<pre class="Agda"><a id="1" class="Comment">------------------------------------------------------------------------</a>
+<a id="74" class="Comment">-- The Agda standard library</a>
+<a id="103" class="Comment">--</a>
+<a id="106" class="Comment">-- Bundles for metrics</a>
+<a id="129" class="Comment">------------------------------------------------------------------------</a>
+
+<a id="203" class="Comment">-- The contents of this module should be accessed via `Function.Metric`.</a>
+
+<a id="277" class="Symbol">{-#</a> <a id="281" class="Keyword">OPTIONS</a> <a id="289" class="Pragma">--cubical-compatible</a> <a id="310" class="Pragma">--safe</a> <a id="317" class="Symbol">#-}</a>
+
+<a id="322" class="Keyword">module</a> <a id="329" href="Function.Metric.Bundles.html" class="Module">Function.Metric.Bundles</a>  <a id="354" class="Keyword">where</a>
+
+<a id="361" class="Keyword">open</a> <a id="366" class="Keyword">import</a> <a id="373" href="Algebra.Core.html" class="Module">Algebra.Core</a> <a id="386" class="Keyword">using</a> <a id="392" class="Symbol">(</a><a id="393" href="Algebra.Core.html#527" class="Function">Op₂</a><a id="396" class="Symbol">)</a>
+<a id="398" class="Keyword">open</a> <a id="403" class="Keyword">import</a> <a id="410" href="Level.html" class="Module">Level</a> <a id="416" class="Keyword">using</a> <a id="422" class="Symbol">(</a><a id="423" href="Agda.Primitive.html#742" class="Postulate">Level</a><a id="428" class="Symbol">;</a> <a id="430" href="Agda.Primitive.html#931" class="Primitive">suc</a><a id="433" class="Symbol">;</a> <a id="435" href="Agda.Primitive.html#961" class="Primitive Operator">_⊔_</a><a id="438" class="Symbol">)</a>
+<a id="440" class="Keyword">open</a> <a id="445" class="Keyword">import</a> <a id="452" href="Relation.Binary.Core.html" class="Module">Relation.Binary.Core</a> <a id="473" class="Keyword">using</a> <a id="479" class="Symbol">(</a><a id="480" href="Relation.Binary.Core.html#896" class="Function">Rel</a><a id="483" class="Symbol">)</a>
+
+<a id="486" class="Keyword">open</a> <a id="491" class="Keyword">import</a> <a id="498" href="Function.Metric.Structures.html" class="Module">Function.Metric.Structures</a>
+<a id="525" class="Keyword">open</a> <a id="530" class="Keyword">import</a> <a id="537" href="Function.Metric.Core.html" class="Module">Function.Metric.Core</a>
+
+<a id="559" class="Comment">------------------------------------------------------------------------</a>
+<a id="632" class="Comment">-- ProtoMetric</a>
+
+<a id="648" class="Keyword">record</a> <a id="ProtoMetric"></a><a id="655" href="Function.Metric.Bundles.html#655" class="Record">ProtoMetric</a> <a id="667" class="Symbol">(</a><a id="668" href="Function.Metric.Bundles.html#668" class="Bound">a</a> <a id="670" href="Function.Metric.Bundles.html#670" class="Bound">i</a> <a id="672" href="Function.Metric.Bundles.html#672" class="Bound">ℓ₁</a> <a id="675" href="Function.Metric.Bundles.html#675" class="Bound">ℓ₂</a> <a id="678" href="Function.Metric.Bundles.html#678" class="Bound">ℓ₃</a> <a id="681" class="Symbol">:</a> <a id="683" href="Agda.Primitive.html#742" class="Postulate">Level</a><a id="688" class="Symbol">)</a>
+                 <a id="707" class="Symbol">:</a> <a id="709" href="Agda.Primitive.html#388" class="Primitive">Set</a> <a id="713" class="Symbol">(</a><a id="714" href="Agda.Primitive.html#931" class="Primitive">suc</a> <a id="718" class="Symbol">(</a><a id="719" href="Function.Metric.Bundles.html#668" class="Bound">a</a> <a id="721" href="Agda.Primitive.html#961" class="Primitive Operator">⊔</a> <a id="723" href="Function.Metric.Bundles.html#670" class="Bound">i</a> <a id="725" href="Agda.Primitive.html#961" class="Primitive Operator">⊔</a> <a id="727" href="Function.Metric.Bundles.html#672" class="Bound">ℓ₁</a> <a id="730" href="Agda.Primitive.html#961" class="Primitive Operator">⊔</a> <a id="732" href="Function.Metric.Bundles.html#675" class="Bound">ℓ₂</a> <a id="735" href="Agda.Primitive.html#961" class="Primitive Operator">⊔</a> <a id="737" href="Function.Metric.Bundles.html#678" class="Bound">ℓ₃</a><a id="739" class="Symbol">))</a> <a id="742" class="Keyword">where</a>
+  <a id="750" class="Keyword">infix</a> <a id="756" class="Number">4</a> <a id="758" href="Function.Metric.Bundles.html#835" class="Field Operator">_≈_</a> <a id="762" href="Function.Metric.Bundles.html#870" class="Field Operator">_≈ᵢ_</a> <a id="767" href="Function.Metric.Bundles.html#903" class="Field Operator">_≤_</a>
+  <a id="773" class="Keyword">field</a>
+    <a id="ProtoMetric.Carrier"></a><a id="783" href="Function.Metric.Bundles.html#783" class="Field">Carrier</a>       <a id="797" class="Symbol">:</a> <a id="799" href="Agda.Primitive.html#388" class="Primitive">Set</a> <a id="803" href="Function.Metric.Bundles.html#668" class="Bound">a</a>
+    <a id="ProtoMetric.Image"></a><a id="809" href="Function.Metric.Bundles.html#809" class="Field">Image</a>         <a id="823" class="Symbol">:</a> <a id="825" href="Agda.Primitive.html#388" class="Primitive">Set</a> <a id="829" href="Function.Metric.Bundles.html#670" class="Bound">i</a>
+    <a id="ProtoMetric._≈_"></a><a id="835" href="Function.Metric.Bundles.html#835" class="Field Operator">_≈_</a>           <a id="849" class="Symbol">:</a> <a id="851" href="Relation.Binary.Core.html#896" class="Function">Rel</a> <a id="855" href="Function.Metric.Bundles.html#783" class="Field">Carrier</a> <a id="863" href="Function.Metric.Bundles.html#672" class="Bound">ℓ₁</a>
+    <a id="ProtoMetric._≈ᵢ_"></a><a id="870" href="Function.Metric.Bundles.html#870" class="Field Operator">_≈ᵢ_</a>          <a id="884" class="Symbol">:</a> <a id="886" href="Relation.Binary.Core.html#896" class="Function">Rel</a> <a id="890" href="Function.Metric.Bundles.html#809" class="Field">Image</a> <a id="896" href="Function.Metric.Bundles.html#675" class="Bound">ℓ₂</a>
+    <a id="ProtoMetric._≤_"></a><a id="903" href="Function.Metric.Bundles.html#903" class="Field Operator">_≤_</a>           <a id="917" class="Symbol">:</a> <a id="919" href="Relation.Binary.Core.html#896" class="Function">Rel</a> <a id="923" href="Function.Metric.Bundles.html#809" class="Field">Image</a> <a id="929" href="Function.Metric.Bundles.html#678" class="Bound">ℓ₃</a>
+    <a id="ProtoMetric.0#"></a><a id="936" href="Function.Metric.Bundles.html#936" class="Field">0#</a>            <a id="950" class="Symbol">:</a> <a id="952" href="Function.Metric.Bundles.html#809" class="Field">Image</a>
+    <a id="ProtoMetric.d"></a><a id="962" href="Function.Metric.Bundles.html#962" class="Field">d</a>             <a id="976" class="Symbol">:</a> <a id="978" href="Function.Metric.Core.html#451" class="Function">DistanceFunction</a> <a id="995" href="Function.Metric.Bundles.html#783" class="Field">Carrier</a> <a id="1003" href="Function.Metric.Bundles.html#809" class="Field">Image</a>
+    <a id="ProtoMetric.isProtoMetric"></a><a id="1013" href="Function.Metric.Bundles.html#1013" class="Field">isProtoMetric</a> <a id="1027" class="Symbol">:</a> <a id="1029" href="Function.Metric.Structures.html#996" class="Record">IsProtoMetric</a> <a id="1043" href="Function.Metric.Bundles.html#835" class="Field Operator">_≈_</a> <a id="1047" href="Function.Metric.Bundles.html#870" class="Field Operator">_≈ᵢ_</a> <a id="1052" href="Function.Metric.Bundles.html#903" class="Field Operator">_≤_</a> <a id="1056" href="Function.Metric.Bundles.html#936" class="Field">0#</a> <a id="1059" href="Function.Metric.Bundles.html#962" class="Field">d</a>
+
+  <a id="1064" class="Keyword">open</a> <a id="1069" href="Function.Metric.Structures.html#996" class="Module">IsProtoMetric</a> <a id="1083" href="Function.Metric.Bundles.html#1013" class="Field">isProtoMetric</a> <a id="1097" class="Keyword">public</a>
+
+<a id="1105" class="Comment">------------------------------------------------------------------------</a>
+<a id="1178" class="Comment">-- PreMetric</a>
+
+<a id="1192" class="Keyword">record</a> <a id="PreMetric"></a><a id="1199" href="Function.Metric.Bundles.html#1199" class="Record">PreMetric</a> <a id="1209" class="Symbol">(</a><a id="1210" href="Function.Metric.Bundles.html#1210" class="Bound">a</a> <a id="1212" href="Function.Metric.Bundles.html#1212" class="Bound">i</a> <a id="1214" href="Function.Metric.Bundles.html#1214" class="Bound">ℓ₁</a> <a id="1217" href="Function.Metric.Bundles.html#1217" class="Bound">ℓ₂</a> <a id="1220" href="Function.Metric.Bundles.html#1220" class="Bound">ℓ₃</a> <a id="1223" class="Symbol">:</a> <a id="1225" href="Agda.Primitive.html#742" class="Postulate">Level</a><a id="1230" class="Symbol">)</a>
+               <a id="1247" class="Symbol">:</a> <a id="1249" href="Agda.Primitive.html#388" class="Primitive">Set</a> <a id="1253" class="Symbol">(</a><a id="1254" href="Agda.Primitive.html#931" class="Primitive">suc</a> <a id="1258" class="Symbol">(</a><a id="1259" href="Function.Metric.Bundles.html#1210" class="Bound">a</a> <a id="1261" href="Agda.Primitive.html#961" class="Primitive Operator">⊔</a> <a id="1263" href="Function.Metric.Bundles.html#1212" class="Bound">i</a> <a id="1265" href="Agda.Primitive.html#961" class="Primitive Operator">⊔</a> <a id="1267" href="Function.Metric.Bundles.html#1214" class="Bound">ℓ₁</a> <a id="1270" href="Agda.Primitive.html#961" class="Primitive Operator">⊔</a> <a id="1272" href="Function.Metric.Bundles.html#1217" class="Bound">ℓ₂</a> <a id="1275" href="Agda.Primitive.html#961" class="Primitive Operator">⊔</a> <a id="1277" href="Function.Metric.Bundles.html#1220" class="Bound">ℓ₃</a><a id="1279" class="Symbol">))</a> <a id="1282" class="Keyword">where</a>
+  <a id="1290" class="Keyword">infix</a> <a id="1296" class="Number">4</a> <a id="1298" href="Function.Metric.Bundles.html#1371" class="Field Operator">_≈_</a> <a id="1302" href="Function.Metric.Bundles.html#1404" class="Field Operator">_≈ᵢ_</a> <a id="1307" href="Function.Metric.Bundles.html#1435" class="Field Operator">_≤_</a>
+  <a id="1313" class="Keyword">field</a>
+    <a id="PreMetric.Carrier"></a><a id="1323" href="Function.Metric.Bundles.html#1323" class="Field">Carrier</a>     <a id="1335" class="Symbol">:</a> <a id="1337" href="Agda.Primitive.html#388" class="Primitive">Set</a> <a id="1341" href="Function.Metric.Bundles.html#1210" class="Bound">a</a>
+    <a id="PreMetric.Image"></a><a id="1347" href="Function.Metric.Bundles.html#1347" class="Field">Image</a>       <a id="1359" class="Symbol">:</a> <a id="1361" href="Agda.Primitive.html#388" class="Primitive">Set</a> <a id="1365" href="Function.Metric.Bundles.html#1212" class="Bound">i</a>
+    <a id="PreMetric._≈_"></a><a id="1371" href="Function.Metric.Bundles.html#1371" class="Field Operator">_≈_</a>         <a id="1383" class="Symbol">:</a> <a id="1385" href="Relation.Binary.Core.html#896" class="Function">Rel</a> <a id="1389" href="Function.Metric.Bundles.html#1323" class="Field">Carrier</a> <a id="1397" href="Function.Metric.Bundles.html#1214" class="Bound">ℓ₁</a>
+    <a id="PreMetric._≈ᵢ_"></a><a id="1404" href="Function.Metric.Bundles.html#1404" class="Field Operator">_≈ᵢ_</a>        <a id="1416" class="Symbol">:</a> <a id="1418" href="Relation.Binary.Core.html#896" class="Function">Rel</a> <a id="1422" href="Function.Metric.Bundles.html#1347" class="Field">Image</a> <a id="1428" href="Function.Metric.Bundles.html#1217" class="Bound">ℓ₂</a>
+    <a id="PreMetric._≤_"></a><a id="1435" href="Function.Metric.Bundles.html#1435" class="Field Operator">_≤_</a>         <a id="1447" class="Symbol">:</a> <a id="1449" href="Relation.Binary.Core.html#896" class="Function">Rel</a> <a id="1453" href="Function.Metric.Bundles.html#1347" class="Field">Image</a> <a id="1459" href="Function.Metric.Bundles.html#1220" class="Bound">ℓ₃</a>
+    <a id="PreMetric.0#"></a><a id="1466" href="Function.Metric.Bundles.html#1466" class="Field">0#</a>          <a id="1478" class="Symbol">:</a> <a id="1480" href="Function.Metric.Bundles.html#1347" class="Field">Image</a>
+    <a id="PreMetric.d"></a><a id="1490" href="Function.Metric.Bundles.html#1490" class="Field">d</a>           <a id="1502" class="Symbol">:</a> <a id="1504" href="Function.Metric.Core.html#451" class="Function">DistanceFunction</a> <a id="1521" href="Function.Metric.Bundles.html#1323" class="Field">Carrier</a> <a id="1529" href="Function.Metric.Bundles.html#1347" class="Field">Image</a>
+    <a id="PreMetric.isPreMetric"></a><a id="1539" href="Function.Metric.Bundles.html#1539" class="Field">isPreMetric</a> <a id="1551" class="Symbol">:</a> <a id="1553" href="Function.Metric.Structures.html#1497" class="Record">IsPreMetric</a> <a id="1565" href="Function.Metric.Bundles.html#1371" class="Field Operator">_≈_</a> <a id="1569" href="Function.Metric.Bundles.html#1404" class="Field Operator">_≈ᵢ_</a> <a id="1574" href="Function.Metric.Bundles.html#1435" class="Field Operator">_≤_</a> <a id="1578" href="Function.Metric.Bundles.html#1466" class="Field">0#</a> <a id="1581" href="Function.Metric.Bundles.html#1490" class="Field">d</a>
+
+  <a id="1586" class="Keyword">open</a> <a id="1591" href="Function.Metric.Structures.html#1497" class="Module">IsPreMetric</a> <a id="1603" href="Function.Metric.Bundles.html#1539" class="Field">isPreMetric</a> <a id="1615" class="Keyword">public</a>
+
+  <a id="PreMetric.protoMetric"></a><a id="1625" href="Function.Metric.Bundles.html#1625" class="Function">protoMetric</a> <a id="1637" class="Symbol">:</a> <a id="1639" href="Function.Metric.Bundles.html#655" class="Record">ProtoMetric</a> <a id="1651" href="Function.Metric.Bundles.html#1210" class="Bound">a</a> <a id="1653" href="Function.Metric.Bundles.html#1212" class="Bound">i</a> <a id="1655" href="Function.Metric.Bundles.html#1214" class="Bound">ℓ₁</a> <a id="1658" href="Function.Metric.Bundles.html#1217" class="Bound">ℓ₂</a> <a id="1661" href="Function.Metric.Bundles.html#1220" class="Bound">ℓ₃</a>
+  <a id="1666" href="Function.Metric.Bundles.html#1625" class="Function">protoMetric</a> <a id="1678" class="Symbol">=</a> <a id="1680" class="Keyword">record</a>
+    <a id="1691" class="Symbol">{</a> <a id="1693" href="Function.Metric.Bundles.html#1013" class="Field">isProtoMetric</a> <a id="1707" class="Symbol">=</a> <a id="1709" href="Function.Metric.Structures.html#1600" class="Function">isProtoMetric</a>
+    <a id="1727" class="Symbol">}</a>
+
+<a id="1730" class="Comment">------------------------------------------------------------------------</a>
+<a id="1803" class="Comment">-- QuasiSemiMetric</a>
+
+<a id="1823" class="Keyword">record</a> <a id="QuasiSemiMetric"></a><a id="1830" href="Function.Metric.Bundles.html#1830" class="Record">QuasiSemiMetric</a> <a id="1846" class="Symbol">(</a><a id="1847" href="Function.Metric.Bundles.html#1847" class="Bound">a</a> <a id="1849" href="Function.Metric.Bundles.html#1849" class="Bound">i</a> <a id="1851" href="Function.Metric.Bundles.html#1851" class="Bound">ℓ₁</a> <a id="1854" href="Function.Metric.Bundles.html#1854" class="Bound">ℓ₂</a> <a id="1857" href="Function.Metric.Bundles.html#1857" class="Bound">ℓ₃</a> <a id="1860" class="Symbol">:</a> <a id="1862" href="Agda.Primitive.html#742" class="Postulate">Level</a><a id="1867" class="Symbol">)</a>
+                     <a id="1890" class="Symbol">:</a> <a id="1892" href="Agda.Primitive.html#388" class="Primitive">Set</a> <a id="1896" class="Symbol">(</a><a id="1897" href="Agda.Primitive.html#931" class="Primitive">suc</a> <a id="1901" class="Symbol">(</a><a id="1902" href="Function.Metric.Bundles.html#1847" class="Bound">a</a> <a id="1904" href="Agda.Primitive.html#961" class="Primitive Operator">⊔</a> <a id="1906" href="Function.Metric.Bundles.html#1849" class="Bound">i</a> <a id="1908" href="Agda.Primitive.html#961" class="Primitive Operator">⊔</a> <a id="1910" href="Function.Metric.Bundles.html#1851" class="Bound">ℓ₁</a> <a id="1913" href="Agda.Primitive.html#961" class="Primitive Operator">⊔</a> <a id="1915" href="Function.Metric.Bundles.html#1854" class="Bound">ℓ₂</a> <a id="1918" href="Agda.Primitive.html#961" class="Primitive Operator">⊔</a> <a id="1920" href="Function.Metric.Bundles.html#1857" class="Bound">ℓ₃</a><a id="1922" class="Symbol">))</a> <a id="1925" class="Keyword">where</a>
+
+  <a id="1934" class="Keyword">infix</a> <a id="1940" class="Number">4</a> <a id="1942" href="Function.Metric.Bundles.html#2027" class="Field Operator">_≈_</a> <a id="1946" href="Function.Metric.Bundles.html#2066" class="Field Operator">_≈ᵢ_</a> <a id="1951" href="Function.Metric.Bundles.html#2103" class="Field Operator">_≤_</a>
+  <a id="1957" class="Keyword">field</a>
+    <a id="QuasiSemiMetric.Carrier"></a><a id="1967" href="Function.Metric.Bundles.html#1967" class="Field">Carrier</a>           <a id="1985" class="Symbol">:</a> <a id="1987" href="Agda.Primitive.html#388" class="Primitive">Set</a> <a id="1991" href="Function.Metric.Bundles.html#1847" class="Bound">a</a>
+    <a id="QuasiSemiMetric.Image"></a><a id="1997" href="Function.Metric.Bundles.html#1997" class="Field">Image</a>             <a id="2015" class="Symbol">:</a> <a id="2017" href="Agda.Primitive.html#388" class="Primitive">Set</a> <a id="2021" href="Function.Metric.Bundles.html#1849" class="Bound">i</a>
+    <a id="QuasiSemiMetric._≈_"></a><a id="2027" href="Function.Metric.Bundles.html#2027" class="Field Operator">_≈_</a>               <a id="2045" class="Symbol">:</a> <a id="2047" href="Relation.Binary.Core.html#896" class="Function">Rel</a> <a id="2051" href="Function.Metric.Bundles.html#1967" class="Field">Carrier</a> <a id="2059" href="Function.Metric.Bundles.html#1851" class="Bound">ℓ₁</a>
+    <a id="QuasiSemiMetric._≈ᵢ_"></a><a id="2066" href="Function.Metric.Bundles.html#2066" class="Field Operator">_≈ᵢ_</a>              <a id="2084" class="Symbol">:</a> <a id="2086" href="Relation.Binary.Core.html#896" class="Function">Rel</a> <a id="2090" href="Function.Metric.Bundles.html#1997" class="Field">Image</a> <a id="2096" href="Function.Metric.Bundles.html#1854" class="Bound">ℓ₂</a>
+    <a id="QuasiSemiMetric._≤_"></a><a id="2103" href="Function.Metric.Bundles.html#2103" class="Field Operator">_≤_</a>               <a id="2121" class="Symbol">:</a> <a id="2123" href="Relation.Binary.Core.html#896" class="Function">Rel</a> <a id="2127" href="Function.Metric.Bundles.html#1997" class="Field">Image</a> <a id="2133" href="Function.Metric.Bundles.html#1857" class="Bound">ℓ₃</a>
+    <a id="QuasiSemiMetric.0#"></a><a id="2140" href="Function.Metric.Bundles.html#2140" class="Field">0#</a>                <a id="2158" class="Symbol">:</a> <a id="2160" href="Function.Metric.Bundles.html#1997" class="Field">Image</a>
+    <a id="QuasiSemiMetric.d"></a><a id="2170" href="Function.Metric.Bundles.html#2170" class="Field">d</a>                 <a id="2188" class="Symbol">:</a> <a id="2190" href="Function.Metric.Core.html#451" class="Function">DistanceFunction</a> <a id="2207" href="Function.Metric.Bundles.html#1967" class="Field">Carrier</a> <a id="2215" href="Function.Metric.Bundles.html#1997" class="Field">Image</a>
+    <a id="QuasiSemiMetric.isQuasiSemiMetric"></a><a id="2225" href="Function.Metric.Bundles.html#2225" class="Field">isQuasiSemiMetric</a> <a id="2243" class="Symbol">:</a> <a id="2245" href="Function.Metric.Structures.html#1823" class="Record">IsQuasiSemiMetric</a> <a id="2263" href="Function.Metric.Bundles.html#2027" class="Field Operator">_≈_</a> <a id="2267" href="Function.Metric.Bundles.html#2066" class="Field Operator">_≈ᵢ_</a> <a id="2272" href="Function.Metric.Bundles.html#2103" class="Field Operator">_≤_</a> <a id="2276" href="Function.Metric.Bundles.html#2140" class="Field">0#</a> <a id="2279" href="Function.Metric.Bundles.html#2170" class="Field">d</a>
+
+  <a id="2284" class="Keyword">open</a> <a id="2289" href="Function.Metric.Structures.html#1823" class="Module">IsQuasiSemiMetric</a> <a id="2307" href="Function.Metric.Bundles.html#2225" class="Field">isQuasiSemiMetric</a> <a id="2325" class="Keyword">public</a>
+
+  <a id="QuasiSemiMetric.preMetric"></a><a id="2335" href="Function.Metric.Bundles.html#2335" class="Function">preMetric</a> <a id="2345" class="Symbol">:</a> <a id="2347" href="Function.Metric.Bundles.html#1199" class="Record">PreMetric</a> <a id="2357" href="Function.Metric.Bundles.html#1847" class="Bound">a</a> <a id="2359" href="Function.Metric.Bundles.html#1849" class="Bound">i</a> <a id="2361" href="Function.Metric.Bundles.html#1851" class="Bound">ℓ₁</a> <a id="2364" href="Function.Metric.Bundles.html#1854" class="Bound">ℓ₂</a> <a id="2367" href="Function.Metric.Bundles.html#1857" class="Bound">ℓ₃</a>
+  <a id="2372" href="Function.Metric.Bundles.html#2335" class="Function">preMetric</a> <a id="2382" class="Symbol">=</a> <a id="2384" class="Keyword">record</a>
+    <a id="2395" class="Symbol">{</a> <a id="2397" href="Function.Metric.Bundles.html#1539" class="Field">isPreMetric</a> <a id="2409" class="Symbol">=</a> <a id="2411" href="Function.Metric.Structures.html#1938" class="Function">isPreMetric</a>
+    <a id="2427" class="Symbol">}</a>
+
+  <a id="2432" class="Keyword">open</a> <a id="2437" href="Function.Metric.Bundles.html#1199" class="Module">PreMetric</a> <a id="2447" href="Function.Metric.Bundles.html#2335" class="Function">preMetric</a> <a id="2457" class="Keyword">public</a>
+    <a id="2468" class="Keyword">using</a> <a id="2474" class="Symbol">(</a><a id="2475" href="Function.Metric.Bundles.html#1625" class="Function">protoMetric</a><a id="2486" class="Symbol">)</a>
+
+<a id="2489" class="Comment">------------------------------------------------------------------------</a>
+<a id="2562" class="Comment">-- SemiMetric</a>
+
+<a id="2577" class="Keyword">record</a> <a id="SemiMetric"></a><a id="2584" href="Function.Metric.Bundles.html#2584" class="Record">SemiMetric</a> <a id="2595" class="Symbol">(</a><a id="2596" href="Function.Metric.Bundles.html#2596" class="Bound">a</a> <a id="2598" href="Function.Metric.Bundles.html#2598" class="Bound">i</a> <a id="2600" href="Function.Metric.Bundles.html#2600" class="Bound">ℓ₁</a> <a id="2603" href="Function.Metric.Bundles.html#2603" class="Bound">ℓ₂</a> <a id="2606" href="Function.Metric.Bundles.html#2606" class="Bound">ℓ₃</a> <a id="2609" class="Symbol">:</a> <a id="2611" href="Agda.Primitive.html#742" class="Postulate">Level</a><a id="2616" class="Symbol">)</a>
+                <a id="2634" class="Symbol">:</a> <a id="2636" href="Agda.Primitive.html#388" class="Primitive">Set</a> <a id="2640" class="Symbol">(</a><a id="2641" href="Agda.Primitive.html#931" class="Primitive">suc</a> <a id="2645" class="Symbol">(</a><a id="2646" href="Function.Metric.Bundles.html#2596" class="Bound">a</a> <a id="2648" href="Agda.Primitive.html#961" class="Primitive Operator">⊔</a> <a id="2650" href="Function.Metric.Bundles.html#2598" class="Bound">i</a> <a id="2652" href="Agda.Primitive.html#961" class="Primitive Operator">⊔</a> <a id="2654" href="Function.Metric.Bundles.html#2600" class="Bound">ℓ₁</a> <a id="2657" href="Agda.Primitive.html#961" class="Primitive Operator">⊔</a> <a id="2659" href="Function.Metric.Bundles.html#2603" class="Bound">ℓ₂</a> <a id="2662" href="Agda.Primitive.html#961" class="Primitive Operator">⊔</a> <a id="2664" href="Function.Metric.Bundles.html#2606" class="Bound">ℓ₃</a><a id="2666" class="Symbol">))</a> <a id="2669" class="Keyword">where</a>
+  <a id="2677" class="Keyword">infix</a> <a id="2683" class="Number">4</a> <a id="2685" href="Function.Metric.Bundles.html#2760" class="Field Operator">_≈_</a> <a id="2689" href="Function.Metric.Bundles.html#2794" class="Field Operator">_≈ᵢ_</a> <a id="2694" href="Function.Metric.Bundles.html#2826" class="Field Operator">_≤_</a>
+  <a id="2700" class="Keyword">field</a>
+    <a id="SemiMetric.Carrier"></a><a id="2710" href="Function.Metric.Bundles.html#2710" class="Field">Carrier</a>      <a id="2723" class="Symbol">:</a> <a id="2725" href="Agda.Primitive.html#388" class="Primitive">Set</a> <a id="2729" href="Function.Metric.Bundles.html#2596" class="Bound">a</a>
+    <a id="SemiMetric.Image"></a><a id="2735" href="Function.Metric.Bundles.html#2735" class="Field">Image</a>        <a id="2748" class="Symbol">:</a> <a id="2750" href="Agda.Primitive.html#388" class="Primitive">Set</a> <a id="2754" href="Function.Metric.Bundles.html#2598" class="Bound">i</a>
+    <a id="SemiMetric._≈_"></a><a id="2760" href="Function.Metric.Bundles.html#2760" class="Field Operator">_≈_</a>          <a id="2773" class="Symbol">:</a> <a id="2775" href="Relation.Binary.Core.html#896" class="Function">Rel</a> <a id="2779" href="Function.Metric.Bundles.html#2710" class="Field">Carrier</a> <a id="2787" href="Function.Metric.Bundles.html#2600" class="Bound">ℓ₁</a>
+    <a id="SemiMetric._≈ᵢ_"></a><a id="2794" href="Function.Metric.Bundles.html#2794" class="Field Operator">_≈ᵢ_</a>         <a id="2807" class="Symbol">:</a> <a id="2809" href="Relation.Binary.Core.html#896" class="Function">Rel</a> <a id="2813" href="Function.Metric.Bundles.html#2735" class="Field">Image</a> <a id="2819" href="Function.Metric.Bundles.html#2603" class="Bound">ℓ₂</a>
+    <a id="SemiMetric._≤_"></a><a id="2826" href="Function.Metric.Bundles.html#2826" class="Field Operator">_≤_</a>          <a id="2839" class="Symbol">:</a> <a id="2841" href="Relation.Binary.Core.html#896" class="Function">Rel</a> <a id="2845" href="Function.Metric.Bundles.html#2735" class="Field">Image</a> <a id="2851" href="Function.Metric.Bundles.html#2606" class="Bound">ℓ₃</a>
+    <a id="SemiMetric.0#"></a><a id="2858" href="Function.Metric.Bundles.html#2858" class="Field">0#</a>           <a id="2871" class="Symbol">:</a> <a id="2873" href="Function.Metric.Bundles.html#2735" class="Field">Image</a>
+    <a id="SemiMetric.d"></a><a id="2883" href="Function.Metric.Bundles.html#2883" class="Field">d</a>            <a id="2896" class="Symbol">:</a> <a id="2898" href="Function.Metric.Core.html#451" class="Function">DistanceFunction</a> <a id="2915" href="Function.Metric.Bundles.html#2710" class="Field">Carrier</a> <a id="2923" href="Function.Metric.Bundles.html#2735" class="Field">Image</a>
+    <a id="SemiMetric.isSemiMetric"></a><a id="2933" href="Function.Metric.Bundles.html#2933" class="Field">isSemiMetric</a> <a id="2946" class="Symbol">:</a> <a id="2948" href="Function.Metric.Structures.html#2150" class="Record">IsSemiMetric</a> <a id="2961" href="Function.Metric.Bundles.html#2760" class="Field Operator">_≈_</a> <a id="2965" href="Function.Metric.Bundles.html#2794" class="Field Operator">_≈ᵢ_</a> <a id="2970" href="Function.Metric.Bundles.html#2826" class="Field Operator">_≤_</a> <a id="2974" href="Function.Metric.Bundles.html#2858" class="Field">0#</a> <a id="2977" href="Function.Metric.Bundles.html#2883" class="Field">d</a>
+
+  <a id="2982" class="Keyword">open</a> <a id="2987" href="Function.Metric.Structures.html#2150" class="Module">IsSemiMetric</a> <a id="3000" href="Function.Metric.Bundles.html#2933" class="Field">isSemiMetric</a> <a id="3013" class="Keyword">public</a>
+
+  <a id="SemiMetric.quasiSemiMetric"></a><a id="3023" href="Function.Metric.Bundles.html#3023" class="Function">quasiSemiMetric</a> <a id="3039" class="Symbol">:</a> <a id="3041" href="Function.Metric.Bundles.html#1830" class="Record">QuasiSemiMetric</a> <a id="3057" href="Function.Metric.Bundles.html#2596" class="Bound">a</a> <a id="3059" href="Function.Metric.Bundles.html#2598" class="Bound">i</a> <a id="3061" href="Function.Metric.Bundles.html#2600" class="Bound">ℓ₁</a> <a id="3064" href="Function.Metric.Bundles.html#2603" class="Bound">ℓ₂</a> <a id="3067" href="Function.Metric.Bundles.html#2606" class="Bound">ℓ₃</a>
+  <a id="3072" href="Function.Metric.Bundles.html#3023" class="Function">quasiSemiMetric</a> <a id="3088" class="Symbol">=</a> <a id="3090" class="Keyword">record</a>
+    <a id="3101" class="Symbol">{</a> <a id="3103" href="Function.Metric.Bundles.html#2225" class="Field">isQuasiSemiMetric</a> <a id="3121" class="Symbol">=</a> <a id="3123" href="Function.Metric.Structures.html#2255" class="Function">isQuasiSemiMetric</a>
+    <a id="3145" class="Symbol">}</a>
+
+  <a id="3150" class="Keyword">open</a> <a id="3155" href="Function.Metric.Bundles.html#1830" class="Module">QuasiSemiMetric</a> <a id="3171" href="Function.Metric.Bundles.html#3023" class="Function">quasiSemiMetric</a> <a id="3187" class="Keyword">public</a>
+    <a id="3198" class="Keyword">using</a> <a id="3204" class="Symbol">(</a><a id="3205" href="Function.Metric.Bundles.html#1625" class="Function">protoMetric</a><a id="3216" class="Symbol">;</a> <a id="3218" href="Function.Metric.Bundles.html#2335" class="Function">preMetric</a><a id="3227" class="Symbol">)</a>
+
+<a id="3230" class="Comment">------------------------------------------------------------------------</a>
+<a id="3303" class="Comment">-- GeneralMetric</a>
+
+<a id="3321" class="Comment">-- Note that this package is not necessarily a metric in the classical</a>
+<a id="3392" class="Comment">-- sense as there is no way to ensure that the _∙_ operator really</a>
+<a id="3459" class="Comment">-- represents addition. See `Function.Metric.Nat` and</a>
+<a id="3513" class="Comment">-- `Function.Metric.Rational` for more specialised `Metric` and</a>
+<a id="3577" class="Comment">-- `UltraMetric` packages.</a>
+
+<a id="3605" class="Comment">-- See the discussion accompanying the `IsGeneralMetric` structure for</a>
+<a id="3676" class="Comment">-- more details.</a>
+
+<a id="3694" class="Keyword">record</a> <a id="GeneralMetric"></a><a id="3701" href="Function.Metric.Bundles.html#3701" class="Record">GeneralMetric</a> <a id="3715" class="Symbol">(</a><a id="3716" href="Function.Metric.Bundles.html#3716" class="Bound">a</a> <a id="3718" href="Function.Metric.Bundles.html#3718" class="Bound">i</a> <a id="3720" href="Function.Metric.Bundles.html#3720" class="Bound">ℓ₁</a> <a id="3723" href="Function.Metric.Bundles.html#3723" class="Bound">ℓ₂</a> <a id="3726" href="Function.Metric.Bundles.html#3726" class="Bound">ℓ₃</a> <a id="3729" class="Symbol">:</a> <a id="3731" href="Agda.Primitive.html#742" class="Postulate">Level</a><a id="3736" class="Symbol">)</a>
+                   <a id="3757" class="Symbol">:</a> <a id="3759" href="Agda.Primitive.html#388" class="Primitive">Set</a> <a id="3763" class="Symbol">(</a><a id="3764" href="Agda.Primitive.html#931" class="Primitive">suc</a> <a id="3768" class="Symbol">(</a><a id="3769" href="Function.Metric.Bundles.html#3716" class="Bound">a</a> <a id="3771" href="Agda.Primitive.html#961" class="Primitive Operator">⊔</a> <a id="3773" href="Function.Metric.Bundles.html#3718" class="Bound">i</a> <a id="3775" href="Agda.Primitive.html#961" class="Primitive Operator">⊔</a> <a id="3777" href="Function.Metric.Bundles.html#3720" class="Bound">ℓ₁</a> <a id="3780" href="Agda.Primitive.html#961" class="Primitive Operator">⊔</a> <a id="3782" href="Function.Metric.Bundles.html#3723" class="Bound">ℓ₂</a> <a id="3785" href="Agda.Primitive.html#961" class="Primitive Operator">⊔</a> <a id="3787" href="Function.Metric.Bundles.html#3726" class="Bound">ℓ₃</a><a id="3789" class="Symbol">))</a> <a id="3792" class="Keyword">where</a>
+  <a id="3800" class="Keyword">infix</a> <a id="3806" class="Number">4</a> <a id="3808" href="Function.Metric.Bundles.html#3904" class="Field Operator">_≈_</a> <a id="3812" href="Function.Metric.Bundles.html#3941" class="Field Operator">_≈ᵢ_</a> <a id="3817" href="Function.Metric.Bundles.html#3976" class="Field Operator">_≤_</a>
+  <a id="3823" class="Keyword">infixl</a> <a id="3830" class="Number">6</a> <a id="3832" href="Function.Metric.Bundles.html#4039" class="Field Operator">_∙_</a>
+  <a id="3838" class="Keyword">field</a>
+    <a id="GeneralMetric.Carrier"></a><a id="3848" href="Function.Metric.Bundles.html#3848" class="Field">Carrier</a>         <a id="3864" class="Symbol">:</a> <a id="3866" href="Agda.Primitive.html#388" class="Primitive">Set</a> <a id="3870" href="Function.Metric.Bundles.html#3716" class="Bound">a</a>
+    <a id="GeneralMetric.Image"></a><a id="3876" href="Function.Metric.Bundles.html#3876" class="Field">Image</a>           <a id="3892" class="Symbol">:</a> <a id="3894" href="Agda.Primitive.html#388" class="Primitive">Set</a> <a id="3898" href="Function.Metric.Bundles.html#3718" class="Bound">i</a>
+    <a id="GeneralMetric._≈_"></a><a id="3904" href="Function.Metric.Bundles.html#3904" class="Field Operator">_≈_</a>             <a id="3920" class="Symbol">:</a> <a id="3922" href="Relation.Binary.Core.html#896" class="Function">Rel</a> <a id="3926" href="Function.Metric.Bundles.html#3848" class="Field">Carrier</a> <a id="3934" href="Function.Metric.Bundles.html#3720" class="Bound">ℓ₁</a>
+    <a id="GeneralMetric._≈ᵢ_"></a><a id="3941" href="Function.Metric.Bundles.html#3941" class="Field Operator">_≈ᵢ_</a>            <a id="3957" class="Symbol">:</a> <a id="3959" href="Relation.Binary.Core.html#896" class="Function">Rel</a> <a id="3963" href="Function.Metric.Bundles.html#3876" class="Field">Image</a> <a id="3969" href="Function.Metric.Bundles.html#3723" class="Bound">ℓ₂</a>
+    <a id="GeneralMetric._≤_"></a><a id="3976" href="Function.Metric.Bundles.html#3976" class="Field Operator">_≤_</a>             <a id="3992" class="Symbol">:</a> <a id="3994" href="Relation.Binary.Core.html#896" class="Function">Rel</a> <a id="3998" href="Function.Metric.Bundles.html#3876" class="Field">Image</a> <a id="4004" href="Function.Metric.Bundles.html#3726" class="Bound">ℓ₃</a>
+    <a id="GeneralMetric.0#"></a><a id="4011" href="Function.Metric.Bundles.html#4011" class="Field">0#</a>              <a id="4027" class="Symbol">:</a> <a id="4029" href="Function.Metric.Bundles.html#3876" class="Field">Image</a>
+    <a id="GeneralMetric._∙_"></a><a id="4039" href="Function.Metric.Bundles.html#4039" class="Field Operator">_∙_</a>             <a id="4055" class="Symbol">:</a> <a id="4057" href="Algebra.Core.html#527" class="Function">Op₂</a> <a id="4061" href="Function.Metric.Bundles.html#3876" class="Field">Image</a>
+    <a id="GeneralMetric.d"></a><a id="4071" href="Function.Metric.Bundles.html#4071" class="Field">d</a>               <a id="4087" class="Symbol">:</a> <a id="4089" href="Function.Metric.Core.html#451" class="Function">DistanceFunction</a> <a id="4106" href="Function.Metric.Bundles.html#3848" class="Field">Carrier</a> <a id="4114" href="Function.Metric.Bundles.html#3876" class="Field">Image</a>
+    <a id="GeneralMetric.isGeneralMetric"></a><a id="4124" href="Function.Metric.Bundles.html#4124" class="Field">isGeneralMetric</a> <a id="4140" class="Symbol">:</a> <a id="4142" href="Function.Metric.Structures.html#3005" class="Record">IsGeneralMetric</a> <a id="4158" href="Function.Metric.Bundles.html#3904" class="Field Operator">_≈_</a> <a id="4162" href="Function.Metric.Bundles.html#3941" class="Field Operator">_≈ᵢ_</a> <a id="4167" href="Function.Metric.Bundles.html#3976" class="Field Operator">_≤_</a> <a id="4171" href="Function.Metric.Bundles.html#4011" class="Field">0#</a> <a id="4174" href="Function.Metric.Bundles.html#4039" class="Field Operator">_∙_</a> <a id="4178" href="Function.Metric.Bundles.html#4071" class="Field">d</a>
+
+  <a id="4183" class="Keyword">open</a> <a id="4188" href="Function.Metric.Structures.html#3005" class="Module">IsGeneralMetric</a> <a id="4204" href="Function.Metric.Bundles.html#4124" class="Field">isGeneralMetric</a> <a id="4220" class="Keyword">public</a>
+
+  <a id="GeneralMetric.semiMetric"></a><a id="4230" href="Function.Metric.Bundles.html#4230" class="Function">semiMetric</a> <a id="4241" class="Symbol">:</a> <a id="4243" href="Function.Metric.Bundles.html#2584" class="Record">SemiMetric</a> <a id="4254" href="Function.Metric.Bundles.html#3716" class="Bound">a</a> <a id="4256" href="Function.Metric.Bundles.html#3718" class="Bound">i</a> <a id="4258" href="Function.Metric.Bundles.html#3720" class="Bound">ℓ₁</a> <a id="4261" href="Function.Metric.Bundles.html#3723" class="Bound">ℓ₂</a> <a id="4264" href="Function.Metric.Bundles.html#3726" class="Bound">ℓ₃</a>
+  <a id="4269" href="Function.Metric.Bundles.html#4230" class="Function">semiMetric</a> <a id="4280" class="Symbol">=</a> <a id="4282" class="Keyword">record</a>
+    <a id="4293" class="Symbol">{</a> <a id="4295" href="Function.Metric.Bundles.html#2933" class="Field">isSemiMetric</a> <a id="4308" class="Symbol">=</a> <a id="4310" href="Function.Metric.Structures.html#3130" class="Function">isSemiMetric</a>
+    <a id="4327" class="Symbol">}</a>
+
+  <a id="4332" class="Keyword">open</a> <a id="4337" href="Function.Metric.Bundles.html#2584" class="Module">SemiMetric</a> <a id="4348" href="Function.Metric.Bundles.html#4230" class="Function">semiMetric</a> <a id="4359" class="Keyword">public</a>
+    <a id="4370" class="Keyword">using</a> <a id="4376" class="Symbol">(</a><a id="4377" href="Function.Metric.Bundles.html#1625" class="Function">protoMetric</a><a id="4388" class="Symbol">;</a> <a id="4390" href="Function.Metric.Bundles.html#2335" class="Function">preMetric</a><a id="4399" class="Symbol">;</a> <a id="4401" href="Function.Metric.Bundles.html#3023" class="Function">quasiSemiMetric</a><a id="4416" class="Symbol">)</a>
+</pre>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      <script id="__config" type="application/json">{"base": "..", "features": ["content.code.copy", "navigation.expand", "navigation.indexes", "navigation.tabs", "navigation.tabs.sticky", "navigation.top"], "search": "../assets/javascripts/workers/search.d50fe291.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.13a4f30d.min.js"></script>
+      
+    
+  </body>
+</html>
