@@ -1,44 +1,9 @@
-site_name: Denotational Semantics in Agda
-site_url: https://pdmosses.github.io/xds-agda/
-repo_name: pdmosses/xds-agda
-repo_url: https://github.com/pdmosses/xds-agda
+site_name: Agda-Material
+site_url: https://pdmosses.github.io/agda-material/
+repo_name: pdmosses/agda-material
+repo_url: https://github.com/pdmosses/agda-material
 
-use_directory_urls: false
-
-nav:
-  - index.md
-  - meta-notation.md
-  - ULC:
-    - ULC.md
-    - md/ULC.All.md
-    - md/ULC.Variables.md
-    - md/ULC.Terms.md
-    - md/ULC.Domains.md
-    - md/ULC.Environments.md
-    - md/ULC.Semantics.md
-    - md/ULC.Checks.md
-  - PCF:
-    - PCF.md
-    - md/PCF.All.md
-    - md/PCF.Domain-Notation.md
-    - md/PCF.Types.md
-    - md/PCF.Constants.md
-    - md/PCF.Variables.md
-    - md/PCF.Terms.md
-    - md/PCF.Environments.md
-    - md/PCF.Checks.md
-  - Scheme:
-    - Scheme.md
-    - md/Scheme.All.md
-    - md/Scheme.Domain-Notation.md
-    - md/Scheme.Abstract-Syntax.md
-    - md/Scheme.Domain-Equations.md
-    - md/Scheme.Auxiliary-Functions.md
-    - md/Scheme.Semantic-Functions.md
-
-not_in_nav: |
-  html
-  md/*.md
+use_directory_urls: true
 
 theme:
   name: material
@@ -52,7 +17,7 @@ theme:
       scheme: slate
       toggle:
         icon: material/lightbulb-outline
-        name: Switch to auto mode
+        name: Switch to light mode
     - media: "(prefers-color-scheme)"
       toggle:
         icon: material/lightbulb-auto
@@ -61,35 +26,44 @@ theme:
   features:
     - content.code.copy
     - navigation.expand
-    - navigation.indexes 
+    - navigation.indexes
+    - navigation.instant
+    - navigation.instant.progress
     - navigation.tabs
     - navigation.tabs.sticky
     - navigation.top
-    # - toc.integrate
+    - search.suggest
+    - search.highlight
 
 extra_css:
   - stylesheets/Agda-material.css
   - stylesheets/Agda-md.css
   - stylesheets/Agda-md-dark.css
+# KaTeX:
+  - https://unpkg.com/katex@0/dist/katex.min.css
+
+extra_javascript:
+# KaTeX:
+  - javascripts/katex.js
+  - https://unpkg.com/katex@0/dist/katex.min.js
+  - https://unpkg.com/katex@0/dist/contrib/auto-render.min.js
+
+markdown_extensions:
+  - admonition
+  - attr_list
+  - def_list
+  - footnotes
+  - md_in_html
+  - meta
+  - pymdownx.emoji:
+      emoji_index: !!python/name:material.extensions.emoji.twemoji
+      emoji_generator: !!python/name:material.extensions.emoji.to_svg
+  - pymdownx.details
+  - pymdownx.superfences
+  - pymdownx.tasklist:
+      custom_checkbox: true
+  - tables
 
 plugins:
 - search
-# - awesome-pages:
-#     collapse_single_pages: false
-#     strict: false
-#     order: asc
-#     sort_type: natural
-#     order_by: title
-
-markdown_extensions:
-- admonition
-- attr_list
-- def_list
-- footnotes
-- meta
-- pymdownx.emoji:
-    emoji_index: !!python/name:material.extensions.emoji.twemoji
-    emoji_generator: !!python/name:material.extensions.emoji.to_svg
-- pymdownx.details
-- pymdownx.superfences
-- tables
+- awesome-nav

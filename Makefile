@@ -1,27 +1,26 @@
 # Makefile for generating websites and pdfs from Agda sources
 
-# PARAMETERS
+# Command to update all files generated from the default test modules:
 #
-# Name   Purpose                  Example       Default
-# -------------------------------------------------------------
-# DIR    agda module directory    DIR=myagda    agda
-# ROOT   root agda module file   ROOT=My.lagda  agda/Test.lagda
-# HTML   generated HTML files    HTML=myhtml    docs/html
-# MD     generated MD files        MD=mymd      docs/md
-# PDF    generated PDF files      PDF=mypdf     docs/pdf
-# LATEX  generated LATEX files  LATEX=mylatex   latex
-# TEMP   temporary files         TEMP=mytemp    /tmp
-
-# Commands to update the files generated from the default test modules:
-#
-# make
-# make ROOT=agda/Test/All.lagda
+# make all
 
 ##############################################################################
+# PARAMETERS
+#
+# Name   Purpose                 Default
+# ----------------------------------------------
+# DIR    import include-path     agda
+# ROOT   root module file        agda/index.lagda
+# HTML   generated HTML files    docs/html
+# MD     generated MD files      docs/md
+# PDF    generated PDF files     docs/pdf
+# LATEX  generated LATEX files   latex
+# TEMP   temporary files         /tmp
+
 # DEFAULTS
 
 DIR   := agda
-ROOT  := agda/Test.lagda
+ROOT  := agda/index.lagda
 HTML  := docs/html
 MD    := docs/md
 PDF   := docs/pdf
@@ -31,23 +30,74 @@ TEMP  := /tmp
 ##############################################################################
 # VARIABLES
 
-SHELL = sh
+SHELL=/bin/sh
 
-AGDA := agda --include-path=$(DIR)
+# Shell command for calling Agda:
+AGDA := agda --include-path=$(DIR) --trace-imports=0
 
-NAME := $(subst /,.,$(subst $(DIR)/,,$(basename $(ROOT))))
-# e.g., Test or Test.All
-
-NAME-INPUTS := $(NAME).inputs
-# e.g., Test.inputs or Test.All.inputs
-
-NAME-ROOT := $(NAME).root
-# e.g.,Test.root or Test.All.root
-
+# Shell command for generating PDF from LaTeX:
 PDFLATEX := pdflatex -shell-escape -interaction=nonstopmode
-# shell command for generating PDF from LaTeX
 
-define DOC
+# Name of ROOT module:
+NAME := $(subst /,.,$(subst $(DIR)/,,$(basename $(ROOT))))
+# e.g., Test.All
+
+# A single newline:
+define NEWLINE
+
+
+endef
+
+# Target files:
+HTML-FILES := $(subst $(TEMP)/,$(HTML)/,$(shell \
+		rm -rf $(TEMP)/*.html; \
+		$(AGDA) --html --html-dir=$(TEMP) $(ROOT); \
+		ls $(TEMP)/*.html))
+# e.g., docs/html/Agda.Primitive.html docs/html/Test.All.html docs/html/Test.Sub.Base.html
+
+# Names of modules imported (perhaps indirectly) by ROOT:
+IMPORT-NAMES := $(subst $(HTML)/,,$(basename $(HTML-FILES)))
+# e.g., Agda.Primitive Test.All Test.Sub.Base
+
+# Paths of modules imported (perhaps indirectly) by ROOT:
+IMPORT-PATHS := $(subst .,/,$(IMPORT-NAMES))
+# e.g., Agda/Primitive Test/All Test/Sub/Base
+
+# Names of modules in DIR:
+MODULE-NAMES := $(sort $(subst /,.,$(subst $(DIR)/,,$(basename $(shell \
+		find $(DIR) -name '*.lagda')))))
+# e.g., Test Test.All Test.Sub.Base Test.Sub.Not-Imported
+
+# Names of imported modules in DIR:
+AGDA-NAMES := $(filter $(MODULE-NAMES),$(IMPORT-NAMES))
+# e.g., Test.All Test.Sub.Base
+
+# Paths of imported modules in DIR:
+AGDA-PATHS := $(subst .,/,$(AGDA-NAMES))
+# e.g., Test/All Test/Sub/Base
+
+# Agda source files:
+AGDA-FILES := $(addprefix $(DIR)/,$(addsuffix .lagda,$(AGDA-PATHS)))
+# e.g., agda/Test/All.lagda agda/Test/Sub/Base.lagda
+
+# Target files:
+MD-FILES := $(addprefix $(MD)/,$(addsuffix .md,$(IMPORT-PATHS)))
+# e.g., docs/md/Agda/Primitive.md docs/md/Test/All.md docs/md/Test/Sub/Base.md
+
+# Target files:
+LATEX-FILES := $(addprefix $(LATEX)/,$(addsuffix .tex,$(AGDA-PATHS)))
+# e.g., latex/Test/All.tex latex/Test/Sub/Base.tex
+
+LATEX-INPUTS := $(foreach p,$(AGDA-PATHS),$(NEWLINE)\section{$(p)}\input{$(p)})
+# e.g., \n\section{index}\input{index}\n\section{Test/All}\input{Test/All}...
+
+AGDA-STYLE := conor
+
+# LaTeX packages provided by Agda-Material are in the project root:
+AGDA-CUSTOM := $(patsubst %/,../,$(LATEX)/)agda-custom
+UNICODE := $(patsubst %/,../,$(LATEX)/)unicode
+
+define LATEXDOC
 \\documentclass[a4paper]{article}
 \\usepackage{parskip}
 \\usepackage[T1]{fontenc}
@@ -55,101 +105,97 @@ define DOC
 \\DisableLigatures[-]{encoding = T1, family = tt* }
 \\usepackage{hyperref}
 
-\\usepackage{agda}
-\\input{agda-custom}
-
-\\newif\\iflatex\\latextrue
-\\newif\\ifmarkdown
-
-% In literate Agda files, enclose text with LaTeX markup in 
-% \\iflatex
-% ...
-% \\fi
-% and enclose text with Markdown markup in
-% \\ifmarkdown
-% ...
-% \\fi
-% Note: Inline use of \\if...\\fi is not yet supported by `make md`.
+\\usepackage[$(AGDA-STYLE)]{agda}
+\\usepackage{$(AGDA-CUSTOM)}
+\\usepackage{$(UNICODE)}
 
 \\title{$(NAME)}
 \\begin{document}
 \\maketitle
-\\input{$(NAME-INPUTS)}
+\\tableofcontents
+\\newpage
+$(LATEX-INPUTS)
+
 \\end{document}
 endef
-
-# Use `agda --html` to list module names imported (perhaps indirectly) by ROOT,
-# and filter to intersect with the modules in the same directory as ROOT:
-
-IMPORT-NAMES = $(subst $(TEMP)/,,$(basename $(shell \
-		rm -rf $(TEMP)/*.html; \
-		$(AGDA) --html --html-dir=$(TEMP) $(ROOT); \
-		ls $(TEMP)/*.html)))
-# e.g., Agda.Primitive Test.All Test.Sub.Base
-
-MODULE-NAMES := $(sort $(subst /,.,$(subst $(DIR)/,,$(basename $(shell \
-		find $(DIR) -name '*.lagda')))))
-# e.g., Test Test.All Test.Sub.Base Test.Sub.Not-Imported
-
-AGDA-NAMES := $(filter $(IMPORT-NAMES),$(MODULE-NAMES))
-# e.g., Test.All Test.Sub.Base
-
-AGDA-FILES := $(addprefix $(DIR)/,$(addsuffix .lagda,$(subst .,/,$(AGDA-NAMES))))
-# e.g., agda/Test/All.lagda agda/Test/Sub/Base.lagda
-
-HTML-FILES := $(addprefix $(HTML)/,$(addsuffix .html,$(AGDA-NAMES)))
-# e.g., docs/html/Test.All.html docs/html/Test.Sub.Base.html
-
-MD-FILES := $(addprefix $(MD)/,$(addsuffix .md,$(AGDA-NAMES)))
-# e.g., docs/md/Test.All.md docs/md/Test.Sub.Base.md
-
-LATEX-FILES := $(addprefix $(LATEX)/,$(subst $(DIR)/,,$(AGDA-FILES:.lagda=.tex)))
-# e.g., latex/Test/All.tex latex/Test/Sub/Base.tex
-
-LATEX-INPUTS := $(patsubst $(LATEX)/%.tex,\\input{%},$(LATEX-FILES))
-# e.g., \input{Test/All} \input{Test/Sub/Base}
 
 ##############################################################################
 # RULES
 
 .PHONY: all
-all: html md latex inputs root pdf
+all: check html md latex doc pdf
 
-# Generate web pages with the default styling:
+# Check Agda source files:
+
+.PHONY: check
+check:
+	@$(AGDA) $(ROOT)
+
+# Generate HTML web pages:
 
 .PHONY: html
 html: $(HTML-FILES)
 
-$(HTML-FILES): $(AGDA-FILES)
+$(HTML-FILES) &:: $(AGDA-FILES)
 	@$(AGDA) --html --html-dir=$(HTML) $(ROOT)
 
-# Generate Markdown sources for web pages with navigation and dark mode:
+# Generate Markdown sources for web pages:
 
 .PHONY: md
 md: $(MD-FILES)
 
-$(MD-FILES): $(AGDA-FILES)
-	@$(AGDA) --html --html-highlight=code --html-dir=$(MD) $(ROOT); \
-	for FILE in $(MD)/*; do \
-	  MDFILE=$${FILE%.*}.md; \
+# `agda --html --html-highlight=code ROOT.lagda` produces highlighted HTML files
+# from plain `agda` and literate `lagda` source files. However, the extension is
+# `tex` for HTML produced from `lagda` files. It is `html` for `agda` files, but
+# needs to be wrapped in `<pre class="Agda">...</pre>` tags.
+
+# The links in the files assume they are all in the same directory, and that the
+# files have extension `.html`. Adjusting them to hierarchical links with
+# directory URLs involves replacing the dots in the basenames of the files by
+# slashes, prefixing the href by the relative path to the top of the hierarchy,
+# and appending a slash to the file path. All URLs that start with A-Z or a-z
+# are assumed to be links to modules, and adjusted (also in the prose of
+# literate Agda source files).
+
+# The links generated by Agda always start with the file name. This could be
+# omitted for local links where the id is in the same file. Similarly, the
+# links to modules in the same directory could be optimized.
+
+$(MD-FILES) &:: $(AGDA-FILES)
+	@$(AGDA) --html --html-highlight=code --html-dir=$(MD) $(ROOT)
+	@for FILE in $(MD)/*; do \
+	  BASENAME=$${FILE%.*}; \
+	  MDFILE=$${BASENAME//./\/}.md; \
+	  RELATIVE=`echo $$BASENAME | sd '^$(MD)/' '.' | sd '\.index$$' '' | sd '\.[^.]*' '../'`; \
 	  export MDFILE; \
 	  case $$FILE in \
-	    *.tex) \
-	      sed -e '/^\\iflatex/,/^\\fi/d' $$FILE | \
-	      sed -e '/^\\ifmarkdown/d' -e '/^\\fi/d' > $$MDFILE; \
-	      rm $$FILE ;; \
 	    *.html) \
-	      printf "%s" '<pre class="Agda">' > $$MDFILE; \
-	      cat $$FILE >> $$MDFILE; \
-	      printf "%s" '</pre>' >> $$MDFILE; \
-	      rm $$FILE ;; \
-	    */Agda.css) \
-	      rm $$FILE ;; \
-	    *) \
+	      sd '\A' '<pre class="Agda">' $$FILE; \
+	      sd '\z' '</pre>' $$FILE;; \
+	  esac; \
+	  case $$FILE in \
+	    *.html | *.tex) \
+	      sd '(href="[A-Za-z][^"]*)\.html' '$$1/' $$FILE; \
+	      while grep -q 'href="[A-Z][^".]*\.' $$FILE; do \
+	        sd '(href="[A-Za-z][^".]*)\.' '$$1/' $$FILE; \
+	      done; \
+	      sd 'href="([A-Za-z])' "href=\"$$RELATIVE\$$1" $$FILE; \
+	      sd '(href="[^"]*)index/' '$$1.' $$FILE; \
+	      mkdir -p `dirname $$MDFILE`; \
+	      printf "%s\ntitle: %s\n%s\n\n# %s\n\n" \
+	             "---" \
+		     `basename -s ".md" $$MDFILE` \
+		     "---" \
+		     $${BASENAME##*/} > $$MDFILE; \
+	      cat $$FILE >> $$MDFILE;; \
+	  esac; \
+	  case $$FILE in \
+	    *.html | *.tex | */Agda.css) \
+	      rm $$FILE;; \
 	  esac \
 	done
 
-# Generate latex source files for use in latex documents:
+# Generate LaTeX source files for use in latex documents:
 
 .PHONY: latex
 latex: $(LATEX-FILES)
@@ -157,102 +203,123 @@ latex: $(LATEX-FILES)
 $(LATEX-FILES): $(LATEX)/%.tex: $(DIR)/%.lagda
 	@$(AGDA) --latex --latex-dir=$(LATEX) $<
 
-# Generate a latex file that inputs all the generated source files:
+# Generate a LaTeX document to format the generated LaTeX files:
 
-.PHONY: inputs
-inputs: $(LATEX)/$(NAME-INPUTS).tex
+.PHONY: doc
+doc: $(LATEX)/$(NAME).doc.tex
 
-$(LATEX)/$(NAME-INPUTS).tex: $(AGDA-FILES)
-	@printf "%s\n\n\\\\bigskip\\\\hrule\\\\bigskip\n\n" $(LATEX-INPUTS) > $@
-
-# Generate a latex document to format all the input source files:
-
-.PHONY: root
-root: $(LATEX)/$(NAME-ROOT).tex
-
-export DOC
-$(LATEX)/$(NAME-ROOT).tex:
-	@echo "$$DOC" > $@
+export LATEXDOC
+$(LATEX)/$(NAME).doc.tex:
+	@echo "$$LATEXDOC" > $@
 
 # Generate a PDF using $(PDFLATEX)
 
 .PHONY: pdf
 pdf: $(PDF)/$(NAME).pdf
 
-$(PDF)/$(NAME).pdf: $(LATEX)/$(NAME-ROOT).tex $(LATEX)/$(NAME-INPUTS).tex $(LATEX-FILES) $(LATEX)/agda.sty $(LATEX)/agda-custom.tex
+$(PDF)/$(NAME).pdf: $(LATEX)/$(NAME).doc.tex $(LATEX-FILES) $(LATEX)/agda.sty $(LATEX)/$(AGDA-CUSTOM).sty $(LATEX)/$(UNICODE).sty
 	@cd $(LATEX); \
-	  $(PDFLATEX) $(NAME-ROOT).tex; \
-	  $(PDFLATEX) $(NAME-ROOT).tex; \
-	  rm -f $(NAME-ROOT).{aux,log,out,ptb}
-	@-mkdir -p docs/pdf && mv -f $(LATEX)/$(NAME-ROOT).pdf $(PDF)/$(NAME).pdf
+	  $(PDFLATEX) $(NAME).doc.tex; \
+	  $(PDFLATEX) $(NAME).doc.tex; \
+	  rm -f $(NAME).doc.{aux,log,out,ptb,toc}
+	@mkdir -p $(PDF) && mv -f $(LATEX)/$(NAME).doc.pdf $(PDF)/$(NAME).pdf
 
-# GENERIC
+# Preview the generated website
 
-.PHONY: clean
-clean: clean-md clean-html
+.PHONY: preview
+preview: all
+	@mkdocs serve
 
-.PHONY: clean-md
-clean-md:
-	@rm -rf $(MD)
+# Update and build the website, then deploy it on GitHub Pages from the gh-pages branch
 
-.PHONY: clean-html
+.PHONY: deploy
+deploy: all
+	@mkdocs gh-deploy --force
+
+# Remove all files generated from ROOT
+
+.PHONY: clean clean-html clean-md clean-latex clean-pdf
+clean: clean-html clean-md clean-latex clean-pdf
+
 clean-html:
-	@rm -rf $(HTML)
+	@rm -rf $(HTML-FILES)
 
+clean-md:
+	@rm -rf $(MD-FILES)
+
+clean-latex:
+	@rm -rf $(LATEX-FILES) $(LATEX)/$(NAME).doc.{aux,log,out,ptb,tex,toc}
+
+clean-pdf:
+	@rm -rf $(PDF)/$(NAME).pdf
 
 # Texts
 
 define HELP
 
 make all
-  Generate web pages and pdfs
-make md:
-  Generate web page sources in docs/md/
+  Generate web pages and pdfs for $(ROOT)
+make check:
+  Check that loading the Agda source files for $(ROOT) does not report errors
+make preview
+  Update the web pages and pdfs for $(ROOT), the preview the website locally
+make deploy
+  Update the web pages and pdfs for $(ROOT), then deploy the website on GitHub Pages 
 make html:
-  Generate web page sources in docs/html/
+  Generate web page sources in ${HTML}
+make md:
+  Generate web page sources in $(MD)
 make latex:
-  Generate latex sources in latex/
-make inputs:
-  Generate input commands for root in latex/
-make root:
-  Generate root source in latex/
+  Generate latex sources in $(LATEX)
+make doc:
+  Generate latex document source in $(LATEX)
 make pdf:
-  Generate pdf in pdf/
+  Generate pdf in $(PDF)
 make clean:
-  Remove generated web pages
+  Remove ROOT-generated files
 make clean-md:
-  Remove docs/md/
+  Remove ROOT-generated Markdown files
 make clean-html:
-  Remove docs/html/
+  Remove ROOT-generated HTML files
+make clean-latex:
+  Remove ROOT-generated LaTeX files
+make clean-pdf:
+  Remove ROOT-generated PDF file
 
 endef
 
 define DEBUG
 
-DIR:
-  $(DIR)
-NAME:
-  $(NAME)
-IMPORT-NAMES:
-  $(IMPORT-NAMES)
-MODULE-NAMES:
-  $(MODULE-NAMES)
-AGDA-NAMES:
-  $(AGDA-NAMES)
-AGDA-FILES:
-  $(AGDA-FILES)
-HTML-FILES:
-  $(HTML-FILES)
-MD-FILES:
-  $(MD-FILES)
-LATEX-FILES:
-  $(LATEX-FILES)
-LATEX-ROOT:
-  $(LATEX)/$(NAME-ROOT).tex
+DIR:          $(DIR)
+ROOT:         $(ROOT)
+NAME:         $(NAME)
+
+IMPORT-NAMES: $(IMPORT-NAMES)
+
+IMPORT-PATHS: $(IMPORT-PATHS)
+
+MODULE-NAMES: $(MODULE-NAMES)
+
+AGDA-NAMES:   $(AGDA-NAMES)
+
+AGDA-PATHS:   $(AGDA-PATHS)
+
+AGDA-FILES:   $(AGDA-FILES)
+
+HTML-FILES:   $(HTML-FILES)
+
+MD-FILES:     $(MD-FILES)
+
+LATEXDOC:
+
+$(LATEXDOC)
+
+LATEX-FILES:  $(LATEX-FILES)
+
 LATEX-INPUTS:
-  $(LATEX-INPUTS)
-PDF-ROOT:
-  $(PDF)/$(NAME).pdf
+$(LATEX-INPUTS)
+
+AGDA-CUSTOM:  $(AGDA-CUSTOM)
 
 endef
 
