@@ -3,14 +3,13 @@
 
 module LC.index where
 
-import LC.Variables
-import LC.Terms
+import LC.Definitions
 import LC.Domains
 import LC.Environments
 import LC.Semantics
-
-import LC.Definitions
+import LC.Terms
 import LC.Tests
+import LC.Variables
 
 import Library.index
 \end{code}
