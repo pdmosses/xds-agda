@@ -1,5 +1,14 @@
 % Copied from https://github.com/armkeh/unicode-sty/blob/master/unicode.sty
 
+% Fixed:
+% \newunicodechar{𝒌}{\ensuremath{\mathbf{k}}} %\newunicodechar{𝒌}{\ensuremath{\mathbf{l}}}
+% \newunicodechar{𝒍}{\ensuremath{\mathbf{l}}} %\newunicodechar{𝒍}{\ensuremath{\mathbf{m}}}
+% \newunicodechar{⟦}{\ensuremath{\llbracket}} %\newunicodechar{⟦}{\ensuremath{[\![}}
+% \newunicodechar{⟧}{\ensuremath{\rrbracket}} %\newunicodechar{⟧}{\ensuremath{]\!]}}
+% Added:
+% \newunicodechar{′}{\ensuremath{'}} % added
+% \newunicodechar{″}{\ensuremath{''}} % added
+
 \ProvidesPackage{unicode}
 
 \usepackage{newunicodechar}
@@ -416,9 +425,9 @@
 \newunicodechar{𝒉}{\ensuremath{\mathbf{h}}}
 \newunicodechar{𝒊}{\ensuremath{\mathbf{i}}}
 \newunicodechar{𝒋}{\ensuremath{\mathbf{j}}}
-\newunicodechar{𝒌}{\ensuremath{\mathbf{k}}}
-\newunicodechar{𝒌}{\ensuremath{\mathbf{l}}}
-\newunicodechar{𝒍}{\ensuremath{\mathbf{m}}}
+\newunicodechar{𝒌}{\ensuremath{\mathbf{k}}} %\newunicodechar{𝒌}{\ensuremath{\mathbf{l}}}
+\newunicodechar{𝒍}{\ensuremath{\mathbf{l}}} %\newunicodechar{𝒍}{\ensuremath{\mathbf{m}}}
+\newunicodechar{𝒎}{\ensuremath{\mathbf{m}}}
 \newunicodechar{𝒏}{\ensuremath{\mathbf{n}}}
 \newunicodechar{𝒐}{\ensuremath{\mathbf{o}}}
 \newunicodechar{𝒑}{\ensuremath{\mathbf{p}}}
@@ -712,10 +721,10 @@
 \newunicodechar{ʸ}{\ensuremath{{}^{y}}}
 \newunicodechar{ᶻ}{\ensuremath{{}^{z}}}
 
-\newunicodechar{⁰}{\ensuremath{{}^{0}}}
-\newunicodechar{¹}{\ensuremath{{}^{1}}}
-\newunicodechar{²}{\ensuremath{{}^{2}}}
-\newunicodechar{³}{\ensuremath{{}^{3}}}
+% \newunicodechar{⁰}{\ensuremath{{}^{0}}}
+% \newunicodechar{¹}{\ensuremath{{}^{1}}}
+% \newunicodechar{²}{\ensuremath{{}^{2}}}
+% \newunicodechar{³}{\ensuremath{{}^{3}}}
 \newunicodechar{⁴}{\ensuremath{{}^{4}}}
 \newunicodechar{⁵}{\ensuremath{{}^{5}}}
 \newunicodechar{⁶}{\ensuremath{{}^{6}}}
@@ -727,17 +736,17 @@
 \newunicodechar{⁻}{\ensuremath{{}^{-}}}
 \newunicodechar{⁼}{\ensuremath{{}^{=}}}
 
-\newunicodechar{…}{\ensuremath{\ldots}}
+% \newunicodechar{…}{\ensuremath{\ldots}}
 \newunicodechar{⋯}{\ensuremath{\cdots}}
 \newunicodechar{⋮}{\ensuremath{\vdots}}
 
-\newunicodechar{–}{\ensuremath{\text{--}}}
-\newunicodechar{—}{\ensuremath{\text{---}}}
+% \newunicodechar{–}{\ensuremath{\text{--}}}
+% \newunicodechar{—}{\ensuremath{\text{---}}}
 
 \newunicodechar{⦅}{\ensuremath{(\!|}}
 \newunicodechar{⦆}{\ensuremath{|\!)}}
-\newunicodechar{⟨}{\ensuremath{\langle}}
-\newunicodechar{⟩}{\ensuremath{\rangle}}
+% \newunicodechar{⟨}{\ensuremath{\langle}}
+% \newunicodechar{⟩}{\ensuremath{\rangle}}
 \newunicodechar{⦃}{\ensuremath{\{\!\mid}}
 \newunicodechar{⦄}{\ensuremath{\mid\!\}}}
 \newunicodechar{⟪}{\ensuremath{\langle\!\langle}}
@@ -747,8 +756,8 @@
 \newunicodechar{｛}{\ensuremath{\{}}
 \newunicodechar{｝}{\ensuremath{\}}}
 
-\newunicodechar{⟦}{\ensuremath{[\![}}
-\newunicodechar{⟧}{\ensuremath{]\!]}}
+\newunicodechar{⟦}{\ensuremath{\llbracket}} %\newunicodechar{⟦}{\ensuremath{[\![}}
+\newunicodechar{⟧}{\ensuremath{\rrbracket}} %\newunicodechar{⟧}{\ensuremath{]\!]}}
 
 \newunicodechar{⌜}{\ensuremath{\ulcorner}}
 \newunicodechar{⌝}{\ensuremath{\urcorner}}
@@ -759,10 +768,10 @@
 \newunicodechar{⌊}{\ensuremath{\lfloor}}
 \newunicodechar{⌋}{\ensuremath{\rfloor}}
 
-\newunicodechar{ }{\ensuremath{~}}
+% \newunicodechar{ }{\ensuremath{~}}
 
 \newunicodechar{≡}{\ensuremath{\equiv}}
-\newunicodechar{¬}{\ensuremath{\lnot}}
+% \newunicodechar{¬}{\ensuremath{\lnot}}
 \newunicodechar{≢}{\ensuremath{\not\equiv}}
 \newunicodechar{∨}{\ensuremath{\lor}}
 \newunicodechar{∧}{\ensuremath{\land}}
@@ -775,13 +784,13 @@
 \newunicodechar{∃}{\ensuremath{\exists}}
 
 \newunicodechar{❙}{\ensuremath{\,\mid\,}}
-\newunicodechar{•}{\ensuremath{\,\bullet\,}}
+% \newunicodechar{•}{\ensuremath{\,\bullet\,}}
 
 \newunicodechar{⊢}{\ensuremath{\vdash}}
 \newunicodechar{⊣}{\ensuremath{\dashv}}
 \newunicodechar{⊨}{\ensuremath{\vDash}}
 
-\newunicodechar{ø}{\ensuremath{\emptyset}}
+% \newunicodechar{ø}{\ensuremath{\emptyset}}
 \newunicodechar{∅}{\ensuremath{\emptyset}}
 \newunicodechar{∈}{\ensuremath{\in}}
 \newunicodechar{∉}{\ensuremath{\not\in}}
@@ -834,14 +843,14 @@
 \newunicodechar{⊒}{\ensuremath{\sqsupseteq}}
 \newunicodechar{∣}{\ensuremath{\mid}}
 
-\newunicodechar{→}{\ensuremath{\rightarrow}}
+% \newunicodechar{→}{\ensuremath{\rightarrow}}
 \newunicodechar{⇨}{\ensuremath{\rightarrow}}
 \newunicodechar{➩}{\ensuremath{\rightarrow}}
 \newunicodechar{⟿}{\ensuremath{\rightsquigarrow}}
-\newunicodechar{←}{\ensuremath{\leftarrow}}
+% \newunicodechar{←}{\ensuremath{\leftarrow}}
 \newunicodechar{↔}{\ensuremath{\leftrightarrow}}
-\newunicodechar{↑}{\ensuremath{\uparrow}}
-\newunicodechar{↓}{\ensuremath{\downarrow}}
+% \newunicodechar{↑}{\ensuremath{\uparrow}}
+% \newunicodechar{↓}{\ensuremath{\downarrow}}
 \newunicodechar{⇊}{\ensuremath{\downarrow\downarrow}}
 \newunicodechar{⟶}{\ensuremath{\longrightarrow}}
 \newunicodechar{⟵}{\ensuremath{\longleftarrow}}
@@ -879,13 +888,16 @@
 \newunicodechar{̈}{\ensuremath{^{..}}}
 
 \newunicodechar{‿}{CONVERSE}
-\newunicodechar{⁻}{\ensuremath{{}^{-}}}
+% \newunicodechar{⁻}{\ensuremath{{}^{-}}}
 \newunicodechar{□}{\ensuremath{QED}}
 % +latex_header: \newunicodechar{∎}{\ensuremath{QED}}
 \newunicodechar{○}{\ensuremath{\circ}}
 
 \newunicodechar{♯}{\ensuremath{SHARP}}
 \newunicodechar{́}{\ensuremath{'}}
+
+\newunicodechar{′}{\ensuremath{'}} % added
+\newunicodechar{″}{\ensuremath{''}} % added
 
 % Agda: \Mi𝓍
  \newunicodechar{𝑝}{p}
