@@ -1,7 +1,7 @@
-site_name: Agda-Material
-site_url: https://pdmosses.github.io/agda-material/
-repo_name: pdmosses/agda-material
-repo_url: https://github.com/pdmosses/agda-material
+site_name: XDS-Agda
+site_url: https://pdmosses.github.io/xds-agda/
+repo_name: pdmosses/xds-agda
+repo_url: https://github.com/pdmosses/xds-agda
 
 use_directory_urls: true
 
@@ -25,7 +25,7 @@ theme:
 
   features:
     - content.code.copy
-    - navigation.expand
+    # - navigation.expand
     - navigation.indexes
     - navigation.instant
     - navigation.instant.progress

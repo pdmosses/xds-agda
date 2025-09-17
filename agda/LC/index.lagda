@@ -1,12 +1,12 @@
 \begin{code}
 {-# OPTIONS --rewriting --confluence-check #-}
 
-module index where
+module LC.index where
 
-import Variables
-import Terms
-import Domains
-import Environments
-import Semantics
-import Checks
+import LC.Variables
+import LC.Terms
+import LC.Domains
+import LC.Environments
+import LC.Semantics
+import LC.Tests
 \end{code}

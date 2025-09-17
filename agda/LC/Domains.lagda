@@ -1,5 +1,5 @@
 \begin{code}
-module Domains where
+module LC.Domains where
 
 open import Function
   using (Inverse; _↔_) public

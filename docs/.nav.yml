@@ -1,11 +1,11 @@
 nav:
-  - README.md
-  - About: about.md
-  - md/index.md
-  - Test3: md/Test.md
-  - md/*
-  - HTML: html/index.html
-  - PDF: pdf/index.pdf
+  - Lambda-Calculus:
+    - md/LC/
+  - Library:
+    - md/Library/index.md
+    - md/*
+  - HTML: html/LC.index.html
+  - PDF: pdf/LC.index.pdf
 
 preserve_directory_names: true
 

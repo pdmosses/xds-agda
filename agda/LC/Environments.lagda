@@ -1,8 +1,8 @@
 \begin{code}
-module Environments where
+module LC.Environments where
 
-open import Variables
-open import Domains
+open import LC.Variables
+open import LC.Domains
 open import Data.Bool using (if_then_else_)
 
 Env = Var → D∞

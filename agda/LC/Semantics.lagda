@@ -1,10 +1,10 @@
 \begin{code}
-module Semantics where
+module LC.Semantics where
 
-open import Variables
-open import Terms
-open import Domains
-open import Environments
+open import LC.Variables
+open import LC.Terms
+open import LC.Domains
+open import LC.Environments
 
 ⟦_⟧ : Exp → Env → D∞
 -- ⟦ e ⟧ ρ is the value of e with ρ giving the values of free variables 

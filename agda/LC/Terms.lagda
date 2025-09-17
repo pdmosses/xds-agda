@@ -1,7 +1,7 @@
 \begin{code}
-module Terms where
+module LC.Terms where
 
-open import Variables
+open import LC.Variables
 
 data Exp : Set where
   var_  : Var → Exp         -- variable value

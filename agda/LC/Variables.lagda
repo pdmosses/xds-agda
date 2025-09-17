@@ -1,5 +1,5 @@
 \begin{code}
-module Variables where
+module LC.Variables where
   
 open import Data.Bool using (Bool)
 open import Data.Nat  using (ℕ; _≡ᵇ_)

@@ -4,12 +4,12 @@
 open import Agda.Builtin.Equality
 open import Agda.Builtin.Equality.Rewrite
 
-module Tests where
+module LC.Tests where
 
-open import Domains
-open import Variables
-open import Terms
-open import Semantics
+open import LC.Domains
+open import LC.Variables
+open import LC.Terms
+open import LC.Semantics
 
 open import Relation.Binary.PropositionalEquality using (refl)
 open Inverse using (inverseˡ; inverseʳ)

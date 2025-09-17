@@ -1,9 +1,9 @@
 \begin{code}
-module Definitions where
+module LC.Definitions where
 
-import Variables
-import Terms
-import Domains
-import Environments
-import Semantics
+import LC.Variables
+import LC.Terms
+import LC.Domains
+import LC.Environments
+import LC.Semantics
 \end{code}
