@@ -1,5 +1,6 @@
 % Copied from https://github.com/armkeh/unicode-sty/blob/master/unicode.sty
 
+% @pdmosses 2025009-17:
 % Fixed:
 % \newunicodechar{𝒌}{\ensuremath{\mathbf{k}}} %\newunicodechar{𝒌}{\ensuremath{\mathbf{l}}}
 % \newunicodechar{𝒍}{\ensuremath{\mathbf{l}}} %\newunicodechar{𝒍}{\ensuremath{\mathbf{m}}}
@@ -8,6 +9,9 @@
 % Added:
 % \newunicodechar{′}{\ensuremath{'}} % added
 % \newunicodechar{″}{\ensuremath{''}} % added
+% \newunicodechar{‵}{\ensuremath{`}} % added
+% \newunicodechar{‶}{\ensuremath{``}} % added
+% Now no warnings when used with pdflatex.
 
 \ProvidesPackage{unicode}
 
@@ -898,6 +902,8 @@
 
 \newunicodechar{′}{\ensuremath{'}} % added
 \newunicodechar{″}{\ensuremath{''}} % added
+\newunicodechar{‵}{\ensuremath{`}} % added
+\newunicodechar{‶}{\ensuremath{``}} % added
 
 % Agda: \Mi𝓍
  \newunicodechar{𝑝}{p}
