@@ -1,8 +1,9 @@
 nav:
   - Lambda-Calculus:
+    - md/LC/index/index.md
     - md/LC/
   - Library:
-    - md/Library/index.md
+    - md/Library/index/index.md
     - md/*
   - HTML: html/LC.index.html
   - PDF: pdf/LC.index.pdf

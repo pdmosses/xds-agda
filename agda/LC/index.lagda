@@ -8,5 +8,9 @@ import LC.Terms
 import LC.Domains
 import LC.Environments
 import LC.Semantics
+
+import LC.Definitions
 import LC.Tests
+
+import Library.index
 \end{code}
