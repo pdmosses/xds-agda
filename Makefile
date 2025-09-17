@@ -88,7 +88,7 @@ MD-FILES := $(addprefix $(MD)/,$(addsuffix /index.md,$(IMPORT-PATHS)))
 LATEX-FILES := $(addprefix $(LATEX)/,$(addsuffix .tex,$(AGDA-PATHS)))
 # e.g., latex/Test/All.tex latex/Test/Sub/Base.tex
 
-LATEX-INPUTS := $(foreach p,$(AGDA-PATHS),$(NEWLINE)\section{$(subst /,.,$(p))}\input{$(p)})
+LATEX-INPUTS := $(foreach p,$(AGDA-PATHS),$(NEWLINE)\pagebreak[3]$(NEWLINE)\section{$(subst /,.,$(p))}\input{$(p)})
 # e.g., \n\section{index}\input{index}\n\section{Test.index}\input{Test/index}...
 
 AGDA-STYLE := conor
@@ -106,8 +106,8 @@ define LATEXDOC
 \\usepackage{hyperref}
 
 \\usepackage[$(AGDA-STYLE)]{agda}
-\\usepackage{$(AGDA-CUSTOM)}
 \\usepackage{$(UNICODE)}
+\\usepackage{$(AGDA-CUSTOM)}
 
 \\title{$(NAME)}
 \\begin{document}
