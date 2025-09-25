@@ -10,6 +10,4 @@ import LC.Semantics
 import LC.Terms
 import LC.Tests
 import LC.Variables
-
-import Library.index
 \end{code}
