@@ -1,12 +1,22 @@
 nav:
+  - About:
+    - LC.md
+    - PCF.md
   - Lambda-Calculus:
     - md/LC/index/index.md
-    - md/LC/
+    - md/LC/*
+  - PCF:
+    - md/PCF/index/index.md
+    - md/PCF/*
   - Library:
-    - md/Library/index/index.md
+    - Library/index.md
     - md/*
-  - HTML: html/LC.index.html
-  - PDF: pdf/LC.index.pdf
+  # - HTML:
+  #   - Lambda-Calculus: html/LC.index.html
+  #   - PCF: html/PCF.index.html
+  # - PDF:
+  #   - Lambda-Calculus: pdf/LC.index.pdf
+  #   - PCF: pdf/PCF.index.pdf
 
 preserve_directory_names: true
 
