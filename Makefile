@@ -203,16 +203,11 @@ html: $(AGDA-FILES)
 .PHONY: md
 md: $(MD-FILES)
 
-# It is unclear to me how to use order-only prerequisites to ensure that $(MD)
-# has been initialized. The following use of md-init is a workaround.
+$(MD)/$(NAME-HEAD):
+	@$(AGDA-Q) --html --html-highlight=code --html-dir=$(MD) $(ROOT)
 
-.PHONY: md-init
-md-init:
-	@if [ ! -d $(MD)/$(NAME-HEAD) ] ; then \
-	    $(AGDA-Q) --html --html-highlight=code --html-dir=$(MD) $(ROOT); \
-	fi
-
-$(MD-FILES): $(MD)/%/index.md: $(HTML-FILES) md-init
+# Use an order-only prerequisite to generate HTML files in $(MD):
+$(MD-FILES): $(MD)/%/index.md: $(AGDA-FILES) | $(MD)/$(NAME-HEAD)
 	@mkdir -p $(@D)
 # Wrap *.html files in <pre> tags, and rename *.html and *.tex files to *.md:
 	@if [ -f $(MD)/$(subst /,.,$*).html ]; then \
