@@ -13,7 +13,6 @@ The Agda code provided in the following examples imports modules from the
 
 - [Untyped λ-calculus]
 - [PCF]
-- [Scheme]
 
 ## Discussion
 
@@ -22,7 +21,7 @@ Advice and suggestions are welcome, e.g., by posting to the repo [Discussions].
 Peter Mosses <p.d.mosses@tudelft.nl>
 
 [website]: https://pdmosses.github.io/xds-agda/
-[standard Agda library version 2.1]: https://agda.github.io/agda-stdlib/v2.1 "Agda library"
+[standard Agda library version]: https://agda.github.io/agda-stdlib/v2.2 "Agda library"
 [Untyped λ-calculus]: https://pdmosses.github.io/xds-agda/ULC/
 [PCF]: https://pdmosses.github.io/xds-agda/PCF/
 [Scheme]: https://pdmosses.github.io/xds-agda/Scheme/
