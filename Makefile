@@ -52,9 +52,9 @@ AGDA-V := agda --include-path=$(DIR) --trace-imports=3
 PDFLATEX := pdflatex -shell-escape -interaction=nonstopmode
 BIBTEX := bibtex
 
-# Name of ROOT module:
-NAME := $(subst /,.,$(patsubst $(DIR)/%,%,$(basename $(ROOT))))
+# Path and name of ROOT module:
 NAME-PATH := $(patsubst $(DIR)/%,%,$(basename $(ROOT)))
+NAME := $(subst /,.,$(NAME-PATH))
 
 # Target files:
 HTML-FILES := $(sort \
