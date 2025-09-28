@@ -1,7 +1,8 @@
 # Meta-notation
 
-This page summarises the current representation of conventional Scott--Strachey
-style denotational semantics meta-notation in Agda.
+The current examples of denotational semantics given here
+(untyped [lambda-calculus], [PCF], and a simple sublanguage [Scm] of Scheme)
+use a lightweight shallow embedding of domain theory in Agda.
 
 For an introduction to the Agda language, see the [Agda docs] or the
 [Agda Wikipedia page].
@@ -33,13 +34,13 @@ and so-called banana-brackets **`⦅ ⦆`** for parentheses.
 Agda doesn't allow empty mixfix names:
 injections between (data)types need to be explicit.
 
-A type can be left unspecified by declaring it as a postulate
-(or a module parameter) in Agda.
+In Agda, a value is left unspecified by declaring it either as a postulate
+or as a module parameter.
 
 ### Domain Equations
 
 A flat domain is defined by equating it to a lifted set,
-which is written **`S +⊥`** or **`𝕃 S`** in Agda.
+which is written **`S +⊥`** in Agda.
 
 Non-recursive groups of domains are defined by equating them to domain terms.
 The currently available domain constructors are:
@@ -47,27 +48,25 @@ The currently available domain constructors are:
 - **`D → E`**, the domain of functions from **`D`** to **`E`**;
 - **`𝕃 D`**, lifting **`D`** with a further **`⊥`**;
 - **`D × E`**, Cartesian product;
-- **`𝕃 (D + E)`**, separated sum;
-- **`D ⋆`**, finite sequences: **`𝕃 ((D ^ 0) + ... + (D ^ n) + ...)`**.
+- **`D + E`**, separated sum;
+- **`D ⋆`**, finite sequences.
 
 Most of the above constructors can also be used with predomains;
 and **`P → D`** is a domain also when **`P`** is a predomain.
-(Domain sequences use a superscript asterisk **`D ⋆`**, whereas
-predomain sequences use a plain asterisk **`P *`**.)
 
-(Groups of mutually) recursive domains are defined by first postulating each
-name to be of type **`Domain`**, then postulating *instances* of propositions
-of the form **`iso-D : D ↔ E`** asserting that the domain named **`D`** is
-isomorphic to the domain **`E`** formed from domain constructors and names.
-The special Agda module application **`open Function.Inverse {{ ... }}`**
-then declares the inverse functions **`to : D → E`** and **`from : E → D`**
-for each declared isomorphism.
+In conventional denotational semantics, (groups of mutually) recursive domains
+are defined, up to isomorphism, by domain equations. The isomorphisms between
+domains and their definitions are usually left implicit.
 
-In conventional denotational semantics, definitions of domains are simply
-specified as equations, and the isomorphisms between domains and their
-definitions are left implicit.
-The isomorphisms need to be specified explicitly in Agda -- both when defining
-domains and when defining elements of domains in λ-notation.
+In Agda, such isomorphisms need to be specified explicitly -- both when defining
+domains and when defining elements of domains in λ-notation. See the
+[lambda-calculus] semantics for an example of this.
+
+When recursively-defined domains involve domain sums, however, the required
+isomorphisms can be subsumed by postulating projections and injections between
+domains and their summands. See the [Scm] semantics for an example.
+
+The [PCF] semantics does not involve recursively-defined domains.
 
 ### Semantic Functions
 
@@ -118,8 +117,12 @@ to be separated by spaces.
 Currently, the examples of denotational definitions presented here are
 independent, and there is some duplication of declarations of notation for
 domains.
+
 In a future version, all the domain notation should be specified in a separate
 module, with submodules for the various domain constructors.
 
 [Agda docs]: https://agda.readthedocs.io/en/v2.7.0.1/getting-started/a-taste-of-agda.html
 [Agda Wikipedia page]: https://en.wikipedia.org/wiki/Agda_(programming_language)
+[Lambda-calculus]: LC.md
+[PCF]: PCF.md
+[Scm]: Scm.md
