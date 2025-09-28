@@ -3,12 +3,18 @@ nav:
     - index.md
     - LC.md
     - PCF.md
+    - Scm.md
+    - meta-notation.md
   - Lambda-Calculus:
     - md/LC/index/index.md
     - md/LC/*
   - PCF:
     - md/PCF/index/index.md
     - md/PCF/*
+  - Scm:
+    - md/Scm/index/index.md
+    # - md/Scm/Notation/index.md
+    - md/Scm/*
   - Library:
     - Library/index.md
     - md/*
