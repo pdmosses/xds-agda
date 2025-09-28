@@ -136,37 +136,59 @@ debug:
 .PHONY: website
 website:
 	@echo
-	@echo Clean and generate the website for $(ROOT)
-	@echo
-	@echo Clean ...
+	@echo "Clean and generate the website ..."
 	@$(MAKE) clean-all
-	@echo Generate HTML in $(HTML) ...
-	@$(MAKE) html ROOT=agda/LC/index.lagda
-	@$(MAKE) html ROOT=agda/PCF/index.lagda
-	@echo Generate Markdown in $(MD) ...
-	@$(MAKE) md ROOT=agda/LC/index.lagda
-	@$(MAKE) md ROOT=agda/PCF/index.lagda
-	@echo Generate LaTeX inputs in $(LATEX) ...
-	@$(MAKE) latex ROOT=agda/LC/index.lagda
-	@$(MAKE) latex ROOT=agda/PCF/index.lagda
-	@echo Generate LaTeX document in $(LATEX) ...
-	@$(MAKE) doc ROOT=agda/LC/index.lagda
-	@$(MAKE) doc ROOT=agda/PCF/index.lagda
-	@echo Generate PDF in $(PDF) ...
-	@$(MAKE) pdf ROOT=agda/LC/index.lagda
-	@$(MAKE) pdf ROOT=agda/PCF/index.lagda
-	@echo ... finished
 	@echo
-	@echo To preview the generated webite:
+	@echo "Generate section for LC ..."
+	@$(MAKE) part-website ROOT=agda/LC/index.lagda
+	@echo
+	@echo "Generate section for PCF ..."
+	@$(MAKE) part-website ROOT=agda/PCF/index.lagda
+	@echo
+	@echo "Generate section for Scm ..."
+	@$(MAKE) part-website ROOT=agda/Scm/index.lagda
+	@echo
+	@echo "... finished"
+	@echo
+	@echo "To preview the generated webite:"
 	@echo "    make serve"
 	@echo
+
+.PHONY: part-website
+part-website:
+	@echo "HTML pages     -> $(HTML) ..."
+	@$(MAKE) html
+	@echo "Markdown pages -> $(MD) ..."
+	@$(MAKE) md
+	@echo "LaTeX inputs   -> $(LATEX) ..."
+	@$(MAKE) latex
+	@echo "LaTeX document -> $(LATEX) ..."
+	@$(MAKE) doc
+	@echo "PDF document   -> $(PDF) ..."
+	@$(MAKE) pdf
 
 # Check Agda source files:
 
 .PHONY: check
 check:
-	@$(AGDA-V) agda/LC/index.lagda | grep $(shell pwd)
-	@$(AGDA-V) agda/PCF/index.lagda | grep $(shell pwd)
+	@echo
+	@echo "Check the Agda code ..."
+	@echo
+	@echo "Loading LC ..."
+	@$(MAKE) part-check ROOT=agda/LC/index.lagda
+	@echo
+	@echo "Loading PCF ..."
+	@$(MAKE) part-check ROOT=agda/PCF/index.lagda
+	@echo
+	@echo "Loading Scm ..."
+	@$(MAKE) part-check ROOT=agda/Scm/index.lagda
+	@echo
+	@echo "... finished"
+	@echo
+
+.PHONY: part-check
+part-check:
+	@$(AGDA-V) $(ROOT) | grep $(shell pwd)
 
 # Generate HTML web pages:
 
