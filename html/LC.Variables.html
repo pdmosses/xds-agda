@@ -1,0 +1,15 @@
+<!DOCTYPE HTML>
+<html><head><meta charset="utf-8"><title>LC.Variables</title><link rel="stylesheet" href="Agda.css"></head><body><pre class="Agda"><a id="1" class="Markup">\begin{code}</a>
+<a id="14" class="Keyword">module</a> <a id="21" href="LC.Variables.html" class="Module">LC.Variables</a> <a id="34" class="Keyword">where</a>
+  
+<a id="43" class="Keyword">open</a> <a id="48" class="Keyword">import</a> <a id="55" href="Data.Bool.html" class="Module">Data.Bool</a> <a id="65" class="Keyword">using</a> <a id="71" class="Symbol">(</a><a id="72" href="Agda.Builtin.Bool.html#173" class="Datatype">Bool</a><a id="76" class="Symbol">)</a>
+<a id="78" class="Keyword">open</a> <a id="83" class="Keyword">import</a> <a id="90" href="Data.Nat.html" class="Module">Data.Nat</a>  <a id="100" class="Keyword">using</a> <a id="106" class="Symbol">(</a><a id="107" href="Agda.Builtin.Nat.html#203" class="Datatype">ℕ</a><a id="108" class="Symbol">;</a> <a id="110" href="Data.Nat.Base.html#1289" class="Primitive Operator">_≡ᵇ_</a><a id="114" class="Symbol">)</a>
+
+<a id="117" class="Keyword">data</a> <a id="Var"></a><a id="122" href="LC.Variables.html#122" class="Datatype">Var</a> <a id="126" class="Symbol">:</a> <a id="128" href="Agda.Primitive.html#388" class="Primitive">Set</a> <a id="132" class="Keyword">where</a>
+  <a id="Var.x"></a><a id="140" href="LC.Variables.html#140" class="InductiveConstructor">x</a> <a id="142" class="Symbol">:</a> <a id="144" href="Agda.Builtin.Nat.html#203" class="Datatype">ℕ</a> <a id="146" class="Symbol">→</a> <a id="148" href="LC.Variables.html#122" class="Datatype">Var</a>  <a id="153" class="Comment">-- variables</a>
+
+<a id="167" class="Keyword">variable</a> <a id="176" href="LC.Variables.html#176" class="Generalizable">v</a> <a id="178" class="Symbol">:</a> <a id="180" href="LC.Variables.html#122" class="Datatype">Var</a>
+
+<a id="_==_"></a><a id="185" href="LC.Variables.html#185" class="Function Operator">_==_</a> <a id="190" class="Symbol">:</a> <a id="192" href="LC.Variables.html#122" class="Datatype">Var</a> <a id="196" class="Symbol">→</a> <a id="198" href="LC.Variables.html#122" class="Datatype">Var</a> <a id="202" class="Symbol">→</a> <a id="204" href="Agda.Builtin.Bool.html#173" class="Datatype">Bool</a>
+<a id="209" href="LC.Variables.html#140" class="InductiveConstructor">x</a> <a id="211" href="LC.Variables.html#211" class="Bound">n</a> <a id="213" href="LC.Variables.html#185" class="Function Operator">==</a> <a id="216" href="LC.Variables.html#140" class="InductiveConstructor">x</a> <a id="218" href="LC.Variables.html#218" class="Bound">n′</a> <a id="221" class="Symbol">=</a> <a id="223" class="Symbol">(</a><a id="224" href="LC.Variables.html#211" class="Bound">n</a> <a id="226" href="Data.Nat.Base.html#1289" class="Primitive Operator">≡ᵇ</a> <a id="229" href="LC.Variables.html#218" class="Bound">n′</a><a id="231" class="Symbol">)</a>
+<a id="233" class="Markup">\end{code}</a></pre></body></html>
