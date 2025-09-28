@@ -1,6 +1,6 @@
 # Denotational Semantics in Agda
 
-> Experiments with Agda support for Scott–Strachey denotational semantics.
+> Experiments with Agda support for Scott–Strachey denotational semantics
 
 ## About
 
@@ -8,11 +8,9 @@ For background and motivation, see the accompanying [website].
 
 ## Examples
 
-The Agda code provided in the following examples imports modules from the
-[standard Agda library version 2.1].
-
-- [Untyped λ-calculus]
+- [Lambda-calculus]
 - [PCF]
+- [Scm]
 
 ## Discussion
 
@@ -21,8 +19,7 @@ Advice and suggestions are welcome, e.g., by posting to the repo [Discussions].
 Peter Mosses <p.d.mosses@tudelft.nl>
 
 [website]: https://pdmosses.github.io/xds-agda/
-[standard Agda library version]: https://agda.github.io/agda-stdlib/v2.2 "Agda library"
-[Untyped λ-calculus]: https://pdmosses.github.io/xds-agda/ULC/
+[Lambda-calculus]: https://pdmosses.github.io/xds-agda/LC/
 [PCF]: https://pdmosses.github.io/xds-agda/PCF/
-[Scheme]: https://pdmosses.github.io/xds-agda/Scheme/
+[Scm]: https://pdmosses.github.io/xds-agda/Scm/
 [Discussions]: https://github.com/pdmosses/xds-agda/discussions
