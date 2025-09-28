@@ -1,13 +1,14 @@
 # About
 
-> Experiments with Agda support for Scott–Strachey denotational semantics.
+> Experiments with Agda support for Scott–Strachey denotational semantics
 
 ## Examples
 
 Complete examples of denotational semantics definitions in Agda:
 
-- [Untyped λ-calculus](LC.md)
+- [Lambda-calculus](LC.md)
 - [PCF](PCF.md)
+- [Scm](Scm.md)
 
 ## Domains in Denotational Semantics
 
@@ -45,15 +46,21 @@ well-developed support for domains.
   - applications need to select the underlying functions, and
   - the isomorphisms between domains and their definitions are explicit.
 
+  Such requirements give significant pragmatic issues: explicit continuity
+  proofs are generally tedious to formulate (and subsequently read); and the
+  notation for pairing and selection prevents direct embedding in Agda of
+  λ-notation from denotational definitions.
+
 ## Extending Agda with Scott-Domains
 
-The purpose of this repo is to experiment with extending Agda to allow
+The purpose of this repository is to experiment with extending Agda to allow
 denotational semantics to be defined more straightforwardly.
 
-The current examples presented here illustrate how denotational semantics might
+The current examples presented here illustrate how denotational semantics can
 be defined in Agda.
-However, the examples currently use *unsatisfiable postulates* to allow Agda to
-type-check the definitions.
+However, they use *postulates* to allow Agda to type-check the definitions,
+and some of the postulates are inconsistent with the underlying Agda logic.
+This does not affect type-checking, but could lead to unsound equivalence proofs.
 
 ### Adding a Universe of Domains
 
@@ -111,7 +118,6 @@ Advice and suggestions are welcome, e.g., by posting to the repo [Discussions].
 
 Peter Mosses <p.d.mosses@tudelft.nl>
 
-[standard Agda library version 2.1]: https://agda.github.io/agda-stdlib/v2.1 "Agda library"
 [DomainTheory]: https://martinescardo.github.io/TypeTopology/DomainTheory.index.html "Agda modules"
 [TypeTopology]: https://martinescardo.github.io/TypeTopology/ "Agda library"
 [DomainTheory.Bilimits.Dinfinity]: https://martinescardo.github.io/TypeTopology/DomainTheory.Bilimits.Dinfinity.html  "Agda module"
