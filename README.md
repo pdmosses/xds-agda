@@ -119,11 +119,6 @@ Peter Mosses
 
 [pdmosses.github.io](https://pdmosses.github.io)
 
-## Discussion
-
-Advice and suggestions are welcome, e.g., by posting to the repo [Discussions].
-
-Peter Mosses <p.d.mosses@tudelft.nl>
 
 [repository]: https://github.com/pdmosses/xds-agda/
 [website]: https://pdmosses.github.io/xds-agda/
