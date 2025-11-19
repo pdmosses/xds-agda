@@ -589,6 +589,42 @@ all:
 	@$(MAKE) pcf
 	@$(MAKE) scm
 
+# OLD:
+
+# .PHONY: website
+# website:
+# 	@echo
+# 	@echo "Clean and generate the website ..."
+# 	@$(MAKE) clean-all
+# 	@echo
+# 	@echo "Generate section for LC ..."
+# 	@$(MAKE) part-website ROOT=agda/LC/index.lagda
+# 	@echo
+# 	@echo "Generate section for PCF ..."
+# 	@$(MAKE) part-website ROOT=agda/PCF/index.lagda
+# 	@echo
+# 	@echo "Generate section for Scm ..."
+# 	@$(MAKE) part-website ROOT=agda/Scm/index.lagda
+# 	@echo
+# 	@echo "... finished"
+# 	@echo
+# 	@echo "To preview the generated webite:"
+# 	@echo "    make serve"
+# 	@echo
+
+# .PHONY: part-website
+# part-website:
+# 	@echo "HTML pages     -> $(HTML) ..."
+# 	@$(MAKE) html
+# 	@echo "Markdown pages -> $(MD) ..."
+# 	@$(MAKE) md
+# 	@echo "LaTeX inputs   -> $(LATEX) ..."
+# 	@$(MAKE) latex
+# 	@echo "LaTeX document -> $(LATEX) ..."
+# 	@$(MAKE) doc
+# 	@echo "PDF document   -> $(PDF) ..."
+# 	@$(MAKE) pdf
+
 ##############################################################################
 # REMOVE GENERATED FILES
 
