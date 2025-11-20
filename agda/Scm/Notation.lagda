@@ -46,7 +46,9 @@ postulate
   inj₁   : D → D + E                        -- injection
   inj₂   : E → D + E                        -- injection
   [_,_]  : (D → F) → (E → F) → (D + E → F)  -- case analysis
-
+\end{code}
+\clearpage
+\begin{code}
 ------------------------------------------------------------------------
 -- Product domains
 
@@ -88,4 +90,4 @@ infix  8   _^_
 infixr 20  _⟶_,_
 
 ⟦_⟧ = id
-\end{code}  
+\end{code}
