@@ -6,6 +6,12 @@
 ##############################################################################
 # MAIN TARGETS
 
+# MAKE ALL ROOT LANGUAGES:
+# make clean-all
+# make all ROOT=agda/LC/index.lagda
+# make all ROOT=agda/PCF/index.lagda
+# make all ROOT=agda/Scm/index.lagda
+
 # SHOW EXPLANATIONS OF THE MAIN TARGETS:
 # make help
 
@@ -27,12 +33,7 @@
 # GENERATE A PDF LISTING THE AGDA FILES:
 # make pdf
 
-# UPDATE A LANGUAGE
-# make lc
-# make pcf
-# make scm
-
-# CLEAN UPDATE THE WEBSITE AND PDF:
+# UPDATE THE WEBSITE AND PDF:
 # make all
 
 # REMOVE ALL GENERATED FILES:
@@ -40,6 +41,7 @@
 
 # SHOW VARIABLE VALUES:
 # make debug
+# The expected output is listed at the end of this file
 
 ##############################################################################
 # COMMAND LINE ARGUMENTS
@@ -75,6 +77,11 @@ TEMP    := /tmp/html
 # Top-level navigation links are specified in docs/.nav.yml; the lower
 # navigation levels reflect the directory hierarchy of the source files.
 
+# Force sequential execution of phony prerequisites, to avoid use of
+# recipes with recursive calls of $(MAKE):
+
+.NOTPARALLEL:
+
 ##############################################################################
 # CONTENTS
 #
@@ -85,7 +92,6 @@ TEMP    := /tmp/html
 # BROWSE AND DEPLOY THE GENERATED WEBSITE
 # DEPLOY, DELETE, AND BROWSE WEBSITE VERSIONS
 # GENERATE A PDF
-# GENERATE A LANGUAGE
 # GENERATE ALL
 # REMOVE GENERATED FILES
 # HELPFUL TEXTS
@@ -98,12 +104,6 @@ TEMP    := /tmp/html
 EMPTY :=
 
 SPACE := $(EMPTY) $(EMPTY)
-
-# A single newline:
-define NEWLINE :=
-
-
-endef
 
 # Shell commands:
 
@@ -137,29 +137,22 @@ debug:
 ##############################################################################
 # CHECK THE AGDA CODE
 
-# `make check` loads ROOT, reporting all imported files located in DIR:
+# `make check` loads ROOT, reporting any errors:
 
 .PHONY: check
 check:
-	@echo
-	@echo "Checking $(ROOT) ..."
-	@echo
-	@$(AGDA-V) $(ROOT) | grep $(PROJECT)/$(DIR)/ | sed -e 's#$(PROJECT)/##'
-	@$(AGDA-Q) $(ROOT) 2>&1 | sed -n -e '1,/error:/p' | sed '1d' \
-						     | sed -e 's#$(PROJECT)/##'
-	@echo
-	@echo "... finished"
+	@ { $(AGDA-Q) $(ROOT) 2>&1 > /dev/null && \
+	    echo "Checking Agda sources finished"; } || \
+	  { $(AGDA-V) $(ROOT) 2>&1 | sed -e 's#$(PROJECT)/##'; }
 	
 ##############################################################################
 # GENERATE WEBPAGES
 
 # ROOT module path relative to DIR:
 NAME-PATH := $(patsubst $(DIR)/%,%,$(basename $(ROOT)))
-# Test/index
 
 # ROOT module name:
 NAME := $(subst /,.,$(NAME-PATH))
-# Test.index
 
 # Target files for HTML generation:
 HTML-FILES := $(sort \
@@ -173,37 +166,23 @@ HTML-FILES := $(sort \
 		  mkdir $(TEMP); \
 		  echo $(TEMP)/ERROR.html; \
 		fi)))
-# docs/html/Agda.Primitive.html docs/html/Test.Sub.Base.html
-# docs/html/Test.html docs/html/Test.index.html docs/html/Test2.html
 
 # Paths of modules imported (perhaps indirectly) by ROOT:
 IMPORT-PATHS := $(subst .,/,$(subst $(HTML)/,,$(basename $(HTML-FILES))))
-# Agda/Primitive Test/Sub/Base Test Test/index Test2
 
 # Names of imported modules located in DIR:
 LOCAL-IMPORT-FILES := $(foreach n,$(IMPORT-PATHS),$(filter $n.%,$(sort $(subst $(DIR)/,,$(shell \
 		find $(DIR) -name '*.agda' -or -name '*.lagda')))))
-# Test/Sub/Base.lagda Test.agda Test/index.lagda Test2.agda
 
 # Target files for Markdown generation:
 MD-FILES := $(sort $(addprefix $(MD)/,$(addsuffix /index.md,$(IMPORT-PATHS))))
-# docs/md/Agda/Primitive/index.md docs/md/Test/Sub/Base/index.md
-# docs/md/Test/index.md docs/md/Test/index/index.md docs/md/Test2/index.md
 
 # `make web` generates the HTML and Markdown sources for all web pages.
 # Note: Generating a website for the Agda standard library takes a few minutes.
 
 .PHONY: web
-web:
-	@echo
-	@echo "Generating HTML and Markdown for $(ROOT) ..."
-	@echo
-	@echo "HTML     -> $(HTML) ..."
-	@$(MAKE) html
-	@echo "Markdown -> $(MD) ..."
-	@$(MAKE) md
-	@echo
-	@echo "... finished"
+web: html md
+	@echo "Web pages finished"
 
 # Generate HTML web pages:
 
@@ -254,7 +233,7 @@ $(MD-FILES): $(MD)/%/index.md: $(prefix $(DIR),$(LOCAL-IMPORT-FILES)) \
 	    mv -f $(MD)/$(subst /,.,$*).tex $@; \
 	fi
 # Remove LaTeX page breaks:
-	@sd '\n\\clearpage\n' '' $@
+	@sd '\n\\(clearpage|newpage)\n' '' $@
 # Prepend front matter:
 	@sd -- '\A' \
 		'---\ntitle: $(*F)\nhide: toc\n---\n\n# $(subst /,.,$*)\n\n' $@
@@ -397,30 +376,24 @@ BIBTEX := bibtex
 
 # Filter plain and literate Agda files
 AGDA-FILES := $(filter %.agda,$(LOCAL-IMPORT-FILES))
-# Test.agda Test2.agda
 LAGDA-FILES := $(filter %.lagda,$(LOCAL-IMPORT-FILES))
-# Test/Sub/Base.lagda Test/index.lagda
 
 # Target files for LaTeX generated from Agda source files:
 AGDA-LATEX-FILES := $(addprefix $(LATEX)/,$(addsuffix .tex,\
 			$(basename $(AGDA-FILES))))
-# latex/Test.tex latex/Test2.tex
 LAGDA-LATEX-FILES := $(addprefix $(LATEX)/,$(addsuffix .tex,\
 			$(basename $(LAGDA-FILES))))
-# latex/Test/Sub/Base.tex latex/Test/index.tex
 
 # LaTeX source code for formatting generated LaTeX:
-LATEX-INPUTS := $(foreach p,$(sort $(basename $(AGDA-FILES) $(LAGDA-FILES))),\
-		$(NEWLINE)\pagebreak[3]$(NEWLINE)\section{$(subst /,.,$(p))}\
-		\input{$(p)})
-# \pagebreak[3]\section{Test}\input{Test}
-# \pagebreak[3]\section{Test.Sub.Base}\input{Test/Sub/Base}
-# \pagebreak[3]\section{Test.index}\input{Test/index}
-# \pagebreak[3]\section{Test2}\input{Test2}
+define LATEX-INPUTS
+$(foreach p,$(basename $(AGDA-FILES) $(LAGDA-FILES)),
+\\newpage
+\\section{$(subst /,.,$(p))}
+\\input{$(p)})
+endef
 
 # Filename for generated LaTeX document:
 AGDA-DOC := $(NAME).doc
-# Test.index.doc
 
 # Source code of generated LaTeX document:
 
@@ -453,84 +426,27 @@ endef
 # `make pdf` generates some LaTeX files and a PDF:
 
 .PHONY: pdf
-pdf:
-	@echo
-	@echo "Generating PDF for $(ROOT) ..."
-	@echo
-	@echo "LaTeX inputs   -> $(LATEX) ..."
-	@$(MAKE) latex-inputs
-	@echo "LaTeX document -> $(LATEX) ..."
-	@$(MAKE) latex-document
-	@echo "PDF document   -> $(PDF) ..."
-	@$(MAKE) pdf-document
-	@echo
-	@echo "... finished"
-	@echo
+pdf: latex-inputs latex-document pdf-document
+	@echo "PDF finished"
 
-.PHONY: part-check
-part-check:
-	@$(AGDA-V) $(ROOT) | grep $(shell pwd)
+# The following targets are auxiliary, and not intended for direct use.
 
-# Generate HTML web pages:
+# `make latex-inputs` generates LaTeX source files for use in a LaTeX document:
 
-.PHONY: html
-html: $(AGDA-FILES)
-	@$(AGDA-Q) --html --html-dir=$(HTML) $(ROOT)
+.PHONY: latex-inputs
+latex-inputs: $(AGDA-LATEX-FILES) $(LAGDA-LATEX-FILES)
 
-# Generate Markdown sources for web pages:
+$(AGDA-LATEX-FILES): $(LATEX)/%.tex: $(DIR)/%.agda
+	@LAGDA=$(patsubst %.agda,%.lagda,$<); \
+	    printf "\\\\begin{code}\\n" > $$LAGDA; \
+	    cat $< >> $$LAGDA; \
+	    printf "\\n\\\\end{code}" >> $$LAGDA; \
+	    mv $< $<.hide; \
+	    $(AGDA-Q) --latex --latex-dir=$(LATEX) $$LAGDA; \
+	    rm $$LAGDA; \
+	    mv $<.hide $<
 
-# `agda --html --html-highlight=code ROOT.lagda` produces highlighted HTML files
-# from plain `agda` and literate `lagda` source files. However, the extension is
-# `tex` for HTML produced from `lagda` files. It is `html` for `agda` files, but
-# needs to be wrapped in `<pre class="Agda">...</pre>` tags.
-
-# The links in the files assume they are all in the same directory, and that the
-# files have extension `.html`. Adjusting them to hierarchical links with
-# directory URLs involves replacing the dots in the basenames of the files by
-# slashes, prefixing the href by the relative path to the top of the hierarchy,
-# and appending a slash to the file path. All URLs that start with A-Z or a-z
-# are assumed to be links to modules, and adjusted (also in the prose of
-# literate Agda source files).
-
-# The links generated by Agda always start with the file name. This could be
-# omitted for local links where the id is in the same file. Similarly, the
-# links to modules in the same directory could be optimized.
-
-.PHONY: md
-md: $(MD-FILES)
-
-# Create HTML files and ROOT directory in $(MD):
-$(MD)/$(NAME-PATH):
-	@$(AGDA-Q) --html --html-highlight=code --html-dir=$(MD) $(ROOT)
-	@mkdir -p $(MD)/$(NAME-PATH)
-
-# Use an order-only prerequisite:
-$(MD-FILES): $(MD)/%/index.md: $(AGDA-FILES) | $(MD)/$(NAME-PATH)
-	@mkdir -p $(@D)
-# Wrap *.html files in <pre> tags, and rename *.html and *.tex files to *.md:
-	@if [ -f $(MD)/$(subst /,.,$*).html ]; then \
-	    mv -f $(MD)/$(subst /,.,$*).html $@; sd '\A' '<pre class="Agda">' $@; sd '\z' '</pre>' $@; \
-	else \
-	    mv -f $(MD)/$(subst /,.,$*).tex $@; \
-	fi
-# Prepend front matter:
-	@sd -- '\A' '---\ntitle: $(*F)\nhide: toc\n---\n\n# $(subst /,.,$*)\n\n' $@
-# Use directory URLs:
-	@sd '(href="[A-Za-z][^"]*)\.html' '$$1/' $@
-# Replace `.`-separated filenames in URLs by `/`-separated paths:
-	@while grep -q 'href="[A-Z][^".]*\.' $@; do \
-	    sd '(href="[A-Za-z][^".]*)\.' '$$1/' $@; \
-	done
-# Prefix paths by relative path to top level:
-	@sd 'href="([A-Za-z])' 'href="$(subst $(SPACE),$(EMPTY),$(foreach d,$(subst /, ,$*),../))$$1' $@
-#	@sd '(href="[^"]*)index/' '$$1.' $@
-
-# Generate LaTeX source files for use in latex documents:
-
-.PHONY: latex
-latex: $(LATEX-FILES)
-
-$(LATEX-FILES): $(LATEX)/%.tex: $(DIR)/%.lagda
+$(LAGDA-LATEX-FILES): $(LATEX)/%.tex: $(DIR)/%.lagda
 	@$(AGDA-Q) --latex --latex-dir=$(LATEX) $<
 
 # `make latex-document` generates a LaTeX document file:
@@ -547,7 +463,7 @@ $(LATEX)/$(AGDA-DOC).tex:
 .PHONY: pdf-document
 pdf-document: $(PDF)/$(NAME).pdf
 
-$(PDF)/$(NAME).pdf: $(LATEX)/$(AGDA-DOC).tex $(LATEX-FILES) $(LATEX)/agda.sty \
+$(PDF)/$(NAME).pdf: $(LATEX)/$(AGDA-DOC).tex $(LAGDA-LATEX-FILES) $(LATEX)/agda.sty \
 		    $(LATEX)/$(AGDA-CUSTOM).sty $(LATEX)/$(AGDA-UNICODE).sty
 	@cd $(LATEX); \
 	  $(PDFLATEX) $(AGDA-DOC) 1>/dev/null; \
@@ -556,74 +472,13 @@ $(PDF)/$(NAME).pdf: $(LATEX)/$(AGDA-DOC).tex $(LATEX-FILES) $(LATEX)/agda.sty \
 	@mkdir -p $(PDF) && mv -f $(LATEX)/$(AGDA-DOC).pdf $(PDF)/$(NAME).pdf
 
 ##############################################################################
-# GENERATE A LANGUAGE
-
-.PHONY: lc
-lc:
-	@$(MAKE) check ROOT=agda/LC/index.lagda
-	@$(MAKE) web   ROOT=agda/LC/index.lagda
-	@$(MAKE) pdf   ROOT=agda/LC/index.lagda
-
-.PHONY: pcf
-pcf:
-	@$(MAKE) check ROOT=agda/PCF/index.lagda
-	@$(MAKE) web   ROOT=agda/PCF/index.lagda
-	@$(MAKE) pdf   ROOT=agda/PCF/index.lagda
-
-.PHONY: scm
-scm:
-	@$(MAKE) check ROOT=agda/Scm/index.lagda
-	@$(MAKE) web   ROOT=agda/Scm/index.lagda
-	@$(MAKE) pdf   ROOT=agda/Scm/index.lagda
-
-##############################################################################
 # GENERATE ALL
 
-# `make all` deletes any previously generated files, then generates a website
-# with highlighted listings of the code for each language.
+# `make all` checks the Agda code, deletes any previously generated files,
+# then generates web pages and a PDF with highlighted listings of the code.
 
 .PHONY: all
-all:
-	@$(MAKE) clean-all
-	@$(MAKE) lc
-	@$(MAKE) pcf
-	@$(MAKE) scm
-
-# OLD:
-
-# .PHONY: website
-# website:
-# 	@echo
-# 	@echo "Clean and generate the website ..."
-# 	@$(MAKE) clean-all
-# 	@echo
-# 	@echo "Generate section for LC ..."
-# 	@$(MAKE) part-website ROOT=agda/LC/index.lagda
-# 	@echo
-# 	@echo "Generate section for PCF ..."
-# 	@$(MAKE) part-website ROOT=agda/PCF/index.lagda
-# 	@echo
-# 	@echo "Generate section for Scm ..."
-# 	@$(MAKE) part-website ROOT=agda/Scm/index.lagda
-# 	@echo
-# 	@echo "... finished"
-# 	@echo
-# 	@echo "To preview the generated webite:"
-# 	@echo "    make serve"
-# 	@echo
-
-# .PHONY: part-website
-# part-website:
-# 	@echo "HTML pages     -> $(HTML) ..."
-# 	@$(MAKE) html
-# 	@echo "Markdown pages -> $(MD) ..."
-# 	@$(MAKE) md
-# 	@echo "LaTeX inputs   -> $(LATEX) ..."
-# 	@$(MAKE) latex
-# 	@echo "LaTeX document -> $(LATEX) ..."
-# 	@$(MAKE) doc
-# 	@echo "PDF document   -> $(PDF) ..."
-# 	@$(MAKE) pdf
+all: check web pdf
 
 ##############################################################################
 # REMOVE GENERATED FILES
@@ -674,12 +529,8 @@ make pdf
   Generate a PDF for $(ROOT) (optional)
 make clean-all
   Remove *all* generated files !!!
-make lc
-make pcf
-make scm
-  Combine check, web, and pdf
 make all
-   Combine clean-all, lc, pcf, scm
+  Combine check, web, and pdf
 make serve
   Browse a generated website locally
 make deploy
@@ -743,3 +594,63 @@ LATEXDOC:
 $(LATEXDOC)
 
 endef
+
+# xds-agda: make debug
+
+# DIR:          agda
+# ROOT:         agda/index.lagda
+# PROJECT:      /Users/pdm/Projects/Agda/xds-agda
+# NAME-PATH:    index
+# NAME:         index
+
+# HTML-FILES   (1-9): docs/html/Agda.Primitive.html docs/html/index.html
+
+# IMPORT-PATHS (1-9): Agda/Primitive index
+
+# LOCAL-IMPORT-FILES (1-9): index.lagda
+
+# MD-FILES     (1-9): docs/md/Agda/Primitive/index.md docs/md/index/index.md
+
+# AGDA-FILES:   
+
+# LAGDA-FILES:  index.lagda
+
+# AGDA-LATEX-FILES:   
+
+# LAGDA-LATEX-FILES:  latex/index.tex
+
+# LATEX-INPUTS:
+
+# \newpage
+# \section{index}
+# \input{index}
+
+# AGDA-DOC:      index.doc
+# AGDA-STYLE:    conor
+# AGDA-CUSTOM:   ../agda-custom
+# AGDA-UNICODE:  ../agda-unicode
+
+# LATEXDOC:
+
+# \documentclass[a4paper]{article}
+# \usepackage{parskip}
+# \usepackage[T1]{fontenc}
+# \usepackage{microtype}
+# \DisableLigatures[-]{encoding = T1, family = tt* }
+# \usepackage{hyperref}
+
+# \usepackage[conor]{agda}
+# \usepackage{../agda-unicode}
+# \usepackage{../agda-custom}
+
+# \title{index}
+# \begin{document}
+# \maketitle
+# \tableofcontents
+# \newpage
+
+# \newpage
+# \section{index}
+# \input{index}
+
+# \end{document}
