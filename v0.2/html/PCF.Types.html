@@ -1,0 +1,35 @@
+<!DOCTYPE HTML>
+<html><head><meta charset="utf-8"><title>PCF.Types</title><link rel="stylesheet" href="Agda.css"></head><body><pre class="Agda"><a id="1" class="Markup">\begin{code}</a>
+<a id="14" class="Symbol">{-#</a> <a id="18" class="Keyword">OPTIONS</a> <a id="26" class="Pragma">--rewriting</a> <a id="38" class="Pragma">--confluence-check</a> <a id="57" class="Pragma">--lossy-unification</a> <a id="77" class="Symbol">#-}</a>
+
+<a id="82" class="Keyword">module</a> <a id="89" href="PCF.Types.html" class="Module">PCF.Types</a> <a id="99" class="Keyword">where</a>
+
+<a id="106" class="Keyword">open</a> <a id="111" class="Keyword">import</a> <a id="118" href="Data.Bool.Base.html" class="Module">Data.Bool.Base</a> 
+  <a id="136" class="Keyword">using</a> <a id="142" class="Symbol">(</a><a id="143" href="Agda.Builtin.Bool.html#173" class="Datatype">Bool</a><a id="147" class="Symbol">)</a>
+<a id="149" class="Keyword">open</a> <a id="154" class="Keyword">import</a> <a id="161" href="Agda.Builtin.Nat.html" class="Module">Agda.Builtin.Nat</a>
+  <a id="180" class="Keyword">using</a> <a id="186" class="Symbol">(</a><a id="187" href="Agda.Builtin.Nat.html#203" class="Datatype">Nat</a><a id="190" class="Symbol">)</a>
+
+<a id="193" class="Keyword">open</a> <a id="198" class="Keyword">import</a> <a id="205" href="PCF.Domain-Notation.html" class="Module">PCF.Domain-Notation</a>
+  <a id="227" class="Keyword">using</a> <a id="233" class="Symbol">(</a><a id="234" href="PCF.Domain-Notation.html#366" class="Postulate">Domain</a><a id="240" class="Symbol">;</a> <a id="242" href="PCF.Domain-Notation.html#383" class="Postulate Operator">⟪_⟫</a><a id="245" class="Symbol">;</a> <a id="247" href="PCF.Domain-Notation.html#604" class="Postulate Operator">_→ᶜ_</a><a id="251" class="Symbol">;</a> <a id="253" href="PCF.Domain-Notation.html#1008" class="Postulate Operator">_+⊥</a><a id="256" class="Symbol">)</a>
+
+<a id="259" class="Comment">-- Syntax</a>
+
+<a id="270" class="Keyword">data</a> <a id="Types"></a><a id="275" href="PCF.Types.html#275" class="Datatype">Types</a> <a id="281" class="Symbol">:</a> <a id="283" href="Agda.Primitive.html#388" class="Primitive">Set</a> <a id="287" class="Keyword">where</a>
+  <a id="Types.ι"></a><a id="295" href="PCF.Types.html#295" class="InductiveConstructor">ι</a>    <a id="300" class="Symbol">:</a> <a id="302" href="PCF.Types.html#275" class="Datatype">Types</a>                  <a id="325" class="Comment">-- natural numbers</a>
+  <a id="Types.o"></a><a id="346" href="PCF.Types.html#346" class="InductiveConstructor">o</a>    <a id="351" class="Symbol">:</a> <a id="353" href="PCF.Types.html#275" class="Datatype">Types</a>                  <a id="376" class="Comment">-- Boolean truthvalues</a>
+  <a id="Types._⇒_"></a><a id="401" href="PCF.Types.html#401" class="InductiveConstructor Operator">_⇒_</a>  <a id="406" class="Symbol">:</a> <a id="408" href="PCF.Types.html#275" class="Datatype">Types</a> <a id="414" class="Symbol">→</a> <a id="416" href="PCF.Types.html#275" class="Datatype">Types</a> <a id="422" class="Symbol">→</a> <a id="424" href="PCF.Types.html#275" class="Datatype">Types</a>  <a id="431" class="Comment">-- functions</a>
+
+<a id="445" class="Keyword">variable</a> <a id="454" href="PCF.Types.html#454" class="Generalizable">σ</a> <a id="456" href="PCF.Types.html#456" class="Generalizable">τ</a> <a id="458" class="Symbol">:</a> <a id="460" href="PCF.Types.html#275" class="Datatype">Types</a>
+
+<a id="467" class="Keyword">infixr</a> <a id="474" class="Number">1</a> <a id="476" href="PCF.Types.html#401" class="InductiveConstructor Operator">_⇒_</a>
+
+<a id="481" class="Comment">-- Semantics 𝒟</a>
+
+<a id="𝒟"></a><a id="497" href="PCF.Types.html#497" class="Function">𝒟</a> <a id="499" class="Symbol">:</a> <a id="501" href="PCF.Types.html#275" class="Datatype">Types</a> <a id="507" class="Symbol">→</a> <a id="509" href="PCF.Domain-Notation.html#366" class="Postulate">Domain</a>
+
+<a id="517" href="PCF.Types.html#497" class="Function">𝒟</a> <a id="519" href="PCF.Types.html#295" class="InductiveConstructor">ι</a>        <a id="528" class="Symbol">=</a> <a id="530" href="Agda.Builtin.Nat.html#203" class="Datatype">Nat</a>  <a id="535" href="PCF.Domain-Notation.html#1008" class="Postulate Operator">+⊥</a>
+<a id="538" href="PCF.Types.html#497" class="Function">𝒟</a> <a id="540" href="PCF.Types.html#346" class="InductiveConstructor">o</a>        <a id="549" class="Symbol">=</a> <a id="551" href="Agda.Builtin.Bool.html#173" class="Datatype">Bool</a> <a id="556" href="PCF.Domain-Notation.html#1008" class="Postulate Operator">+⊥</a>
+<a id="559" href="PCF.Types.html#497" class="Function">𝒟</a> <a id="561" class="Symbol">(</a><a id="562" href="PCF.Types.html#562" class="Bound">σ</a> <a id="564" href="PCF.Types.html#401" class="InductiveConstructor Operator">⇒</a> <a id="566" href="PCF.Types.html#566" class="Bound">τ</a><a id="567" class="Symbol">)</a>  <a id="570" class="Symbol">=</a> <a id="572" href="PCF.Types.html#497" class="Function">𝒟</a> <a id="574" href="PCF.Types.html#562" class="Bound">σ</a> <a id="576" href="PCF.Domain-Notation.html#604" class="Postulate Operator">→ᶜ</a> <a id="579" href="PCF.Types.html#497" class="Function">𝒟</a> <a id="581" href="PCF.Types.html#566" class="Bound">τ</a>
+
+<a id="584" class="Keyword">variable</a> <a id="593" href="PCF.Types.html#593" class="Generalizable">x</a> <a id="595" href="PCF.Types.html#595" class="Generalizable">y</a> <a id="597" href="PCF.Types.html#597" class="Generalizable">z</a> <a id="599" class="Symbol">:</a> <a id="601" href="PCF.Domain-Notation.html#383" class="Postulate Operator">⟪</a> <a id="603" href="PCF.Types.html#497" class="Function">𝒟</a> <a id="605" href="PCF.Types.html#454" class="Generalizable">σ</a> <a id="607" href="PCF.Domain-Notation.html#383" class="Postulate Operator">⟫</a>
+<a id="609" class="Markup">\end{code}</a></pre></body></html>
