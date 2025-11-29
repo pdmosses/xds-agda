@@ -1,4 +1,6 @@
 \begin{code}
+{-# OPTIONS --rewriting --confluence-check --lossy-unification #-}
+
 module PCF.Constants where
 
 open import Data.Bool.Base 
@@ -7,7 +9,7 @@ open import Agda.Builtin.Nat
   using (Nat; _+_; _-_; _==_)
 
 open import PCF.Domain-Notation
-  using (η; _♯; fix; ⊥; _⟶_,_)
+  using (⟪_⟫; η; _♯; fix; ⊥; _⟶_,_)
 open import PCF.Types
   using (Types; o; ι; _⇒_; σ; 𝒟)
 
@@ -28,7 +30,7 @@ variable c : ℒ σ
 
 -- Semantics
 
-𝒜⟦_⟧ : ℒ σ → 𝒟 σ
+𝒜⟦_⟧ : ℒ σ → ⟪ 𝒟 σ ⟫
 
 𝒜⟦ tt   ⟧ =  η true
 𝒜⟦ ff   ⟧ =  η false

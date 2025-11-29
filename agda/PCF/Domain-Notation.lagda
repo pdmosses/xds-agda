@@ -1,51 +1,73 @@
 \begin{code}
+{-# OPTIONS --rewriting --confluence-check --lossy-unification #-}
+open import Agda.Builtin.Equality
+open import Agda.Builtin.Equality.Rewrite
+
 module PCF.Domain-Notation where
 
 open import Relation.Binary.PropositionalEquality.Core
   using (_≡_) public
 
-variable D E : Set  -- Set should be a sort of domains
-
--- Domains are pointed
-postulate
-  ⊥ : {D : Set} → D
-
--- Fixed points of endofunctions on function domains
+------------------------------------------------------------------------
+-- Domains
 
 postulate
-  fix : {D : Set} → (D → D) → D
+  Domain  : Set₁
+  ⟪_⟫     : Domain → Set
+
+variable
+  D E : Domain
+  P : Set
+  d₁ d₂ : Set
+
+postulate
+  ⊥ : ⟪ D ⟫  -- bottom element
+
+------------------------------------------------------------------------
+-- Function domains
+
+postulate
+  _→ᶜ_     : Domain → Domain → Domain      -- assume continuous
+  _→ˢ_     : Set    → Domain → Domain      -- always continuous
+  dom-cts  : ⟪ D →ᶜ E ⟫ ≡ (⟪ D ⟫ → ⟪ E ⟫)
+  set-cts  : ⟪ P →ˢ E ⟫ ≡ (P → ⟪ E ⟫)
+
+{-# REWRITE dom-cts set-cts #-}
+
+postulate
+  fix : ⟪ (D →ᶜ D) →ᶜ D ⟫  -- fixed point of endofunction
 
   -- Properties
-  fix-fix : ∀ {D} (f : D → D) → fix f ≡ f (fix f)
-
--- Lifted domains
-
-postulate
-  𝕃   : Set → Set
-  η   : {P : Set} → P → 𝕃 P
-  _♯  : {P : Set} {D : Set} → (P → D) → (𝕃 P → D)
-
-  -- Properties
-  elim-♯-η  : ∀ {P D} (f : P → D) (p : P) →  (f ♯) (η p)  ≡ f p
-  elim-♯-⊥  : ∀ {P D} (f : P → D) →          (f ♯) ⊥      ≡ ⊥
+  fix-fix : (f : ⟪ D →ᶜ D ⟫) → fix f ≡ f (fix f)
 
 -- Flat domains
 
-_+⊥   : Set → Set
-S +⊥  = 𝕃 S
+postulate
+  _+⊥    : Set → Domain               -- lifted set
+  η      : ⟪ P →ˢ P +⊥ ⟫              -- inclusion
+  _♯     : ⟪ (P →ˢ D) →ᶜ P +⊥ →ᶜ D ⟫  -- Kleisli extension
+
+  -- Properties
+  elim-♯-η  : (f : ⟪ P →ˢ D ⟫) (p : P) →  (f ♯) (η p)  ≡ f p
+  elim-♯-⊥  : (f : ⟪ P →ˢ D ⟫) →          (f ♯) ⊥      ≡ ⊥
 
 -- McCarthy conditional
 
--- t ⟶ d₁ , d₂ : D  (t : Bool +⊥ ; d₁, d₂ : D)
+-- t ⟶ d₁ , d₂ : ⟪ D ⟫  (t : Bool +⊥ ; d₁, d₂ : ⟪ D ⟫)
 
 open import Data.Bool.Base
   using (Bool; true; false; if_then_else_) public
 
 postulate
-  _⟶_,_ : {D : Set} → Bool +⊥ → D → D → D
+  _⟶_,_  : ⟪ Bool +⊥ →ᶜ D →ᶜ D →ᶜ D ⟫   -- McCarthy conditional
 
   -- Properties
-  true-cond    : ∀ {D} {d₁ d₂ : D} → (η true ⟶ d₁ , d₂)  ≡ d₁
-  false-cond   : ∀ {D} {d₁ d₂ : D} → (η false ⟶ d₁ , d₂) ≡ d₂
-  bottom-cond  : ∀ {D} {d₁ d₂ : D} → (⊥ ⟶ d₁ , d₂)       ≡ ⊥
+  true-cond    : {d₁ d₂ : ⟪ D ⟫} → (η true ⟶ d₁ , d₂)  ≡ d₁
+  false-cond   : {d₁ d₂ : ⟪ D ⟫} → (η false ⟶ d₁ , d₂) ≡ d₂
+  bottom-cond  : {d₁ d₂ : ⟪ D ⟫} → (⊥ ⟶ d₁ , d₂)       ≡ ⊥
+
+infixr 0  _→ᶜ_
+infixr 0  _→ˢ_
+infix  10   _+⊥
+infixr 20  _⟶_,_
 \end{code}

@@ -1,5 +1,5 @@
 \begin{code}
-{-# OPTIONS --rewriting --confluence-check #-}
+{-# OPTIONS --rewriting --confluence-check --lossy-unification #-}
 
 module PCF.index where
 

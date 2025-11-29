@@ -1,6 +1,10 @@
 \begin{code}
+{-# OPTIONS --rewriting --confluence-check --lossy-unification #-}
+
 module PCF.Terms where
 
+open import PCF.Domain-Notation
+  using (⟪_⟫; _→ᶜ_; _→ˢ_)
 open import PCF.Types
   using (Types; _⇒_; σ; 𝒟)
 open import PCF.Constants
@@ -23,7 +27,7 @@ infixl 20 _␣_
 
 -- Semantics
 
-𝒜′⟦_⟧ : Terms σ → Env → 𝒟 σ
+𝒜′⟦_⟧ : Terms σ → ⟪ Env →ˢ 𝒟 σ ⟫
 
 𝒜′⟦ 𝑉 α      ⟧ ρ = ρ ⟦ α ⟧
 𝒜′⟦ 𝐿 c      ⟧ ρ = 𝒜⟦ c ⟧

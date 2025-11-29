@@ -1,4 +1,6 @@
 \begin{code}
+{-# OPTIONS --rewriting --confluence-check --lossy-unification #-}
+
 module PCF.Environments where
 
 open import Data.Bool.Base 
@@ -11,7 +13,7 @@ open import Relation.Binary.PropositionalEquality.Core
   using (_≡_; refl; trans; cong)
 
 open import PCF.Domain-Notation
-  using (⊥)
+  using (⟪_⟫; ⊥)
 open import PCF.Types
   using (Types; ι; o; _⇒_; 𝒟)
 open import PCF.Variables
@@ -24,10 +26,10 @@ open import PCF.Variables
 
 -- (ρ [ x / α ]) α′ = x when α and α′ are identical, otherwise ρ α′
 
-_[_/_] : {σ : Types} → Env → 𝒟 σ → 𝒱 σ → Env
+_[_/_] : {σ : Types} → Env → ⟪ 𝒟 σ ⟫ → 𝒱 σ → Env
 ρ [ x / α ] = λ α′ → h ρ x α α′ (α ==V α′) where
 
-  h : {σ τ : Types} → Env → 𝒟 σ → 𝒱 σ → 𝒱 τ → Maybe (σ ≡ τ) → 𝒟 τ
+  h : {σ τ : Types} → Env → ⟪ 𝒟 σ ⟫ → 𝒱 σ → 𝒱 τ → Maybe (σ ≡ τ) → ⟪ 𝒟 τ ⟫
   h ρ x α α′ (just refl)  = x
   h ρ x α α′ nothing      = ρ α′
 

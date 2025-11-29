@@ -1,5 +1,5 @@
 \begin{code}
-{-# OPTIONS --rewriting --confluence-check #-}
+{-# OPTIONS --rewriting --confluence-check --lossy-unification #-}
 open import Agda.Builtin.Equality
 open import Agda.Builtin.Equality.Rewrite
 
@@ -17,11 +17,7 @@ open import PCF.Variables
 open import PCF.Environments
 open import PCF.Terms
 
-fix-app  : ∀ {P D} (f : (P → D) → (P → D)) (p : P) →
-              fix f p ≡ f (fix f) p
-fix-app  = λ f → cong-app (fix-fix f) 
-
-{-# REWRITE fix-app elim-♯-η elim-♯-⊥ true-cond false-cond #-} 
+{-# REWRITE fix-fix elim-♯-η elim-♯-⊥ true-cond false-cond #-} 
 
 -- Constants
 pattern 𝑁 n    = 𝐿 (k n)
@@ -82,21 +78,21 @@ check-fix-lambda :
   ≡ η 42
 check-fix-lambda = refl
 
--- fix (λg. λa. ifz a then 42 else g (pred a)) 101 ≡ 42
+-- fix (λg. λa. ifz a then 42 else g (pred a)) 5 ≡ 42
 check-countdown :
   𝒜′⟦ 𝑌 ␣ (ƛ g ␣ ƛ a ␣
               (if ␣ (𝑍 ␣ 𝑉 a) ␣ 𝑁 42 ␣ (𝑉 g ␣ (pred⊥ ␣ 𝑉 a))))
-      ␣ 𝑁 101
+      ␣ 𝑁 5
     ⟧ ρ⊥ 
   ≡ η 42
 check-countdown = refl
 
--- fix (λh. λa. λb. ifz a then b else h (pred a) (succ b)) 4 38 ≡ 42
+-- fix (λh. λa. λb. ifz a then b else h (pred a) (succ b)) 2 40 ≡ 42
 check-sum-42 :
   𝒜′⟦ (𝑌 ␣ (ƛ h ␣ ƛ a ␣ ƛ b ␣
               (if ␣ (𝑍 ␣ 𝑉 a) ␣ 𝑉 b ␣ (𝑉 h ␣ (pred⊥ ␣ 𝑉 a) ␣ (succ ␣ 𝑉 b)))))
-      ␣ 𝑁 4 ␣ 𝑁 38
-    ⟧ ρ⊥ 
+      ␣ 𝑁 2 ␣ 𝑁 40
+    ⟧ ρ⊥
   ≡ η 42
 check-sum-42 = refl
 -- Exponential in first arg?

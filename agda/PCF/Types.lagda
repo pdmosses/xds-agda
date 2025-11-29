@@ -1,4 +1,6 @@
 \begin{code}
+{-# OPTIONS --rewriting --confluence-check --lossy-unification #-}
+
 module PCF.Types where
 
 open import Data.Bool.Base 
@@ -7,7 +9,7 @@ open import Agda.Builtin.Nat
   using (Nat)
 
 open import PCF.Domain-Notation
-  using (_+⊥)
+  using (Domain; ⟪_⟫; _→ᶜ_; _+⊥)
 
 -- Syntax
 
@@ -22,11 +24,11 @@ infixr 1 _⇒_
 
 -- Semantics 𝒟
 
-𝒟 : Types → Set  -- Set should be a sort of domains
+𝒟 : Types → Domain
 
 𝒟 ι        = Nat  +⊥
 𝒟 o        = Bool +⊥
-𝒟 (σ ⇒ τ)  = 𝒟 σ → 𝒟 τ
+𝒟 (σ ⇒ τ)  = 𝒟 σ →ᶜ 𝒟 τ
 
-variable x y z : 𝒟 σ
+variable x y z : ⟪ 𝒟 σ ⟫
 \end{code}
