@@ -3,6 +3,13 @@ site_url: https://pdmosses.github.io/xds-agda/
 repo_name: pdmosses/xds-agda
 repo_url: https://github.com/pdmosses/xds-agda
 
+# To deploy website versions:
+# - install mike (https://github.com/jimporter/mike/)
+# - uncomment the following lines:
+extra:
+  version:
+    provider: mike
+
 use_directory_urls: true
 
 theme:
