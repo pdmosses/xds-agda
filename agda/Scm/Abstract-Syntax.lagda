@@ -1,4 +1,6 @@
 \begin{code}
+{-# OPTIONS --rewriting --confluence-check --lossy-unification #-}
+
 module Scm.Abstract-Syntax where
 
 open import Data.Integer.Base  renaming (ℤ to Int) public

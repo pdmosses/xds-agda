@@ -1,4 +1,6 @@
 \begin{code}
+{-# OPTIONS --rewriting --confluence-check --lossy-unification #-}
+
 module Scm.Semantic-Functions where
 
 open import Scm.Notation
@@ -6,13 +8,13 @@ open import Scm.Abstract-Syntax
 open import Scm.Domain-Equations
 open import Scm.Auxiliary-Functions
 
-𝒦⟦_⟧    : Con → 𝐄
-ℰ⟦_⟧    : Exp → 𝐔 → (𝐄 → 𝐂) → 𝐂
-ℰ⋆⟦_⟧  : Exp⋆ → 𝐔 → (𝐄⋆ → 𝐂) → 𝐂
+𝒦⟦_⟧    : ⟪ Con →ˢ 𝐄 ⟫
+ℰ⟦_⟧    : ⟪ Exp →ˢ 𝐔 →ᶜ (𝐄 →ᶜ 𝐂) →ᶜ 𝐂 ⟫
+ℰ⋆⟦_⟧  : ⟪ Exp⋆ →ˢ 𝐔 →ᶜ (𝐄⋆ →ᶜ 𝐂) →ᶜ 𝐂 ⟫
 
-ℬ⟦_⟧    : Body → 𝐔 → (𝐔 → 𝐂) → 𝐂
-ℬ⁺⟦_⟧   : Body⁺ → 𝐔 → (𝐔 → 𝐂) → 𝐂
-𝒫⟦_⟧    : Prog → 𝐀
+ℬ⟦_⟧    : ⟪ Body →ˢ 𝐔 →ᶜ (𝐔 →ᶜ 𝐂) →ᶜ 𝐂 ⟫
+ℬ⁺⟦_⟧   : ⟪ Body⁺ →ˢ 𝐔 →ᶜ (𝐔 →ᶜ 𝐂) →ᶜ 𝐂 ⟫
+𝒫⟦_⟧    : ⟪ Prog →ˢ 𝐀 ⟫
 
 -- Constant denotations 𝒦⟦ K ⟧ : 𝐄
 
@@ -56,9 +58,7 @@ open import Scm.Auxiliary-Functions
     ℰ⋆⟦ E⋆ ⟧ ρ (λ ϵ⋆ →
       κ (⟨ ϵ ⟩ § ϵ⋆)))
 \end{code}
-\iflatex
 \clearpage
-\fi
 \begin{code}
 -- Body denotations ℬ⟦ B ⟧ : 𝐔 → (𝐔 → 𝐂) → 𝐂
 
