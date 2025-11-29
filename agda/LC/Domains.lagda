@@ -7,9 +7,13 @@ open Inverse {{ ... }}
   using (to; from) public
 
 postulate
-  D∞ : Set
+  Domain : Set₁
+  ⟪_⟫ : Domain → Set
+  D∞ : Domain
 postulate
-  instance iso : D∞ ↔ (D∞ → D∞)
+  instance iso : ⟪ D∞ ⟫ ↔ (⟪ D∞ ⟫ → ⟪ D∞ ⟫)
 
-variable d : D∞
-\end{code} 
+variable d : ⟪ D∞ ⟫
+\end{code}
+
+The PCF example illustrates declaration of a domain of functions.

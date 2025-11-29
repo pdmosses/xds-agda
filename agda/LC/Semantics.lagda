@@ -6,7 +6,7 @@ open import LC.Terms
 open import LC.Domains
 open import LC.Environments
 
-⟦_⟧ : Exp → Env → D∞
+⟦_⟧ : Exp → Env → ⟪ D∞ ⟫
 -- ⟦ e ⟧ ρ is the value of e with ρ giving the values of free variables 
 
 ⟦ var  v      ⟧ ρ  = ρ v
