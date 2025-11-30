@@ -10,6 +10,10 @@ Complete examples of denotational semantics definitions in Agda:
 - [PCF](PCF.md)
 - [Scm](Scm.md)
 
+!!! warning
+
+    This version was deployed from the `dev` branch of the repository
+
 ## Domains in Denotational Semantics
 
 In the Scott–Strachey style of denotational semantics:
