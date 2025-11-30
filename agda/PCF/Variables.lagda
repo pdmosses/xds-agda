@@ -1,5 +1,5 @@
 \begin{code}
-{-# OPTIONS --rewriting --confluence-check --lossy-unification #-}
+{-# OPTIONS --rewriting --confluence-check #-}
 
 module PCF.Variables where
 
