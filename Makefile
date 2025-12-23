@@ -14,16 +14,16 @@ https://pdmosses.github.io/agda-material/
 # make help                           <1 second
 
 # CHECK THE AGDA CODE:
-# make check                          <1 second
+# make check                          50 seconds
 
 # GENERATE AND BROWSE A WEBSITE:
-# make web                            <1 second
-# make serve                          <1 second
+# make web                           110 seconda
+# make serve                           5 seconds
 
 # REMOVE ALL GENERATED FILES:
 # make clean-all                      <1 second
 
-# DEPLOY A GENERATED WEBSITE:          3 seconds
+# DEPLOY A GENERATED WEBSITE:          9 seconds
 # make deploy
 # make initial VERSION=...
 # make default VERSION=...
