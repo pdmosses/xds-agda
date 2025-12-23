@@ -12,7 +12,7 @@ Complete examples of denotational semantics definitions in Agda:
 
 !!! warning
 
-    This version was deployed from the `dev` branch of the repository
+    This version was deployed from the `gen-pdf` branch of the repository
 
 ## Domains in Denotational Semantics
 
