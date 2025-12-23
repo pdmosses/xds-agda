@@ -1,0 +1,33 @@
+<!DOCTYPE HTML>
+<html><head><meta charset="utf-8"><title>PCF.Variables</title><link rel="stylesheet" href="Agda.css"><script type="text/javascript" src="highlight-hover.js"></script></head><body><pre class="Agda"><a id="1" class="Markup">\begin{code}</a>
+<a id="14" class="Symbol">{-#</a> <a id="18" class="Keyword">OPTIONS</a> <a id="26" class="Pragma">--rewriting</a> <a id="38" class="Pragma">--confluence-check</a> <a id="57" class="Symbol">#-}</a>
+
+<a id="62" class="Keyword">module</a> <a id="69" href="PCF.Variables.html" class="Module">PCF.Variables</a> <a id="83" class="Keyword">where</a>
+
+<a id="90" class="Keyword">open</a> <a id="95" class="Keyword">import</a> <a id="102" href="Agda.Builtin.Nat.html" class="Module">Agda.Builtin.Nat</a>
+  <a id="121" class="Keyword">using</a> <a id="127" class="Symbol">(</a><a id="128" href="Agda.Builtin.Nat.html#203" class="Datatype">Nat</a><a id="131" class="Symbol">)</a>
+
+<a id="134" class="Keyword">open</a> <a id="139" class="Keyword">import</a> <a id="146" href="PCF.Domain-Notation.html" class="Module">PCF.Domain-Notation</a>
+  <a id="168" class="Keyword">using</a> <a id="174" class="Symbol">(</a><a id="175" href="PCF.Domain-Notation.html#383" class="Postulate Operator">⟪_⟫</a><a id="178" class="Symbol">;</a> <a id="180" href="PCF.Domain-Notation.html#604" class="Postulate Operator">_→ᶜ_</a><a id="184" class="Symbol">;</a> <a id="186" href="PCF.Domain-Notation.html#668" class="Postulate Operator">_→ˢ_</a><a id="190" class="Symbol">)</a>
+<a id="192" class="Keyword">open</a> <a id="197" class="Keyword">import</a> <a id="204" href="PCF.Types.html" class="Module">PCF.Types</a>
+  <a id="216" class="Keyword">using</a> <a id="222" class="Symbol">(</a><a id="223" href="PCF.Types.html#255" class="Datatype">Types</a><a id="228" class="Symbol">;</a> <a id="230" href="PCF.Types.html#434" class="Generalizable">σ</a><a id="231" class="Symbol">;</a> <a id="233" href="PCF.Types.html#477" class="Function">𝒟</a><a id="234" class="Symbol">)</a>
+
+<a id="237" class="Comment">-- Syntax</a>
+
+<a id="248" class="Keyword">data</a> <a id="𝒱"></a><a id="253" href="PCF.Variables.html#253" class="Datatype">𝒱</a> <a id="255" class="Symbol">:</a> <a id="257" href="PCF.Types.html#255" class="Datatype">Types</a> <a id="263" class="Symbol">→</a> <a id="265" href="Agda.Primitive.html#388" class="Primitive">Set</a> <a id="269" class="Keyword">where</a>
+  <a id="𝒱.var"></a><a id="277" href="PCF.Variables.html#277" class="InductiveConstructor">var</a> <a id="281" class="Symbol">:</a> <a id="283" href="Agda.Builtin.Nat.html#203" class="Datatype">Nat</a> <a id="287" class="Symbol">→</a> <a id="289" class="Symbol">(</a><a id="290" href="PCF.Variables.html#290" class="Bound">σ</a> <a id="292" class="Symbol">:</a> <a id="294" href="PCF.Types.html#255" class="Datatype">Types</a><a id="299" class="Symbol">)</a> <a id="301" class="Symbol">→</a> <a id="303" href="PCF.Variables.html#253" class="Datatype">𝒱</a> <a id="305" href="PCF.Variables.html#290" class="Bound">σ</a>
+
+<a id="308" class="Keyword">variable</a> <a id="317" href="PCF.Variables.html#317" class="Generalizable">α</a> <a id="319" class="Symbol">:</a> <a id="321" href="PCF.Variables.html#253" class="Datatype">𝒱</a> <a id="323" href="PCF.Types.html#434" class="Generalizable">σ</a>
+
+<a id="326" class="Comment">-- Environments</a>
+
+<a id="Env"></a><a id="343" href="PCF.Variables.html#343" class="Function">Env</a> <a id="347" class="Symbol">=</a> <a id="349" class="Symbol">{</a><a id="350" href="PCF.Variables.html#350" class="Bound">σ</a> <a id="352" class="Symbol">:</a> <a id="354" href="PCF.Types.html#255" class="Datatype">Types</a><a id="359" class="Symbol">}</a> <a id="361" class="Symbol">→</a> <a id="363" href="PCF.Variables.html#253" class="Datatype">𝒱</a> <a id="365" href="PCF.Variables.html#350" class="Bound">σ</a> <a id="367" class="Symbol">→</a> <a id="369" href="PCF.Domain-Notation.html#383" class="Postulate Operator">⟪</a> <a id="371" href="PCF.Types.html#477" class="Function">𝒟</a> <a id="373" href="PCF.Variables.html#350" class="Bound">σ</a> <a id="375" href="PCF.Domain-Notation.html#383" class="Postulate Operator">⟫</a>
+
+<a id="378" class="Keyword">variable</a> <a id="387" href="PCF.Variables.html#387" class="Generalizable">ρ</a> <a id="389" class="Symbol">:</a> <a id="391" href="PCF.Variables.html#343" class="Function">Env</a>
+
+<a id="396" class="Comment">-- Semantics</a>
+
+<a id="_⟦_⟧"></a><a id="410" href="PCF.Variables.html#410" class="Function Operator">_⟦_⟧</a> <a id="415" class="Symbol">:</a> <a id="417" href="PCF.Domain-Notation.html#383" class="Postulate Operator">⟪</a> <a id="419" href="PCF.Variables.html#343" class="Function">Env</a> <a id="423" href="PCF.Domain-Notation.html#668" class="Postulate Operator">→ˢ</a> <a id="426" href="PCF.Variables.html#253" class="Datatype">𝒱</a> <a id="428" href="PCF.Types.html#434" class="Generalizable">σ</a> <a id="430" href="PCF.Domain-Notation.html#668" class="Postulate Operator">→ˢ</a> <a id="433" href="PCF.Types.html#477" class="Function">𝒟</a> <a id="435" href="PCF.Types.html#434" class="Generalizable">σ</a> <a id="437" href="PCF.Domain-Notation.html#383" class="Postulate Operator">⟫</a>
+
+<a id="440" href="PCF.Variables.html#440" class="Bound">ρ</a> <a id="442" href="PCF.Variables.html#410" class="Function Operator">⟦</a> <a id="444" href="PCF.Variables.html#444" class="Bound">α</a> <a id="446" href="PCF.Variables.html#410" class="Function Operator">⟧</a> <a id="448" class="Symbol">=</a> <a id="450" href="PCF.Variables.html#440" class="Bound">ρ</a> <a id="452" href="PCF.Variables.html#444" class="Bound">α</a>
+<a id="454" class="Markup">\end{code}</a></pre></body></html>
