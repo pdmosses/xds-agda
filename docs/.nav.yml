@@ -6,25 +6,19 @@ nav:
     - Scm.md
     - meta-notation.md
   - Lambda-Calculus:
-    - md/LC/index/index.md
+    - md/LC/index.md
     - md/LC/*
   - PCF:
-    - md/PCF/index/index.md
+    - md/PCF/index.md
     - md/PCF/*
   - Scm:
-    - md/Scm/index/index.md
+    - md/Scm/index.md
     # - md/Scm/Notation/index.md
     - md/Scm/*
   - Library:
     - Library/index.md
     - md/*
-  # - HTML:
-  #   - Lambda-Calculus: html/LC.index.html
-  #   - PCF: html/PCF.index.html
-  # - PDF:
-  #   - Lambda-Calculus: pdf/LC.index.pdf
-  #   - PCF: pdf/PCF.index.pdf
-
+  
 preserve_directory_names: true
 
 sort:

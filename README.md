@@ -32,8 +32,6 @@ The [repository] contains the following files and directories:
     - `docs/stylesheets`: directory for added CSS files
     - `docs/.nav.yml`: configuration file for navigation panels
     - `docs/*.md`: Markdown sources for non-generated pages
-- `agda-custom.sty`: package for overriding commands defined in `agda.sty`
-- `agda-unicode.sty`: package mapping Unicode characters to LaTeX
 - `UNLICENSE`: release into the public domain
 - `Makefile`: automation of website and PDF generation
 - `mkdocs.yml`: configuration file for generated websites
@@ -42,22 +40,15 @@ The repository does not contain any generated files.
 
 ## Software dependencies
 
-- [Agda] (2.7.0)
-- [GNU Make] (3.8.1)
+- [Agda] (2.8.0)
+- [GNU Make] (3.81)
 - [sd] (1.0.0)
-
-### For website generation
-
 - [Python 3] (3.11.3)
 - [Pip] (25.2)
 - [MkDocs] (1.6.1)
-- [Material for MkDocs] (9.6.19)
-- [Awesome-nav] (3.2.0)
+- [Material for MkDocs] (9.7.0)
+- [Awesome-nav] (3.3.0)
 - [GitHub Pages]
-
-### For PDF generation
-
-- [TeXLive] (2025)
 
 ## Platform dependencies
 
@@ -83,7 +74,7 @@ make check
 ### Generate a website listing the Agda code
 
 ```sh
-make website
+make web
 ```
 
 ### Browse the website locally
@@ -140,4 +131,3 @@ Peter Mosses
 [Material for MkDocs]: https://squidfunk.github.io/mkdocs-material/getting-started/
 [Awesome-nav]: https://lukasgeiter.github.io/mkdocs-awesome-nav/
 [GitHub Pages]: https://pages.github.com
-[TeXLive]: https://www.tug.org/texlive/
