@@ -21,7 +21,7 @@ https://pdmosses.github.io/agda-material/
 
 # DEPLOY A GENERATED WEBSITE:
 # make deploy
-# make deploy  VERSION=...             ? seconds
+# make deploy  VERSION=...            10 seconds
 
 # MANAGE VERSIONS:
 # make default VERSION=...             
