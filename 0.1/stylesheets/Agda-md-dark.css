@@ -1,5 +1,3 @@
-.Agda { color: var(--md-code-fg-color); background-color: var(--md-code-bg-color) }
-
 [data-md-color-scheme="slate"] {
 
   /* Aspects. */
@@ -44,5 +42,9 @@
   .Agda a { text-decoration: none }
   .Agda a[href]:hover { background-color: #B4EEB4 }
   .Agda [href].hover-highlight { background-color: #B4EEB4; }
+
+  :root > * {
+    --md-typeset-mark-color: #B4EEB4;
+  }
 
 }

@@ -1,5 +1,3 @@
-.Agda { color: var(--md-code-fg-color); background-color: var(--md-code-bg-color) }
-
 /* Aspects. */
 .Agda .Comment       { color: #B22222 }
 /* .Agda .Background    { } */
@@ -42,3 +40,7 @@
 .Agda a { text-decoration: none }
 .Agda a[href]:hover { background-color: #B4EEB4 }
 .Agda [href].hover-highlight { background-color: #B4EEB4; }
+
+:root > * {
+  --md-typeset-mark-color: #B4EEB4;
+}
