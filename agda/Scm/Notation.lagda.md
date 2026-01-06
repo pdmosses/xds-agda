@@ -272,3 +272,18 @@ open Products public
 open Tuples public
 open Sequences public
 ```
+
+Use `open import Notation.All` to use all the notation declared above.
+
+```agda
+module All where
+  open Functions public
+  open Lifted public
+  open Booleans public
+  open Naturals public
+  open Strings public
+  open Sums public
+  open Products public
+  open Tuples public
+  open Sequences public
+```
