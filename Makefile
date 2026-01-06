@@ -68,7 +68,8 @@ https://pdmosses.github.io/agda-material/
 # ARGUMENT DEFAULT VALUES
 
 DIR     := agda
-ROOT    := LC.index,PCF.index,Scm.index
+# ROOT    := LC.index,PCF.index,Scm.index
+ROOT    := Scm.index
 
 # Both DIR and ROOT may be comma-separated lists.
 # The top level of the ROOT module(s) should be in DIR.
@@ -278,7 +279,7 @@ gen-md: clean-md
 	  esac; \
 	  \
 	  if grep -q '^# '  $$t; then \
-	    sd -- '\A' "---\ntitle: $$m\nhide: toc\n---\n\n" $$t; \
+	    sd -- '\A' "---\ntitle: $$m\n---\n\n" $$t; \
 	  else \
 	    sd -- '\A' "---\ntitle: $$m\nhide: toc\n---\n\n# $$m\n\n" $$t; \
 	  fi; \

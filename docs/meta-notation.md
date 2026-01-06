@@ -1,7 +1,6 @@
 # Meta-notation
 
 The current examples of denotational semantics given here
-(untyped [lambda-calculus], [PCF], and a simple sublanguage [Scm] of Scheme)
 use a lightweight shallow embedding of domain theory in Agda.
 
 For an introduction to the Agda language, see the [Agda docs] or the
@@ -59,14 +58,11 @@ are defined, up to isomorphism, by domain equations. The isomorphisms between
 domains and their definitions are usually left implicit.
 
 In Agda, such isomorphisms need to be specified explicitly -- both when defining
-domains and when defining elements of domains in λ-notation. See the
-[lambda-calculus] semantics for an example of this.
+domains and when defining elements of domains in λ-notation. 
 
 When recursively-defined domains involve domain sums, however, the required
 isomorphisms can be subsumed by postulating projections and injections between
 domains and their summands. See the [Scm] semantics for an example.
-
-The [PCF] semantics does not involve recursively-defined domains.
 
 ### Semantic Functions
 
@@ -123,6 +119,4 @@ module, with submodules for the various domain constructors.
 
 [Agda docs]: https://agda.readthedocs.io/en/v2.7.0.1/getting-started/a-taste-of-agda.html
 [Agda Wikipedia page]: https://en.wikipedia.org/wiki/Agda_(programming_language)
-[Lambda-calculus]: LC.md
-[PCF]: PCF.md
 [Scm]: Scm.md

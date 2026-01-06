@@ -6,8 +6,6 @@
 
 Complete examples of denotational semantics definitions in Agda:
 
-- [Lambda-calculus](LC.md)
-- [PCF](PCF.md)
 - [Scm](Scm.md)
 
 !!! info
