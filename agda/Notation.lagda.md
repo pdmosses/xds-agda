@@ -250,13 +250,13 @@ double angle-brackets `⟪ D ⟫` used for the carrier of domain `D`.
     open Tuples
 
     postulate
-      _⋆     : Domain → Domain         -- D ⋆ domain of finite sequences 
-      ⟨⟩     : ⟪ D ⋆ ⟫                 -- empty sequence
-      ⟨_⟩    : ⟪ (D ^ suc n) →ᶜ D ⋆ ⟫  -- ⟨ d₁ , ... , dₙ₊₁ ⟩ non-empty sequence
-      #      : ⟪ D ⋆ →ᶜ Nat⊥ ⟫         -- # d⋆                sequence length
-      _§_    : ⟪ D ⋆ →ᶜ D ⋆ →ᶜ D ⋆ ⟫   -- d⋆ § d⋆             concatenation
-      _↓_    : ⟪ D ⋆ →ᶜ Nat →ˢ D ⟫     -- d⋆ ↓ n              nth component
-      _†_    : ⟪ D ⋆ →ᶜ Nat →ˢ D ⋆ ⟫   -- d⋆ † n              nth tail
+      _⋆     : Domain → Domain         -- D ⋆          finite sequences 
+      ⟨⟩     : ⟪ D ⋆ ⟫                 -- ⟨⟩            empty sequence
+      ⟨_⟩    : ⟪ (D ^ suc n) →ᶜ D ⋆ ⟫  -- ⟨ d₁ , ... ⟩  non-empty sequence
+      #      : ⟪ D ⋆ →ᶜ Nat⊥ ⟫         -- # d⋆          sequence length
+      _§_    : ⟪ D ⋆ →ᶜ D ⋆ →ᶜ D ⋆ ⟫   -- d⋆ § d⋆       concatenation
+      _↓_    : ⟪ D ⋆ →ᶜ Nat →ˢ D ⟫     -- d⋆ ↓ n        nth component
+      _†_    : ⟪ D ⋆ →ᶜ Nat →ˢ D ⋆ ⟫   -- d⋆ † n        nth tail
 ```
 
 Use `open import Notation.All` to use all the notation declared above.
