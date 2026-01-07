@@ -1,14 +1,18 @@
-\begin{code}
+# Auxiliary Functions
+
+```agda
 {-# OPTIONS --rewriting --confluence-check --lossy-unification #-}
 
 module Scm.Auxiliary-Functions where
 
-open import Scm.Notation
+open import Notation
 open import Scm.Abstract-Syntax
 open import Scm.Domain-Equations
+```
 
--- Environments ρ : 𝐔 = Ide →ˢ 𝐋
+## Environments `ρ : 𝐔 = Ide →ˢ 𝐋`
 
+```agda
 postulate _==_ : Ide → Ide → Bool
 
 _[_/_] : ⟪ 𝐔 →ᶜ 𝐋 →ᶜ Ide →ˢ 𝐔 ⟫
@@ -19,9 +23,11 @@ postulate unknown : ⟪ 𝐋 ⟫
 
 postulate initial-env : ⟪ 𝐔 ⟫
 -- initial-env shoud include various procedures and values
+```
 
--- Stores σ : 𝐒 = 𝐋 →ᶜ 𝐄
+## Stores `σ : 𝐒 = 𝐋 →ᶜ 𝐄`
 
+```agda
 _[_/_]′ : ⟪ 𝐒 →ᶜ 𝐄 →ᶜ 𝐋 →ᶜ 𝐒 ⟫
 σ [ ϵ / α ]′ = λ α′ → (α ==ᴸ α′) ⟶ ϵ , σ α′
 
@@ -43,17 +49,21 @@ initial-store = λ α → η unallocated 𝐌-in-𝐄
 
 postulate finished : ⟪ 𝐂 ⟫
 -- normal termination with answer depending on final store
+```
 
+## Truth Values
+
+```agda
 truish : ⟪ 𝐄 →ᶜ 𝐓 ⟫
 truish =
   λ ϵ → (ϵ ∈-𝐓) ⟶
       (((ϵ |-𝐓) ==ᵀ η false) ⟶ η false , η true) ,
     η true
-\end{code}
-\clearpage
-\begin{code}
--- Lists
+```
 
+## Lists
+
+```agda
 cons : ⟪ 𝐅 ⟫
 cons =
   λ ϵ⋆ κ →
@@ -91,4 +101,4 @@ setcdr =
                              (ϵ⋆ ↓ 2)
                              (κ (η unspecified 𝐌-in-𝐄)) , 
     ⊥
-\end{code} 
+```

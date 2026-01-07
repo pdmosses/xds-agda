@@ -1,9 +1,11 @@
-\begin{code}
+# Semantic Functions
+
+```agda
 {-# OPTIONS --rewriting --confluence-check --lossy-unification #-}
 
 module Scm.Semantic-Functions where
 
-open import Scm.Notation
+open import Notation
 open import Scm.Abstract-Syntax
 open import Scm.Domain-Equations
 open import Scm.Auxiliary-Functions
@@ -15,15 +17,19 @@ open import Scm.Auxiliary-Functions
 ℬ⟦_⟧    : ⟪ Body →ˢ 𝐔 →ᶜ (𝐔 →ᶜ 𝐂) →ᶜ 𝐂 ⟫
 ℬ⁺⟦_⟧   : ⟪ Body⁺ →ˢ 𝐔 →ᶜ (𝐔 →ᶜ 𝐂) →ᶜ 𝐂 ⟫
 𝒫⟦_⟧    : ⟪ Prog →ˢ 𝐀 ⟫
+```
 
--- Constant denotations 𝒦⟦ K ⟧ : 𝐄
+## Constants
 
+```agda
 𝒦⟦ int Z ⟧  = η Z 𝐑-in-𝐄
 𝒦⟦ #t ⟧     = η true 𝐓-in-𝐄
 𝒦⟦ #f ⟧     = η false 𝐓-in-𝐄
+```
 
--- Expression denotations
+## Expressions
 
+```agda
 ℰ⟦ con K ⟧ ρ κ = κ (𝒦⟦ K ⟧)
 
 ℰ⟦ ide I ⟧ ρ κ = hold (ρ I) κ
@@ -48,20 +54,22 @@ open import Scm.Auxiliary-Functions
   ℰ⟦ E ⟧ ρ (λ ϵ →
     assign (ρ I) ϵ (
       κ (η unspecified 𝐌-in-𝐄)))
+```
 
--- ℰ⋆⟦_⟧  : Exp⋆ → 𝐔 → (𝐄⋆ → 𝐂) → 𝐂
+## Expression Sequences
 
+```agda
 ℰ⋆⟦ ␣␣␣ ⟧ ρ κ = κ ⟨⟩
 
 ℰ⋆⟦ E ␣␣ E⋆ ⟧ ρ κ =
   ℰ⟦ E ⟧ ρ (λ ϵ →
     ℰ⋆⟦ E⋆ ⟧ ρ (λ ϵ⋆ →
       κ (⟨ ϵ ⟩ § ϵ⋆)))
-\end{code}
-\clearpage
-\begin{code}
--- Body denotations ℬ⟦ B ⟧ : 𝐔 → (𝐔 → 𝐂) → 𝐂
+```
 
+## Bodies
+
+```agda
 ℬ⟦ ␣␣ E ⟧ ρ κ = ℰ⟦ E ⟧ ρ (λ ϵ → κ ρ)
 
 ℬ⟦ ⦅define I ␣ E ⦆ ⟧ ρ κ =
@@ -70,16 +78,20 @@ open import Scm.Auxiliary-Functions
                     assign (ρ I) ϵ (κ ρ))
 
 ℬ⟦ ⦅begin B⁺ ⦆ ⟧ ρ κ = ℬ⁺⟦ B⁺ ⟧ ρ κ
+```
 
--- Body sequence denotations ℬ⁺⟦ B⁺ ⟧ : 𝐔 → (𝐔 → 𝐂) → 𝐂
+## Body Sequences
 
+```agda
 ℬ⁺⟦ ␣␣ B ⟧ ρ κ = ℬ⟦ B ⟧ ρ κ
 
 ℬ⁺⟦ B ␣␣ B⁺ ⟧ ρ κ = ℬ⟦ B ⟧ ρ (λ ρ′ → ℬ⁺⟦ B⁺ ⟧ ρ′ κ)
+```
 
--- Program denotations 𝒫⟦ Π ⟧ : 𝐀
+## Programs
 
+```agda
 𝒫⟦ ␣␣␣ ⟧ = finished initial-store
 
 𝒫⟦ ␣␣ B⁺ ⟧ = ℬ⁺⟦ B⁺ ⟧ initial-env (λ ρ → finished) initial-store
-\end{code}
+```

@@ -15,7 +15,7 @@ The notation for each domain constructor is generally declared in a separate
 submodule. Opening a submodule makes its declared names directly visible.
 
 ```agda
-module Scm.Notation where
+module Notation where
 
 open import Data.Bool.Base  using (Bool; false; true) public
 open import Data.Nat.Base   renaming (ℕ to Nat) using (suc) public

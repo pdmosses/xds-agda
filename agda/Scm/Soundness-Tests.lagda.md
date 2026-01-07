@@ -1,9 +1,11 @@
-\begin{code}
+# Soundness Tests
+
+```agda
 {-# OPTIONS --rewriting --confluence-check --lossy-unification #-}
 
 module Scm.Soundness-Tests where
 
-open import Scm.Notation
+open import Notation
 open import Scm.Abstract-Syntax
 open import Scm.Domain-Equations
 open import Scm.Auxiliary-Functions
@@ -14,5 +16,4 @@ open import Relation.Binary.PropositionalEquality.Core
 
 postulate
   fix-fix : (f : ⟪ D →ᶜ D ⟫) → fix f ≡ f (fix f)
-
-\end{code}
+```

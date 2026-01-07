@@ -1,4 +1,6 @@
-\begin{code}
+# Abstract Syntax
+
+```agda
 {-# OPTIONS --rewriting --confluence-check --lossy-unification #-}
 
 module Scm.Abstract-Syntax where
@@ -21,18 +23,20 @@ data       Body⁺  : Set     -- body sequences
 variable   B⁺     : Body⁺
 data       Prog   : Set     -- programs
 variable   Π      : Prog
+```
 
-------------------------------------------------------------------------
--- Literal constants
+## Literal Constants
 
+```agda
 data Con where                -- basic constants
   int  : Int → Con            -- integer numerals
   #t   : Con                  -- true
   #f   : Con                  -- false
+```
 
-------------------------------------------------------------------------
--- Expressions
+## Expressions
 
+```agda
 data Exp where                          -- expressions
   con          : Con → Exp              -- K
   ide          : Ide → Exp              -- I
@@ -44,14 +48,11 @@ data Exp where                          -- expressions
 data Exp⋆ where                         -- expression sequences
   ␣␣␣          : Exp⋆                   -- empty sequence
   _␣␣_         : Exp → Exp⋆ → Exp⋆      -- prefix sequence E E⋆
-\end{code}
-\iflatex
-\clearpage
-\fi
-\begin{code}
-------------------------------------------------------------------------
--- Definitions and Programs
+```
 
+## Definitions and Programs
+
+```agda
 data Body where
   ␣␣_          : Exp → Body             -- side-effect expression E
   ⦅define_␣_⦆  : Ide → Exp → Body       -- definition (define I E)
@@ -67,4 +68,4 @@ data Prog where                         -- programs
 
 infix 30 ␣␣_
 infixr 20 _␣␣_
-\end{code}
+```

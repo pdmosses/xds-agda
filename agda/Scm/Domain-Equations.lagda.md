@@ -1,13 +1,21 @@
-\begin{code}
+# Domain Equations
+
+```agda
 {-# OPTIONS --rewriting --confluence-check --lossy-unification #-}
 
 module Scm.Domain-Equations where
 
-open import Scm.Notation
+open import Notation
+open Lifted
+open Booleans
+open Naturals
+open Products
 open import Scm.Abstract-Syntax using (Ide; Int)
+```
 
--- Domain declarations
+## Domain declarations
 
+```agda
 postulate  𝐋   :  Domain  -- locations
 variable   α   :  ⟪ 𝐋 ⟫
 𝐍              :  Domain  -- natural numbers
@@ -30,9 +38,11 @@ postulate  𝐀   :  Domain  -- answers
 
 𝐄⋆             =  𝐄 ⋆
 variable   ϵ⋆  :  ⟪ 𝐄⋆ ⟫
+```
 
--- Domain equations
+## Domain Definitions
 
+```agda
 data Misc : Set where
   null unallocated undefined unspecified : Misc
 
@@ -46,11 +56,11 @@ data Misc : Set where
 𝐒     =  𝐋 →ᶜ 𝐄
 𝐔     =  Ide →ˢ 𝐋
 𝐂     =  𝐒 →ᶜ 𝐀
-\end{code}
-\clearpage
-\begin{code}
--- Injections, tests, and projections
+```
 
+## Injections, Tests, and Projections
+
+```agda
 postulate
   _𝐓-in-𝐄    : ⟪ 𝐓   →ᶜ 𝐄 ⟫
   _∈-𝐓       : ⟪ 𝐄   →ᶜ Bool +⊥ ⟫
@@ -71,9 +81,11 @@ postulate
   _𝐅-in-𝐄    : ⟪ 𝐅   →ᶜ 𝐄 ⟫
   _∈-𝐅       : ⟪ 𝐄   →ᶜ Bool +⊥ ⟫
   _|-𝐅       : ⟪ 𝐄   →ᶜ 𝐅 ⟫
+```
 
--- Operations on flat domains
+## Operations
 
+```agda
 postulate
   _==ᴸ_  : ⟪ 𝐋 →ᶜ 𝐋 →ᶜ 𝐓 ⟫
   _==ᴹ_  : ⟪ 𝐌 →ᶜ 𝐌 →ᶜ 𝐓 ⟫
@@ -82,4 +94,4 @@ postulate
   _<ᴿ_   : ⟪ 𝐑 →ᶜ 𝐑 →ᶜ 𝐓 ⟫
   _+ᴿ_   : ⟪ 𝐑 →ᶜ 𝐑 →ᶜ 𝐑 ⟫
   _∧ᵀ_   : ⟪ 𝐓 →ᶜ 𝐓 →ᶜ 𝐓 ⟫
-\end{code}
+```
