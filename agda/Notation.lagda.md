@@ -84,7 +84,7 @@ be regarded as a domain (ordered pointwise).
 
   infixr 0 _→ˢ_
 
-open Functions
+open Functions public
 ```
 
 ## Lifted domains
@@ -257,20 +257,6 @@ double angle-brackets `⟪ D ⟫` used for the carrier of domain `D`.
       _§_    : ⟪ D ⋆ →ᶜ D ⋆ →ᶜ D ⋆ ⟫   -- d⋆ § d⋆             concatenation
       _↓_    : ⟪ D ⋆ →ᶜ Nat →ˢ D ⟫     -- d⋆ ↓ n              nth component
       _†_    : ⟪ D ⋆ →ᶜ Nat →ˢ D ⋆ ⟫   -- d⋆ † n              nth tail
-```
-
-Temporary:
-
-```agda
-open Functions public
-open Lifted public
-open Booleans public
-open Naturals public
-open Strings public
-open Sums public
-open Products public
-open Tuples public
-open Sequences public
 ```
 
 Use `open import Notation.All` to use all the notation declared above.

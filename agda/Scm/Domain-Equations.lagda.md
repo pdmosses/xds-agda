@@ -10,6 +10,7 @@ open Lifted
 open Booleans
 open Naturals
 open Products
+open Sequences
 open import Scm.Abstract-Syntax using (Ide; Int)
 ```
 

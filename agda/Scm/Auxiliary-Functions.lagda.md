@@ -6,6 +6,11 @@
 module Scm.Auxiliary-Functions where
 
 open import Notation
+open Lifted
+open Booleans
+open Naturals
+open Products
+open Sequences
 open import Scm.Abstract-Syntax
 open import Scm.Domain-Equations
 ```
