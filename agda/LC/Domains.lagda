@@ -1,19 +1,18 @@
 \begin{code}
 module LC.Domains where
 
-open import Function
-  using (Inverse; _↔_) public
-open Inverse {{ ... }}
-  using (to; from) public
+postulate
+  Domain  : Set₁          -- type of all domains
+  ⟪_⟫     : Domain → Set  -- carrier of a domain
+
+open import Function    using (Inverse; _↔_)  public
+open Inverse {{ ... }}  using (to; from)      public
 
 postulate
-  Domain : Set₁
-  ⟪_⟫ : Domain → Set
-  D∞ : Domain
-postulate
-  instance iso : ⟪ D∞ ⟫ ↔ (⟪ D∞ ⟫ → ⟪ D∞ ⟫)
+  D∞  : Domain
+
+postulate instance
+  bi  : ⟪ D∞ ⟫ ↔ (⟪ D∞ ⟫ → ⟪ D∞ ⟫)
 
 variable d : ⟪ D∞ ⟫
 \end{code}
-
-The PCF example illustrates declaration of a domain of functions.

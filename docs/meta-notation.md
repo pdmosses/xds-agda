@@ -46,14 +46,15 @@ of a denotational semantics, and is left unspecified.
 Non-recursive groups of domains are defined by equating them to domain terms.
 The currently available domain constructors are:
 
-- **`D →ᶜ E`**, the domain of (supposedly continuous) functions from **`D`**
-  to **`E`**;
-- **`A →ˢ D`**, the domain of *all* functions from a set **`A`** to **`D`**;
+- **`D →ᶜ E`**, the domain of (supposedly continuous) functions from a domain
+  **`D`** to a domain **`E`**;
+- **`A →ˢ D`**, the domain of *all* functions from a set **`A`** to a domain
+  **`D`**;
 - **`A +⊥`**. the flat domain constructed by adding `⊥`to a set **`A`;
-- **`D + E`**, the coalesced sum of the domains **`D`** and **`E`**;
-- **`D × E`**, the cartesian product of the domains **`D`** and **`E`**;
-- **`D ^ n`**, the domain of n-tuples of elements of **`D`**;
-- **`D ⋆`**, the domain of finite sequences of elements of **`D`**.
+- **`D + E`**, the coalesced sum of domains **`D`** and **`E`**;
+- **`D × E`**, the cartesian product of domains **`D`** and **`E`**;
+- **`D ^ n`**, the domain of n-tuples of elements of a domain **`D`**;
+- **`D ⋆`**, the domain of finite sequences of elements of a domain **`D`**.
 
 In conventional denotational semantics, (groups of mutually) recursive domains
 are defined, up to isomorphism, by domain equations. The isomorphisms between
@@ -114,9 +115,10 @@ Currently, the examples of denotational definitions presented here are
 independent, and there is some duplication of declarations of notation for
 domains.
 
-In a future version, all the domain notation should be specified in a separate
-module, with submodules for the various domain constructors.
+In a future version, all the domain notation should be specified in the module
+[Notation], with submodules for the various domain constructors.
 
 [Agda docs]: https://agda.readthedocs.io/en/latest/getting-started/a-taste-of-agda.html
 [Agda Wikipedia page]: https://en.wikipedia.org/wiki/Agda_(programming_language)
 [Scm]: Scm.md
+[Notation]: md/Notation/index.md

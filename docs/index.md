@@ -6,7 +6,8 @@
 
 Complete examples of denotational semantics definitions in Agda:
 
-- [Scm](Scm.md)
+- [LC](LC.md): the untyped λ-calculus
+- [Scm](Scm.md): a sublanguage of [Scheme]
 
 !!! info
 
@@ -120,6 +121,7 @@ Advice and suggestions are welcome, e.g., by posting to the repo [Discussions].
 
 Peter Mosses <p.d.mosses@tudelft.nl>
 
+[Scheme]: https://scheme.org
 [DomainTheory]: https://martinescardo.github.io/TypeTopology/DomainTheory.index.html "Agda modules"
 [TypeTopology]: https://martinescardo.github.io/TypeTopology/ "Agda library"
 [DomainTheory.Bilimits.Dinfinity]: https://martinescardo.github.io/TypeTopology/DomainTheory.Bilimits.Dinfinity.html  "Agda module"

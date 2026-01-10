@@ -69,7 +69,7 @@ https://pdmosses.github.io/agda-material/
 
 DIR     := agda
 # ROOT    := LC.index,PCF.index,Scm.index
-ROOT    := Scm.index
+ROOT    := LC.index,Scm.index
 
 # Both DIR and ROOT may be comma-separated lists.
 # The top level of the ROOT module(s) should be in DIR.

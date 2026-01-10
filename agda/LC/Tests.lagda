@@ -12,18 +12,12 @@ open import LC.Terms
 open import LC.Semantics
 
 open import Relation.Binary.PropositionalEquality using (refl)
-open Inverse using (inverseˡ; inverseʳ)
+open Inverse using (inverseˡ)
 
 to-from-elim : ∀ {f}  →  to (from f)  ≡ f
-to-from-elim  = inverseˡ iso refl
-
-from-to-elim : ∀ {d}  →  from (to d)  ≡ d
-from-to-elim  = inverseʳ iso refl
+to-from-elim  = inverseˡ bi refl
 
 {-# REWRITE to-from-elim #-}
-
--- The following proofs are potentially unsound,
--- due to rewriting using the postulated iso
 
 -- (λx1.x1)x42 = x42
 check-id :

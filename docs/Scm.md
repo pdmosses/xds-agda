@@ -15,7 +15,7 @@ The [Agda code] of a lightweight formalization of the denotational semantics of 
 
 See [Scm] for hyperlinked, highlighted listings of the code, generated using [Agda-Material].
 
-[Agda code]: https://github.com/pdmosses/xds-agda/tree/main/Scm
+[Agda code]: https://github.com/pdmosses/xds-agda/tree/main/agda/Scm
 [Scm]: md/Scm/index.md
 [Scheme Reports]: https://standards.scheme.org
 [Agda-Material]: https://pdmosses.github.io/agda-material/
