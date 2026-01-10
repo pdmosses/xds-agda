@@ -37,8 +37,23 @@ submodule. Opening a submodule makes its declared names directly visible.
   <a id="𝟙"></a><a id="973" href="Notation.html#973" class="Postulate">𝟙</a>       <a id="981" class="Symbol">:</a> <a id="983" href="Notation.html#759" class="Postulate">Domain</a>        <a id="997" class="Comment">-- trivial domain</a>
 <a id="1015" class="Markup">```
 </a><a id="1019" class="Background">
-In several papers published in 2025, the type `Domain` is defined to be the
-Agda universe `Set`. Postulating that all domains have bottom elements 
+In several papers published in 2025, the type  of domains was defined by
+`Domain = Set`. However, postulating `⊥ : D` was then *inconsistent* with the
+existence of an empty type in Agda. The current declaration `Domain : Set₁`
+and the distinction between domains and their carrier sets circumvents that
+issue.[^history]
+
+[^history]:
+    The current declarations were previously adopted in the lightweight
+    formalisation of a denotational semantics of inheritance (presented at
+    [JENSFEST 2024]), see [Inheritance/Definitions]. I thought that declaring
+    `Domain = Set` simplified direct use of λ-notation for defining functions
+    between domains. At [AIM-XLI], however, András Kovács pointed out that this
+    was not the case.
+
+[JENSFEST 2024]: https://2024.splashcon.org/home/jensfest-2024/
+[Inheritance/Definitions]: https://github.com/pdmosses/jensfest-agda/blob/main/Inheritance/Definitions.lagda
+[AIM-XLI]: https://wiki.portal.chalmers.se/agda/Main/AIMXLI
 
 ## Function domains
 
@@ -49,28 +64,36 @@ proofs of their continuity (and explicitly discarding the proofs when applying
 functions), which is quite impractical.
 
 To support direct use of conventional λ-notation for defining functions between
-domains, the type `⟪ D →ᶜ E ⟫` is rewritten to the Agda type `⟪ D ⟫ → ⟪ E ⟫` of
-*all* total functions between the carriers of `D` and `E`. Functions between
-domains are *automatically* continuous when defined in terms of λ-abstraction
-and application from the primitive continuous functions associated with
-specific domain constructors, as usual in conventional denotational semantics.
-And continuous endofunctions have (least) fixed points.
+domains, the type `⟪ D →ᶜ E ⟫` is rewritten[^rewrite] to the Agda type
+`⟪ D ⟫ → ⟪ E ⟫` of *all* total functions between the carriers of `D` and `E`.
+Functions between domains are *automatically* continuous when defined in terms
+of λ-abstraction and application from the primitive continuous functions
+associated with specific domain constructors, as usual in conventional
+denotational semantics. And continuous endofunctions have (least) fixed points.
 
-</a><a id="2055" class="Markup">```agda
-</a><a id="2063" class="Keyword">module</a> <a id="Functions"></a><a id="2070" href="Notation.html#2070" class="Module">Functions</a> <a id="2080" class="Keyword">where</a>
+[^rewrite]:
+    This rewrite rule appears to be essential for defining functions as
+    elements of `⟪ D →ᶜ E ⟫` without applying an explicit injection to each
+    λ-abstraction. Jesper Cockx suggested the rule to me at [AIM-XLI], as well
+    as the addition of the `--lossy-unification` option (which appears to be
+    required in some modules, but resulted in slow type-checking when used in
+    all modules).
 
-  <a id="2089" class="Keyword">postulate</a>
-    <a id="Functions._→ᶜ_"></a><a id="2103" href="Notation.html#2103" class="Postulate Operator">_→ᶜ_</a>     <a id="2112" class="Symbol">:</a> <a id="2114" href="Notation.html#759" class="Postulate">Domain</a> <a id="2121" class="Symbol">→</a> <a id="2123" href="Notation.html#759" class="Postulate">Domain</a> <a id="2130" class="Symbol">→</a> <a id="2132" href="Notation.html#759" class="Postulate">Domain</a> <a id="2139" class="Comment">-- assume continuous</a>
-    <a id="Functions.dom-cts"></a><a id="2164" href="Notation.html#2164" class="Postulate">dom-cts</a>  <a id="2173" class="Symbol">:</a> <a id="2175" href="Notation.html#808" class="Postulate Operator">⟪</a> <a id="2177" href="Notation.html#883" class="Generalizable">D</a> <a id="2179" href="Notation.html#2103" class="Postulate Operator">→ᶜ</a> <a id="2182" href="Notation.html#885" class="Generalizable">E</a> <a id="2184" href="Notation.html#808" class="Postulate Operator">⟫</a> <a id="2186" href="Agda.Builtin.Equality.html#150" class="Datatype Operator">≡</a> <a id="2188" class="Symbol">(</a><a id="2189" href="Notation.html#808" class="Postulate Operator">⟪</a> <a id="2191" href="Notation.html#883" class="Generalizable">D</a> <a id="2193" href="Notation.html#808" class="Postulate Operator">⟫</a> <a id="2195" class="Symbol">→</a> <a id="2197" href="Notation.html#808" class="Postulate Operator">⟪</a> <a id="2199" href="Notation.html#885" class="Generalizable">E</a> <a id="2201" href="Notation.html#808" class="Postulate Operator">⟫</a><a id="2202" class="Symbol">)</a>
+</a><a id="3302" class="Markup">```agda
+</a><a id="3310" class="Keyword">module</a> <a id="Functions"></a><a id="3317" href="Notation.html#3317" class="Module">Functions</a> <a id="3327" class="Keyword">where</a>
 
-  <a id="2207" class="Symbol">{-#</a> <a id="2211" class="Keyword">REWRITE</a> <a id="2219" href="Notation.html#2164" class="Postulate">dom-cts</a> <a id="2227" class="Symbol">#-}</a>
+  <a id="3336" class="Keyword">postulate</a>
+    <a id="Functions._→ᶜ_"></a><a id="3350" href="Notation.html#3350" class="Postulate Operator">_→ᶜ_</a>     <a id="3359" class="Symbol">:</a> <a id="3361" href="Notation.html#759" class="Postulate">Domain</a> <a id="3368" class="Symbol">→</a> <a id="3370" href="Notation.html#759" class="Postulate">Domain</a> <a id="3377" class="Symbol">→</a> <a id="3379" href="Notation.html#759" class="Postulate">Domain</a> <a id="3386" class="Comment">-- assume continuous</a>
+    <a id="Functions.dom-cts"></a><a id="3411" href="Notation.html#3411" class="Postulate">dom-cts</a>  <a id="3420" class="Symbol">:</a> <a id="3422" href="Notation.html#808" class="Postulate Operator">⟪</a> <a id="3424" href="Notation.html#883" class="Generalizable">D</a> <a id="3426" href="Notation.html#3350" class="Postulate Operator">→ᶜ</a> <a id="3429" href="Notation.html#885" class="Generalizable">E</a> <a id="3431" href="Notation.html#808" class="Postulate Operator">⟫</a> <a id="3433" href="Agda.Builtin.Equality.html#150" class="Datatype Operator">≡</a> <a id="3435" class="Symbol">(</a><a id="3436" href="Notation.html#808" class="Postulate Operator">⟪</a> <a id="3438" href="Notation.html#883" class="Generalizable">D</a> <a id="3440" href="Notation.html#808" class="Postulate Operator">⟫</a> <a id="3442" class="Symbol">→</a> <a id="3444" href="Notation.html#808" class="Postulate Operator">⟪</a> <a id="3446" href="Notation.html#885" class="Generalizable">E</a> <a id="3448" href="Notation.html#808" class="Postulate Operator">⟫</a><a id="3449" class="Symbol">)</a>
 
-  <a id="2234" class="Keyword">infixr</a> <a id="2241" class="Number">0</a> <a id="2243" href="Notation.html#2103" class="Postulate Operator">_→ᶜ_</a>
+  <a id="3454" class="Symbol">{-#</a> <a id="3458" class="Keyword">REWRITE</a> <a id="3466" href="Notation.html#3411" class="Postulate">dom-cts</a> <a id="3474" class="Symbol">#-}</a>
 
-  <a id="2251" class="Keyword">postulate</a>
-    <a id="Functions.fix"></a><a id="2265" href="Notation.html#2265" class="Postulate">fix</a> <a id="2269" class="Symbol">:</a> <a id="2271" href="Notation.html#808" class="Postulate Operator">⟪</a> <a id="2273" class="Symbol">(</a><a id="2274" href="Notation.html#883" class="Generalizable">D</a> <a id="2276" href="Notation.html#2103" class="Postulate Operator">→ᶜ</a> <a id="2279" href="Notation.html#883" class="Generalizable">D</a><a id="2280" class="Symbol">)</a> <a id="2282" href="Notation.html#2103" class="Postulate Operator">→ᶜ</a> <a id="2285" href="Notation.html#883" class="Generalizable">D</a> <a id="2287" href="Notation.html#808" class="Postulate Operator">⟫</a> <a id="2289" class="Comment">-- fixed points of endofunctions</a>
-<a id="2322" class="Markup">```
-</a><a id="2326" class="Background">
+  <a id="3481" class="Keyword">infixr</a> <a id="3488" class="Number">0</a> <a id="3490" href="Notation.html#3350" class="Postulate Operator">_→ᶜ_</a>
+
+  <a id="3498" class="Keyword">postulate</a>
+    <a id="Functions.fix"></a><a id="3512" href="Notation.html#3512" class="Postulate">fix</a> <a id="3516" class="Symbol">:</a> <a id="3518" href="Notation.html#808" class="Postulate Operator">⟪</a> <a id="3520" class="Symbol">(</a><a id="3521" href="Notation.html#883" class="Generalizable">D</a> <a id="3523" href="Notation.html#3350" class="Postulate Operator">→ᶜ</a> <a id="3526" href="Notation.html#883" class="Generalizable">D</a><a id="3527" class="Symbol">)</a> <a id="3529" href="Notation.html#3350" class="Postulate Operator">→ᶜ</a> <a id="3532" href="Notation.html#883" class="Generalizable">D</a> <a id="3534" href="Notation.html#808" class="Postulate Operator">⟫</a> <a id="3536" class="Comment">-- fixed points of endofunctions</a>
+<a id="3569" class="Markup">```
+</a><a id="3573" class="Background">
 It would be possible to declare an analogous type of *predomains*,[^pre]
 together with notation for types of continuous functions between predomains.
 The following declarations are for the special case of all functions from an
@@ -80,18 +103,18 @@ be regarded as a domain (ordered pointwise).
 [^pre]:
     A predomain is like a domain, but its carrier need not have a `⊥`-element.
 
-</a><a id="2767" class="Markup">```agda
-</a>  <a id="2777" class="Keyword">postulate</a>
-    <a id="Functions._→ˢ_"></a><a id="2791" href="Notation.html#2791" class="Postulate Operator">_→ˢ_</a>     <a id="2800" class="Symbol">:</a> <a id="2802" href="Agda.Primitive.html#388" class="Primitive">Set</a> <a id="2806" class="Symbol">→</a> <a id="2808" href="Notation.html#759" class="Postulate">Domain</a> <a id="2815" class="Symbol">→</a> <a id="2817" href="Notation.html#759" class="Postulate">Domain</a> <a id="2824" class="Comment">-- always continuous</a>
-    <a id="Functions.set-cts"></a><a id="2849" href="Notation.html#2849" class="Postulate">set-cts</a>  <a id="2858" class="Symbol">:</a> <a id="2860" href="Notation.html#808" class="Postulate Operator">⟪</a> <a id="2862" href="Notation.html#867" class="Generalizable">A</a> <a id="2864" href="Notation.html#2791" class="Postulate Operator">→ˢ</a> <a id="2867" href="Notation.html#885" class="Generalizable">E</a> <a id="2869" href="Notation.html#808" class="Postulate Operator">⟫</a> <a id="2871" href="Agda.Builtin.Equality.html#150" class="Datatype Operator">≡</a> <a id="2873" class="Symbol">(</a><a id="2874" href="Notation.html#867" class="Generalizable">A</a> <a id="2876" class="Symbol">→</a> <a id="2878" href="Notation.html#808" class="Postulate Operator">⟪</a> <a id="2880" href="Notation.html#885" class="Generalizable">E</a> <a id="2882" href="Notation.html#808" class="Postulate Operator">⟫</a><a id="2883" class="Symbol">)</a>
+</a><a id="4014" class="Markup">```agda
+</a>  <a id="4024" class="Keyword">postulate</a>
+    <a id="Functions._→ˢ_"></a><a id="4038" href="Notation.html#4038" class="Postulate Operator">_→ˢ_</a>     <a id="4047" class="Symbol">:</a> <a id="4049" href="Agda.Primitive.html#388" class="Primitive">Set</a> <a id="4053" class="Symbol">→</a> <a id="4055" href="Notation.html#759" class="Postulate">Domain</a> <a id="4062" class="Symbol">→</a> <a id="4064" href="Notation.html#759" class="Postulate">Domain</a> <a id="4071" class="Comment">-- always continuous</a>
+    <a id="Functions.set-cts"></a><a id="4096" href="Notation.html#4096" class="Postulate">set-cts</a>  <a id="4105" class="Symbol">:</a> <a id="4107" href="Notation.html#808" class="Postulate Operator">⟪</a> <a id="4109" href="Notation.html#867" class="Generalizable">A</a> <a id="4111" href="Notation.html#4038" class="Postulate Operator">→ˢ</a> <a id="4114" href="Notation.html#885" class="Generalizable">E</a> <a id="4116" href="Notation.html#808" class="Postulate Operator">⟫</a> <a id="4118" href="Agda.Builtin.Equality.html#150" class="Datatype Operator">≡</a> <a id="4120" class="Symbol">(</a><a id="4121" href="Notation.html#867" class="Generalizable">A</a> <a id="4123" class="Symbol">→</a> <a id="4125" href="Notation.html#808" class="Postulate Operator">⟪</a> <a id="4127" href="Notation.html#885" class="Generalizable">E</a> <a id="4129" href="Notation.html#808" class="Postulate Operator">⟫</a><a id="4130" class="Symbol">)</a>
 
-  <a id="2888" class="Symbol">{-#</a> <a id="2892" class="Keyword">REWRITE</a> <a id="2900" href="Notation.html#2849" class="Postulate">set-cts</a> <a id="2908" class="Symbol">#-}</a>
+  <a id="4135" class="Symbol">{-#</a> <a id="4139" class="Keyword">REWRITE</a> <a id="4147" href="Notation.html#4096" class="Postulate">set-cts</a> <a id="4155" class="Symbol">#-}</a>
 
-  <a id="2915" class="Keyword">infixr</a> <a id="2922" class="Number">0</a> <a id="2924" href="Notation.html#2791" class="Postulate Operator">_→ˢ_</a>
+  <a id="4162" class="Keyword">infixr</a> <a id="4169" class="Number">0</a> <a id="4171" href="Notation.html#4038" class="Postulate Operator">_→ˢ_</a>
 
-<a id="2930" class="Keyword">open</a> <a id="2935" href="Notation.html#2070" class="Module">Functions</a> <a id="2945" class="Keyword">public</a>
-<a id="2952" class="Markup">```
-</a><a id="2956" class="Background">
+<a id="4177" class="Keyword">open</a> <a id="4182" href="Notation.html#3317" class="Module">Functions</a> <a id="4192" class="Keyword">public</a>
+<a id="4199" class="Markup">```
+</a><a id="4203" class="Background">
 ## Lifted domains
 
 Lifting adds a `⊥`-element to an arbitrary type `A` to form a domain
@@ -107,17 +130,17 @@ is generally left implicit; and ordinary operations on sets of elements are
 assumed to map `⊥` to `⊥`, which avoids the need for explicit use of `_♯`.
 However, it seems difficult to support such conventions in Agda formalisations.
 
-</a><a id="3588" class="Markup">```agda
-</a><a id="3596" class="Keyword">module</a> <a id="Lifted"></a><a id="3603" href="Notation.html#3603" class="Module">Lifted</a> <a id="3610" class="Keyword">where</a>
+</a><a id="4835" class="Markup">```agda
+</a><a id="4843" class="Keyword">module</a> <a id="Lifted"></a><a id="4850" href="Notation.html#4850" class="Module">Lifted</a> <a id="4857" class="Keyword">where</a>
 
-  <a id="3619" class="Keyword">postulate</a>
-    <a id="Lifted._+⊥"></a><a id="3633" href="Notation.html#3633" class="Postulate Operator">_+⊥</a>  <a id="3638" class="Symbol">:</a> <a id="3640" href="Agda.Primitive.html#388" class="Primitive">Set</a> <a id="3644" class="Symbol">→</a> <a id="3646" href="Notation.html#759" class="Postulate">Domain</a>               <a id="3667" class="Comment">-- lifted set</a>
-    <a id="Lifted.η"></a><a id="3685" href="Notation.html#3685" class="Postulate">η</a>    <a id="3690" class="Symbol">:</a> <a id="3692" href="Notation.html#808" class="Postulate Operator">⟪</a> <a id="3694" href="Notation.html#867" class="Generalizable">A</a> <a id="3696" href="Notation.html#2791" class="Postulate Operator">→ˢ</a> <a id="3699" href="Notation.html#867" class="Generalizable">A</a> <a id="3701" href="Notation.html#3633" class="Postulate Operator">+⊥</a> <a id="3704" href="Notation.html#808" class="Postulate Operator">⟫</a>              <a id="3719" class="Comment">-- inclusion</a>
-    <a id="Lifted._♯"></a><a id="3736" href="Notation.html#3736" class="Postulate Operator">_♯</a>   <a id="3741" class="Symbol">:</a> <a id="3743" href="Notation.html#808" class="Postulate Operator">⟪</a> <a id="3745" class="Symbol">(</a><a id="3746" href="Notation.html#867" class="Generalizable">A</a> <a id="3748" href="Notation.html#2791" class="Postulate Operator">→ˢ</a> <a id="3751" href="Notation.html#883" class="Generalizable">D</a><a id="3752" class="Symbol">)</a> <a id="3754" href="Notation.html#2103" class="Postulate Operator">→ᶜ</a> <a id="3757" href="Notation.html#867" class="Generalizable">A</a> <a id="3759" href="Notation.html#3633" class="Postulate Operator">+⊥</a> <a id="3762" href="Notation.html#2103" class="Postulate Operator">→ᶜ</a> <a id="3765" href="Notation.html#883" class="Generalizable">D</a> <a id="3767" href="Notation.html#808" class="Postulate Operator">⟫</a>  <a id="3770" class="Comment">-- Kleisli extension</a>
+  <a id="4866" class="Keyword">postulate</a>
+    <a id="Lifted._+⊥"></a><a id="4880" href="Notation.html#4880" class="Postulate Operator">_+⊥</a>  <a id="4885" class="Symbol">:</a> <a id="4887" href="Agda.Primitive.html#388" class="Primitive">Set</a> <a id="4891" class="Symbol">→</a> <a id="4893" href="Notation.html#759" class="Postulate">Domain</a>               <a id="4914" class="Comment">-- lifted set</a>
+    <a id="Lifted.η"></a><a id="4932" href="Notation.html#4932" class="Postulate">η</a>    <a id="4937" class="Symbol">:</a> <a id="4939" href="Notation.html#808" class="Postulate Operator">⟪</a> <a id="4941" href="Notation.html#867" class="Generalizable">A</a> <a id="4943" href="Notation.html#4038" class="Postulate Operator">→ˢ</a> <a id="4946" href="Notation.html#867" class="Generalizable">A</a> <a id="4948" href="Notation.html#4880" class="Postulate Operator">+⊥</a> <a id="4951" href="Notation.html#808" class="Postulate Operator">⟫</a>              <a id="4966" class="Comment">-- inclusion</a>
+    <a id="Lifted._♯"></a><a id="4983" href="Notation.html#4983" class="Postulate Operator">_♯</a>   <a id="4988" class="Symbol">:</a> <a id="4990" href="Notation.html#808" class="Postulate Operator">⟪</a> <a id="4992" class="Symbol">(</a><a id="4993" href="Notation.html#867" class="Generalizable">A</a> <a id="4995" href="Notation.html#4038" class="Postulate Operator">→ˢ</a> <a id="4998" href="Notation.html#883" class="Generalizable">D</a><a id="4999" class="Symbol">)</a> <a id="5001" href="Notation.html#3350" class="Postulate Operator">→ᶜ</a> <a id="5004" href="Notation.html#867" class="Generalizable">A</a> <a id="5006" href="Notation.html#4880" class="Postulate Operator">+⊥</a> <a id="5009" href="Notation.html#3350" class="Postulate Operator">→ᶜ</a> <a id="5012" href="Notation.html#883" class="Generalizable">D</a> <a id="5014" href="Notation.html#808" class="Postulate Operator">⟫</a>  <a id="5017" class="Comment">-- Kleisli extension</a>
 
-  <a id="3794" class="Keyword">infix</a> <a id="3800" class="Number">10</a> <a id="3803" href="Notation.html#3633" class="Postulate Operator">_+⊥</a>
-<a id="3807" class="Markup">```
-</a><a id="3811" class="Background">
+  <a id="5041" class="Keyword">infix</a> <a id="5047" class="Number">10</a> <a id="5050" href="Notation.html#4880" class="Postulate Operator">_+⊥</a>
+<a id="5054" class="Markup">```
+</a><a id="5058" class="Background">
 ### Booleans
 
 The McCarthy conditional operation extends the usual ternary conditional choice
@@ -128,45 +151,45 @@ A short arrow is conventionally used in denotational semantics both for
 function domains and McCarthy conditionals. Agda reserves the short arrow `→`
 for ordinary (and dependent) function types.
 
-</a><a id="4192" class="Markup">```agda
-</a>  <a id="4202" class="Keyword">module</a> <a id="Lifted.Booleans"></a><a id="4209" href="Notation.html#4209" class="Module">Booleans</a> <a id="4218" class="Keyword">where</a>
+</a><a id="5439" class="Markup">```agda
+</a>  <a id="5449" class="Keyword">module</a> <a id="Lifted.Booleans"></a><a id="5456" href="Notation.html#5456" class="Module">Booleans</a> <a id="5465" class="Keyword">where</a>
 
-    <a id="Lifted.Booleans.Bool⊥"></a><a id="4229" href="Notation.html#4229" class="Function">Bool⊥</a> <a id="4235" class="Symbol">=</a> <a id="4237" href="Agda.Builtin.Bool.html#173" class="Datatype">Bool</a> <a id="4242" href="Notation.html#3633" class="Postulate Operator">+⊥</a>                      <a id="4266" class="Comment">-- truth-value domain</a>
+    <a id="Lifted.Booleans.Bool⊥"></a><a id="5476" href="Notation.html#5476" class="Function">Bool⊥</a> <a id="5482" class="Symbol">=</a> <a id="5484" href="Agda.Builtin.Bool.html#173" class="Datatype">Bool</a> <a id="5489" href="Notation.html#4880" class="Postulate Operator">+⊥</a>                      <a id="5513" class="Comment">-- truth-value domain</a>
     
-    <a id="4297" class="Keyword">postulate</a>
-      <a id="Lifted.Booleans._⟶_,_"></a><a id="4313" href="Notation.html#4313" class="Postulate Operator">_⟶_,_</a>  <a id="4320" class="Symbol">:</a> <a id="4322" href="Notation.html#808" class="Postulate Operator">⟪</a> <a id="4324" href="Notation.html#4229" class="Function">Bool⊥</a> <a id="4330" href="Notation.html#2103" class="Postulate Operator">→ᶜ</a> <a id="4333" href="Notation.html#883" class="Generalizable">D</a> <a id="4335" href="Notation.html#2103" class="Postulate Operator">→ᶜ</a> <a id="4338" href="Notation.html#883" class="Generalizable">D</a> <a id="4340" href="Notation.html#2103" class="Postulate Operator">→ᶜ</a> <a id="4343" href="Notation.html#883" class="Generalizable">D</a> <a id="4345" href="Notation.html#808" class="Postulate Operator">⟫</a>  <a id="4348" class="Comment">-- McCarthy conditional</a>
+    <a id="5544" class="Keyword">postulate</a>
+      <a id="Lifted.Booleans._⟶_,_"></a><a id="5560" href="Notation.html#5560" class="Postulate Operator">_⟶_,_</a>  <a id="5567" class="Symbol">:</a> <a id="5569" href="Notation.html#808" class="Postulate Operator">⟪</a> <a id="5571" href="Notation.html#5476" class="Function">Bool⊥</a> <a id="5577" href="Notation.html#3350" class="Postulate Operator">→ᶜ</a> <a id="5580" href="Notation.html#883" class="Generalizable">D</a> <a id="5582" href="Notation.html#3350" class="Postulate Operator">→ᶜ</a> <a id="5585" href="Notation.html#883" class="Generalizable">D</a> <a id="5587" href="Notation.html#3350" class="Postulate Operator">→ᶜ</a> <a id="5590" href="Notation.html#883" class="Generalizable">D</a> <a id="5592" href="Notation.html#808" class="Postulate Operator">⟫</a>  <a id="5595" class="Comment">-- McCarthy conditional</a>
 
-    <a id="4377" class="Keyword">infixr</a> <a id="4384" class="Number">20</a> <a id="4387" href="Notation.html#4313" class="Postulate Operator">_⟶_,_</a>
-<a id="4393" class="Markup">```
-</a><a id="4397" class="Background">
+    <a id="5624" class="Keyword">infixr</a> <a id="5631" class="Number">20</a> <a id="5634" href="Notation.html#5560" class="Postulate Operator">_⟶_,_</a>
+<a id="5640" class="Markup">```
+</a><a id="5644" class="Background">
 ### Naturals
 
 Agda allows decimal notation for natural numbers, as well as unary notation
 using `zero` and `suc`.
 
 
-</a><a id="4514" class="Markup">```agda
-</a>  <a id="4524" class="Keyword">module</a> <a id="Lifted.Naturals"></a><a id="4531" href="Notation.html#4531" class="Module">Naturals</a> <a id="4540" class="Keyword">where</a>
+</a><a id="5761" class="Markup">```agda
+</a>  <a id="5771" class="Keyword">module</a> <a id="Lifted.Naturals"></a><a id="5778" href="Notation.html#5778" class="Module">Naturals</a> <a id="5787" class="Keyword">where</a>
 
-    <a id="Lifted.Naturals.Nat⊥"></a><a id="4551" href="Notation.html#4551" class="Function">Nat⊥</a> <a id="4556" class="Symbol">=</a> <a id="4558" href="Notation.html#671" class="Datatype">Nat</a> <a id="4562" href="Notation.html#3633" class="Postulate Operator">+⊥</a> <a id="4565" class="Comment">-- natural number domain</a>
+    <a id="Lifted.Naturals.Nat⊥"></a><a id="5798" href="Notation.html#5798" class="Function">Nat⊥</a> <a id="5803" class="Symbol">=</a> <a id="5805" href="Notation.html#671" class="Datatype">Nat</a> <a id="5809" href="Notation.html#4880" class="Postulate Operator">+⊥</a> <a id="5812" class="Comment">-- natural number domain</a>
 
-    <a id="4595" class="Keyword">open</a> <a id="4600" href="Notation.html#4209" class="Module">Booleans</a>
+    <a id="5842" class="Keyword">open</a> <a id="5847" href="Notation.html#5456" class="Module">Booleans</a>
 
-    <a id="4614" class="Keyword">postulate</a>
-      <a id="Lifted.Naturals._==⊥_"></a><a id="4630" href="Notation.html#4630" class="Postulate Operator">_==⊥_</a>  <a id="4637" class="Symbol">:</a> <a id="4639" href="Notation.html#808" class="Postulate Operator">⟪</a> <a id="4641" href="Notation.html#4551" class="Function">Nat⊥</a> <a id="4646" href="Notation.html#2103" class="Postulate Operator">→ᶜ</a> <a id="4649" href="Notation.html#4551" class="Function">Nat⊥</a> <a id="4654" href="Notation.html#2103" class="Postulate Operator">→ᶜ</a> <a id="4657" href="Notation.html#4229" class="Function">Bool⊥</a> <a id="4663" href="Notation.html#808" class="Postulate Operator">⟫</a> <a id="4665" class="Comment">-- strict numerical equality</a>
-<a id="4694" class="Markup">```
-</a><a id="4698" class="Background">
+    <a id="5861" class="Keyword">postulate</a>
+      <a id="Lifted.Naturals._==⊥_"></a><a id="5877" href="Notation.html#5877" class="Postulate Operator">_==⊥_</a>  <a id="5884" class="Symbol">:</a> <a id="5886" href="Notation.html#808" class="Postulate Operator">⟪</a> <a id="5888" href="Notation.html#5798" class="Function">Nat⊥</a> <a id="5893" href="Notation.html#3350" class="Postulate Operator">→ᶜ</a> <a id="5896" href="Notation.html#5798" class="Function">Nat⊥</a> <a id="5901" href="Notation.html#3350" class="Postulate Operator">→ᶜ</a> <a id="5904" href="Notation.html#5476" class="Function">Bool⊥</a> <a id="5910" href="Notation.html#808" class="Postulate Operator">⟫</a> <a id="5912" class="Comment">-- strict numerical equality</a>
+<a id="5941" class="Markup">```
+</a><a id="5945" class="Background">
 ### Strings
 
 Agda allows literal strings enclosed in double quotation marks `&quot;...&quot;`.
 
-</a><a id="4785" class="Markup">```agda
-</a>  <a id="4795" class="Keyword">module</a> <a id="Lifted.Strings"></a><a id="4802" href="Notation.html#4802" class="Module">Strings</a> <a id="4810" class="Keyword">where</a>
-    <a id="4820" class="Keyword">open</a> <a id="4825" class="Keyword">import</a> <a id="4832" href="Data.String.Base.html" class="Module">Data.String.Base</a> <a id="4849" class="Keyword">using</a> <a id="4855" class="Symbol">(</a><a id="4856" href="Agda.Builtin.String.html#335" class="Postulate">String</a><a id="4862" class="Symbol">)</a> <a id="4864" class="Keyword">public</a>
+</a><a id="6032" class="Markup">```agda
+</a>  <a id="6042" class="Keyword">module</a> <a id="Lifted.Strings"></a><a id="6049" href="Notation.html#6049" class="Module">Strings</a> <a id="6057" class="Keyword">where</a>
+    <a id="6067" class="Keyword">open</a> <a id="6072" class="Keyword">import</a> <a id="6079" href="Data.String.Base.html" class="Module">Data.String.Base</a> <a id="6096" class="Keyword">using</a> <a id="6102" class="Symbol">(</a><a id="6103" href="Agda.Builtin.String.html#335" class="Postulate">String</a><a id="6109" class="Symbol">)</a> <a id="6111" class="Keyword">public</a>
 
-    <a id="Lifted.Strings.String⊥"></a><a id="4876" href="Notation.html#4876" class="Function">String⊥</a> <a id="4884" class="Symbol">=</a> <a id="4886" href="Agda.Builtin.String.html#335" class="Postulate">String</a> <a id="4893" href="Notation.html#3633" class="Postulate Operator">+⊥</a> <a id="4896" class="Comment">-- meta-string domain</a>
-<a id="4918" class="Markup">```
-</a><a id="4922" class="Background">
+    <a id="Lifted.Strings.String⊥"></a><a id="6123" href="Notation.html#6123" class="Function">String⊥</a> <a id="6131" class="Symbol">=</a> <a id="6133" href="Agda.Builtin.String.html#335" class="Postulate">String</a> <a id="6140" href="Notation.html#4880" class="Postulate Operator">+⊥</a> <a id="6143" class="Comment">-- meta-string domain</a>
+<a id="6165" class="Markup">```
+</a><a id="6169" class="Background">
 ## Sum domains
 
 The coalesced sum of two domains correspons to lifting the disjoint union of
@@ -179,40 +202,40 @@ into sum domains are usually left implicit, and case analysis is specified
 by combining a boolean-valued test with the McCarthy conditional and projection
 from sums to summands.
 
-</a><a id="5443" class="Markup">```agda
-</a><a id="5451" class="Keyword">module</a> <a id="Sums"></a><a id="5458" href="Notation.html#5458" class="Module">Sums</a> <a id="5463" class="Keyword">where</a>
+</a><a id="6690" class="Markup">```agda
+</a><a id="6698" class="Keyword">module</a> <a id="Sums"></a><a id="6705" href="Notation.html#6705" class="Module">Sums</a> <a id="6710" class="Keyword">where</a>
 
-  <a id="5472" class="Keyword">postulate</a>
-    <a id="Sums._+_"></a><a id="5486" href="Notation.html#5486" class="Postulate Operator">_+_</a>    <a id="5493" class="Symbol">:</a> <a id="5495" href="Notation.html#759" class="Postulate">Domain</a> <a id="5502" class="Symbol">→</a> <a id="5504" href="Notation.html#759" class="Postulate">Domain</a> <a id="5511" class="Symbol">→</a> <a id="5513" href="Notation.html#759" class="Postulate">Domain</a>                 <a id="5536" class="Comment">-- coalesced sum</a>
-    <a id="Sums.inj₁"></a><a id="5557" href="Notation.html#5557" class="Postulate">inj₁</a>   <a id="5564" class="Symbol">:</a> <a id="5566" href="Notation.html#808" class="Postulate Operator">⟪</a> <a id="5568" href="Notation.html#883" class="Generalizable">D</a> <a id="5570" href="Notation.html#2103" class="Postulate Operator">→ᶜ</a> <a id="5573" href="Notation.html#883" class="Generalizable">D</a> <a id="5575" href="Notation.html#5486" class="Postulate Operator">+</a> <a id="5577" href="Notation.html#885" class="Generalizable">E</a> <a id="5579" href="Notation.html#808" class="Postulate Operator">⟫</a>                            <a id="5608" class="Comment">-- injection</a>
-    <a id="Sums.inj₂"></a><a id="5625" href="Notation.html#5625" class="Postulate">inj₂</a>   <a id="5632" class="Symbol">:</a> <a id="5634" href="Notation.html#808" class="Postulate Operator">⟪</a> <a id="5636" href="Notation.html#885" class="Generalizable">E</a> <a id="5638" href="Notation.html#2103" class="Postulate Operator">→ᶜ</a> <a id="5641" href="Notation.html#883" class="Generalizable">D</a> <a id="5643" href="Notation.html#5486" class="Postulate Operator">+</a> <a id="5645" href="Notation.html#885" class="Generalizable">E</a> <a id="5647" href="Notation.html#808" class="Postulate Operator">⟫</a>                            <a id="5676" class="Comment">-- injection</a>
-    <a id="Sums.[_,_]"></a><a id="5693" href="Notation.html#5693" class="Postulate Operator">[_,_]</a>  <a id="5700" class="Symbol">:</a> <a id="5702" href="Notation.html#808" class="Postulate Operator">⟪</a> <a id="5704" class="Symbol">(</a><a id="5705" href="Notation.html#883" class="Generalizable">D</a> <a id="5707" href="Notation.html#2103" class="Postulate Operator">→ᶜ</a> <a id="5710" href="Notation.html#887" class="Generalizable">F</a><a id="5711" class="Symbol">)</a> <a id="5713" href="Notation.html#2103" class="Postulate Operator">→ᶜ</a> <a id="5716" class="Symbol">(</a><a id="5717" href="Notation.html#885" class="Generalizable">E</a> <a id="5719" href="Notation.html#2103" class="Postulate Operator">→ᶜ</a> <a id="5722" href="Notation.html#887" class="Generalizable">F</a><a id="5723" class="Symbol">)</a> <a id="5725" href="Notation.html#2103" class="Postulate Operator">→ᶜ</a> <a id="5728" class="Symbol">(</a><a id="5729" href="Notation.html#883" class="Generalizable">D</a> <a id="5731" href="Notation.html#5486" class="Postulate Operator">+</a> <a id="5733" href="Notation.html#885" class="Generalizable">E</a> <a id="5735" href="Notation.html#2103" class="Postulate Operator">→ᶜ</a> <a id="5738" href="Notation.html#887" class="Generalizable">F</a><a id="5739" class="Symbol">)</a> <a id="5741" href="Notation.html#808" class="Postulate Operator">⟫</a>  <a id="5744" class="Comment">-- case analysis</a>
+  <a id="6719" class="Keyword">postulate</a>
+    <a id="Sums._+_"></a><a id="6733" href="Notation.html#6733" class="Postulate Operator">_+_</a>    <a id="6740" class="Symbol">:</a> <a id="6742" href="Notation.html#759" class="Postulate">Domain</a> <a id="6749" class="Symbol">→</a> <a id="6751" href="Notation.html#759" class="Postulate">Domain</a> <a id="6758" class="Symbol">→</a> <a id="6760" href="Notation.html#759" class="Postulate">Domain</a>                 <a id="6783" class="Comment">-- coalesced sum</a>
+    <a id="Sums.inj₁"></a><a id="6804" href="Notation.html#6804" class="Postulate">inj₁</a>   <a id="6811" class="Symbol">:</a> <a id="6813" href="Notation.html#808" class="Postulate Operator">⟪</a> <a id="6815" href="Notation.html#883" class="Generalizable">D</a> <a id="6817" href="Notation.html#3350" class="Postulate Operator">→ᶜ</a> <a id="6820" href="Notation.html#883" class="Generalizable">D</a> <a id="6822" href="Notation.html#6733" class="Postulate Operator">+</a> <a id="6824" href="Notation.html#885" class="Generalizable">E</a> <a id="6826" href="Notation.html#808" class="Postulate Operator">⟫</a>                            <a id="6855" class="Comment">-- injection</a>
+    <a id="Sums.inj₂"></a><a id="6872" href="Notation.html#6872" class="Postulate">inj₂</a>   <a id="6879" class="Symbol">:</a> <a id="6881" href="Notation.html#808" class="Postulate Operator">⟪</a> <a id="6883" href="Notation.html#885" class="Generalizable">E</a> <a id="6885" href="Notation.html#3350" class="Postulate Operator">→ᶜ</a> <a id="6888" href="Notation.html#883" class="Generalizable">D</a> <a id="6890" href="Notation.html#6733" class="Postulate Operator">+</a> <a id="6892" href="Notation.html#885" class="Generalizable">E</a> <a id="6894" href="Notation.html#808" class="Postulate Operator">⟫</a>                            <a id="6923" class="Comment">-- injection</a>
+    <a id="Sums.[_,_]"></a><a id="6940" href="Notation.html#6940" class="Postulate Operator">[_,_]</a>  <a id="6947" class="Symbol">:</a> <a id="6949" href="Notation.html#808" class="Postulate Operator">⟪</a> <a id="6951" class="Symbol">(</a><a id="6952" href="Notation.html#883" class="Generalizable">D</a> <a id="6954" href="Notation.html#3350" class="Postulate Operator">→ᶜ</a> <a id="6957" href="Notation.html#887" class="Generalizable">F</a><a id="6958" class="Symbol">)</a> <a id="6960" href="Notation.html#3350" class="Postulate Operator">→ᶜ</a> <a id="6963" class="Symbol">(</a><a id="6964" href="Notation.html#885" class="Generalizable">E</a> <a id="6966" href="Notation.html#3350" class="Postulate Operator">→ᶜ</a> <a id="6969" href="Notation.html#887" class="Generalizable">F</a><a id="6970" class="Symbol">)</a> <a id="6972" href="Notation.html#3350" class="Postulate Operator">→ᶜ</a> <a id="6975" class="Symbol">(</a><a id="6976" href="Notation.html#883" class="Generalizable">D</a> <a id="6978" href="Notation.html#6733" class="Postulate Operator">+</a> <a id="6980" href="Notation.html#885" class="Generalizable">E</a> <a id="6982" href="Notation.html#3350" class="Postulate Operator">→ᶜ</a> <a id="6985" href="Notation.html#887" class="Generalizable">F</a><a id="6986" class="Symbol">)</a> <a id="6988" href="Notation.html#808" class="Postulate Operator">⟫</a>  <a id="6991" class="Comment">-- case analysis</a>
 
-  <a id="5764" class="Keyword">infixr</a> <a id="5771" class="Number">1</a> <a id="5773" href="Notation.html#5486" class="Postulate Operator">_+_</a>
-<a id="5777" class="Markup">```
-</a><a id="5781" class="Background">
+  <a id="7011" class="Keyword">infixr</a> <a id="7018" class="Number">1</a> <a id="7020" href="Notation.html#6733" class="Postulate Operator">_+_</a>
+<a id="7024" class="Markup">```
+</a><a id="7028" class="Background">
 ## Product domains
 
 The carrier of the binary cartesian product of two domains consists of all
 pairs of elements of the carriers of the agument domains. Neither the product
 nor pairing is associative.
 
-</a><a id="5984" class="Markup">```agda
-</a><a id="5992" class="Keyword">module</a> <a id="Products"></a><a id="5999" href="Notation.html#5999" class="Module">Products</a> <a id="6008" class="Keyword">where</a>
+</a><a id="7231" class="Markup">```agda
+</a><a id="7239" class="Keyword">module</a> <a id="Products"></a><a id="7246" href="Notation.html#7246" class="Module">Products</a> <a id="7255" class="Keyword">where</a>
 
-  <a id="6017" class="Keyword">postulate</a>
-    <a id="Products._×_"></a><a id="6031" href="Notation.html#6031" class="Postulate Operator">_×_</a>   <a id="6037" class="Symbol">:</a> <a id="6039" href="Notation.html#759" class="Postulate">Domain</a> <a id="6046" class="Symbol">→</a> <a id="6048" href="Notation.html#759" class="Postulate">Domain</a> <a id="6055" class="Symbol">→</a> <a id="6057" href="Notation.html#759" class="Postulate">Domain</a>   <a id="6066" class="Comment">-- cartesian product</a>
-    <a id="Products._,_"></a><a id="6091" href="Notation.html#6091" class="Postulate Operator">_,_</a>   <a id="6097" class="Symbol">:</a> <a id="6099" href="Notation.html#808" class="Postulate Operator">⟪</a> <a id="6101" href="Notation.html#883" class="Generalizable">D</a> <a id="6103" href="Notation.html#2103" class="Postulate Operator">→ᶜ</a> <a id="6106" href="Notation.html#885" class="Generalizable">E</a> <a id="6108" href="Notation.html#2103" class="Postulate Operator">→ᶜ</a> <a id="6111" href="Notation.html#883" class="Generalizable">D</a> <a id="6113" href="Notation.html#6031" class="Postulate Operator">×</a> <a id="6115" href="Notation.html#885" class="Generalizable">E</a> <a id="6117" href="Notation.html#808" class="Postulate Operator">⟫</a>         <a id="6127" class="Comment">-- pairing</a>
-    <a id="Products._↓²1"></a><a id="6142" href="Notation.html#6142" class="Postulate Operator">_↓²1</a>  <a id="6148" class="Symbol">:</a> <a id="6150" href="Notation.html#808" class="Postulate Operator">⟪</a> <a id="6152" href="Notation.html#883" class="Generalizable">D</a> <a id="6154" href="Notation.html#6031" class="Postulate Operator">×</a> <a id="6156" href="Notation.html#885" class="Generalizable">E</a> <a id="6158" href="Notation.html#2103" class="Postulate Operator">→ᶜ</a> <a id="6161" href="Notation.html#883" class="Generalizable">D</a> <a id="6163" href="Notation.html#808" class="Postulate Operator">⟫</a>              <a id="6178" class="Comment">-- 1st projection</a>
-    <a id="Products._↓²2"></a><a id="6200" href="Notation.html#6200" class="Postulate Operator">_↓²2</a>  <a id="6206" class="Symbol">:</a> <a id="6208" href="Notation.html#808" class="Postulate Operator">⟪</a> <a id="6210" href="Notation.html#883" class="Generalizable">D</a> <a id="6212" href="Notation.html#6031" class="Postulate Operator">×</a> <a id="6214" href="Notation.html#885" class="Generalizable">E</a> <a id="6216" href="Notation.html#2103" class="Postulate Operator">→ᶜ</a> <a id="6219" href="Notation.html#885" class="Generalizable">E</a> <a id="6221" href="Notation.html#808" class="Postulate Operator">⟫</a>              <a id="6236" class="Comment">-- 2nd projection</a>
-    <a id="Products._↓³1"></a><a id="6258" href="Notation.html#6258" class="Postulate Operator">_↓³1</a>  <a id="6264" class="Symbol">:</a> <a id="6266" href="Notation.html#808" class="Postulate Operator">⟪</a> <a id="6268" href="Notation.html#883" class="Generalizable">D</a> <a id="6270" href="Notation.html#6031" class="Postulate Operator">×</a> <a id="6272" href="Notation.html#885" class="Generalizable">E</a> <a id="6274" href="Notation.html#6031" class="Postulate Operator">×</a> <a id="6276" href="Notation.html#887" class="Generalizable">F</a> <a id="6278" href="Notation.html#2103" class="Postulate Operator">→ᶜ</a> <a id="6281" href="Notation.html#883" class="Generalizable">D</a> <a id="6283" href="Notation.html#808" class="Postulate Operator">⟫</a>          <a id="6294" class="Comment">-- 1st projection</a>
-    <a id="Products._↓³2"></a><a id="6316" href="Notation.html#6316" class="Postulate Operator">_↓³2</a>  <a id="6322" class="Symbol">:</a> <a id="6324" href="Notation.html#808" class="Postulate Operator">⟪</a> <a id="6326" href="Notation.html#883" class="Generalizable">D</a> <a id="6328" href="Notation.html#6031" class="Postulate Operator">×</a> <a id="6330" href="Notation.html#885" class="Generalizable">E</a> <a id="6332" href="Notation.html#6031" class="Postulate Operator">×</a> <a id="6334" href="Notation.html#887" class="Generalizable">F</a> <a id="6336" href="Notation.html#2103" class="Postulate Operator">→ᶜ</a> <a id="6339" href="Notation.html#885" class="Generalizable">E</a> <a id="6341" href="Notation.html#808" class="Postulate Operator">⟫</a>          <a id="6352" class="Comment">-- 2nd projection</a>
-    <a id="Products._↓³3"></a><a id="6374" href="Notation.html#6374" class="Postulate Operator">_↓³3</a>  <a id="6380" class="Symbol">:</a> <a id="6382" href="Notation.html#808" class="Postulate Operator">⟪</a> <a id="6384" href="Notation.html#883" class="Generalizable">D</a> <a id="6386" href="Notation.html#6031" class="Postulate Operator">×</a> <a id="6388" href="Notation.html#885" class="Generalizable">E</a> <a id="6390" href="Notation.html#6031" class="Postulate Operator">×</a> <a id="6392" href="Notation.html#887" class="Generalizable">F</a> <a id="6394" href="Notation.html#2103" class="Postulate Operator">→ᶜ</a> <a id="6397" href="Notation.html#887" class="Generalizable">F</a> <a id="6399" href="Notation.html#808" class="Postulate Operator">⟫</a>          <a id="6410" class="Comment">-- 3rd projection</a>
+  <a id="7264" class="Keyword">postulate</a>
+    <a id="Products._×_"></a><a id="7278" href="Notation.html#7278" class="Postulate Operator">_×_</a>   <a id="7284" class="Symbol">:</a> <a id="7286" href="Notation.html#759" class="Postulate">Domain</a> <a id="7293" class="Symbol">→</a> <a id="7295" href="Notation.html#759" class="Postulate">Domain</a> <a id="7302" class="Symbol">→</a> <a id="7304" href="Notation.html#759" class="Postulate">Domain</a>   <a id="7313" class="Comment">-- cartesian product</a>
+    <a id="Products._,_"></a><a id="7338" href="Notation.html#7338" class="Postulate Operator">_,_</a>   <a id="7344" class="Symbol">:</a> <a id="7346" href="Notation.html#808" class="Postulate Operator">⟪</a> <a id="7348" href="Notation.html#883" class="Generalizable">D</a> <a id="7350" href="Notation.html#3350" class="Postulate Operator">→ᶜ</a> <a id="7353" href="Notation.html#885" class="Generalizable">E</a> <a id="7355" href="Notation.html#3350" class="Postulate Operator">→ᶜ</a> <a id="7358" href="Notation.html#883" class="Generalizable">D</a> <a id="7360" href="Notation.html#7278" class="Postulate Operator">×</a> <a id="7362" href="Notation.html#885" class="Generalizable">E</a> <a id="7364" href="Notation.html#808" class="Postulate Operator">⟫</a>         <a id="7374" class="Comment">-- pairing</a>
+    <a id="Products._↓²1"></a><a id="7389" href="Notation.html#7389" class="Postulate Operator">_↓²1</a>  <a id="7395" class="Symbol">:</a> <a id="7397" href="Notation.html#808" class="Postulate Operator">⟪</a> <a id="7399" href="Notation.html#883" class="Generalizable">D</a> <a id="7401" href="Notation.html#7278" class="Postulate Operator">×</a> <a id="7403" href="Notation.html#885" class="Generalizable">E</a> <a id="7405" href="Notation.html#3350" class="Postulate Operator">→ᶜ</a> <a id="7408" href="Notation.html#883" class="Generalizable">D</a> <a id="7410" href="Notation.html#808" class="Postulate Operator">⟫</a>              <a id="7425" class="Comment">-- 1st projection</a>
+    <a id="Products._↓²2"></a><a id="7447" href="Notation.html#7447" class="Postulate Operator">_↓²2</a>  <a id="7453" class="Symbol">:</a> <a id="7455" href="Notation.html#808" class="Postulate Operator">⟪</a> <a id="7457" href="Notation.html#883" class="Generalizable">D</a> <a id="7459" href="Notation.html#7278" class="Postulate Operator">×</a> <a id="7461" href="Notation.html#885" class="Generalizable">E</a> <a id="7463" href="Notation.html#3350" class="Postulate Operator">→ᶜ</a> <a id="7466" href="Notation.html#885" class="Generalizable">E</a> <a id="7468" href="Notation.html#808" class="Postulate Operator">⟫</a>              <a id="7483" class="Comment">-- 2nd projection</a>
+    <a id="Products._↓³1"></a><a id="7505" href="Notation.html#7505" class="Postulate Operator">_↓³1</a>  <a id="7511" class="Symbol">:</a> <a id="7513" href="Notation.html#808" class="Postulate Operator">⟪</a> <a id="7515" href="Notation.html#883" class="Generalizable">D</a> <a id="7517" href="Notation.html#7278" class="Postulate Operator">×</a> <a id="7519" href="Notation.html#885" class="Generalizable">E</a> <a id="7521" href="Notation.html#7278" class="Postulate Operator">×</a> <a id="7523" href="Notation.html#887" class="Generalizable">F</a> <a id="7525" href="Notation.html#3350" class="Postulate Operator">→ᶜ</a> <a id="7528" href="Notation.html#883" class="Generalizable">D</a> <a id="7530" href="Notation.html#808" class="Postulate Operator">⟫</a>          <a id="7541" class="Comment">-- 1st projection</a>
+    <a id="Products._↓³2"></a><a id="7563" href="Notation.html#7563" class="Postulate Operator">_↓³2</a>  <a id="7569" class="Symbol">:</a> <a id="7571" href="Notation.html#808" class="Postulate Operator">⟪</a> <a id="7573" href="Notation.html#883" class="Generalizable">D</a> <a id="7575" href="Notation.html#7278" class="Postulate Operator">×</a> <a id="7577" href="Notation.html#885" class="Generalizable">E</a> <a id="7579" href="Notation.html#7278" class="Postulate Operator">×</a> <a id="7581" href="Notation.html#887" class="Generalizable">F</a> <a id="7583" href="Notation.html#3350" class="Postulate Operator">→ᶜ</a> <a id="7586" href="Notation.html#885" class="Generalizable">E</a> <a id="7588" href="Notation.html#808" class="Postulate Operator">⟫</a>          <a id="7599" class="Comment">-- 2nd projection</a>
+    <a id="Products._↓³3"></a><a id="7621" href="Notation.html#7621" class="Postulate Operator">_↓³3</a>  <a id="7627" class="Symbol">:</a> <a id="7629" href="Notation.html#808" class="Postulate Operator">⟪</a> <a id="7631" href="Notation.html#883" class="Generalizable">D</a> <a id="7633" href="Notation.html#7278" class="Postulate Operator">×</a> <a id="7635" href="Notation.html#885" class="Generalizable">E</a> <a id="7637" href="Notation.html#7278" class="Postulate Operator">×</a> <a id="7639" href="Notation.html#887" class="Generalizable">F</a> <a id="7641" href="Notation.html#3350" class="Postulate Operator">→ᶜ</a> <a id="7644" href="Notation.html#887" class="Generalizable">F</a> <a id="7646" href="Notation.html#808" class="Postulate Operator">⟫</a>          <a id="7657" class="Comment">-- 3rd projection</a>
 
-  <a id="6431" class="Keyword">infixr</a> <a id="6438" class="Number">2</a> <a id="6440" href="Notation.html#6031" class="Postulate Operator">_×_</a>
-  <a id="6446" class="Keyword">infixr</a> <a id="6453" class="Number">4</a> <a id="6455" href="Notation.html#6091" class="Postulate Operator">_,_</a>
-<a id="6459" class="Markup">```
-</a><a id="6463" class="Background">
+  <a id="7678" class="Keyword">infixr</a> <a id="7685" class="Number">2</a> <a id="7687" href="Notation.html#7278" class="Postulate Operator">_×_</a>
+  <a id="7693" class="Keyword">infixr</a> <a id="7700" class="Number">4</a> <a id="7702" href="Notation.html#7338" class="Postulate Operator">_,_</a>
+<a id="7706" class="Markup">```
+</a><a id="7710" class="Background">
 It would be possible to add similar notation for so-called *smash*-products,
 where the pairing operation is strict.
 
@@ -224,17 +247,17 @@ and requires spaces aroun the `^` operator.
 
 Note that `D ^ 2` is equal to `D × D`.
 
-</a><a id="6836" class="Markup">```agda
-</a>  <a id="6846" class="Keyword">module</a> <a id="Products.Tuples"></a><a id="6853" href="Notation.html#6853" class="Module">Tuples</a> <a id="6860" class="Keyword">where</a>
+</a><a id="8083" class="Markup">```agda
+</a>  <a id="8093" class="Keyword">module</a> <a id="Products.Tuples"></a><a id="8100" href="Notation.html#8100" class="Module">Tuples</a> <a id="8107" class="Keyword">where</a>
 
-    <a id="Products.Tuples._^_"></a><a id="6871" href="Notation.html#6871" class="Function Operator">_^_</a> <a id="6875" class="Symbol">:</a> <a id="6877" href="Notation.html#759" class="Postulate">Domain</a> <a id="6884" class="Symbol">→</a> <a id="6886" href="Notation.html#671" class="Datatype">Nat</a> <a id="6890" class="Symbol">→</a> <a id="6892" href="Notation.html#759" class="Postulate">Domain</a>
-    <a id="6903" href="Notation.html#6903" class="Bound">D</a> <a id="6905" href="Notation.html#6871" class="Function Operator">^</a> <a id="6907" class="Number">0</a>            <a id="6920" class="Symbol">=</a> <a id="6922" href="Notation.html#973" class="Postulate">𝟙</a> 
-    <a id="6929" href="Notation.html#6929" class="Bound">D</a> <a id="6931" href="Notation.html#6871" class="Function Operator">^</a> <a id="6933" class="Number">1</a>            <a id="6946" class="Symbol">=</a> <a id="6948" href="Notation.html#6929" class="Bound">D</a>
-    <a id="6954" href="Notation.html#6954" class="Bound">D</a> <a id="6956" href="Notation.html#6871" class="Function Operator">^</a> <a id="6958" href="Agda.Builtin.Nat.html#234" class="InductiveConstructor">suc</a> <a id="6962" class="Symbol">(</a><a id="6963" href="Agda.Builtin.Nat.html#234" class="InductiveConstructor">suc</a> <a id="6967" href="Notation.html#6967" class="Bound">n</a><a id="6968" class="Symbol">)</a>  <a id="6971" class="Symbol">=</a> <a id="6973" href="Notation.html#6954" class="Bound">D</a> <a id="6975" href="Notation.html#6031" class="Postulate Operator">×</a> <a id="6977" class="Symbol">(</a><a id="6978" href="Notation.html#6954" class="Bound">D</a> <a id="6980" href="Notation.html#6871" class="Function Operator">^</a> <a id="6982" href="Agda.Builtin.Nat.html#234" class="InductiveConstructor">suc</a> <a id="6986" href="Notation.html#6967" class="Bound">n</a><a id="6987" class="Symbol">)</a>
+    <a id="Products.Tuples._^_"></a><a id="8118" href="Notation.html#8118" class="Function Operator">_^_</a> <a id="8122" class="Symbol">:</a> <a id="8124" href="Notation.html#759" class="Postulate">Domain</a> <a id="8131" class="Symbol">→</a> <a id="8133" href="Notation.html#671" class="Datatype">Nat</a> <a id="8137" class="Symbol">→</a> <a id="8139" href="Notation.html#759" class="Postulate">Domain</a>
+    <a id="8150" href="Notation.html#8150" class="Bound">D</a> <a id="8152" href="Notation.html#8118" class="Function Operator">^</a> <a id="8154" class="Number">0</a>            <a id="8167" class="Symbol">=</a> <a id="8169" href="Notation.html#973" class="Postulate">𝟙</a> 
+    <a id="8176" href="Notation.html#8176" class="Bound">D</a> <a id="8178" href="Notation.html#8118" class="Function Operator">^</a> <a id="8180" class="Number">1</a>            <a id="8193" class="Symbol">=</a> <a id="8195" href="Notation.html#8176" class="Bound">D</a>
+    <a id="8201" href="Notation.html#8201" class="Bound">D</a> <a id="8203" href="Notation.html#8118" class="Function Operator">^</a> <a id="8205" href="Agda.Builtin.Nat.html#234" class="InductiveConstructor">suc</a> <a id="8209" class="Symbol">(</a><a id="8210" href="Agda.Builtin.Nat.html#234" class="InductiveConstructor">suc</a> <a id="8214" href="Notation.html#8214" class="Bound">n</a><a id="8215" class="Symbol">)</a>  <a id="8218" class="Symbol">=</a> <a id="8220" href="Notation.html#8201" class="Bound">D</a> <a id="8222" href="Notation.html#7278" class="Postulate Operator">×</a> <a id="8224" class="Symbol">(</a><a id="8225" href="Notation.html#8201" class="Bound">D</a> <a id="8227" href="Notation.html#8118" class="Function Operator">^</a> <a id="8229" href="Agda.Builtin.Nat.html#234" class="InductiveConstructor">suc</a> <a id="8233" href="Notation.html#8214" class="Bound">n</a><a id="8234" class="Symbol">)</a>
 
-    <a id="6994" class="Keyword">infix</a> <a id="7000" class="Number">8</a>  <a id="7003" href="Notation.html#6871" class="Function Operator">_^_</a>
-<a id="7007" class="Markup">```
-</a><a id="7011" class="Background">
+    <a id="8241" class="Keyword">infix</a> <a id="8247" class="Number">8</a>  <a id="8250" href="Notation.html#8118" class="Function Operator">_^_</a>
+<a id="8254" class="Markup">```
+</a><a id="8258" class="Background">
 ### Sequences
 
 The domain `D ⋆` of finite sequences of elements of a domain `D` is
@@ -248,33 +271,33 @@ The single angle-brackets `⟨...⟩` used to form  sequences are unrelated to t
 double angle-brackets `⟪ D ⟫` used for the carrier of domain `D`.
 
 
-</a><a id="7522" class="Markup">```
-</a>  <a id="7528" class="Keyword">module</a> <a id="Products.Sequences"></a><a id="7535" href="Notation.html#7535" class="Module">Sequences</a> <a id="7545" class="Keyword">where</a>
+</a><a id="8769" class="Markup">```
+</a>  <a id="8775" class="Keyword">module</a> <a id="Products.Sequences"></a><a id="8782" href="Notation.html#8782" class="Module">Sequences</a> <a id="8792" class="Keyword">where</a>
 
-    <a id="7556" class="Keyword">open</a> <a id="7561" href="Notation.html#4531" class="Module">Lifted.Naturals</a>
-    <a id="7581" class="Keyword">open</a> <a id="7586" href="Notation.html#6853" class="Module">Tuples</a>
+    <a id="8803" class="Keyword">open</a> <a id="8808" href="Notation.html#5778" class="Module">Lifted.Naturals</a>
+    <a id="8828" class="Keyword">open</a> <a id="8833" href="Notation.html#8100" class="Module">Tuples</a>
 
-    <a id="7598" class="Keyword">postulate</a>
-      <a id="Products.Sequences._⋆"></a><a id="7614" href="Notation.html#7614" class="Postulate Operator">_⋆</a>     <a id="7621" class="Symbol">:</a> <a id="7623" href="Notation.html#759" class="Postulate">Domain</a> <a id="7630" class="Symbol">→</a> <a id="7632" href="Notation.html#759" class="Postulate">Domain</a>         <a id="7647" class="Comment">-- D ⋆          finite sequences </a>
-      <a id="Products.Sequences.⟨⟩"></a><a id="7687" href="Notation.html#7687" class="Postulate">⟨⟩</a>     <a id="7694" class="Symbol">:</a> <a id="7696" href="Notation.html#808" class="Postulate Operator">⟪</a> <a id="7698" href="Notation.html#883" class="Generalizable">D</a> <a id="7700" href="Notation.html#7614" class="Postulate Operator">⋆</a> <a id="7702" href="Notation.html#808" class="Postulate Operator">⟫</a>                 <a id="7720" class="Comment">-- ⟨⟩            empty sequence</a>
-      <a id="Products.Sequences.⟨_⟩"></a><a id="7758" href="Notation.html#7758" class="Postulate Operator">⟨_⟩</a>    <a id="7765" class="Symbol">:</a> <a id="7767" href="Notation.html#808" class="Postulate Operator">⟪</a> <a id="7769" class="Symbol">(</a><a id="7770" href="Notation.html#883" class="Generalizable">D</a> <a id="7772" href="Notation.html#6871" class="Function Operator">^</a> <a id="7774" href="Agda.Builtin.Nat.html#234" class="InductiveConstructor">suc</a> <a id="7778" href="Notation.html#902" class="Generalizable">n</a><a id="7779" class="Symbol">)</a> <a id="7781" href="Notation.html#2103" class="Postulate Operator">→ᶜ</a> <a id="7784" href="Notation.html#883" class="Generalizable">D</a> <a id="7786" href="Notation.html#7614" class="Postulate Operator">⋆</a> <a id="7788" href="Notation.html#808" class="Postulate Operator">⟫</a>  <a id="7791" class="Comment">-- ⟨ d₁ , ... ⟩  non-empty sequence</a>
-      <a id="Products.Sequences.#"></a><a id="7833" href="Notation.html#7833" class="Postulate">#</a>      <a id="7840" class="Symbol">:</a> <a id="7842" href="Notation.html#808" class="Postulate Operator">⟪</a> <a id="7844" href="Notation.html#883" class="Generalizable">D</a> <a id="7846" href="Notation.html#7614" class="Postulate Operator">⋆</a> <a id="7848" href="Notation.html#2103" class="Postulate Operator">→ᶜ</a> <a id="7851" href="Notation.html#4551" class="Function">Nat⊥</a> <a id="7856" href="Notation.html#808" class="Postulate Operator">⟫</a>         <a id="7866" class="Comment">-- # d⋆          sequence length</a>
-      <a id="Products.Sequences._§_"></a><a id="7905" href="Notation.html#7905" class="Postulate Operator">_§_</a>    <a id="7912" class="Symbol">:</a> <a id="7914" href="Notation.html#808" class="Postulate Operator">⟪</a> <a id="7916" href="Notation.html#883" class="Generalizable">D</a> <a id="7918" href="Notation.html#7614" class="Postulate Operator">⋆</a> <a id="7920" href="Notation.html#2103" class="Postulate Operator">→ᶜ</a> <a id="7923" href="Notation.html#883" class="Generalizable">D</a> <a id="7925" href="Notation.html#7614" class="Postulate Operator">⋆</a> <a id="7927" href="Notation.html#2103" class="Postulate Operator">→ᶜ</a> <a id="7930" href="Notation.html#883" class="Generalizable">D</a> <a id="7932" href="Notation.html#7614" class="Postulate Operator">⋆</a> <a id="7934" href="Notation.html#808" class="Postulate Operator">⟫</a>   <a id="7938" class="Comment">-- d⋆ § d⋆       concatenation</a>
-      <a id="Products.Sequences._↓_"></a><a id="7975" href="Notation.html#7975" class="Postulate Operator">_↓_</a>    <a id="7982" class="Symbol">:</a> <a id="7984" href="Notation.html#808" class="Postulate Operator">⟪</a> <a id="7986" href="Notation.html#883" class="Generalizable">D</a> <a id="7988" href="Notation.html#7614" class="Postulate Operator">⋆</a> <a id="7990" href="Notation.html#2103" class="Postulate Operator">→ᶜ</a> <a id="7993" href="Notation.html#671" class="Datatype">Nat</a> <a id="7997" href="Notation.html#2791" class="Postulate Operator">→ˢ</a> <a id="8000" href="Notation.html#883" class="Generalizable">D</a> <a id="8002" href="Notation.html#808" class="Postulate Operator">⟫</a>     <a id="8008" class="Comment">-- d⋆ ↓ n        nth component</a>
-      <a id="Products.Sequences._†_"></a><a id="8045" href="Notation.html#8045" class="Postulate Operator">_†_</a>    <a id="8052" class="Symbol">:</a> <a id="8054" href="Notation.html#808" class="Postulate Operator">⟪</a> <a id="8056" href="Notation.html#883" class="Generalizable">D</a> <a id="8058" href="Notation.html#7614" class="Postulate Operator">⋆</a> <a id="8060" href="Notation.html#2103" class="Postulate Operator">→ᶜ</a> <a id="8063" href="Notation.html#671" class="Datatype">Nat</a> <a id="8067" href="Notation.html#2791" class="Postulate Operator">→ˢ</a> <a id="8070" href="Notation.html#883" class="Generalizable">D</a> <a id="8072" href="Notation.html#7614" class="Postulate Operator">⋆</a> <a id="8074" href="Notation.html#808" class="Postulate Operator">⟫</a>   <a id="8078" class="Comment">-- d⋆ † n        nth tail</a>
-<a id="8104" class="Markup">```
-</a><a id="8108" class="Background">
+    <a id="8845" class="Keyword">postulate</a>
+      <a id="Products.Sequences._⋆"></a><a id="8861" href="Notation.html#8861" class="Postulate Operator">_⋆</a>     <a id="8868" class="Symbol">:</a> <a id="8870" href="Notation.html#759" class="Postulate">Domain</a> <a id="8877" class="Symbol">→</a> <a id="8879" href="Notation.html#759" class="Postulate">Domain</a>         <a id="8894" class="Comment">-- D ⋆          finite sequences </a>
+      <a id="Products.Sequences.⟨⟩"></a><a id="8934" href="Notation.html#8934" class="Postulate">⟨⟩</a>     <a id="8941" class="Symbol">:</a> <a id="8943" href="Notation.html#808" class="Postulate Operator">⟪</a> <a id="8945" href="Notation.html#883" class="Generalizable">D</a> <a id="8947" href="Notation.html#8861" class="Postulate Operator">⋆</a> <a id="8949" href="Notation.html#808" class="Postulate Operator">⟫</a>                 <a id="8967" class="Comment">-- ⟨⟩            empty sequence</a>
+      <a id="Products.Sequences.⟨_⟩"></a><a id="9005" href="Notation.html#9005" class="Postulate Operator">⟨_⟩</a>    <a id="9012" class="Symbol">:</a> <a id="9014" href="Notation.html#808" class="Postulate Operator">⟪</a> <a id="9016" class="Symbol">(</a><a id="9017" href="Notation.html#883" class="Generalizable">D</a> <a id="9019" href="Notation.html#8118" class="Function Operator">^</a> <a id="9021" href="Agda.Builtin.Nat.html#234" class="InductiveConstructor">suc</a> <a id="9025" href="Notation.html#902" class="Generalizable">n</a><a id="9026" class="Symbol">)</a> <a id="9028" href="Notation.html#3350" class="Postulate Operator">→ᶜ</a> <a id="9031" href="Notation.html#883" class="Generalizable">D</a> <a id="9033" href="Notation.html#8861" class="Postulate Operator">⋆</a> <a id="9035" href="Notation.html#808" class="Postulate Operator">⟫</a>  <a id="9038" class="Comment">-- ⟨ d₁ , ... ⟩  non-empty sequence</a>
+      <a id="Products.Sequences.#"></a><a id="9080" href="Notation.html#9080" class="Postulate">#</a>      <a id="9087" class="Symbol">:</a> <a id="9089" href="Notation.html#808" class="Postulate Operator">⟪</a> <a id="9091" href="Notation.html#883" class="Generalizable">D</a> <a id="9093" href="Notation.html#8861" class="Postulate Operator">⋆</a> <a id="9095" href="Notation.html#3350" class="Postulate Operator">→ᶜ</a> <a id="9098" href="Notation.html#5798" class="Function">Nat⊥</a> <a id="9103" href="Notation.html#808" class="Postulate Operator">⟫</a>         <a id="9113" class="Comment">-- # d⋆          sequence length</a>
+      <a id="Products.Sequences._§_"></a><a id="9152" href="Notation.html#9152" class="Postulate Operator">_§_</a>    <a id="9159" class="Symbol">:</a> <a id="9161" href="Notation.html#808" class="Postulate Operator">⟪</a> <a id="9163" href="Notation.html#883" class="Generalizable">D</a> <a id="9165" href="Notation.html#8861" class="Postulate Operator">⋆</a> <a id="9167" href="Notation.html#3350" class="Postulate Operator">→ᶜ</a> <a id="9170" href="Notation.html#883" class="Generalizable">D</a> <a id="9172" href="Notation.html#8861" class="Postulate Operator">⋆</a> <a id="9174" href="Notation.html#3350" class="Postulate Operator">→ᶜ</a> <a id="9177" href="Notation.html#883" class="Generalizable">D</a> <a id="9179" href="Notation.html#8861" class="Postulate Operator">⋆</a> <a id="9181" href="Notation.html#808" class="Postulate Operator">⟫</a>   <a id="9185" class="Comment">-- d⋆ § d⋆       concatenation</a>
+      <a id="Products.Sequences._↓_"></a><a id="9222" href="Notation.html#9222" class="Postulate Operator">_↓_</a>    <a id="9229" class="Symbol">:</a> <a id="9231" href="Notation.html#808" class="Postulate Operator">⟪</a> <a id="9233" href="Notation.html#883" class="Generalizable">D</a> <a id="9235" href="Notation.html#8861" class="Postulate Operator">⋆</a> <a id="9237" href="Notation.html#3350" class="Postulate Operator">→ᶜ</a> <a id="9240" href="Notation.html#671" class="Datatype">Nat</a> <a id="9244" href="Notation.html#4038" class="Postulate Operator">→ˢ</a> <a id="9247" href="Notation.html#883" class="Generalizable">D</a> <a id="9249" href="Notation.html#808" class="Postulate Operator">⟫</a>     <a id="9255" class="Comment">-- d⋆ ↓ n        nth component</a>
+      <a id="Products.Sequences._†_"></a><a id="9292" href="Notation.html#9292" class="Postulate Operator">_†_</a>    <a id="9299" class="Symbol">:</a> <a id="9301" href="Notation.html#808" class="Postulate Operator">⟪</a> <a id="9303" href="Notation.html#883" class="Generalizable">D</a> <a id="9305" href="Notation.html#8861" class="Postulate Operator">⋆</a> <a id="9307" href="Notation.html#3350" class="Postulate Operator">→ᶜ</a> <a id="9310" href="Notation.html#671" class="Datatype">Nat</a> <a id="9314" href="Notation.html#4038" class="Postulate Operator">→ˢ</a> <a id="9317" href="Notation.html#883" class="Generalizable">D</a> <a id="9319" href="Notation.html#8861" class="Postulate Operator">⋆</a> <a id="9321" href="Notation.html#808" class="Postulate Operator">⟫</a>   <a id="9325" class="Comment">-- d⋆ † n        nth tail</a>
+<a id="9351" class="Markup">```
+</a><a id="9355" class="Background">
 Use `open import Notation.All` to use all the notation declared above.
 
-</a><a id="8181" class="Markup">```agda
-</a><a id="8189" class="Keyword">module</a> <a id="All"></a><a id="8196" href="Notation.html#8196" class="Module">All</a> <a id="8200" class="Keyword">where</a>
-  <a id="8208" class="Keyword">open</a> <a id="8213" href="Notation.html#2070" class="Module">Functions</a> <a id="8223" class="Keyword">public</a>
-  <a id="8232" class="Keyword">open</a> <a id="8237" href="Notation.html#3603" class="Module">Lifted</a> <a id="8244" class="Keyword">public</a>
-  <a id="8253" class="Keyword">open</a> <a id="8258" href="Notation.html#4209" class="Module">Booleans</a> <a id="8267" class="Keyword">public</a>
-  <a id="8276" class="Keyword">open</a> <a id="8281" href="Notation.html#4531" class="Module">Naturals</a> <a id="8290" class="Keyword">public</a>
-  <a id="8299" class="Keyword">open</a> <a id="8304" href="Notation.html#4802" class="Module">Strings</a> <a id="8312" class="Keyword">public</a>
-  <a id="8321" class="Keyword">open</a> <a id="8326" href="Notation.html#5458" class="Module">Sums</a> <a id="8331" class="Keyword">public</a>
-  <a id="8340" class="Keyword">open</a> <a id="8345" href="Notation.html#5999" class="Module">Products</a> <a id="8354" class="Keyword">public</a>
-  <a id="8363" class="Keyword">open</a> <a id="8368" href="Notation.html#6853" class="Module">Tuples</a> <a id="8375" class="Keyword">public</a>
-  <a id="8384" class="Keyword">open</a> <a id="8389" href="Notation.html#7535" class="Module">Sequences</a> <a id="8399" class="Keyword">public</a>
-<a id="8406" class="Markup">```</a></pre></body></html>
+</a><a id="9428" class="Markup">```agda
+</a><a id="9436" class="Keyword">module</a> <a id="All"></a><a id="9443" href="Notation.html#9443" class="Module">All</a> <a id="9447" class="Keyword">where</a>
+  <a id="9455" class="Keyword">open</a> <a id="9460" href="Notation.html#3317" class="Module">Functions</a> <a id="9470" class="Keyword">public</a>
+  <a id="9479" class="Keyword">open</a> <a id="9484" href="Notation.html#4850" class="Module">Lifted</a> <a id="9491" class="Keyword">public</a>
+  <a id="9500" class="Keyword">open</a> <a id="9505" href="Notation.html#5456" class="Module">Booleans</a> <a id="9514" class="Keyword">public</a>
+  <a id="9523" class="Keyword">open</a> <a id="9528" href="Notation.html#5778" class="Module">Naturals</a> <a id="9537" class="Keyword">public</a>
+  <a id="9546" class="Keyword">open</a> <a id="9551" href="Notation.html#6049" class="Module">Strings</a> <a id="9559" class="Keyword">public</a>
+  <a id="9568" class="Keyword">open</a> <a id="9573" href="Notation.html#6705" class="Module">Sums</a> <a id="9578" class="Keyword">public</a>
+  <a id="9587" class="Keyword">open</a> <a id="9592" href="Notation.html#7246" class="Module">Products</a> <a id="9601" class="Keyword">public</a>
+  <a id="9610" class="Keyword">open</a> <a id="9615" href="Notation.html#8100" class="Module">Tuples</a> <a id="9622" class="Keyword">public</a>
+  <a id="9631" class="Keyword">open</a> <a id="9636" href="Notation.html#8782" class="Module">Sequences</a> <a id="9646" class="Keyword">public</a>
+<a id="9653" class="Markup">```</a></pre></body></html>
