@@ -11,6 +11,7 @@ between domains.
 open import Agda.Builtin.Equality
 open import Agda.Builtin.Equality.Rewrite
 ```
+
 The notation for each domain constructor is generally declared in a separate
 submodule. Opening a submodule makes its declared names directly visible.
 
@@ -22,8 +23,8 @@ open import Data.Nat.Base   renaming (ℕ to Nat) using (suc) public
 open import Function        using (id; _∘_) public
 
 postulate
-  Domain  : Set₁         -- type of all domains
-  ⟪_⟫     : Domain → Set  -- carrier
+  Domain  : Set₁          -- type of all domains
+  ⟪_⟫     : Domain → Set  -- carrier of a domain
 
 variable
   A B C   : Set
@@ -35,6 +36,24 @@ postulate
   𝟙       : Domain        -- trivial domain
 ```
 
+In several papers published in 2025, the type  of domains was defined by
+`Domain = Set`. However, postulating `⊥ : D` was then *inconsistent* with the
+existence of an empty type in Agda. The current declaration `Domain : Set₁`
+and the distinction between domains and their carrier sets circumvents that
+issue.[^history]
+
+[^history]:
+    The current declarations were previously adopted in the lightweight
+    formalisation of a denotational semantics of inheritance (presented at
+    [JENSFEST 2024]), see [Inheritance/Definitions]. I thought that declaring
+    `Domain = Set` simplified direct use of λ-notation for defining functions
+    between domains. At [AIM-XLI], however, András Kovács pointed out that this
+    was not the case.
+
+[JENSFEST 2024]: https://2024.splashcon.org/home/jensfest-2024/
+[Inheritance/Definitions]: https://github.com/pdmosses/jensfest-agda/blob/main/Inheritance/Definitions.lagda
+[AIM-XLI]: https://wiki.portal.chalmers.se/agda/Main/AIMXLI
+
 ## Function domains
 
 The carrier `⟪ D →ᶜ E ⟫` of a function domain should consist of just the
@@ -44,12 +63,20 @@ proofs of their continuity (and explicitly discarding the proofs when applying
 functions), which is quite impractical.
 
 To support direct use of conventional λ-notation for defining functions between
-domains, the type `⟪ D →ᶜ E ⟫` is rewritten to the Agda type `⟪ D ⟫ → ⟪ E ⟫` of
-*all* total functions between the carriers of `D` and `E`. Functions between
-domains are *automatically* continuous when defined in terms of λ-abstraction
-and application from the primitive continuous functions associated with
-specific domain constructors, as usual in conventional denotational semantics.
-And continuous endofunctions have (least) fixed points.
+domains, the type `⟪ D →ᶜ E ⟫` is rewritten[^rewrite] to the Agda type
+`⟪ D ⟫ → ⟪ E ⟫` of *all* total functions between the carriers of `D` and `E`.
+Functions between domains are *automatically* continuous when defined in terms
+of λ-abstraction and application from the primitive continuous functions
+associated with specific domain constructors, as usual in conventional
+denotational semantics. And continuous endofunctions have (least) fixed points.
+
+[^rewrite]:
+    This rewrite rule appears to be essential for defining functions as
+    elements of `⟪ D →ᶜ E ⟫` without applying an explicit injection to each
+    λ-abstraction. Jesper Cockx suggested the rule to me at [AIM-XLI], as well
+    as the addition of the `--lossy-unification` option (which appears to be
+    required in some modules, but resulted in slow type-checking when used in
+    all modules).
 
 ```agda
 module Functions where
