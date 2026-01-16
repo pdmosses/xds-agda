@@ -196,11 +196,6 @@ the non-`⊥` elements of their carriers. It is associative, in contrast to the
 separated sum (which adds a fresh `⊥`-element to the disjoint union of the
 complete carriers).
 
-In published examples of denotational semantics, injections from summands
-into sum domains are usually left implicit, and case analysis is specified
-by combining a boolean-valued test with the McCarthy conditional and projection
-from sums to summands.
-
 ```agda
 module Sums where
 
@@ -211,6 +206,33 @@ module Sums where
     [_,_]  : ⟪ (D →ᶜ F) →ᶜ (E →ᶜ F) →ᶜ (D + E →ᶜ F) ⟫  -- case analysis
 
   infixr 1 _+_
+```
+
+In published examples of denotational semantics, injections from summands
+into sum domains are usually left implicit, and case analysis is specified
+by combining a boolean-valued test with the McCarthy conditional and projection
+from sums to summands.
+
+```agda
+postulate
+  Summand : Domain → Domain → Set
+  _inj_ : {D : Domain} → ⟪ D ⟫ → (E : Domain) → {{Summand D E}} → ⟪ E ⟫
+
+postulate R S T U : Domain
+
+postulate instance
+  R<S : Summand R S
+  T<U : Summand T U
+
+postulate
+  r : ⟪ R ⟫
+  t : ⟪ T ⟫
+
+s : ⟪ S ⟫
+s = r inj S  -- ok accepted
+
+-- x : ⟪ S ⟫
+-- x = t inj S  -- ok rejected (but accepted when x : S omitted!)
 ```
 
 ## Product domains
