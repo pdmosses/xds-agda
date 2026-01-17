@@ -18,7 +18,7 @@ open import Scm.Abstract-Syntax using (Ide; Int)
 ## Domain declarations
 
 ```agda
-postulate  𝐋   :  Domain  -- locations
+𝐋              :  Domain  -- locations
 variable   α   :  ⟪ 𝐋 ⟫
 𝐍              :  Domain  -- natural numbers
 𝐓              :  Domain  -- booleans
@@ -45,9 +45,12 @@ variable   ϵ⋆  :  ⟪ 𝐄⋆ ⟫
 ## Domain Definitions
 
 ```agda
+postulate Loc : Set -- elements of 𝐋
+
 data Misc : Set where
   null unallocated undefined unspecified : Misc
 
+𝐋     =  Loc +⊥
 𝐍     =  Nat⊥
 𝐓     =  Bool⊥
 𝐑     =  Int +⊥
@@ -55,6 +58,9 @@ data Misc : Set where
 𝐌     =  Misc +⊥
 𝐅     =  𝐄⋆ →ᶜ (𝐄 →ᶜ 𝐂) →ᶜ 𝐂
 -- 𝐄  =  𝐓 + 𝐑 + 𝐏 + 𝐌 + 𝐅
+-- The mutual recursion of 𝐄 and 𝐅 would make type-checking non-terminating.
+-- The following postulates have been moved to Scm.Auxiliary-Functions,
+-- otherwise Scm.Semantic-Functions can't find them!
 -- postulate instance
 --   E+=T : 𝐓 ⇌ 𝐄
 --   E+=R : 𝐑 ⇌ 𝐄
@@ -64,23 +70,4 @@ data Misc : Set where
 𝐒     =  𝐋 →ᶜ 𝐄
 𝐔     =  Ide →ˢ 𝐋
 𝐂     =  𝐒 →ᶜ 𝐀
-```
-
-## Operations
-
-```agda
-postulate
-  Eq : Domain → Set
-  _==⊥_ : {D : Domain} → {{Eq D}} → ⟪ D →ᶜ D →ᶜ 𝐓 ⟫
-  instance
-    eqL : Eq 𝐋
-    eqM : Eq 𝐌
-    eqN : Eq 𝐍
-    eqR : Eq 𝐑
-    eqT : Eq 𝐓
-
-postulate
-  _<ᴿ_   : ⟪ 𝐑 →ᶜ 𝐑 →ᶜ 𝐓 ⟫
-  _+ᴿ_   : ⟪ 𝐑 →ᶜ 𝐑 →ᶜ 𝐑 ⟫
-  _∧ᵀ_   : ⟪ 𝐓 →ᶜ 𝐓 →ᶜ 𝐓 ⟫
 ```

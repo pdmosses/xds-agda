@@ -24,6 +24,22 @@ postulate instance
   E+=F : 𝐅 ⇌ 𝐄
 ```
 
+## Operations
+
+```agda
+postulate instance
+  eqL : Eq 𝐋
+  eqM : Eq 𝐌
+  eqN : Eq 𝐍
+  eqR : Eq 𝐑
+  eqT : Eq 𝐓
+
+postulate
+  _<ᴿ_   : ⟪ 𝐑 →ᶜ 𝐑 →ᶜ 𝐓 ⟫
+  _+ᴿ_   : ⟪ 𝐑 →ᶜ 𝐑 →ᶜ 𝐑 ⟫
+  _∧ᵀ_   : ⟪ 𝐓 →ᶜ 𝐓 →ᶜ 𝐓 ⟫
+```
+
 ## Environments `ρ : 𝐔 = Ide →ˢ 𝐋`
 
 ```agda

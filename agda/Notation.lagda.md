@@ -18,9 +18,10 @@ submodule. Opening a submodule makes its declared names directly visible.
 ```agda
 module Notation where
 
-open import Data.Bool.Base  using (Bool; false; true) public
-open import Data.Nat.Base   renaming (ℕ to Nat) using (suc) public
-open import Function        using (id; _∘_) public
+open import Data.Bool.Base    using (Bool; false; true) public
+open import Data.Nat.Base     renaming (ℕ to Nat) using (suc) public
+open import Data.String.Base  using (String) public
+open import Function          using (id; _∘_) public
 
 postulate
   Domain  : Set₁          -- type of all domains
@@ -114,15 +115,46 @@ be regarded as a domain (ordered pointwise).
 open Functions public
 ```
 
+## Recursive domains
+
+Groups of non-recursive domains can be specified in Agda by type definitions.
+For groups of mutually-recursive domains, the corresponding Agda type
+definitions would lead to non-termination of the type-checker. To avoid
+non-termination, it is sufficient to break the recursion by leaving (one or
+more) domains as postulated. The following inverse operations can then be used
+to map values from a postulated domain to its structure and *vice versa*.
+
+```agda
+postulate
+  _≅_ : Domain → Domain → Set
+  unfold : {D E : Domain} → {{D ≅ E}} → ⟪ D →ᶜ E ⟫
+  fold :   {D E : Domain} → {{D ≅ E}} → ⟪ E →ᶜ D ⟫
+```
+
+The instance parameter `{{D ≅ E}}`` of the above operations declares them
+only for domains `D` and `E` with `instance _ : D ≅ E`.
+
+For example, the lightweight formalisation of Scott's $D_\infty$ domain,
+isomorphic to the domain of all continuous endofunctions on $D_\infty$,
+is simply as follows.
+
+```agda
+module D-infinity where
+  postulate
+    D∞ : Domain
+    instance _ : D∞ ≅ (D∞ →ᶜ D∞)
+```
+
 ## Lifted domains
 
 Lifting adds a `⊥`-element to an arbitrary type `A` to form a 'flat' domain
 `A +⊥`.[^lift] The conventional notation for the lifted domain formed from
-$A$ is $A_⊥$, but Agda does not support such a subscript. The notation for
-the inclusion of `A` in `A +⊥` varies; `η` is commonly used in theoretical
-treatments of monads, but conflicts with the convention of using single
-lowercase Greek letters as bound variables. The 'floor' notation `⌊ a ⌋`,
-introduced below, seems reasonably suggestive for the non-`⊥` elements of
+$A$ is $A_⊥$, but Agda does not support such a subscript.
+
+The notation for the inclusion of `A` in `A +⊥` varies; `η` is commonly used
+in theoretical treatments of monads, but conflicts with the convention of using
+single lowercase Greek letters as bound variables. The 'floor' notation `⌊ a ⌋`
+introduced below seems reasonably suggestive for the non-`⊥` elements of
 `A +⊥`, and has the advantage of reducing the need for parentheses.
 (Its conventional arithmetical interpretation is seldom needed in semantic
 of programming languages.)
@@ -130,10 +162,6 @@ of programming languages.)
 [^lift]:
     Lifting can be generalised to add a (fresh) `⊥`-element to a domain or
     predomain.
-
-In published examples of denotational semantics, ordinary operations on sets
-of elements are often implicitly lifted to flat domains, mapping `⊥` to `⊥`.
-However, it seems difficult to support such conventions in Agda formalisations.
 
 ```agda
 module Lifted where
@@ -145,6 +173,10 @@ module Lifted where
 
   infix 10 _+⊥
 ```
+
+In published examples of denotational semantics, ordinary operations on sets
+of elements are often implicitly lifted to flat domains, mapping `⊥` to `⊥`.
+However, it seems difficult to support such conventions in Agda formalisations.
 
 ### Booleans
 
@@ -167,21 +199,25 @@ for ordinary (and dependent) function types.
     infixr 20 _⟶_,_
 ```
 
+The instance parameter `{{Eq (A +⊥)}}` of the strict equality test `d₁ ==⊥ d₂`
+declares the operation only for flat domains `D` with `instance _ : Eq D`.
+(Equality is not continuous on non-flat domains.)
+
+```agda
+    postulate
+      Eq : Domain → Set
+      _==⊥_ : {A : Set} → {{Eq (A +⊥)}} → ⟪ A +⊥ →ᶜ A +⊥ →ᶜ Bool⊥ ⟫
+```
+
 ### Naturals
 
 Agda allows decimal notation for natural numbers, as well as unary notation
 using `zero` and `suc`.
 
-
 ```agda
   module Naturals where
 
     Nat⊥ = Nat +⊥ -- natural number domain
-
-    -- open Booleans
-
-    -- postulate
-    --   _==⊥_  : ⟪ Nat⊥ →ᶜ Nat⊥ →ᶜ Bool⊥ ⟫ -- strict numerical equality
 ```
 
 ### Strings
@@ -190,7 +226,6 @@ Agda allows literal strings enclosed in double quotation marks `"..."`.
 
 ```agda
   module Strings where
-    open import Data.String.Base using (String) public
 
     String⊥ = String +⊥ -- meta-string domain
 ```
