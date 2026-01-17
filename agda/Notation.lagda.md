@@ -18,7 +18,7 @@ submodule. Opening a submodule makes its declared names directly visible.
 ```agda
 module Notation where
 
-open import Data.Bool.Base    using (Bool; false; true) public
+open import Data.Bool.Base    using (Bool; false; true; if_then_else_) public
 open import Data.Nat.Base     renaming (ℕ to Nat) using (suc) public
 open import Data.String.Base  using (String) public
 open import Function          using (id; _∘_) public
@@ -125,10 +125,11 @@ more) domains as postulated. The following inverse operations can then be used
 to map values from a postulated domain to its structure and *vice versa*.
 
 ```agda
-postulate
-  _≅_ : Domain → Domain → Set
-  unfold : {D E : Domain} → {{D ≅ E}} → ⟪ D →ᶜ E ⟫
-  fold :   {D E : Domain} → {{D ≅ E}} → ⟪ E →ᶜ D ⟫
+module Recursion where
+  postulate
+    _≅_ : Domain → Domain → Set
+    unfold : {D E : Domain} → {{D ≅ E}} → ⟪ D →ᶜ E ⟫
+    fold :   {D E : Domain} → {{D ≅ E}} → ⟪ E →ᶜ D ⟫
 ```
 
 The instance parameter `{{D ≅ E}}`` of the above operations declares them
@@ -139,10 +140,10 @@ isomorphic to the domain of all continuous endofunctions on $D_\infty$,
 is simply as follows.
 
 ```agda
-module D-infinity where
-  postulate
-    D∞ : Domain
-    instance _ : D∞ ≅ (D∞ →ᶜ D∞)
+  module D-infinity where
+    postulate
+      D∞ : Domain
+      instance _ : D∞ ≅ (D∞ →ᶜ D∞)
 ```
 
 ## Lifted domains
@@ -199,14 +200,14 @@ for ordinary (and dependent) function types.
     infixr 20 _⟶_,_
 ```
 
-The instance parameter `{{Eq (A +⊥)}}` of the strict equality test `d₁ ==⊥ d₂`
-declares the operation only for flat domains `D` with `instance _ : Eq D`.
-(Equality is not continuous on non-flat domains.)
+The instance parameter `{{Eq⊥ (A +⊥)}}` of the strict equality test `d₁ ==⊥ d₂`
+below declares the operation only for flat domains `D` with `instance _ : Eq D`.
+(Equality is unavailable on non-flat domains because it is not continuous.)
 
 ```agda
     postulate
-      Eq : Domain → Set
-      _==⊥_ : {A : Set} → {{Eq (A +⊥)}} → ⟪ A +⊥ →ᶜ A +⊥ →ᶜ Bool⊥ ⟫
+      Eq⊥ : Domain → Set
+      _==⊥_ : {A : Set} → {{Eq⊥ (A +⊥)}} → ⟪ A +⊥ →ᶜ A +⊥ →ᶜ Bool⊥ ⟫
 ```
 
 ### Naturals
@@ -228,6 +229,35 @@ Agda allows literal strings enclosed in double quotation marks `"..."`.
   module Strings where
 
     String⊥ = String +⊥ -- meta-string domain
+```
+
+### Maps
+
+When an ordinary Agda type `A` has an equality operation `_==_ : A → A → Bool`,
+functions of type `A → B` can be extended or overridden using the following
+conventional notation.
+
+```agda
+  module Maps where
+    open Booleans
+    postulate
+      Eq : Set → Set
+      _==_ : {A : Set} → {{Eq A}} → A → A → Bool
+
+    _[_/_] : {A : Set} → {{Eq A}} → (A → B) → B → A → (A → B)
+    f [ b / a ] = λ a′ → if a == a′ then b else f a′
+```
+
+The same notation can be used when `B` is `⟪ D ⟫` for some domain `D`:
+the carrier of the function domain `A →ˢ D` is equivalent to `A → ⟪ D ⟫`.
+
+The following definition lifts the above operation to a continuous function
+domain `A +⊥ →ᶜ D`.
+
+```agda
+    _[_/_]⊥ : {A : Set} → {{Eq⊥ (A +⊥)}} →
+              ⟪ (A +⊥ →ᶜ D) →ᶜ D →ᶜ A +⊥ →ᶜ (A +⊥ →ᶜ D) ⟫
+    φ [ δ / α ]⊥ = λ α′ → (α ==⊥ α′) ⟶ δ , φ α′
 ```
 
 ## Sum domains
@@ -377,12 +407,14 @@ Use `open import Notation.All` to use all the notation declared above.
 ```agda
 module All where
   open Functions public
-  open Lifted public
-  open Booleans public
-  open Naturals public
-  open Strings public
-  open Sums public
-  open Products public
-  open Tuples public
+  open Recursion public
+  open Lifted    public
+  open Booleans  public
+  open Naturals  public
+  open Strings   public
+  open Maps      public
+  open Sums      public
+  open Products  public
+  open Tuples    public
   open Sequences public
 ```

@@ -9,6 +9,7 @@ open import Notation
 open Lifted
 open Booleans
 open Naturals
+open Maps
 open Sums
 open Products
 open Sequences

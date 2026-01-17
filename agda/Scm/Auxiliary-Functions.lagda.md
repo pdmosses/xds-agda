@@ -9,6 +9,7 @@ open import Notation
 open Lifted
 open Booleans
 open Naturals
+open Maps
 open Sums
 open Products
 open Sequences
@@ -28,11 +29,11 @@ postulate instance
 
 ```agda
 postulate instance
-  eqL : Eq 𝐋
-  eqM : Eq 𝐌
-  eqN : Eq 𝐍
-  eqR : Eq 𝐑
-  eqT : Eq 𝐓
+  eqL : Eq⊥ 𝐋
+  eqM : Eq⊥ 𝐌
+  eqN : Eq⊥ 𝐍
+  eqR : Eq⊥ 𝐑
+  eqT : Eq⊥ 𝐓
 
 postulate
   _<ᴿ_   : ⟪ 𝐑 →ᶜ 𝐑 →ᶜ 𝐓 ⟫
@@ -43,10 +44,7 @@ postulate
 ## Environments `ρ : 𝐔 = Ide →ˢ 𝐋`
 
 ```agda
-postulate _==_ : Ide → Ide → Bool
-
-_[_/_] : ⟪ 𝐔 →ᶜ 𝐋 →ᶜ Ide →ˢ 𝐔 ⟫
-ρ [ α / I ] = λ I′ → ⌊ I == I′ ⌋ ⟶ α , ρ I′
+postulate instance eqIde : Eq Ide
 
 postulate unknown : ⟪ 𝐋 ⟫
 -- ρ I = unknown represents the lack of a binding for I in ρ
@@ -58,11 +56,8 @@ postulate initial-env : ⟪ 𝐔 ⟫
 ## Stores `σ : 𝐒 = 𝐋 →ᶜ 𝐄`
 
 ```agda
-_[_/_]′ : ⟪ 𝐒 →ᶜ 𝐄 →ᶜ 𝐋 →ᶜ 𝐒 ⟫
-σ [ ϵ / α ]′ = λ α′ → (α ==⊥ α′) ⟶ ϵ , σ α′
-
 assign : ⟪ 𝐋 →ᶜ 𝐄 →ᶜ 𝐂 →ᶜ 𝐂 ⟫
-assign = λ α ϵ θ σ → θ (σ [ ϵ / α ]′)
+assign = λ α ϵ θ σ → θ (σ [ ϵ / α ]⊥)
 
 hold : ⟪ 𝐋 →ᶜ (𝐄 →ᶜ 𝐂) →ᶜ 𝐂 ⟫
 hold = λ α κ σ → κ (σ α) σ
