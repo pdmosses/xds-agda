@@ -9,6 +9,7 @@ open import Notation
 open Lifted
 open Booleans
 open Naturals
+open Sums
 open Products
 open Sequences
 open import Scm.Abstract-Syntax
@@ -27,9 +28,9 @@ open import Scm.Auxiliary-Functions
 ## Constants
 
 ```agda
-𝒦⟦ int Z ⟧  = η Z 𝐑-in-𝐄
-𝒦⟦ #t ⟧     = η true 𝐓-in-𝐄
-𝒦⟦ #f ⟧     = η false 𝐓-in-𝐄
+𝒦⟦ int Z ⟧  = ⌊ Z ⌋ in⊥ 𝐄
+𝒦⟦ #t ⟧     = ⌊ true ⌋ in⊥ 𝐄
+𝒦⟦ #f ⟧     = ⌊ false ⌋ in⊥ 𝐄
 ```
 
 ## Expressions
@@ -42,14 +43,14 @@ open import Scm.Auxiliary-Functions
 ℰ⟦ ⦅ E ␣ E⋆ ⦆ ⟧ ρ κ =
   ℰ⟦ E ⟧ ρ (λ ϵ →
     ℰ⋆⟦ E⋆ ⟧ ρ (λ ϵ⋆ →
-      (ϵ |-𝐅) ϵ⋆ κ))
+      (ϵ |⊥ 𝐅) ϵ⋆ κ))
 
 ℰ⟦ ⦅lambda I ␣ E ⦆ ⟧ ρ κ =
   κ (  (λ ϵ⋆ κ′ →
           list ϵ⋆ (λ ϵ → 
             alloc ϵ (λ α →
               ℰ⟦ E ⟧ (ρ [ α / I ]) κ′))
-       ) 𝐅-in-𝐄)
+       ) in⊥ 𝐄)
 
 ℰ⟦ ⦅if E ␣ E₁ ␣ E₂ ⦆ ⟧ ρ κ =
   ℰ⟦ E ⟧ ρ (λ ϵ →
@@ -58,7 +59,7 @@ open import Scm.Auxiliary-Functions
 ℰ⟦ ⦅set! I ␣ E ⦆ ⟧ ρ κ =
   ℰ⟦ E ⟧ ρ (λ ϵ →
     assign (ρ I) ϵ (
-      κ (η unspecified 𝐌-in-𝐄)))
+      κ (⌊ unspecified ⌋ in⊥ 𝐄)))
 ```
 
 ## Expression Sequences
@@ -78,7 +79,7 @@ open import Scm.Auxiliary-Functions
 ℬ⟦ ␣␣ E ⟧ ρ κ = ℰ⟦ E ⟧ ρ (λ ϵ → κ ρ)
 
 ℬ⟦ ⦅define I ␣ E ⦆ ⟧ ρ κ =
-  ℰ⟦ E ⟧ ρ (λ ϵ → (ρ I ==ᴸ unknown) ⟶ 
+  ℰ⟦ E ⟧ ρ (λ ϵ → (ρ I ==⊥ unknown) ⟶ 
                       alloc ϵ (λ α → κ (ρ [ α / I ])),
                     assign (ρ I) ϵ (κ ρ))
 

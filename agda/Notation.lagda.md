@@ -39,8 +39,8 @@ postulate
 In several papers published in 2025, the type  of domains was defined by
 `Domain = Set`. However, postulating `⊥ : D` was then *inconsistent* with the
 existence of an empty type in Agda. The current declaration `Domain : Set₁`
-and the distinction between domains and their carrier sets circumvents that
-issue.[^history]
+circumvents that issue, but also requires domains to be distinguished from
+their carrier sets.[^history]
 
 [^history]:
     The current declarations were previously adopted in the lightweight
@@ -116,26 +116,32 @@ open Functions public
 
 ## Lifted domains
 
-Lifting adds a `⊥`-element to an arbitrary type `A` to form a domain
+Lifting adds a `⊥`-element to an arbitrary type `A` to form a 'flat' domain
 `A +⊥`.[^lift] The conventional notation for the lifted domain formed from
-$A$ is $A_⊥$, but Agda does not support such a subscript.
+$A$ is $A_⊥$, but Agda does not support such a subscript. The notation for
+the inclusion of `A` in `A +⊥` varies; `η` is commonly used in theoretical
+treatments of monads, but conflicts with the convention of using single
+lowercase Greek letters as bound variables. The 'floor' notation `⌊ a ⌋`,
+introduced below, seems reasonably suggestive for the non-`⊥` elements of
+`A +⊥`, and has the advantage of reducing the need for parentheses.
+(Its conventional arithmetical interpretation is seldom needed in semantic
+of programming languages.)
 
 [^lift]:
     Lifting can be generalised to add a (fresh) `⊥`-element to a domain or
     predomain.
 
-In published examples of denotational semantics, the inclusion operation `η`
-is generally left implicit; and ordinary operations on sets of elements are
-assumed to map `⊥` to `⊥`, which avoids the need for explicit use of `_♯`.
+In published examples of denotational semantics, ordinary operations on sets
+of elements are often implicitly lifted to flat domains, mapping `⊥` to `⊥`.
 However, it seems difficult to support such conventions in Agda formalisations.
 
 ```agda
 module Lifted where
 
   postulate
-    _+⊥  : Set → Domain               -- lifted set
-    η    : ⟪ A →ˢ A +⊥ ⟫              -- inclusion
-    _♯   : ⟪ (A →ˢ D) →ᶜ A +⊥ →ᶜ D ⟫  -- Kleisli extension
+    _+⊥     : Set → Domain               -- lifted set
+    ⌊_⌋     : ⟪ A →ˢ A +⊥ ⟫              -- inclusion
+    -- _♯   : ⟪ (A →ˢ D) →ᶜ A +⊥ →ᶜ D ⟫  -- Kleisli extension
 
   infix 10 _+⊥
 ```
@@ -172,10 +178,10 @@ using `zero` and `suc`.
 
     Nat⊥ = Nat +⊥ -- natural number domain
 
-    open Booleans
+    -- open Booleans
 
-    postulate
-      _==⊥_  : ⟪ Nat⊥ →ᶜ Nat⊥ →ᶜ Bool⊥ ⟫ -- strict numerical equality
+    -- postulate
+    --   _==⊥_  : ⟪ Nat⊥ →ᶜ Nat⊥ →ᶜ Bool⊥ ⟫ -- strict numerical equality
 ```
 
 ### Strings
@@ -213,26 +219,49 @@ into sum domains are usually left implicit, and case analysis is specified
 by combining a boolean-valued test with the McCarthy conditional and projection
 from sums to summands.
 
+Here, `D ⇌ E` when `D` is a summand of a coalesced sum domain `E`.
+
+- When `d` is an element of `D`, `d in⊥ E` is its injection into `E`.
+- When `e` is an element of `E`, `e |⊥ D` is its projection onto `D`,
+  and `e ∈⊥ D` tests whether `e` is the injection of an element of `D`.
+
+The (inherently *dependent*) types of the above operations are given below.
+The argument `{D : Domain}` is implicit, and inferred from the other arguments.
+The argument `{{D ⇌ E}}` is an instance argument, and inferred from `instance`
+declarations.
+
 ```agda
-postulate
-  Summand : Domain → Domain → Set
-  _inj_ : {D : Domain} → ⟪ D ⟫ → (E : Domain) → {{Summand D E}} → ⟪ E ⟫
+  open Lifted.Booleans
+  
+  postulate
+    _⇌_   : Domain → Domain → Set
+    _in⊥_ : {D : Domain} → ⟪ D ⟫ → (E : Domain) → {{D ⇌ E}} → ⟪ E ⟫
+    _|⊥_  : {E : Domain} → ⟪ E ⟫ → (D : Domain) → {{D ⇌ E}} → ⟪ D ⟫
+    _∈⊥_  : {E : Domain} → ⟪ E ⟫ → (D : Domain) → {{D ⇌ E}} → ⟪ Bool⊥ ⟫
+```
 
-postulate R S T U : Domain
+!!! note
 
-postulate instance
-  R<S : Summand R S
-  T<U : Summand T U
+    Remove the following tests.
 
-postulate
-  r : ⟪ R ⟫
-  t : ⟪ T ⟫
+```agda
+  module Test where
+  
+    postulate R S T U : Domain
 
-s : ⟪ S ⟫
-s = r inj S  -- ok accepted
+    postulate instance
+      _ : R ⇌ S
+      _ : T ⇌ U
 
--- x : ⟪ S ⟫
--- x = t inj S  -- ok rejected (but accepted when x : S omitted!)
+    postulate
+      r : ⟪ R ⟫
+      t : ⟪ T ⟫
+
+    s : ⟪ S ⟫
+    s = r in⊥ S  -- ok accepted
+
+    -- x : ⟪ S ⟫
+    -- x = t in⊥ S  -- ok rejected (but accepted when x : S omitted!)
 ```
 
 ## Product domains
