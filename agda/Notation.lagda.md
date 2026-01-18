@@ -23,6 +23,19 @@ open import Data.Nat.Base     renaming (ℕ to Nat) using (suc) public
 open import Data.String.Base  using (String) public
 open import Function          using (id; _∘_) public
 
+-- record Eq (A : Set) : Set where
+--   field
+--     _==_ : A → A → Bool
+--
+-- open Eq {{...}} public
+--
+-- Eq moved to Lifting.Maps to avoid:
+--
+-- Agda v2.8.0
+-- Error
+-- src/full/Agda/TypeChecking/Rewriting/Confluence.hs:787:10-17:
+-- Non-exhaustive patterns in Pi b c
+
 postulate
   Domain  : Set₁          -- type of all domains
   ⟪_⟫     : Domain → Set  -- carrier of a domain
@@ -239,10 +252,12 @@ conventional notation.
 
 ```agda
   module Maps where
-    open Booleans
-    postulate
-      Eq : Set → Set
-      _==_ : {A : Set} → {{Eq A}} → A → A → Bool
+
+    record Eq (A : Set) : Set where
+      field
+        _==_ : A → A → Bool
+    
+    open Eq {{...}} public
 
     _[_/_] : {A : Set} → {{Eq A}} → (A → B) → B → A → (A → B)
     f [ b / a ] = λ a′ → if a == a′ then b else f a′
@@ -255,6 +270,8 @@ The following definition lifts the above operation to a continuous function
 domain `A +⊥ →ᶜ D`.
 
 ```agda
+    open Booleans
+    
     _[_/_]⊥ : {A : Set} → {{Eq⊥ (A +⊥)}} →
               ⟪ (A +⊥ →ᶜ D) →ᶜ D →ᶜ A +⊥ →ᶜ (A +⊥ →ᶜ D) ⟫
     φ [ δ / α ]⊥ = λ α′ → (α ==⊥ α′) ⟶ δ , φ α′
