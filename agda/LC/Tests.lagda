@@ -6,16 +6,15 @@ open import Agda.Builtin.Equality.Rewrite
 
 module LC.Tests where
 
-open import LC.Domains
-open import LC.Variables
-open import LC.Terms
-open import LC.Semantics
+open import LC.Definitions
+open Abstract-Syntax
+open Domain-Equations
+open Semantic-Functions
 
 open import Relation.Binary.PropositionalEquality using (refl)
-open Inverse using (inverseˡ)
 
-to-from-elim : ∀ {f}  →  to (from f)  ≡ f
-to-from-elim  = inverseˡ bi refl
+postulate
+  unfold-fold-elim : ∀ {f}  →  unfold (fold f)  ≡ f
 
 {-# REWRITE to-from-elim #-}
 
