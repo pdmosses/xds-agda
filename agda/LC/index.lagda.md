@@ -6,5 +6,5 @@
 module LC.index where
 
 import LC.Definitions
--- import LC.Tests
+import LC.Tests
 ```
