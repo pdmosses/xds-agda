@@ -1,10 +1,16 @@
-\begin{code}
+# Tests
+
+```agda
 {-# OPTIONS --rewriting --confluence-check #-}
 
 open import Agda.Builtin.Equality
 open import Agda.Builtin.Equality.Rewrite
 
 module LC.Tests where
+
+open import Notation
+open Notation.Lifted.Maps
+open Notation.Recursion
 
 open import LC.Definitions
 open Abstract-Syntax
@@ -14,9 +20,10 @@ open Semantic-Functions
 open import Relation.Binary.PropositionalEquality using (refl)
 
 postulate
-  unfold-fold-elim : ∀ {f}  →  unfold (fold f)  ≡ f
+  unfold-fold-elim :
+    ∀ {f : ⟪ D∞ →ᶜ D∞ ⟫}  →  unfold (fold f) ≡ f
 
-{-# REWRITE to-from-elim #-}
+{-# REWRITE unfold-fold-elim #-}
 
 -- (λx1.x1)x42 = x42
 check-id :
@@ -30,12 +37,12 @@ check-const :
         (var x 0) ⟧ ≡ ⟦ var x 42 ⟧
 check-const = refl 
 
--- (λx0.x0 x0)(λx0.x0 x0) = ...
--- check-divergence :
---   ⟦ app (lam (x 0) (app (var x 0) (var x 0))) 
---         (lam (x 0) (app (var x 0) (var x 0))) ⟧
---   ≡ ⟦ var x 42 ⟧
--- check-divergence = refl 
+-- -- (λx0.x0 x0)(λx0.x0 x0) = ...
+-- -- check-divergence :
+-- --   ⟦ app (lam (x 0) (app (var x 0) (var x 0))) 
+-- --         (lam (x 0) (app (var x 0) (var x 0))) ⟧
+-- --   ≡ ⟦ var x 42 ⟧
+-- -- check-divergence = refl 
 
 -- (λx1.x42)((λx0.x0 x0)(λx0.x0 x0)) = x42
 check-convergence :
@@ -59,4 +66,4 @@ check-free :
                (var x 2)))
         (var x 42) ⟧ ≡ ⟦ var x 42 ⟧
 check-free = refl
-\end{code} 
+```
