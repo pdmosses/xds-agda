@@ -22,6 +22,17 @@ module Abstract-Syntax where
   data Var : Set where
     x : ℕ → Var  -- variables
 
+  open import Data.Bool using (Bool)
+
+  _==ⱽ_ : Var → Var → Bool
+  x n ==ⱽ x n′ = (n ≡ᵇ n′)
+
+  open Lifted.Maps
+
+  instance
+    eqVar : Eq Var
+    _==_ {{eqVar}} = _==ⱽ_
+
   variable v : Var
 ```
 
@@ -54,9 +65,6 @@ module Domain-Equations where
   Env = Var → ⟪ D∞ ⟫
 
   variable ρ : Env
-
-  postulate instance
-    eqVar : Eq Var
 ```
 
 ## Semantic functions
@@ -75,12 +83,3 @@ module Semantic-Functions where
   ⟦ lam  v e    ⟧ ρ  = fold ( λ d → ⟦ e ⟧ (ρ [ d / v ]) )
   ⟦ app  e₁ e₂  ⟧ ρ  = unfold ( ⟦ e₁ ⟧ ρ ) ( ⟦ e₂ ⟧ ρ )
 ```
-
-
-open import Data.Bool using (Bool)
-
-_==_ : Var → Var → Bool
-x n == x n′ = (n ≡ᵇ n′)
-
-_[_/_] : Env → ⟪ D∞ ⟫ → Var → Env
-ρ [ d / v ] = λ v′ → if v == v′ then d else ρ v′
