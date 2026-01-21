@@ -19,7 +19,7 @@ submodule. Opening a submodule makes its declared names directly visible.
 module Notation where
 
 open import Data.Bool.Base    using (Bool; false; true; if_then_else_) public
-open import Data.Nat.Base     renaming (ℕ to Nat) using (suc) public
+open import Data.Nat.Base     renaming (ℕ to Nat) using (suc; _+_; _∸_; _≡ᵇ_) public
 open import Data.String.Base  using (String) public
 open import Function          using (id; _∘_) public
 
@@ -183,7 +183,7 @@ module Lifted where
   postulate
     _+⊥     : Set → Domain               -- lifted set
     ⌊_⌋     : ⟪ A →ˢ A +⊥ ⟫              -- inclusion
-    -- _♯   : ⟪ (A →ˢ D) →ᶜ A +⊥ →ᶜ D ⟫  -- Kleisli extension
+    _♯   : ⟪ (A →ˢ D) →ᶜ A +⊥ →ᶜ D ⟫  -- Kleisli extension
 
   infix 10 _+⊥
 ```
@@ -288,12 +288,12 @@ complete carriers).
 module Sums where
 
   postulate
-    _+_    : Domain → Domain → Domain                 -- coalesced sum
-    inj₁   : ⟪ D →ᶜ D + E ⟫                            -- injection
-    inj₂   : ⟪ E →ᶜ D + E ⟫                            -- injection
-    [_,_]  : ⟪ (D →ᶜ F) →ᶜ (E →ᶜ F) →ᶜ (D + E →ᶜ F) ⟫  -- case analysis
+    _⊕_    : Domain → Domain → Domain                 -- coalesced sum
+    inj₁   : ⟪ D →ᶜ D ⊕ E ⟫                            -- injection
+    inj₂   : ⟪ E →ᶜ D ⊕ E ⟫                            -- injection
+    [_,_]  : ⟪ (D →ᶜ F) →ᶜ (E →ᶜ F) →ᶜ (D ⊕ E →ᶜ F) ⟫  -- case analysis
 
-  infixr 1 _+_
+  infixr 1 _⊕_
 ```
 
 In published examples of denotational semantics, injections from summands
@@ -324,7 +324,7 @@ declarations.
 
 !!! note
 
-    Remove the following tests.
+    The following Test module is to be removed.
 
 ```agda
   module Test where
