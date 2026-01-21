@@ -54,16 +54,13 @@ well-developed support for domains.
   notation for pairing and selection prevents direct embedding in Agda of
   λ-notation from denotational definitions.
 
-## Extending Agda with Scott-Domains
+## Postulating Scott-Domains in Agda
 
-The purpose of this repository is to experiment with extending Agda to allow
-denotational semantics to be defined more straightforwardly.
+The purpose of this repository is to experiment with defining denotational
+semantics more straightforwardly in Agda.
 
-The current examples presented here illustrate how denotational semantics can
-be defined in Agda.
-However, they use *postulates* to allow Agda to type-check the definitions,
-and some of the postulates are inconsistent with the underlying Agda logic.
-This does not affect type-checking, but could lead to unsound equivalence proofs.
+The current examples use *postulates*, and some of the postulates are
+inconsistent with a classical set-theoretic interpretation of Agda.
 
 ### Adding a Universe of Domains
 
@@ -74,10 +71,12 @@ to domains and declarations of ordinary types – e.g., by introducing a univers
 A domain type would implicitly be a cpo, with built-in notation for its partial
 order and least element. A type that corresponds to the domain of continuous 
 functions from a domain to itself would also have a least fixed-point function.
+Functions on elements of domains should be defined in λ-notation, based on
+built-in functions associated with th various domain contructors.
 
 ### Implementing Synthetic Domain Theory
 
-An implementation of Synthetic Domain Theory (SDT) in Agda would address the
+An implementation of *Synthetic Domain Theory* (SDT) in Agda would address the
 pragmatic issues with using the [DomainTheory] modules from the [TypeTopology]
 library.
 
