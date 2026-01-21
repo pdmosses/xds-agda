@@ -102,7 +102,7 @@ module Domain-Equations where
   open Maps
   open Variables
 
-  Env = {σ : Types} → 𝒱 σ → ⟪ 𝒟 σ ⟫
+  Env = 𝒱 σ → ⟪ 𝒟 σ ⟫
 
   variable ρ : Env
 ```

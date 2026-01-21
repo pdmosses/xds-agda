@@ -181,8 +181,8 @@ of programming languages.)
 module Lifted where
 
   postulate
-    _+⊥     : Set → Domain               -- lifted set
-    ⌊_⌋     : ⟪ A →ˢ A +⊥ ⟫              -- inclusion
+    _+⊥     : Set → Domain            -- lifted set
+    ⌊_⌋     : ⟪ A →ˢ A +⊥ ⟫           -- inclusion
     _♯   : ⟪ (A →ˢ D) →ᶜ A +⊥ →ᶜ D ⟫  -- Kleisli extension
 
   infix 10 _+⊥
@@ -259,7 +259,7 @@ conventional notation.
     
     open Eq {{...}} public
 
-    _[_/_] : {A : Set} → {{Eq A}} → (A → B) → B → A → (A → B)
+    _[_/_] : {{Eq A}} → (A → B) → B → A → (A → B)
     f [ b / a ] = λ a′ → if a == a′ then b else f a′
 ```
 
