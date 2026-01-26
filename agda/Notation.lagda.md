@@ -18,7 +18,7 @@ submodule. Opening a submodule makes its declared names directly visible.
 ```agda
 module Notation where
 
-open import Data.Bool.Base    using (Bool; false; true; if_then_else_) public
+open import Data.Bool.Base    using (Bool; false; true; if_then_else_; _∧_) public
 open import Data.Nat.Base     renaming (ℕ to Nat) using (suc; _+_; _∸_; _≡ᵇ_) public
 open import Data.String.Base  using (String) public
 open import Function          using (id; _∘_) public
