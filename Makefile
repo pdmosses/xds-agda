@@ -349,7 +349,7 @@ gen-md: clean-md
 
 .PHONY: serve
 serve:
-	@mkdocs serve --livereload
+	@mkdocs serve --livereload --dev-addr localhost:8001
 
 ##############################################################################
 # DEPLOY A WEBSITE AND MANAGE VERSIONS
