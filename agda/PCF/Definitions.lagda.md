@@ -102,9 +102,29 @@ module Domain-Equations where
   open Maps
   open Variables
 
-  Env = 𝒱 σ → ⟪ 𝒟 σ ⟫
+  Env = (σ : Types) → 𝒱 σ → ⟪ 𝒟 σ ⟫
 
   variable ρ : Env
+
+  _==ᵀ_ : Types → Types → Bool
+  ι ==ᵀ ι = true
+  o ==ᵀ o = true
+  (σ₁ ⇒ τ₁) ==ᵀ (σ₂ ⇒ τ₂) = (σ₁ ==ᵀ σ₂) ∧ (τ₁ ==ᵀ τ₂)
+  _ ==ᵀ _ = false
+
+  _==ⱽ_ : 𝒱 σ → 𝒱 σ → Bool
+  var n σ ==ⱽ var n′ σ  =  (n ≡ᵇ n′)
+
+  instance
+    eqT : Eq Types
+    _==_ {{eqT}} = _==ᵀ_
+
+  instance
+    eqV : Eq (𝒱 σ)
+    _==_ {{eqV}} = _==ⱽ_
+  
+  _!_[_/_] : Env → (σ : Types) → ⟪ 𝒟 σ ⟫ → 𝒱 σ → Env
+  ρ ! σ [ x / var n .σ ] = ρ [ ρ σ [ x / var n σ ] / σ ]
 ```
 
 ## Semantic functions
@@ -124,7 +144,7 @@ module Semantic-Functions where
 
   _⟦_⟧ : ⟪ Env →ˢ 𝒱 σ →ˢ 𝒟 σ ⟫
 
-  ρ ⟦ α ⟧ = ρ α
+  ρ ⟦ var n σ ⟧ = ρ σ (var n σ)
 ```
 
 ### Constants
@@ -152,23 +172,11 @@ module Semantic-Functions where
 
 ```agda
   open Terms
-  open Maps
-  
-  _==ⱽ_ : 𝒱 σ → 𝒱 σ → Bool
-  var n σ ==ⱽ var n′ σ  =  (n ≡ᵇ n′)
-
-  instance
-    eqVar : Eq (𝒱 σ)
-    _==_ {{eqVar}} = _==ⱽ_
-  
--- 169,41-42: error: [UnequalTerms]
--- σ != σ₁ of type Types
--- when checking that the expression x has type ⟪ 𝒟 σ₁ ⟫
 
   𝒜′⟦_⟧ : Terms σ → ⟪ Env →ˢ 𝒟 σ ⟫
 
   𝒜′⟦ 𝑉 α      ⟧ ρ = ρ ⟦ α ⟧
   𝒜′⟦ 𝐿 c      ⟧ ρ = 𝒜⟦ c ⟧
   𝒜′⟦ M ␣ N    ⟧ ρ = 𝒜′⟦ M ⟧ ρ (𝒜′⟦ N ⟧ ρ) 
-  𝒜′⟦ ƛ α ␣ M  ⟧ ρ = λ x → 𝒜′⟦ M ⟧ (ρ [ x / α ])
+  𝒜′⟦ ƛ var n σ ␣ M  ⟧ ρ = λ x → 𝒜′⟦ M ⟧ (ρ ! σ [ x / var n σ ])
 ```
