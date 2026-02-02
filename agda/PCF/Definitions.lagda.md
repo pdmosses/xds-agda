@@ -35,9 +35,7 @@ module Abstract-Syntax where
     open Types
     
     data 𝒱 : Types → Set where
-      var : Nat → (σ : Types) → 𝒱 σ
-
-    variable α : 𝒱 σ
+      α : Nat → (σ : Types) → 𝒱 σ
 ```
 
 ### Constants
@@ -93,38 +91,46 @@ module Domain-Equations where
 
   𝒟 : Types → Domain
 
-  𝒟 ι        = Nat⊥
-  𝒟 o        = Bool⊥
+  𝒟 ι        =  Nat⊥
+  𝒟 o        =  Bool⊥
   𝒟 (σ ⇒ τ)  = 𝒟 σ →ᶜ 𝒟 τ
 
   variable x y z : ⟪ 𝒟 σ ⟫
+```
 
+Environments are type-preserving maps from variables to values. They are
+naturally modeled by a dependent type:
+
+```agda
   open Maps
   open Variables
 
   Env = (σ : Types) → 𝒱 σ → ⟪ 𝒟 σ ⟫
 
   variable ρ : Env
+```
 
-  _==ᵀ_ : Types → Types → Bool
-  ι ==ᵀ ι = true
-  o ==ᵀ o = true
-  (σ₁ ⇒ τ₁) ==ᵀ (σ₂ ⇒ τ₂) = (σ₁ ==ᵀ σ₂) ∧ (τ₁ ==ᵀ τ₂)
-  _ ==ᵀ _ = false
+Extension or overriding environments requires instances of the equality tests
+for both variables and types:
 
+```agda
   _==ⱽ_ : 𝒱 σ → 𝒱 σ → Bool
-  var n σ ==ⱽ var n′ σ  =  (n ≡ᵇ n′)
-
-  instance
-    eqT : Eq Types
-    _==_ {{eqT}} = _==ᵀ_
+  α n σ ==ⱽ α n′ σ  =  (n ≡ᵇ n′)
 
   instance
     eqV : Eq (𝒱 σ)
     _==_ {{eqV}} = _==ⱽ_
-  
-  _!_[_/_] : Env → (σ : Types) → ⟪ 𝒟 σ ⟫ → 𝒱 σ → Env
-  ρ ! σ [ x / var n .σ ] = ρ [ ρ σ [ x / var n σ ] / σ ]
+
+  instance
+    eqT : EqMaybe Types
+    _==?_ {{eqT}} ι ι = just refl
+    _==?_ {{eqT}} o o = just refl
+    _==?_ {{eqT}} (σ ⇒ τ) (σ₁ ⇒ τ₁) with σ ==? σ₁
+    _==?_ {{eqT}} (σ ⇒ τ) (σ₁ ⇒ τ₁)    | nothing = nothing
+    _==?_ {{eqT}} (σ ⇒ τ) (.σ ⇒ τ₁)    | just refl with τ ==? τ₁
+    _==?_ {{eqT}} (σ ⇒ τ) (.σ ⇒ τ₁)    | just refl    | nothing   = nothing
+    _==?_ {{eqT}} (σ ⇒ τ) (.σ ⇒ .τ)    | just refl    | just refl = just refl
+    _==?_ {{eqT}} _ _ = nothing
 ```
 
 ## Semantic functions
@@ -144,7 +150,7 @@ module Semantic-Functions where
 
   _⟦_⟧ : ⟪ Env →ˢ 𝒱 σ →ˢ 𝒟 σ ⟫
 
-  ρ ⟦ var n σ ⟧ = ρ σ (var n σ)
+  ρ ⟦ α n σ ⟧ = ρ σ (α n σ)
 ```
 
 ### Constants
@@ -172,11 +178,12 @@ module Semantic-Functions where
 
 ```agda
   open Terms
+  open Maps
 
   𝒜′⟦_⟧ : Terms σ → ⟪ Env →ˢ 𝒟 σ ⟫
 
-  𝒜′⟦ 𝑉 α      ⟧ ρ = ρ ⟦ α ⟧
-  𝒜′⟦ 𝐿 c      ⟧ ρ = 𝒜⟦ c ⟧
-  𝒜′⟦ M ␣ N    ⟧ ρ = 𝒜′⟦ M ⟧ ρ (𝒜′⟦ N ⟧ ρ) 
-  𝒜′⟦ ƛ var n σ ␣ M  ⟧ ρ = λ x → 𝒜′⟦ M ⟧ (ρ ! σ [ x / var n σ ])
+  𝒜′⟦ 𝑉 (α n σ)    ⟧ ρ =  ρ ⟦ α n σ ⟧
+  𝒜′⟦ 𝐿 c          ⟧ ρ =  𝒜⟦ c ⟧
+  𝒜′⟦ M ␣ N        ⟧ ρ =  𝒜′⟦ M ⟧ ρ (𝒜′⟦ N ⟧ ρ) 
+  𝒜′⟦ ƛ α n σ ␣ M  ⟧ ρ =  λ x → 𝒜′⟦ M ⟧ (ρ [ ρ σ [ x / α n σ ] / σ ]′)
 ```

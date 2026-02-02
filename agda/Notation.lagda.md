@@ -277,9 +277,13 @@ domain `A +⊥ →ᶜ D`.
     φ [ δ / α ]⊥ = λ α′ → (α ==⊥ α′) ⟶ δ , φ α′
 ```
 
+Defining extension or overriding of *dependent* maps is somewhat less
+straightforward, as it involves a function that returns an equivalence proof
+instead of a truth value: 
+
 ```agda
-    open import Data.Maybe.Base using(Maybe; just; nothing)
-    open import Relation.Binary.PropositionalEquality.Core using (_≡_; refl)
+    open import Data.Maybe.Base using(Maybe; just; nothing) public
+    open import Relation.Binary.PropositionalEquality.Core using (_≡_; refl) public
 
     record EqMaybe (A : Set) : Set where
       field
@@ -287,33 +291,16 @@ domain `A +⊥ →ᶜ D`.
 
     open EqMaybe {{...}} public
     
-    module T where
+    extend-map : {X : Set} → {Y : X → Set} → {{EqMaybe X}} → 
+                 (∀ (x′) → Y x′) → (x : X) → Y x → (∀ (x′) → Y x′)
 
-      postulate
-        X : Set
-        Y : X → Set
-      
-      M : Set
-      M = (x : X) → Y x
-
-      extend : {{EqMaybe X}} → M → (x : X) → (y : Y x) → M
-
-      extend m x y = λ x′ → h x′ (x ==? x′)
-        where
-        h : (x′ : X) → Maybe (x ≡ x′) → Y x′
-        h x′ (just refl) = y
-        h x′ nothing = m x′
-
-      gen-extend : {X : Set} → {Y : X → Set} → {{EqMaybe X}} → 
-                   (∀ (x : X) → Y x) → (x : X) → Y x → (∀ (x : X) → Y x)
-
-      gen-extend {X} {Y} m x y = λ x′ → h x′ (x ==? x′)
-        where
-        h : (x′ : X) → Maybe (x ≡ x′) → Y x′
-        h x′ (just refl) = y
-        h x′ nothing = m x′
-
-
+    extend-map {X} {Y} m x y = λ x′ → h x′ (x ==? x′)
+      where
+      h : (x′ : X) → Maybe (x ≡ x′) → Y x′
+      h x′ (just refl) = y
+      h x′ nothing = m x′
+    
+    syntax extend-map f x y = f [ y / x ]′
 ```
 
 ## Sum domains
