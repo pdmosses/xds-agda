@@ -127,7 +127,7 @@ module Semantic-Functions where
   ⟦ e₁ ␣ e₂  ⟧ ρ  = unfold ( ⟦ e₁ ⟧ ρ ) ( ⟦ e₂ ⟧ ρ )
 ```
 
-See the [LC.Tests] module for some examples of abstract syntax terms and their
+See the [Tests] module for some examples of abstract syntax terms and their
 denotations.
 
-[LC.Tests]: LC.Tests/index.md
+[Tests]: ../Tests/index.md
