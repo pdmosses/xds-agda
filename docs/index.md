@@ -7,7 +7,10 @@
 Complete examples of denotational semantics definitions in Agda:
 
 - [LC](LC.md): the untyped λ-calculus
+- [PCF](PCF.md): an intrinsically (simply) typed programming language based on LCF.[^1]
 - [Scm](Scm.md): a sublanguage of [Scheme]
+
+[^1]: LCF is Scott's logic of computable functions.
 
 !!! info
 
