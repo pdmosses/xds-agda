@@ -277,6 +277,35 @@ domain `A +⊥ →ᶜ D`.
     φ [ δ / α ]⊥ = λ α′ → (α ==⊥ α′) ⟶ δ , φ α′
 ```
 
+```agda
+    open import Data.Maybe.Base using(Maybe; just; nothing)
+    open import Relation.Binary.PropositionalEquality.Core using (_≡_; refl)
+
+    record EqMaybe (A : Set) : Set where
+      field
+        _==?_ : (a : A) → (a′ : A) → Maybe (a ≡ a′)
+
+    open EqMaybe {{...}} public
+    
+    module T where
+
+      postulate
+        X : Set
+        Y : X → Set
+      
+      M : Set
+      M = (x : X) → Y x
+
+      extend : {{EqMaybe X}} → M → (x : X) → (y : Y x) → M
+
+      extend m x y = λ x′ → h x′ (x ==? x′)
+        where
+        h : (x′ : X) → Maybe (x ≡ x′) → Y x′
+        h x′ (just refl) = y
+        h x′ nothing = m x′
+
+```
+
 ## Sum domains
 
 The coalesced sum of two domains correspons to lifting the disjoint union of
