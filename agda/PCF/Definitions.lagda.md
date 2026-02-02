@@ -4,6 +4,7 @@
 module PCF.Definitions where
 
 open import Notation
+open Functions
 ```
 
 ## Abstract Syntax
@@ -106,6 +107,9 @@ naturally modeled by a dependent type:
   open Variables
 
   Env = (σ : Types) → 𝒱 σ → ⟪ 𝒟 σ ⟫
+
+  ρ⊥ : Env
+  ρ⊥ = λ σ → λ _ → ⊥
 
   variable ρ : Env
 ```

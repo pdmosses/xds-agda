@@ -105,6 +105,8 @@ module Functions where
 
   postulate
     fix : ⟪ (D →ᶜ D) →ᶜ D ⟫ -- fixed points of endofunctions
+
+    fix-fix : (f : ⟪ D →ᶜ D ⟫) → fix f ≡ f (fix f)
 ```
 
 It would be possible to declare an analogous type of *predomains*,[^pre]
@@ -180,12 +182,17 @@ of programming languages.)
 ```agda
 module Lifted where
 
+  variable P : Set
   postulate
     _+⊥     : Set → Domain            -- lifted set
-    ⌊_⌋     : ⟪ A →ˢ A +⊥ ⟫           -- inclusion
-    _♯   : ⟪ (A →ˢ D) →ᶜ A +⊥ →ᶜ D ⟫  -- Kleisli extension
+    ⌊_⌋     : ⟪ P →ˢ P +⊥ ⟫           -- inclusion
+    _♯   : ⟪ (P →ˢ D) →ᶜ P +⊥ →ᶜ D ⟫  -- Kleisli extension
+
+    elim-♯-η  : (f : ⟪ P →ˢ D ⟫) (p : P) →  (f ♯) (⌊ p ⌋)  ≡ f p
+    elim-♯-⊥  : (f : ⟪ P →ˢ D ⟫) →          (f ♯) ⊥       ≡ ⊥
 
   infix 10 _+⊥
+
 ```
 
 In published examples of denotational semantics, ordinary operations on sets
@@ -209,6 +216,10 @@ for ordinary (and dependent) function types.
     
     postulate
       _⟶_,_  : ⟪ Bool⊥ →ᶜ D →ᶜ D →ᶜ D ⟫  -- McCarthy conditional
+
+      true-cond    : {d₁ d₂ : ⟪ D ⟫} → (⌊ true ⌋ ⟶ d₁ , d₂)  ≡ d₁
+      false-cond   : {d₁ d₂ : ⟪ D ⟫} → (⌊ false ⌋ ⟶ d₁ , d₂) ≡ d₂
+      bottom-cond  : {d₁ d₂ : ⟪ D ⟫} → (⊥ ⟶ d₁ , d₂)         ≡ ⊥
 
     infixr 20 _⟶_,_
 ```
@@ -448,16 +459,16 @@ double angle-brackets `⟪ D ⟫` used for the carrier of domain `D`.
 Use `open import Notation.All` to use all the notation declared above.
 
 ```agda
-module All where
-  open Functions public
-  open Recursion public
-  open Lifted    public
-  open Booleans  public
-  open Naturals  public
-  open Strings   public
-  open Maps      public
-  open Sums      public
-  open Products  public
-  open Tuples    public
-  open Sequences public
+-- module All where
+--   open Functions public
+--   open Recursion public
+--   open Lifted    public
+--   open Booleans  public
+--   open Naturals  public
+--   open Strings   public
+--   open Maps      public
+--   open Sums      public
+--   open Products  public
+--   open Tuples    public
+--   open Sequences public
 ```
