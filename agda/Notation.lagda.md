@@ -304,6 +304,16 @@ domain `A +⊥ →ᶜ D`.
         h x′ (just refl) = y
         h x′ nothing = m x′
 
+      gen-extend : {X : Set} → {Y : X → Set} → {{EqMaybe X}} → 
+                   (∀ (x : X) → Y x) → (x : X) → Y x → (∀ (x : X) → Y x)
+
+      gen-extend {X} {Y} m x y = λ x′ → h x′ (x ==? x′)
+        where
+        h : (x′ : X) → Maybe (x ≡ x′) → Y x′
+        h x′ (just refl) = y
+        h x′ nothing = m x′
+
+
 ```
 
 ## Sum domains
