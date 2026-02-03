@@ -169,14 +169,13 @@ of programming languages.)
 ```agda
 module Lifted where
 
-  variable P : Set
   postulate
     _+⊥  : Set → Domain               -- lifted set
-    ⌊_⌋  : ⟪ P →ˢ P +⊥ ⟫              -- inclusion
-    _♯   : ⟪ (P →ˢ D) →ᶜ P +⊥ →ᶜ D ⟫  -- Kleisli extension
+    ⌊_⌋  : ⟪ A →ˢ A +⊥ ⟫              -- inclusion
+    _♯   : ⟪ (A →ˢ D) →ᶜ A +⊥ →ᶜ D ⟫  -- Kleisli extension
 
-    elim-♯-η  : (f : ⟪ P →ˢ D ⟫) (p : P) →  (f ♯) (⌊ p ⌋)  ≡ f p
-    elim-♯-⊥  : (f : ⟪ P →ˢ D ⟫) →          (f ♯) ⊥       ≡ ⊥
+    elim-♯-η  : (f : ⟪ A →ˢ D ⟫) (a : A) →  (f ♯) (⌊ a ⌋)  ≡ f a
+    elim-♯-⊥  : (f : ⟪ A →ˢ D ⟫) →          (f ♯) ⊥       ≡ ⊥
 
   infix 10 _+⊥
 ```
