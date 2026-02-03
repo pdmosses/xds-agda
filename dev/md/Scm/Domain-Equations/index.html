@@ -10664,11 +10664,11 @@
 
 <a id="132" class="Keyword">open</a> <a id="137" class="Keyword">import</a> <a id="144" href="../../Notation/" class="Module">Notation</a>
 <a id="153" class="Keyword">open</a> <a id="158" href="../../Notation/#6250" class="Module">Lifted</a>
-<a id="165" class="Keyword">open</a> <a id="170" href="../../Notation/#7238" class="Module">Booleans</a>
-<a id="179" class="Keyword">open</a> <a id="184" href="../../Notation/#8116" class="Module">Naturals</a>
-<a id="193" class="Keyword">open</a> <a id="198" href="../../Notation/#10318" class="Module">Sums</a>
-<a id="203" class="Keyword">open</a> <a id="208" href="../../Notation/#11936" class="Module">Products</a>
-<a id="217" class="Keyword">open</a> <a id="222" href="../../Notation/#13472" class="Module">Sequences</a>
+<a id="165" class="Keyword">open</a> <a id="170" href="../../Notation/#7219" class="Module">Booleans</a>
+<a id="179" class="Keyword">open</a> <a id="184" href="../../Notation/#8097" class="Module">Naturals</a>
+<a id="193" class="Keyword">open</a> <a id="198" href="../../Notation/#10312" class="Module">Sums</a>
+<a id="203" class="Keyword">open</a> <a id="208" href="../../Notation/#11930" class="Module">Products</a>
+<a id="217" class="Keyword">open</a> <a id="222" href="../../Notation/#13466" class="Module">Sequences</a>
 <a id="232" class="Keyword">open</a> <a id="237" class="Keyword">import</a> <a id="244" href="../../Scm/Abstract-Syntax/" class="Module">Scm.Abstract-Syntax</a> <a id="264" class="Keyword">using</a> <a id="270" class="Symbol">(</a><a id="271" href="../../Scm/Abstract-Syntax/#331" class="Function">Ide</a><a id="274" class="Symbol">;</a> <a id="276" href="../../Agda/Builtin/Int/#245" class="Datatype">Int</a><a id="279" class="Symbol">)</a>
 </code></pre>
 <h2 id="domain-declarations">Domain declarations</h2>
@@ -10692,7 +10692,7 @@
 <a id="920" class="Keyword">variable</a>   <a id="931" href="../../Scm/Domain-Equations/#931" class="Generalizable">θ</a>   <a id="935" class="Symbol">:</a>  <a id="938" href="../../Notation/#902" class="Postulate Operator">⟪</a> <a id="940" href="../../Scm/Domain-Equations/#869" class="Function">𝐂</a> <a id="942" href="../../Notation/#902" class="Postulate Operator">⟫</a>
 <a id="944" class="Keyword">postulate</a>  <a id="𝐀"></a><a id="955" href="../../Scm/Domain-Equations/#955" class="Postulate">𝐀</a>   <a id="959" class="Symbol">:</a>  <a id="962" href="../../Notation/#853" class="Postulate">Domain</a>  <a id="970" class="Comment">-- answers</a>
 
-<a id="𝐄⋆"></a><a id="982" href="../../Scm/Domain-Equations/#982" class="Function">𝐄⋆</a>             <a id="997" class="Symbol">=</a>  <a id="1000" href="../../Scm/Domain-Equations/#684" class="Postulate">𝐄</a> <a id="1002" href="../../Notation/#13551" class="Postulate Operator">⋆</a>
+<a id="𝐄⋆"></a><a id="982" href="../../Scm/Domain-Equations/#982" class="Function">𝐄⋆</a>             <a id="997" class="Symbol">=</a>  <a id="1000" href="../../Scm/Domain-Equations/#684" class="Postulate">𝐄</a> <a id="1002" href="../../Notation/#13545" class="Postulate Operator">⋆</a>
 <a id="1004" class="Keyword">variable</a>   <a id="1015" href="../../Scm/Domain-Equations/#1015" class="Generalizable">ϵ⋆</a>  <a id="1019" class="Symbol">:</a>  <a id="1022" href="../../Notation/#902" class="Postulate Operator">⟪</a> <a id="1024" href="../../Scm/Domain-Equations/#982" class="Function">𝐄⋆</a> <a id="1027" href="../../Notation/#902" class="Postulate Operator">⟫</a>
 </code></pre>
 <h2 id="domain-definitions">Domain Definitions</h2>
@@ -10701,12 +10701,12 @@
 <a id="1103" class="Keyword">data</a> <a id="Misc"></a><a id="1108" href="../../Scm/Domain-Equations/#1108" class="Datatype">Misc</a> <a id="1113" class="Symbol">:</a> <a id="1115" href="../../Agda/Primitive/#388" class="Primitive">Set</a> <a id="1119" class="Keyword">where</a>
   <a id="Misc.null"></a><a id="1127" href="../../Scm/Domain-Equations/#1127" class="InductiveConstructor">null</a> <a id="Misc.unallocated"></a><a id="1132" href="../../Scm/Domain-Equations/#1132" class="InductiveConstructor">unallocated</a> <a id="Misc.undefined"></a><a id="1144" href="../../Scm/Domain-Equations/#1144" class="InductiveConstructor">undefined</a> <a id="Misc.unspecified"></a><a id="1154" href="../../Scm/Domain-Equations/#1154" class="InductiveConstructor">unspecified</a> <a id="1166" class="Symbol">:</a> <a id="1168" href="../../Scm/Domain-Equations/#1108" class="Datatype">Misc</a>
 
-<a id="1174" href="../../Scm/Domain-Equations/#318" class="Function">𝐋</a>     <a id="1180" class="Symbol">=</a>  <a id="1183" href="../../Scm/Domain-Equations/#1075" class="Postulate">Loc</a> <a id="1187" href="../../Notation/#6299" class="Postulate Operator">+⊥</a>
-<a id="1190" href="../../Scm/Domain-Equations/#381" class="Function">𝐍</a>     <a id="1196" class="Symbol">=</a>  <a id="1199" href="../../Notation/#8136" class="Function">Nat⊥</a>
-<a id="1204" href="../../Scm/Domain-Equations/#426" class="Function">𝐓</a>     <a id="1210" class="Symbol">=</a>  <a id="1213" href="../../Notation/#7258" class="Function">Bool⊥</a>
-<a id="1219" href="../../Scm/Domain-Equations/#464" class="Function">𝐑</a>     <a id="1225" class="Symbol">=</a>  <a id="1228" href="../../Agda/Builtin/Int/#245" class="Datatype">Int</a> <a id="1232" href="../../Notation/#6299" class="Postulate Operator">+⊥</a>
-<a id="1235" href="../../Scm/Domain-Equations/#501" class="Function">𝐏</a>     <a id="1241" class="Symbol">=</a>  <a id="1244" href="../../Scm/Domain-Equations/#318" class="Function">𝐋</a> <a id="1246" href="../../Notation/#11968" class="Postulate Operator">×</a> <a id="1248" href="../../Scm/Domain-Equations/#318" class="Function">𝐋</a>
-<a id="1250" href="../../Scm/Domain-Equations/#536" class="Function">𝐌</a>     <a id="1256" class="Symbol">=</a>  <a id="1259" href="../../Scm/Domain-Equations/#1108" class="Datatype">Misc</a> <a id="1264" href="../../Notation/#6299" class="Postulate Operator">+⊥</a>
+<a id="1174" href="../../Scm/Domain-Equations/#318" class="Function">𝐋</a>     <a id="1180" class="Symbol">=</a>  <a id="1183" href="../../Scm/Domain-Equations/#1075" class="Postulate">Loc</a> <a id="1187" href="../../Notation/#6280" class="Postulate Operator">+⊥</a>
+<a id="1190" href="../../Scm/Domain-Equations/#381" class="Function">𝐍</a>     <a id="1196" class="Symbol">=</a>  <a id="1199" href="../../Notation/#8117" class="Function">Nat⊥</a>
+<a id="1204" href="../../Scm/Domain-Equations/#426" class="Function">𝐓</a>     <a id="1210" class="Symbol">=</a>  <a id="1213" href="../../Notation/#7239" class="Function">Bool⊥</a>
+<a id="1219" href="../../Scm/Domain-Equations/#464" class="Function">𝐑</a>     <a id="1225" class="Symbol">=</a>  <a id="1228" href="../../Agda/Builtin/Int/#245" class="Datatype">Int</a> <a id="1232" href="../../Notation/#6280" class="Postulate Operator">+⊥</a>
+<a id="1235" href="../../Scm/Domain-Equations/#501" class="Function">𝐏</a>     <a id="1241" class="Symbol">=</a>  <a id="1244" href="../../Scm/Domain-Equations/#318" class="Function">𝐋</a> <a id="1246" href="../../Notation/#11962" class="Postulate Operator">×</a> <a id="1248" href="../../Scm/Domain-Equations/#318" class="Function">𝐋</a>
+<a id="1250" href="../../Scm/Domain-Equations/#536" class="Function">𝐌</a>     <a id="1256" class="Symbol">=</a>  <a id="1259" href="../../Scm/Domain-Equations/#1108" class="Datatype">Misc</a> <a id="1264" href="../../Notation/#6280" class="Postulate Operator">+⊥</a>
 <a id="1267" href="../../Scm/Domain-Equations/#603" class="Function">𝐅</a>     <a id="1273" class="Symbol">=</a>  <a id="1276" href="../../Scm/Domain-Equations/#982" class="Function">𝐄⋆</a> <a id="1279" href="../../Notation/#3456" class="Postulate Operator">→ᶜ</a> <a id="1282" class="Symbol">(</a><a id="1283" href="../../Scm/Domain-Equations/#684" class="Postulate">𝐄</a> <a id="1285" href="../../Notation/#3456" class="Postulate Operator">→ᶜ</a> <a id="1288" href="../../Scm/Domain-Equations/#869" class="Function">𝐂</a><a id="1289" class="Symbol">)</a> <a id="1291" href="../../Notation/#3456" class="Postulate Operator">→ᶜ</a> <a id="1294" href="../../Scm/Domain-Equations/#869" class="Function">𝐂</a>
 <a id="1296" class="Comment">-- 𝐄  =  𝐓 + 𝐑 + 𝐏 + 𝐌 + 𝐅</a>
 <a id="1323" class="Comment">-- The mutual recursion of 𝐄 and 𝐅 would make type-checking non-terminating.</a>
