@@ -134,7 +134,7 @@ module Recursion where
     fold :   {D E : Domain} → {{D ≅ E}} → ⟪ E →ᶜ D ⟫
 ```
 
-The instance parameter `{{D ≅ E}}`` of the above operations declares them
+The instance parameter `{{D ≅ E}}` of the above operations declares them
 only for domains `D` and `E` with `instance _ : D ≅ E`.
 
 For example, the lightweight formalisation of Scott's $D_\infty$ domain,

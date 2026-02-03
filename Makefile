@@ -481,6 +481,44 @@ else
 endif
 
 ##############################################################################
+# GENERATE LATEX
+
+# Assumption: DIR is a single directory
+
+LATEX := latex
+LDIR := lagda
+
+LAGDA-MD-FILES := $(sort $(shell find $(DIR) -name '*.lagda.md'))
+
+LAGDA-TEX-FILES := \
+	$(patsubst $(DIR)/%,$(LDIR)/%, \
+	  $(patsubst %.lagda.md,%.lagda.tex, $(LAGDA-MD-FILES)))
+
+LAGDA := agda $(addprefix --include-path=, $(LDIR))
+
+LAGDA-QUIET   := $(LAGDA) --trace-imports=0
+LAGDA-VERBOSE := $(LAGDA) --trace-imports=3
+
+.PHONY: gen-latex
+gen-latex: clean-latex
+	@for m in $(LAGDA-MD-FILES); do \
+	    t=$(LDIR)/$${m#$(DIR)/*}; \
+	    d=$${t%*/*.lagda.md}; mkdir -p $$d; \
+	    t=$${t%*.lagda.md}.lagda.tex; \
+	    pandoc -f markdown -t latex --syntax-highlighting=none -o $$t $$m; \
+	    sd '\\begin\{verbatim\}' '\\begin{code}' $$t; \
+	    sd '\\end\{verbatim\}' '\\end{code}' $$t; \
+	done
+	@for t in $(LAGDA-TEX-FILES); do \
+	    $(LAGDA-QUIET) --latex --latex-dir=$(LATEX) $$t; \
+	done
+
+.PHONY: clean-latex
+clean-latex:
+	@rm -rf $(LDIR)
+	@rm -rf $(LATEX)
+
+##############################################################################
 # HELPFUL TEXTS
 
 define HELP
@@ -526,6 +564,10 @@ PROJECT: $(PROJECT)
 INCLUDE-PATHS: $(strip $(INCLUDE-PATHS))
 ROOT-PATHS:    $(strip $(ROOT-PATHS))
 ROOT-FILES:    $(strip $(ROOT-FILES))
+
+LAGDA-MD-FILES:  $(strip $(LAGDA-MD-FILES))
+
+LAGDA-TEX-FILES: $(strip $(LAGDA-TEX-FILES))
 
 HTML: $(HTML)
 MD:   $(MD)

@@ -1,6 +1,8 @@
 *.agdai
-docs/html/
-docs/md/
+/docs/html/
+/docs/md/
+/lagda/
+/latex/
 .DS_Store
 site
 bin
