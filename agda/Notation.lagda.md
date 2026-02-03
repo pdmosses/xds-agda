@@ -278,8 +278,10 @@ straightforward, as it involves a function that returns an equivalence proof
 instead of a truth value: 
 
 ```agda
-    open import Data.Maybe.Base using(Maybe; just; nothing) public
-    open import Relation.Binary.PropositionalEquality.Core using (_≡_; refl) public
+    open import Data.Maybe.Base
+      using (Maybe; just; nothing) public
+    open import Relation.Binary.PropositionalEquality.Core
+      using (_≡_; refl) public
 
     record EqMaybe (A : Set) : Set where
       field
