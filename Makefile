@@ -295,6 +295,7 @@ gen-md: clean-md
 	    *.html) \
 		sd '\A' '<pre class="Agda"><code class="Agda">' $$t; \
 		sd '\z' '</code></pre>' $$t; \
+		sd -- '\A' "---\ntitle: $$m\nhide: toc\n---\n\n# $$m\n\n" $$t; \
 		;; \
 	    *.tex) \
 		sd '^[ \t]*<pre class="Agda">\n([ \t]*)</pre>\n' '<code class="Agda">$$1</code>' $$t; \
@@ -303,10 +304,16 @@ gen-md: clean-md
 		sd '\n[ \t]*</pre>$$' '\n</code>' $$t; \
 		sd '\A' '<pre class="Agda">' $$t; \
 		sd '\z' '</pre>' $$t; \
+		sd -- '\A' "---\ntitle: $$m\nhide: toc\n---\n\n# $$m\n\n" $$t; \
 		;; \
 	    *.md) \
 		sd '(<pre class="Agda">)' '$$1<code class="Agda">' $$t; \
 		sd '(</pre>)' '</code>$$1' $$t; \
+		if grep -q '^# '  $$t; then \
+		    sd -- '\A' "---\ntitle: $$m\n---\n\n" $$t; \
+		else \
+		    sd -- '\A' "---\ntitle: $$m\n---\n\n# $$m\n\n" $$t; \
+		fi; \
 		;; \
 	    *) \
 		echo "Module $$m has an unsupported type of literate Agda."; \
@@ -314,12 +321,6 @@ gen-md: clean-md
 		echo "and all references to the module are broken links."; \
 		;; \
 	  esac; \
-	  \
-	  if grep -q '^# '  $$t; then \
-	    sd -- '\A' "---\ntitle: $$m\nhide: toc\n---\n\n" $$t; \
-	  else \
-	    sd -- '\A' "---\ntitle: $$m\nhide: toc\n---\n\n# $$m\n\n" $$t; \
-	  fi; \
 	  \
 	  sd '(href="[^:"]+)\.html' '$$1/' $$t; \
 	  \
