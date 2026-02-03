@@ -23,19 +23,6 @@ open import Data.Nat.Base     renaming (ℕ to Nat) using (suc; _+_; _∸_; _≡
 open import Data.String.Base  using (String) public
 open import Function          using (id; _∘_) public
 
--- record Eq (A : Set) : Set where
---   field
---     _==_ : A → A → Bool
---
--- open Eq {{...}} public
---
--- Eq moved to Lifting.Maps to avoid:
---
--- Agda v2.8.0
--- Error
--- src/full/Agda/TypeChecking/Rewriting/Confluence.hs:787:10-17:
--- Non-exhaustive patterns in Pi b c
-
 postulate
   Domain  : Set₁          -- type of all domains
   ⟪_⟫     : Domain → Set  -- carrier of a domain
@@ -184,15 +171,14 @@ module Lifted where
 
   variable P : Set
   postulate
-    _+⊥     : Set → Domain            -- lifted set
-    ⌊_⌋     : ⟪ P →ˢ P +⊥ ⟫           -- inclusion
+    _+⊥  : Set → Domain               -- lifted set
+    ⌊_⌋  : ⟪ P →ˢ P +⊥ ⟫              -- inclusion
     _♯   : ⟪ (P →ˢ D) →ᶜ P +⊥ →ᶜ D ⟫  -- Kleisli extension
 
     elim-♯-η  : (f : ⟪ P →ˢ D ⟫) (p : P) →  (f ♯) (⌊ p ⌋)  ≡ f p
     elim-♯-⊥  : (f : ⟪ P →ˢ D ⟫) →          (f ♯) ⊥       ≡ ⊥
 
   infix 10 _+⊥
-
 ```
 
 In published examples of denotational semantics, ordinary operations on sets
@@ -359,30 +345,6 @@ declarations.
     _∈⊥_  : {E : Domain} → ⟪ E ⟫ → (D : Domain) → {{D ⇌ E}} → ⟪ Bool⊥ ⟫
 ```
 
-!!! note
-
-    The following Test module is to be removed.
-
-```agda
-  module Test where
-  
-    postulate R S T U : Domain
-
-    postulate instance
-      _ : R ⇌ S
-      _ : T ⇌ U
-
-    postulate
-      r : ⟪ R ⟫
-      t : ⟪ T ⟫
-
-    s : ⟪ S ⟫
-    s = r in⊥ S  -- ok accepted
-
-    -- x : ⟪ S ⟫
-    -- x = t in⊥ S  -- ok rejected (but accepted when x : S omitted!)
-```
-
 ## Product domains
 
 The carrier of the binary cartesian product of two domains consists of all
@@ -454,21 +416,4 @@ double angle-brackets `⟪ D ⟫` used for the carrier of domain `D`.
       _§_    : ⟪ D ⋆ →ᶜ D ⋆ →ᶜ D ⋆ ⟫   -- d⋆ § d⋆       concatenation
       _↓_    : ⟪ D ⋆ →ᶜ Nat →ˢ D ⟫     -- d⋆ ↓ n        nth component
       _†_    : ⟪ D ⋆ →ᶜ Nat →ˢ D ⋆ ⟫   -- d⋆ † n        nth tail
-```
-
-Use `open import Notation.All` to use all the notation declared above.
-
-```agda
--- module All where
---   open Functions public
---   open Recursion public
---   open Lifted    public
---   open Booleans  public
---   open Naturals  public
---   open Strings   public
---   open Maps      public
---   open Sums      public
---   open Products  public
---   open Tuples    public
---   open Sequences public
 ```
