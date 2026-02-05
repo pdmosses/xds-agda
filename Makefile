@@ -508,6 +508,7 @@ gen-latex: clean-latex
 	    pandoc -f markdown -t latex --syntax-highlighting=none -o $$t $$m; \
 	    sd '\\begin\{verbatim\}' '\\begin{code}' $$t; \
 	    sd '\\end\{verbatim\}' '\\end{code}' $$t; \
+	    sd '\\texttt\{' '\\AgdaFontStyle{' $$t; \
 	done
 	@for t in $(LAGDA-TEX-FILES); do \
 	    $(LAGDA-QUIET) --latex --latex-dir=$(LATEX) $$t; \
