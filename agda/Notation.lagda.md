@@ -186,13 +186,14 @@ However, it seems difficult to support such conventions in Agda formalisations.
 
 ### Booleans
 
-The McCarthy conditional operation extends the usual ternary conditional choice
-to carriers of domains. It is expected to return `⊥` whenever its first argument
-is `⊥`.
+The McCarthy conditional operation `β ⟶ δ₁ , δ₂` extends the usual ternary
+conditional choice to domains. It is supposed to return `⊥` whenever its first
+argument is `⊥`.
 
 A short arrow is conventionally used in denotational semantics both for
 function domains and McCarthy conditionals. Agda reserves the short arrow `→`
-for ordinary (and dependent) function types.
+for ordinary (and dependent) function types, so a longer arrow `⟶` is used for
+McCarthy conditional.
 
 ```agda
   module Booleans where
@@ -249,10 +250,7 @@ conventional notation.
 ```agda
   module Maps where
 
-    record Eq (A : Set) : Set where
-      field
-        _==_ : A → A → Bool
-    
+    record Eq (A : Set) : Set where field  _==_ : A → A → Bool
     open Eq {{...}} public
 
     _[_/_] : {{Eq A}} → (A → B) → B → A → (A → B)
@@ -278,10 +276,8 @@ straightforward, as it involves a function that returns an equivalence proof
 instead of a truth value: 
 
 ```agda
-    open import Data.Maybe.Base
-      using (Maybe; just; nothing) public
-    open import Relation.Binary.PropositionalEquality.Core
-      using (_≡_; refl) public
+    open import Data.Maybe.Base  using (Maybe; just; nothing) public
+    open import Relation.Binary.PropositionalEquality.Core using (_≡_; refl) public
 
     record EqMaybe (A : Set) : Set where
       field
