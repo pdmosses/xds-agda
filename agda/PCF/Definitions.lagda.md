@@ -86,7 +86,7 @@ module Domain-Equations where
 
   open Abstract-Syntax
   open Types
-  open Lifted
+  open Flat
   open Booleans
   open Naturals
 
@@ -103,7 +103,7 @@ Environments are type-preserving maps from variables to values. They are
 naturally modeled by a dependent type:
 
 ```agda
-  open Maps
+  open Updates
   open Variables
 
   Env = (σ : Types) → 𝒱 σ → ⟪ 𝒟 σ ⟫
@@ -161,7 +161,7 @@ module Semantic-Functions where
 
 ```agda
   open Constants
-  open Lifted
+  open Flat
   open Booleans
   open Naturals
 
@@ -182,7 +182,7 @@ module Semantic-Functions where
 
 ```agda
   open Terms
-  open Maps
+  open Updates
 
   𝒜′⟦_⟧ : Terms σ → ⟪ Env →ˢ 𝒟 σ ⟫
 

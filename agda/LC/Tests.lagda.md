@@ -9,7 +9,7 @@ open import Agda.Builtin.Equality.Rewrite
 module LC.Tests where
 
 open import Notation
-open Notation.Lifted.Maps
+open Notation.Updates
 open Notation.Recursion
 
 open import LC.Definitions

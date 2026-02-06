@@ -6,7 +6,7 @@
 module Scm.Domain-Equations where
 
 open import Notation
-open Lifted
+open Flat
 open Booleans
 open Naturals
 open Sums

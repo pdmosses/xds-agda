@@ -11,7 +11,7 @@ open import Relation.Binary.PropositionalEquality.Core
   using (_≡_; refl; cong-app)
 
 open import Notation
-open Lifted
+open Flat
 open Booleans
 
 open import PCF.Definitions

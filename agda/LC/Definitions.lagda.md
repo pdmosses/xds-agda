@@ -96,8 +96,8 @@ The following definitions instantiate the conventional notation `ρ [ d / v ]`
 for the environment that maps `v` to `d`, and maps other arguments as `ρ` does. 
 
 ```agda
-  open import Data.Bool.Base using (Bool)
-  open Notation.Lifted.Maps public
+  open Notation.Flat.Booleans
+  open Notation.Updates public
 
   _==ⱽ_ : Var → Var → Bool
   x n ==ⱽ x n′ = (n ≡ᵇ n′)

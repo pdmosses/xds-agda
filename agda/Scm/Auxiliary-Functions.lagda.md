@@ -6,10 +6,10 @@
 module Scm.Auxiliary-Functions where
 
 open import Notation
-open Lifted
+open Flat
 open Booleans
 open Naturals
-open Maps
+open Updates
 open Sums
 open Products
 open Sequences
