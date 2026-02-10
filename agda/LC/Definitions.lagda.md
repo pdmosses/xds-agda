@@ -4,13 +4,11 @@ This module defines a denotational semantics of the untyped λ-calculus in Agda,
 corresponding to Dana Scott's original $D_\infty$ model. 
 
 The following options are needed in connection with the lightweight
-formalisation of domains in Agda.
+formalisation of [function domains] in Agda.
 
 ```agda
 {-# OPTIONS --rewriting --confluence-check --lossy-unification #-}
-
 module LC.Definitions where
-
 open import Notation
 ```
 
@@ -23,14 +21,10 @@ module Abstract-Syntax where
 ### Variables
 
 A variable  is written `x n`. The argument `n` merely distinguishes between
-variables – `n` is not a De Bruin index.
+variables – it is *not* a De Bruin index.
 
 ```agda
-  open import Data.Nat.Base using (ℕ; _≡ᵇ_)
-
-  data Var : Set where
-    x : ℕ → Var  -- variables
-
+  data Var : Set where x : Nat → Var
   variable v : Var
 ```
 
@@ -45,42 +39,35 @@ allow abstract syntax terms to be written reasonably suggestively.
 
 ```agda
   data Exp : Set where
-    val_  : Var → Exp         -- variable value
-    ƛ_␣_  : Var → Exp → Exp   -- lambda abstraction
-    _␣_   : Exp → Exp → Exp   -- application
-
+    val_  : Var → Exp
+    ƛ_␣_  : Var → Exp → Exp
+    _␣_   : Exp → Exp → Exp
   infixl 20 _␣_
-
   variable e : Exp
 ```
 
-Abstract syntax does not need to be regarded as a domain. Abstract syntax terms
-are well-founded, and functions on them can be defined inductively.
+Abstract syntax is *not* regarded as a domain. All abstract syntax terms
+are finite, and semantic functions are defined inductively.
 
 ## Domain equations
 
 The domain equation `D∞ ≅ (D∞ →ᶜ D∞)` below declares the functions
 `unfold : ⟪ D∞ →ᶜ (D∞ →ᶜ D∞) ⟫ and `fold : ⟪ (D∞ →ᶜ D∞) →ᶜ D∞ ⟫`,
-corresponging to an isomorphism between the postulated domain `D∞` and
+corresponging to a bijection between the postulated domain `D∞` and
 the domain of all continuous endofunctions on `D∞`. (Simply defining
 `D∞ = (D∞ →ᶜ D∞)` would lead to non-termination of the Agda type-checker.)
 
 ```agda
 module Domain-Equations where
-
   open Abstract-Syntax
-  open Notation.Recursion public
-
-  postulate
-    D∞ : Domain
-  
-  postulate instance
-    eqD∞ : D∞ ≅ (D∞ →ᶜ D∞)
+  open Notation.Recursion using (_≅_; fold; unfold) public
+  postulate D∞ : Domain
+  postulate instance eqD∞ : D∞ ≅ (D∞ →ᶜ D∞)
 ```
 
-The one-point domain is a trivial solution for the above domain equation.
-It coud be excluded by postulating an embedding of any non-trivial domain
-into `D∞`.
+The one-point domain `𝟙` is a trivial solution for the above domain equation.
+It could be excluded by postulating an embedding of any non-trivial domain
+into `D∞`. 
 
 Environments `ρ` map variables to elements of the carrier of the postulated
 domain `D∞`. The type `Env` could be treated as a domain by ordering the maps
@@ -88,7 +75,6 @@ pointwise.
 
 ```agda
   Env = Var → ⟪ D∞ ⟫
-
   variable ρ : Env
 ```
 
@@ -96,15 +82,11 @@ The following definitions instantiate the conventional notation `ρ [ d / v ]`
 for the environment that maps `v` to `d`, and maps other arguments as `ρ` does. 
 
 ```agda
-  open Notation.Flat.Booleans
-  open Notation.Updates public
-
+  open Notation.Flat.Booleans using (Bool)
   _==ⱽ_ : Var → Var → Bool
+  open Notation.Updates using (Eq; _==_; _[_/_]) public
   x n ==ⱽ x n′ = (n ≡ᵇ n′)
-
-  instance
-    eqVar : Eq Var
-    _==_ {{eqVar}} = _==ⱽ_
+  instance eqVar : Eq Var; _==_ {{eqVar}} = _==ⱽ_
 ```
 
 ## Semantic functions
@@ -116,18 +98,16 @@ defined up to isomorphism, and are conventionally elided.)
 
 ```agda
 module Semantic-Functions where
-
   open Abstract-Syntax
   open Domain-Equations
-
   ⟦_⟧ : Exp → Env → ⟪ D∞ ⟫
-
   ⟦ val  v   ⟧ ρ  = ρ v
   ⟦ ƛ v ␣ e  ⟧ ρ  = fold ( λ d → ⟦ e ⟧ (ρ [ d / v ]) )
   ⟦ e₁ ␣ e₂  ⟧ ρ  = unfold ( ⟦ e₁ ⟧ ρ ) ( ⟦ e₂ ⟧ ρ )
 ```
 
-See the [Tests] module for some examples of abstract syntax terms and their
-denotations.
+See the [Tests] module for some examples of abstract syntax terms and
+equivalence proofs.
 
+[Function domains]: ../../Notation/index.md#function-domains
 [Tests]: ../Tests/index.md

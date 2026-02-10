@@ -2,22 +2,20 @@
 
 ```agda
 {-# OPTIONS --rewriting --confluence-check #-}
-
-open import Agda.Builtin.Equality
-open import Agda.Builtin.Equality.Rewrite
-
 module LC.Tests where
-
-open import Notation
-open Notation.Updates
-open Notation.Recursion
 
 open import LC.Definitions
 open Abstract-Syntax
 open Domain-Equations
 open Semantic-Functions
 
-open import Relation.Binary.PropositionalEquality using (refl)
+open import Notation
+open Notation.Updates
+open Notation.Recursion
+
+open import Agda.Builtin.Equality
+open import Agda.Builtin.Equality.Rewrite
+open import Relation.Binary.PropositionalEquality.Core using (refl)
 
 postulate
   unfold-fold-elim :

@@ -239,7 +239,7 @@ the operation only for flat domains `D` with `instance _ : Eq⊥ D`.
 ```agda
     postulate Eq⊥ : Domain → Set
     postulate _==⊥_ : {{Eq⊥ (A +⊥)}} → ⟪ A +⊥ →ᶜ A +⊥ →ᶜ Bool⊥ ⟫
-    postulate instance _ : Eq⊥ Bool⊥
+    postulate instance eq⊥Bool⊥ : Eq⊥ Bool⊥
 ```
 
 ### Naturals
@@ -251,7 +251,10 @@ using `zero` and `suc`.
   module Naturals where
     Nat⊥ = Nat +⊥
     open Booleans
-    postulate instance _ : Eq⊥ Nat⊥
+    postulate instance eq⊥Nat⊥ : Eq⊥ Nat⊥
+    variable n₁ n₂ : Nat
+    postulate
+      ==⊥≡ᵇ : (⌊ n₁ ⌋ ==⊥ ⌊ n₂ ⌋) ≡ ⌊ n₁ ≡ᵇ n₂ ⌋
 ```
 
 ### Strings
@@ -379,15 +382,14 @@ double angle-brackets `⟪ D ⟫` used for the carrier of domain `D`.)
 ## Updates
 
 When an ordinary Agda type `A` has an equality operation `_==_ : A → A → Bool`,
-functions `f : A → B` can be "updated" (extended or overridden) using the
-conventional notation `f [ b / a ]`, defined as follows
+functions `f : A → B` can be "updated" (i.e., extended or overridden) using the
+conventional notation `f [ b / a ]`, defined as follows.
 
 ```agda
 module Updates where
   open Flat.Booleans
   record Eq (A : Set) : Set where field _==_ : A → A → Bool
   open Eq {{...}} public
-
   _[_/_] : {{Eq A}} → (A → B) → B → A → (A → B)
   f [ b / a ] = λ a′ → if a == a′ then b else f a′
 ```
@@ -398,28 +400,24 @@ an equality operation `_==⊥_ : ⟪ A +⊥ →ᶜ A +⊥ →ᶜ Bool⊥ ⟫` is
 
 ```agda
   open Flat
-  
   _[_/_]⊥ : {{Eq⊥ (A +⊥)}} → ⟪ (A +⊥ →ᶜ D) →ᶜ D →ᶜ A +⊥ →ᶜ (A +⊥ →ᶜ D) ⟫
   φ [ δ / α ]⊥ = λ α′ → (α ==⊥ α′) ⟶ δ , φ α′
 ```
 
-Defining extension or overriding of *dependent* maps is somewhat less
-straightforward, as it involves a function that returns an equivalence proof
-instead of a truth value: 
+Defining extension or overriding of *dependent* maps is less straightforward,
+as it involves a function that returns an *equivalence proof* instead of a
+truth value: 
 
 ```agda
   open import Data.Maybe.Base using (Maybe; just; nothing) public
   open import Relation.Binary.PropositionalEquality.Core using (_≡_; refl) public
 
-  record EqMaybe (A : Set) : Set where
-    field
-      _==?_ : (a : A) → (a′ : A) → Maybe (a ≡ a′)
+  record EqMaybe (A : Set) : Set where field _==?_ : (a a′ : A) → Maybe (a ≡ a′)
   open EqMaybe {{...}} public
   
-  extend-map : {X : Set} → {Y : X → Set} → {{EqMaybe X}} → 
+  extend-map :  {X : Set} → {Y : X → Set} → {{EqMaybe X}} → 
                 (∀ (x′) → Y x′) → (x : X) → Y x → (∀ (x′) → Y x′)
-  extend-map {X} {Y} m x y = λ x′ → h x′ (x ==? x′)
-    where
+  extend-map {X} {Y} m x y = λ x′ → h x′ (x ==? x′) where
     h : (x′ : X) → Maybe (x ≡ x′) → Y x′
     h x′ (just refl) = y
     h x′ nothing = m x′
