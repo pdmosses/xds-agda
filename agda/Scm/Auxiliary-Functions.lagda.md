@@ -31,9 +31,7 @@ postulate instance
 postulate instance
   eqL : Eq⊥ 𝐋
   eqM : Eq⊥ 𝐌
-  eqN : Eq⊥ 𝐍
   eqR : Eq⊥ 𝐑
-  eqT : Eq⊥ 𝐓
 
 postulate
   _<ᴿ_   : ⟪ 𝐑 →ᶜ 𝐑 →ᶜ 𝐓 ⟫
