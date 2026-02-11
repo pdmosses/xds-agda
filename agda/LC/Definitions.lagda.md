@@ -85,7 +85,7 @@ for the environment that maps `v` to `d`, and maps other arguments as `ρ` does.
   open Notation.Flat.Booleans using (Bool)
   _==ⱽ_ : Var → Var → Bool
   open Notation.Updates using (Eq; _==_; _[_/_]) public
-  x n ==ⱽ x n′ = (n ≡ᵇ n′)
+  (x n ==ⱽ x n′) = (n ≡ᵇ n′)
   instance eqVar : Eq Var; _==_ {{eqVar}} = _==ⱽ_
 ```
 
@@ -94,16 +94,16 @@ for the environment that maps `v` to `d`, and maps other arguments as `ρ` does.
 The semantic equations below correspond closely to those found in textbooks
 on denotational semantics. (The inverse functions `unfold` and `fold` between
 domains and their definitions reflect that solutions of domain equations are
-defined up to isomorphism, and are conventionally elided.)
+up to isomorphism, and are conventionally elided.)
 
 ```agda
 module Semantic-Functions where
   open Abstract-Syntax
   open Domain-Equations
   ⟦_⟧ : Exp → Env → ⟪ D∞ ⟫
-  ⟦ val  v   ⟧ ρ  = ρ v
-  ⟦ ƛ v ␣ e  ⟧ ρ  = fold ( λ d → ⟦ e ⟧ (ρ [ d / v ]) )
-  ⟦ e₁ ␣ e₂  ⟧ ρ  = unfold ( ⟦ e₁ ⟧ ρ ) ( ⟦ e₂ ⟧ ρ )
+  ⟦ val  v ⟧ ρ   = ρ v
+  ⟦ ƛ v ␣ e ⟧ ρ  = fold ( λ d → ⟦ e ⟧ (ρ [ d / v ]) )
+  ⟦ e₁ ␣ e₂ ⟧ ρ  = unfold ( ⟦ e₁ ⟧ ρ ) ( ⟦ e₂ ⟧ ρ )
 ```
 
 See the [Tests] module for some examples of abstract syntax terms and
