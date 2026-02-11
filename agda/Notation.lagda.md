@@ -415,11 +415,10 @@ truth value:
   record EqMaybe (A : Set) : Set where field _==?_ : (a a′ : A) → Maybe (a ≡ a′)
   open EqMaybe {{...}} public
   
-  extend-map :  {X : Set} → {Y : X → Set} → {{EqMaybe X}} → 
-                (∀ (x′) → Y x′) → (x : X) → Y x → (∀ (x′) → Y x′)
-  extend-map {X} {Y} m x y = λ x′ → h x′ (x ==? x′) where
+  _[_←_] :  {X : Set} → {Y : X → Set} → {{EqMaybe X}} → 
+            (∀ (x′) → Y x′) → (x : X) → Y x → (∀ (x′) → Y x′)
+  _[_←_] {X} {Y} m x y = λ x′ → h x′ (x ==? x′) where
     h : (x′ : X) → Maybe (x ≡ x′) → Y x′
     h x′ (just refl) = y
     h x′ nothing = m x′
-  syntax extend-map f x y = f [ y / x ]′
 ```
