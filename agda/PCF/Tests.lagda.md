@@ -21,14 +21,6 @@ open import Relation.Binary.PropositionalEquality.Core using (_≡_; refl; cong-
 
 {-# REWRITE fix-fix elim-♯-η elim-♯-⊥ true-cond false-cond ==⊥≡ᵇ #-} 
 
--- Constants
-pattern 𝑁 n    = 𝐿 (k n)
-pattern succ   = 𝐿 +1′
-pattern pred⊥  = 𝐿 -1′
-pattern if     = 𝐿 ⊃
-pattern 𝑌      = 𝐿 Y
-pattern 𝑍      = 𝐿 Z
-
 -- Variables
 f  = α 0 ι
 g  = α 1 (ι ⇒ ι)
@@ -37,61 +29,53 @@ a  = α 3 ι
 b  = α 4 ι
 
 -- Arithmetic
-check-41+1 : 𝓐′⟦ succ ␣ 𝑁 41 ⟧ ρ⊥ ≡ ⌊ 42 ⌋
+check-41+1 : 𝓐′⟦ ⦅ 𝐿 ⦅+1⦆ ␣ 𝐿 k 41 ⦆ ⟧ ρ⊥ ≡ ⌊ 42 ⌋
 check-41+1 = refl
 
-check-43-1 : 𝓐′⟦ pred⊥ ␣ 𝑁 43 ⟧ ρ⊥ ≡ ⌊ 42 ⌋
+check-43-1 : 𝓐′⟦ ⦅ 𝐿 ⦅-1⦆ ␣ 𝐿 k 43 ⦆ ⟧ ρ⊥ ≡ ⌊ 42 ⌋
 check-43-1 = refl
 
 -- Binding
-check-id : 𝓐′⟦ (ƛ a ␣ 𝑉 a) ␣ 𝑁 42 ⟧ ρ⊥ ≡ ⌊ 42 ⌋
+check-id : 𝓐′⟦ ⦅ ⦅λ a ␣ 𝑉 a ⦆ ␣ 𝐿 k 42 ⦆ ⟧ ρ⊥ ≡ ⌊ 42 ⌋
 check-id = refl
 
-check-k : 𝓐′⟦ (ƛ a ␣ ƛ b ␣ 𝑉 a) ␣ 𝑁 42 ␣ 𝑁 41 ⟧ ρ⊥ ≡ ⌊ 42 ⌋
+check-k : 𝓐′⟦ ⦅ ⦅ ⦅λ a ␣ ⦅λ b ␣ 𝑉 a ⦆ ⦆ ␣ 𝐿 k 42 ⦆ ␣ 𝐿 k 41 ⦆ ⟧ ρ⊥ ≡ ⌊ 42 ⌋
 check-k = refl
 
-check-ki : 𝓐′⟦ (ƛ a ␣ ƛ b ␣ 𝑉 b) ␣ 𝑁 41 ␣ 𝑁 42 ⟧ ρ⊥ ≡ ⌊ 42 ⌋
+check-ki : 𝓐′⟦ ⦅ ⦅ ⦅λ a ␣ ⦅λ b ␣ 𝑉 b ⦆ ⦆ ␣ 𝐿 k 41 ⦆ ␣ 𝐿 k 42 ⦆ ⟧ ρ⊥ ≡ ⌊ 42 ⌋
 check-ki = refl
 
-check-suc-41 : 𝓐′⟦ (ƛ a ␣ (succ ␣ 𝑉 a )) ␣ 𝑁 41 ⟧ ρ⊥ ≡ ⌊ 42 ⌋
+check-suc-41 : 𝓐′⟦ ⦅ ⦅λ a ␣ ⦅ 𝐿 ⦅+1⦆ ␣ 𝑉 a ⦆ ⦆ ␣ 𝐿 k 41 ⦆ ⟧ ρ⊥ ≡ ⌊ 42 ⌋
 check-suc-41 = refl
 
-check-pred-42 : 𝓐′⟦ (ƛ a ␣ (pred⊥ ␣ 𝑉 a)) ␣ 𝑁 43 ⟧ ρ⊥ ≡ ⌊ 42 ⌋
+check-pred-42 : 𝓐′⟦ ⦅ ⦅λ a ␣ ⦅ 𝐿 ⦅-1⦆ ␣ 𝑉 a ⦆ ⦆ ␣ 𝐿 k 43 ⦆ ⟧ ρ⊥ ≡ ⌊ 42 ⌋
 check-pred-42 = refl
 
-check-if-zero : 𝓐′⟦ if ␣ (𝑍 ␣ 𝑁 0) ␣ 𝑁 42 ␣ 𝑁 0 ⟧ ρ⊥ ≡ ⌊ 42 ⌋
+check-if-zero : 𝓐′⟦ ⦅ ⦅ ⦅ 𝐿 ⊃ ␣ ⦅ 𝐿 Z  ␣ 𝐿 k 0 ⦆ ⦆ ␣ 𝐿 k 42 ⦆ ␣ 𝐿 k 0 ⦆ ⟧ ρ⊥ ≡ ⌊ 42 ⌋
 check-if-zero = refl
 
-check-if-nonzero : 𝓐′⟦ if ␣ (𝑍 ␣ 𝑁 42) ␣ 𝑁 0 ␣ 𝑁 42 ⟧ ρ⊥ ≡ ⌊ 42 ⌋
+check-if-nonzero : 𝓐′⟦ ⦅ ⦅ ⦅ 𝐿 ⊃ ␣ ⦅ 𝐿 Z  ␣ 𝐿 k 42 ⦆ ⦆ ␣ 𝐿 k 0 ⦆ ␣ 𝐿 k 42 ⦆ ⟧ ρ⊥ ≡ ⌊ 42 ⌋
 check-if-nonzero = refl
 
--- fix (λf. 42) ≡ 42
-check-fix-const :
-  𝓐′⟦ 𝑌 ␣ (ƛ f ␣ 𝑁 42) ⟧ ρ⊥ 
-  ≡ ⌊ 42 ⌋
+check-fix-const : 𝓐′⟦ ⦅ 𝐿 Y ␣ ⦅λ f ␣ 𝐿 k 42 ⦆ ⦆ ⟧ ρ⊥ ≡ ⌊ 42 ⌋
 check-fix-const = fix-fix (λ x → ⌊ 42 ⌋)
 
 -- fix (λg. λa. 42) 2 ≡ 42
-check-fix-lambda :
-  𝓐′⟦ 𝑌 ␣ (ƛ g ␣ ƛ a ␣ 𝑁 42) ␣ 𝑁 2 ⟧ ρ⊥ 
-  ≡ ⌊ 42 ⌋
+check-fix-lambda : 𝓐′⟦ ⦅ ⦅ 𝐿 Y ␣ ⦅λ g ␣ ⦅λ a ␣ 𝐿 k 42 ⦆ ⦆ ⦆ ␣ 𝐿 k 2 ⦆ ⟧ ρ⊥ ≡ ⌊ 42 ⌋
 check-fix-lambda = refl
 
 -- fix (λg. λa. ifz a then 42 else g (pred a)) 5 ≡ 42
 check-countdown :
-  𝓐′⟦ 𝑌 ␣ (ƛ g ␣ ƛ a ␣
-              (if ␣ (𝑍 ␣ 𝑉 a) ␣ 𝑁 42 ␣ (𝑉 g ␣ (pred⊥ ␣ 𝑉 a))))
-      ␣ 𝑁 5
-    ⟧ ρ⊥ 
-  ≡ ⌊ 42 ⌋
+  𝓐′⟦ ⦅ ⦅ 𝐿 Y ␣ ⦅λ g ␣ ⦅λ a ␣
+              ⦅ ⦅ ⦅ 𝐿 ⊃ ␣ ⦅ 𝐿 Z  ␣ 𝑉 a ⦆ ⦆ ␣ 𝐿 k 42 ⦆ ␣ ⦅ 𝑉 g ␣ ⦅ 𝐿 ⦅-1⦆ ␣ 𝑉 a ⦆ ⦆ ⦆ ⦆ ⦆ ⦆
+      ␣ 𝐿 k 5 ⦆ ⟧ ρ⊥ ≡ ⌊ 42 ⌋
 check-countdown = refl
 
--- fix (λh. λa. λb. ifz a then b else h (pred a) (succ b)) 4 38 ≡ 42
+-- fix (λh. λa. λb. ifz a then b else h (pred a) (𝐿 ⦅+1⦆ b)) 4 38 ≡ 42
 check-sum-42 :
-  𝓐′⟦ (𝑌 ␣ (ƛ h ␣ ƛ a ␣ ƛ b ␣
-              (if ␣ (𝑍 ␣ 𝑉 a) ␣ 𝑉 b ␣ (𝑉 h ␣ (pred⊥ ␣ 𝑉 a) ␣ (succ ␣ 𝑉 b)))))
-      ␣ 𝑁 4 ␣ 𝑁 38
-    ⟧ ρ⊥
-  ≡ ⌊ 42 ⌋
+  𝓐′⟦ ⦅ ⦅ ⦅ 𝐿 Y ␣ ⦅λ h ␣ ⦅λ a ␣ ⦅λ b ␣
+                  ⦅ ⦅ ⦅ 𝐿 ⊃ ␣ ⦅ 𝐿 Z  ␣ 𝑉 a ⦆ ⦆ ␣ 𝑉 b ⦆ ␣ 
+                    ⦅ ⦅ 𝑉 h ␣ ⦅ 𝐿 ⦅-1⦆ ␣ 𝑉 a ⦆ ⦆ ␣ ⦅ 𝐿 ⦅+1⦆ ␣ 𝑉 b ⦆ ⦆ ⦆ ⦆ ⦆ ⦆ ⦆
+      ␣ 𝐿 k 4 ⦆ ␣ 𝐿 k 38 ⦆ ⟧ ρ⊥ ≡ ⌊ 42 ⌋
 check-sum-42 = refl
 ```
