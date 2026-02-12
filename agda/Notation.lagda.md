@@ -8,6 +8,7 @@ direct use of λ-notation for defining functions between domains.
 {-# OPTIONS --rewriting --confluence-check --lossy-unification #-}
 module Notation where
 open import Data.Nat.Base renaming (ℕ to Nat) using (suc; _+_; _∸_; _≡ᵇ_) public
+variable A B C : Set
 ```
 
 !!! note "TODO"
@@ -33,12 +34,14 @@ element of the trivial domain `𝟙` is `⊥`.[^bottom]
     is `tt`.
 
 ```agda
-postulate
-  Domain : Set₁
-  ⟪_⟫ : Domain → Set
-  ⊥ : {D : Domain} → ⟪ D ⟫
-  𝟙 : Domain
-variable A B C : Set; D E F : Domain
+module Domains where
+  postulate
+    Domain : Set₁
+    ⟪_⟫ : Domain → Set
+    ⊥ : {D : Domain} → ⟪ D ⟫
+    𝟙 : Domain
+  variable D E F : Domain
+open Domains public
 ```
 
 In three previous papers ([Mosses2025CDS], [Mosses2025CSE], [Mosses2025LAF]),
