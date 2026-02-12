@@ -2,70 +2,52 @@
 
 ```agda
 {-# OPTIONS --rewriting --confluence-check --lossy-unification #-}
-
 module Scm.Abstract-Syntax where
+```
 
-open import Data.Integer.Base  renaming (ℤ to Int) public
-open import Data.String.Base   using (String) public
+## Identifiers
 
-data       Con    : Set     -- constants, *excluding* quotations
-variable   K      : Con
-Ide               = String  -- identifiers (variables)
-variable   I      : Ide
-data       Exp    : Set     -- expressions
-variable   E      : Exp
-data       Exp⋆   : Set     -- expression sequences
-variable   E⋆     : Exp⋆
-
-data       Body   : Set     -- body expression or definition
-variable   B      : Body
-data       Body⁺  : Set     -- body sequences
-variable   B⁺     : Body⁺
-data       Prog   : Set     -- programs
-variable   Π      : Prog
+```agda
+open import Data.String.Base using (String) public
+Ide = String
+variable I : Ide
 ```
 
 ## Literal Constants
 
 ```agda
-data Con where                -- basic constants
-  int  : Int → Con            -- integer numerals
-  #t   : Con                  -- true
-  #f   : Con                  -- false
+open import Data.Integer.Base renaming (ℤ to Int) using () public
+data Con : Set where int : Int → Con; #t #f : Con
+variable K : Con
 ```
 
 ## Expressions
 
 ```agda
-data Exp where                          -- expressions
-  con          : Con → Exp              -- K
-  ide          : Ide → Exp              -- I
-  ⦅_␣_⦆        : Exp → Exp⋆ → Exp       -- (E E⋆)
-  ⦅lambda_␣_⦆  : Ide → Exp → Exp        -- (lambda I E)
-  ⦅if_␣_␣_⦆    : Exp → Exp → Exp → Exp  -- (if E E₁ E₂)
-  ⦅set!_␣_⦆    : Ide → Exp → Exp        -- (set! I E)
-
-data Exp⋆ where                         -- expression sequences
-  ␣␣␣          : Exp⋆                   -- empty sequence
-  _␣␣_         : Exp → Exp⋆ → Exp⋆      -- prefix sequence E E⋆
+data Exp⋆ : Set
+data Exp : Set where
+  con          : Con → Exp
+  ide          : Ide → Exp
+  ⦅_␣_⦆        : Exp → Exp⋆ → Exp
+  ⦅lambda_␣_⦆  : Ide → Exp → Exp
+  ⦅if_␣_␣_⦆    : Exp → Exp → Exp → Exp
+  ⦅set!_␣_⦆    : Ide → Exp → Exp
+data Exp⋆ where
+  ␣␣␣ : Exp⋆; _␣␣_ : Exp → Exp⋆ → Exp⋆
+variable E : Exp; E⋆ : Exp⋆
 ```
 
 ## Definitions and Programs
 
 ```agda
-data Body where
-  ␣␣_          : Exp → Body             -- side-effect expression E
-  ⦅define_␣_⦆  : Ide → Exp → Body       -- definition (define I E)
-  ⦅begin_⦆     : Body⁺ → Body           -- block (begin B⁺)
-
-data Body⁺ where                        -- body sequence
-  ␣␣_          : Body → Body⁺           -- single body sequence B
-  _␣␣_         : Body → Body⁺ → Body⁺   -- prefix body sequence B B⁺
-
-data Prog where                         -- programs
-  ␣␣␣          : Prog                   -- empty program
-  ␣␣_          : Body⁺ → Prog           -- non-empty program B⁺
-
-infix 30 ␣␣_
-infixr 20 _␣␣_
+data Body⁺ : Set
+data Body : Set where
+  ␣␣_          : Exp → Body
+  ⦅define_␣_⦆  : Ide → Exp → Body
+  ⦅begin_⦆     : Body⁺ → Body
+data Body⁺ where
+  ␣␣_ : Body → Body⁺; _␣␣_ : Body → Body⁺ → Body⁺
+data Prog : Set where
+  ␣␣␣ : Prog; ␣␣_ : Body⁺ → Prog
+variable B : Body; B⁺ : Body⁺; Π : Prog
 ```
