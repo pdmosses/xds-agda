@@ -57,7 +57,7 @@ well-developed support for domains.
   notation for pairing and selection prevents direct embedding in Agda of
   λ-notation from denotational definitions.
 
-## Postulating Scott-Domains in Agda
+## Postulating Domains in Agda
 
 The purpose of this repository is to experiment with defining denotational
 semantics more straightforwardly in Agda.

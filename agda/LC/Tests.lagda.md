@@ -9,19 +9,7 @@ open Abstract-Syntax
 open Domain-Equations
 open Semantic-Functions
 
-open import Notation
-open Notation.Updates
-open Notation.Recursion
-
-open import Agda.Builtin.Equality
-open import Agda.Builtin.Equality.Rewrite
-open import Relation.Binary.PropositionalEquality.Core using (refl)
-
-postulate
-  unfold-fold-elim :
-    ∀ {f : ⟪ D∞ →ᶜ D∞ ⟫}  →  unfold (fold f) ≡ f
-
-{-# REWRITE unfold-fold-elim #-}
+open import Properties
 
 -- (λx1.x1)x42 = x42
 check-id :

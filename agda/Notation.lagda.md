@@ -7,13 +7,8 @@ direct use of λ-notation for defining functions between domains.
 ```agda
 {-# OPTIONS --rewriting --confluence-check --lossy-unification #-}
 module Notation where
-open import Data.Nat.Base renaming (ℕ to Nat) using (suc; _+_; _∸_; _≡ᵇ_) public
 variable A B C : Set
 ```
-
-!!! note "TODO"
-
-    Move all postulated properties to a separate `Properties` module.
 
 ## Domains
 
@@ -68,6 +63,13 @@ Agda then requires domains `D` to be distinguished from their carrier sets
 The notation for each domain constructor is generally declared in a separate
 submodule.
 
+!!! info
+
+    The [Properties] module postulates equational properties of the postulated
+    operations on elements of domains, and declares them as rewrite rules.
+
+[Properties]: ../Properties/index.md
+
 ## Function domains
 
 The conventional notation in denotational definitions for the domain of all
@@ -117,10 +119,6 @@ domain constructors. And continuous *endofunctions* `f` in `D →ᶜ D` have
   postulate fix : ⟪ (D →ᶜ D) →ᶜ D ⟫
 ```
 
-```agda
-  postulate fix-fix : (f : ⟪ D →ᶜ D ⟫) → fix f ≡ f (fix f)
-```
-
 It would be possible to declare an analogous type of *predomains*,[^pre]
 together with notation for types of continuous functions between predomains.
 An ordinary set `A` is a special case of a predomain. The domain `A →ˢ D`
@@ -163,8 +161,8 @@ to map values from a postulated domain to its structure and *vice versa*.
 module Recursion where
   postulate
     _≅_ : Domain → Domain → Set
-    unfold : {D E : Domain} → {{D ≅ E}} → ⟪ D →ᶜ E ⟫
-    fold :   {D E : Domain} → {{D ≅ E}} → ⟪ E →ᶜ D ⟫
+    unfold : {{D ≅ E}} → ⟪ D →ᶜ E ⟫
+    fold :   {{D ≅ E}} → ⟪ E →ᶜ D ⟫
 ```
 
 The *instance parameter* `{{D ≅ E}}` of the above operations restricts them
@@ -207,12 +205,6 @@ module Flat where
   infix 10 _+⊥
 ```
 
-```agda
-  postulate
-    elim-♯-↑  : (f : ⟪ A →ˢ D ⟫) (a : A) →  (f ♯) (↑ a)  ≡ f a
-    elim-♯-⊥  : (f : ⟪ A →ˢ D ⟫) →          (f ♯) ⊥       ≡ ⊥
-```
-
 ### Booleans
 
 The McCarthy conditional operation `β ⟶ δ₁ , δ₂` extends the usual ternary
@@ -225,14 +217,6 @@ argument is `⊥`.
     Bool⊥ = Bool +⊥
     postulate _⟶_,_ : ⟪ Bool⊥ →ᶜ D →ᶜ D →ᶜ D ⟫
     infixr 20 _⟶_,_
-```
-
-```agda
-    variable δ₁ δ₂ : ⟪ D ⟫
-    postulate
-      true-cond    : (↑ true ⟶ δ₁ , δ₂)   ≡ δ₁
-      false-cond   : (↑ false ⟶ δ₁ , δ₂)  ≡ δ₂
-      bottom-cond  : (⊥ ⟶ δ₁ , δ₂)          ≡ ⊥
 ```
 
 The instance parameter of the strict equality test `δ₁ ==⊥ δ₂` below declares
@@ -252,12 +236,10 @@ using `zero` and `suc`.
 
 ```agda
   module Naturals where
+    open import Data.Nat.Base renaming (ℕ to Nat) using (suc; _+_; _∸_; _≡ᵇ_) public
     Nat⊥ = Nat +⊥
     open Booleans
     postulate instance eq⊥Nat⊥ : Eq⊥ Nat⊥
-    variable n₁ n₂ : Nat
-    postulate
-      ==⊥≡ᵇ : (↑ n₁ ==⊥ ↑ n₂) ≡ ↑ (n₁ ≡ᵇ n₂)
 ```
 
 ### Strings
@@ -347,6 +329,7 @@ written $D^n$, but Agda does not support the use of variables as superscripts.
 
 ```agda
   module Tuples where
+    open import Data.Nat.Base renaming (ℕ to Nat) using (suc) public
     _^_ : Domain → Nat → Domain
     D ^ 0            = 𝟙 
     D ^ 1            = D

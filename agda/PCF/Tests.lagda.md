@@ -7,18 +7,11 @@ open Abstract-Syntax
 open Domain-Equations
 open Semantic-Functions
 
-open import Notation
-open Notation.Flat
-open Notation.Flat.Booleans
-open Notation.Flat.Naturals
-
-open import Agda.Builtin.Equality
-open import Agda.Builtin.Equality.Rewrite
-open import Data.Bool.Base 
-open import Data.Nat.Base
-open import Relation.Binary.PropositionalEquality.Core using (_≡_; refl; cong-app)
-
-{-# REWRITE fix-fix elim-♯-↑ elim-♯-⊥ true-cond false-cond ==⊥≡ᵇ #-} 
+open import Properties
+open Properties.Functions
+open Properties.Flat
+open Properties.Flat.Booleans
+open Properties.Flat.Naturals
 
 -- Variables
 f  = α 0 ι

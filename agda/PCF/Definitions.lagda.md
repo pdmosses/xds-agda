@@ -46,6 +46,7 @@ The argument `i` merely distinguishes between variables – it is *not* a De Bru
 index.
 
 ```agda
+  open import Data.Nat.Base renaming (ℕ to Nat) using () public
   data 𝒱 : Types → Set where α : Nat → (σ : Types) → 𝒱 σ
   variable i : Nat
 ```
@@ -132,6 +133,7 @@ in Agda.
 ```agda
   open Notation.Updates using (Eq; _==_; _[_/_])
   _==ⱽ_ : 𝒱 σ → 𝒱 σ → Bool
+  open import Data.Nat.Base using (_≡ᵇ_) public
   (α i σ ==ⱽ α i′ σ)  =  (i ≡ᵇ i′)
   instance
     eqV : Eq (𝒱 σ)
@@ -185,6 +187,7 @@ case analysis, which is not supported in this Agda formalisation
 ```agda
   open Notation.Flat using (↑; _♯)
   open Notation.Flat.Booleans using (_⟶_,_; _==⊥_; false; true)
+  open Notation.Flat.Naturals using (_+_; _∸_)
   𝒜⟦_⟧ : ℒᴬ σ → ⟪ 𝒟 σ ⟫
   𝒜⟦ tt ⟧    =  ↑ true
   𝒜⟦ ff ⟧    =  ↑ false

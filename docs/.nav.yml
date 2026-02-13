@@ -14,7 +14,9 @@ nav:
   - Scm:
     - md/Scm/index.md
     - md/Scm/*
-  - md/Notation/index.md
+  - Notation:
+    - md/Notation/index.md
+    - md/Properties/index.md
   - Library:
     - Library/index.md
     - md/*

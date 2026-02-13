@@ -24,6 +24,7 @@ A variable  is written `x n`. The argument `n` merely distinguishes between
 variables – it is *not* a De Bruin index.
 
 ```agda
+  open import Data.Nat.Base renaming (ℕ to Nat) using () public
   data Var : Set where x : Nat → Var
   variable v : Var
 ```
@@ -84,6 +85,7 @@ for the environment that maps `v` to `d`, and maps other arguments as `ρ` does.
 ```agda
   open Notation.Flat.Booleans using (Bool)
   _==ⱽ_ : Var → Var → Bool
+  open import Data.Nat.Base using (_≡ᵇ_) public
   open Notation.Updates using (Eq; _==_; _[_/_]) public
   (x n ==ⱽ x n′) = (n ≡ᵇ n′)
   instance eqVar : Eq Var; _==_ {{eqVar}} = _==ⱽ_
