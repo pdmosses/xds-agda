@@ -33,18 +33,18 @@ variables – it is *not* a De Bruin index.
 
 The term constructor `val` below merely includes variables in terms.
 
-Agda does not support the use of the conventional notation `λ _ . _`
-for the abstract syntax of lambda abstraction terms, nor juxtaposition `_ _`
-for the abstract syntax of application terms. The Unicode symbols `ƛ` and `␣`
-allow abstract syntax terms to be written reasonably suggestively.
+In Agda, mixfix notation requires arguments to be separated by characters
+other than spaces. Below, the notation for application `⦅ e₁ ␣ e₂ ⦆` and
+λ-abstraction `⦅λ v ␣ e ⦆` uses the Unicode character `␣` (representing a
+space) as a separator. Application terms are also parenthesised, but using
+`⦅…⦆` instead of ordinary parentheses.
 
 ```agda
   data Exp : Set where
-    val_  : Var → Exp
-    ƛ_␣_  : Var → Exp → Exp
-    _␣_   : Exp → Exp → Exp
-  infixl 20 _␣_
-  variable e : Exp
+    val_    : Var → Exp
+    ⦅λ_␣_⦆  : Var → Exp → Exp
+    ⦅_␣_⦆   : Exp → Exp → Exp
+  variable e e₁ e₂ : Exp
 ```
 
 Abstract syntax is *not* regarded as a domain. All abstract syntax terms
@@ -103,9 +103,9 @@ module Semantic-Functions where
   open Abstract-Syntax
   open Domain-Equations
   ⟦_⟧ : Exp → Env → ⟪ D∞ ⟫
-  ⟦ val  v ⟧ ρ   = ρ v
-  ⟦ ƛ v ␣ e ⟧ ρ  = fold ( λ d → ⟦ e ⟧ (ρ [ d / v ]) )
-  ⟦ e₁ ␣ e₂ ⟧ ρ  = unfold ( ⟦ e₁ ⟧ ρ ) ( ⟦ e₂ ⟧ ρ )
+  ⟦ val v ⟧ ρ        = ρ v
+  ⟦ ⦅λ v ␣ e ⦆ ⟧ ρ   = fold ( λ d → ⟦ e ⟧ (ρ [ d / v ]) )
+  ⟦ ⦅ e₁ ␣ e₂ ⦆ ⟧ ρ  = unfold ( ⟦ e₁ ⟧ ρ ) ( ⟦ e₂ ⟧ ρ )
 ```
 
 See the [Tests] module for some examples of abstract syntax terms and
