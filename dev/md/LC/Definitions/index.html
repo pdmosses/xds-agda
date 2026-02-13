@@ -335,17 +335,20 @@
   
   
   
-    <li class="md-tabs__item">
-      <a href="../../Notation/" class="md-tabs__link">
-        
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../Notation/" class="md-tabs__link">
+          
   
   
     
   
   Notation
 
-      </a>
-    </li>
+        </a>
+      </li>
+    
   
 
       
@@ -1403,9 +1406,32 @@
   
   
   
-    <li class="md-nav__item">
-      <a href="../../Notation/" class="md-nav__link">
+    
+    
+      
         
+          
+        
+      
+        
+      
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../Notation/" class="md-nav__link ">
+              
   
   
   <span class="md-ellipsis">
@@ -1419,7 +1445,59 @@
   
   
 
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_5" id="__nav_5_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Notation
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Properties/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Properties
+  
+
+    
+  </span>
+  
+  
+
       </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
     </li>
   
 
@@ -8955,8 +9033,9 @@ formalisation of <a href="../../Notation/#function-domains">function domains</a>
 <h3 id="variables">Variables</h3>
 <p>A variable  is written <code>x n</code>. The argument <code>n</code> merely distinguishes between
 variables – it is <em>not</em> a De Bruin index.</p>
-<pre class="Agda"><code class="Agda">  <a id="607" class="Keyword">data</a> <a id="Abstract-Syntax.Var"></a><a id="612" href="../../LC/Definitions/#612" class="Datatype">Var</a> <a id="616" class="Symbol">:</a> <a id="618" href="../../Agda/Primitive/#388" class="Primitive">Set</a> <a id="622" class="Keyword">where</a> <a id="Abstract-Syntax.Var.x"></a><a id="628" href="../../LC/Definitions/#628" class="InductiveConstructor">x</a> <a id="630" class="Symbol">:</a> <a id="632" href="../../Notation/#365" class="Datatype">Nat</a> <a id="636" class="Symbol">→</a> <a id="638" href="../../LC/Definitions/#612" class="Datatype">Var</a>
-  <a id="644" class="Keyword">variable</a> <a id="653" href="../../LC/Definitions/#653" class="Generalizable">v</a> <a id="655" class="Symbol">:</a> <a id="657" href="../../LC/Definitions/#612" class="Datatype">Var</a>
+<pre class="Agda"><code class="Agda">  <a id="607" class="Keyword">open</a> <a id="612" class="Keyword">import</a> <a id="619" href="../../Data/Nat/Base/" class="Module">Data.Nat.Base</a> <a id="633" class="Keyword">renaming</a> <a id="642" class="Symbol">(</a><a id="643" href="../../Agda/Builtin/Nat/#203" class="Datatype">ℕ</a> <a id="645" class="Symbol">to</a> <a id="648" class="Datatype">Nat</a><a id="651" class="Symbol">)</a> <a id="653" class="Keyword">using</a> <a id="659" class="Symbol">()</a> <a id="662" class="Keyword">public</a>
+  <a id="671" class="Keyword">data</a> <a id="Abstract-Syntax.Var"></a><a id="676" href="../../LC/Definitions/#676" class="Datatype">Var</a> <a id="680" class="Symbol">:</a> <a id="682" href="../../Agda/Primitive/#388" class="Primitive">Set</a> <a id="686" class="Keyword">where</a> <a id="Abstract-Syntax.Var.x"></a><a id="692" href="../../LC/Definitions/#692" class="InductiveConstructor">x</a> <a id="694" class="Symbol">:</a> <a id="696" href="../../LC/Definitions/#648" class="Datatype">Nat</a> <a id="700" class="Symbol">→</a> <a id="702" href="../../LC/Definitions/#676" class="Datatype">Var</a>
+  <a id="708" class="Keyword">variable</a> <a id="717" href="../../LC/Definitions/#717" class="Generalizable">v</a> <a id="719" class="Symbol">:</a> <a id="721" href="../../LC/Definitions/#676" class="Datatype">Var</a>
 </code></pre>
 <h3 id="terms">Terms</h3>
 <p>The term constructor <code>val</code> below merely includes variables in terms.</p>
@@ -8964,12 +9043,12 @@ variables – it is <em>not</em> a De Bruin index.</p>
 for the abstract syntax of lambda abstraction terms, nor juxtaposition <code>_ _</code>
 for the abstract syntax of application terms. The Unicode symbols <code>ƛ</code> and <code>␣</code>
 allow abstract syntax terms to be written reasonably suggestively.</p>
-<pre class="Agda"><code class="Agda">  <a id="1049" class="Keyword">data</a> <a id="Abstract-Syntax.Exp"></a><a id="1054" href="../../LC/Definitions/#1054" class="Datatype">Exp</a> <a id="1058" class="Symbol">:</a> <a id="1060" href="../../Agda/Primitive/#388" class="Primitive">Set</a> <a id="1064" class="Keyword">where</a>
-    <a id="Abstract-Syntax.Exp.val_"></a><a id="1074" href="../../LC/Definitions/#1074" class="InductiveConstructor Operator">val_</a>  <a id="1080" class="Symbol">:</a> <a id="1082" href="../../LC/Definitions/#612" class="Datatype">Var</a> <a id="1086" class="Symbol">→</a> <a id="1088" href="../../LC/Definitions/#1054" class="Datatype">Exp</a>
-    <a id="Abstract-Syntax.Exp.ƛ_␣_"></a><a id="1096" href="../../LC/Definitions/#1096" class="InductiveConstructor Operator">ƛ_␣_</a>  <a id="1102" class="Symbol">:</a> <a id="1104" href="../../LC/Definitions/#612" class="Datatype">Var</a> <a id="1108" class="Symbol">→</a> <a id="1110" href="../../LC/Definitions/#1054" class="Datatype">Exp</a> <a id="1114" class="Symbol">→</a> <a id="1116" href="../../LC/Definitions/#1054" class="Datatype">Exp</a>
-    <a id="Abstract-Syntax.Exp._␣_"></a><a id="1124" href="../../LC/Definitions/#1124" class="InductiveConstructor Operator">_␣_</a>   <a id="1130" class="Symbol">:</a> <a id="1132" href="../../LC/Definitions/#1054" class="Datatype">Exp</a> <a id="1136" class="Symbol">→</a> <a id="1138" href="../../LC/Definitions/#1054" class="Datatype">Exp</a> <a id="1142" class="Symbol">→</a> <a id="1144" href="../../LC/Definitions/#1054" class="Datatype">Exp</a>
-  <a id="1150" class="Keyword">infixl</a> <a id="1157" class="Number">20</a> <a id="1160" href="../../LC/Definitions/#1124" class="InductiveConstructor Operator">_␣_</a>
-  <a id="1166" class="Keyword">variable</a> <a id="1175" href="../../LC/Definitions/#1175" class="Generalizable">e</a> <a id="1177" class="Symbol">:</a> <a id="1179" href="../../LC/Definitions/#1054" class="Datatype">Exp</a>
+<pre class="Agda"><code class="Agda">  <a id="1113" class="Keyword">data</a> <a id="Abstract-Syntax.Exp"></a><a id="1118" href="../../LC/Definitions/#1118" class="Datatype">Exp</a> <a id="1122" class="Symbol">:</a> <a id="1124" href="../../Agda/Primitive/#388" class="Primitive">Set</a> <a id="1128" class="Keyword">where</a>
+    <a id="Abstract-Syntax.Exp.val_"></a><a id="1138" href="../../LC/Definitions/#1138" class="InductiveConstructor Operator">val_</a>  <a id="1144" class="Symbol">:</a> <a id="1146" href="../../LC/Definitions/#676" class="Datatype">Var</a> <a id="1150" class="Symbol">→</a> <a id="1152" href="../../LC/Definitions/#1118" class="Datatype">Exp</a>
+    <a id="Abstract-Syntax.Exp.ƛ_␣_"></a><a id="1160" href="../../LC/Definitions/#1160" class="InductiveConstructor Operator">ƛ_␣_</a>  <a id="1166" class="Symbol">:</a> <a id="1168" href="../../LC/Definitions/#676" class="Datatype">Var</a> <a id="1172" class="Symbol">→</a> <a id="1174" href="../../LC/Definitions/#1118" class="Datatype">Exp</a> <a id="1178" class="Symbol">→</a> <a id="1180" href="../../LC/Definitions/#1118" class="Datatype">Exp</a>
+    <a id="Abstract-Syntax.Exp._␣_"></a><a id="1188" href="../../LC/Definitions/#1188" class="InductiveConstructor Operator">_␣_</a>   <a id="1194" class="Symbol">:</a> <a id="1196" href="../../LC/Definitions/#1118" class="Datatype">Exp</a> <a id="1200" class="Symbol">→</a> <a id="1202" href="../../LC/Definitions/#1118" class="Datatype">Exp</a> <a id="1206" class="Symbol">→</a> <a id="1208" href="../../LC/Definitions/#1118" class="Datatype">Exp</a>
+  <a id="1214" class="Keyword">infixl</a> <a id="1221" class="Number">20</a> <a id="1224" href="../../LC/Definitions/#1188" class="InductiveConstructor Operator">_␣_</a>
+  <a id="1230" class="Keyword">variable</a> <a id="1239" href="../../LC/Definitions/#1239" class="Generalizable">e</a> <a id="1241" class="Symbol">:</a> <a id="1243" href="../../LC/Definitions/#1118" class="Datatype">Exp</a>
 </code></pre>
 <p>Abstract syntax is <em>not</em> regarded as a domain. All abstract syntax terms
 are finite, and semantic functions are defined inductively.</p>
@@ -8978,11 +9057,11 @@ are finite, and semantic functions are defined inductively.</p>
 <code>unfold : ⟪ D∞ →ᶜ (D∞ →ᶜ D∞) ⟫ and</code>fold : ⟪ (D∞ →ᶜ D∞) →ᶜ D∞ ⟫<code>,
 corresponging to a bijection between the postulated domain</code>D∞<code>and
 the domain of all continuous endofunctions on</code>D∞<code>. (Simply defining</code>D∞ = (D∞ →ᶜ D∞)` would lead to non-termination of the Agda type-checker.)</p>
-<pre class="Agda"><code class="Agda"><a id="1697" class="Keyword">module</a> <a id="Domain-Equations"></a><a id="1704" href="../../LC/Definitions/#1704" class="Module">Domain-Equations</a> <a id="1721" class="Keyword">where</a>
-  <a id="1729" class="Keyword">open</a> <a id="1734" href="../../LC/Definitions/#436" class="Module">Abstract-Syntax</a>
-  <a id="1752" class="Keyword">open</a> <a id="1757" href="../../Notation/#5953" class="Module">Notation.Recursion</a> <a id="1776" class="Keyword">using</a> <a id="1782" class="Symbol">(</a><a id="1783" href="../../Notation/#5985" class="Postulate Operator">_≅_</a><a id="1786" class="Symbol">;</a> <a id="1788" href="../../Notation/#6070" class="Postulate">fold</a><a id="1792" class="Symbol">;</a> <a id="1794" href="../../Notation/#6017" class="Postulate">unfold</a><a id="1800" class="Symbol">)</a> <a id="1802" class="Keyword">public</a>
-  <a id="1811" class="Keyword">postulate</a> <a id="Domain-Equations.D∞"></a><a id="1821" href="../../LC/Definitions/#1821" class="Postulate">D∞</a> <a id="1824" class="Symbol">:</a> <a id="1826" href="../../Notation/#1294" class="Postulate">Domain</a>
-  <a id="1835" class="Keyword">postulate</a> <a id="1845" class="Keyword">instance</a> <a id="Domain-Equations.eqD∞"></a><a id="1854" href="../../LC/Definitions/#1854" class="Postulate">eqD∞</a> <a id="1859" class="Symbol">:</a> <a id="1861" href="../../LC/Definitions/#1821" class="Postulate">D∞</a> <a id="1864" href="../../Notation/#5985" class="Postulate Operator">≅</a> <a id="1866" class="Symbol">(</a><a id="1867" href="../../LC/Definitions/#1821" class="Postulate">D∞</a> <a id="1870" href="../../Notation/#3122" class="Postulate Operator">→ᶜ</a> <a id="1873" href="../../LC/Definitions/#1821" class="Postulate">D∞</a><a id="1875" class="Symbol">)</a>
+<pre class="Agda"><code class="Agda"><a id="1761" class="Keyword">module</a> <a id="Domain-Equations"></a><a id="1768" href="../../LC/Definitions/#1768" class="Module">Domain-Equations</a> <a id="1785" class="Keyword">where</a>
+  <a id="1793" class="Keyword">open</a> <a id="1798" href="../../LC/Definitions/#436" class="Module">Abstract-Syntax</a>
+  <a id="1816" class="Keyword">open</a> <a id="1821" href="../../Notation/#5915" class="Module">Notation.Recursion</a> <a id="1840" class="Keyword">using</a> <a id="1846" class="Symbol">(</a><a id="1847" href="../../Notation/#5947" class="Postulate Operator">_≅_</a><a id="1850" class="Symbol">;</a> <a id="1852" href="../../Notation/#6015" class="Postulate">fold</a><a id="1856" class="Symbol">;</a> <a id="1858" href="../../Notation/#5979" class="Postulate">unfold</a><a id="1864" class="Symbol">)</a> <a id="1866" class="Keyword">public</a>
+  <a id="1875" class="Keyword">postulate</a> <a id="Domain-Equations.D∞"></a><a id="1885" href="../../LC/Definitions/#1885" class="Postulate">D∞</a> <a id="1888" class="Symbol">:</a> <a id="1890" href="../../Notation/#1125" class="Postulate">Domain</a>
+  <a id="1899" class="Keyword">postulate</a> <a id="1909" class="Keyword">instance</a> <a id="Domain-Equations.eqD∞"></a><a id="1918" href="../../LC/Definitions/#1918" class="Postulate">eqD∞</a> <a id="1923" class="Symbol">:</a> <a id="1925" href="../../LC/Definitions/#1885" class="Postulate">D∞</a> <a id="1928" href="../../Notation/#5947" class="Postulate Operator">≅</a> <a id="1930" class="Symbol">(</a><a id="1931" href="../../LC/Definitions/#1885" class="Postulate">D∞</a> <a id="1934" href="../../Notation/#3156" class="Postulate Operator">→ᶜ</a> <a id="1937" href="../../LC/Definitions/#1885" class="Postulate">D∞</a><a id="1939" class="Symbol">)</a>
 </code></pre>
 <p>The one-point domain <code>𝟙</code> is a trivial solution for the above domain equation.
 It could be excluded by postulating an embedding of any non-trivial domain
@@ -8990,29 +9069,30 @@ into <code>D∞</code>. </p>
 <p>Environments <code>ρ</code> map variables to elements of the carrier of the postulated
 domain <code>D∞</code>. The type <code>Env</code> could be treated as a domain by ordering the maps
 pointwise.</p>
-<pre class="Agda"><code class="Agda">  <a id="Domain-Equations.Env"></a><a id="2224" href="../../LC/Definitions/#2224" class="Function">Env</a> <a id="2228" class="Symbol">=</a> <a id="2230" href="../../LC/Definitions/#612" class="Datatype">Var</a> <a id="2234" class="Symbol">→</a> <a id="2236" href="../../Notation/#1312" class="Postulate Operator">⟪</a> <a id="2238" href="../../LC/Definitions/#1821" class="Postulate">D∞</a> <a id="2241" href="../../Notation/#1312" class="Postulate Operator">⟫</a>
-  <a id="2245" class="Keyword">variable</a> <a id="2254" href="../../LC/Definitions/#2254" class="Generalizable">ρ</a> <a id="2256" class="Symbol">:</a> <a id="2258" href="../../LC/Definitions/#2224" class="Function">Env</a>
+<pre class="Agda"><code class="Agda">  <a id="Domain-Equations.Env"></a><a id="2288" href="../../LC/Definitions/#2288" class="Function">Env</a> <a id="2292" class="Symbol">=</a> <a id="2294" href="../../LC/Definitions/#676" class="Datatype">Var</a> <a id="2298" class="Symbol">→</a> <a id="2300" href="../../Notation/#1143" class="Postulate Operator">⟪</a> <a id="2302" href="../../LC/Definitions/#1885" class="Postulate">D∞</a> <a id="2305" href="../../Notation/#1143" class="Postulate Operator">⟫</a>
+  <a id="2309" class="Keyword">variable</a> <a id="2318" href="../../LC/Definitions/#2318" class="Generalizable">ρ</a> <a id="2320" class="Symbol">:</a> <a id="2322" href="../../LC/Definitions/#2288" class="Function">Env</a>
 </code></pre>
 <p>The following definitions instantiate the conventional notation <code>ρ [ d / v ]</code>
 for the environment that maps <code>v</code> to <code>d</code>, and maps other arguments as <code>ρ</code> does. </p>
-<pre class="Agda"><code class="Agda">  <a id="2437" class="Keyword">open</a> <a id="2442" href="../../Notation/#7907" class="Module">Notation.Flat.Booleans</a> <a id="2465" class="Keyword">using</a> <a id="2471" class="Symbol">(</a><a id="2472" href="../../Agda/Builtin/Bool/#173" class="Datatype">Bool</a><a id="2476" class="Symbol">)</a>
-  <a id="Domain-Equations._==ⱽ_"></a><a id="2480" href="../../LC/Definitions/#2480" class="Function Operator">_==ⱽ_</a> <a id="2486" class="Symbol">:</a> <a id="2488" href="../../LC/Definitions/#612" class="Datatype">Var</a> <a id="2492" class="Symbol">→</a> <a id="2494" href="../../LC/Definitions/#612" class="Datatype">Var</a> <a id="2498" class="Symbol">→</a> <a id="2500" href="../../Agda/Builtin/Bool/#173" class="Datatype">Bool</a>
-  <a id="2507" class="Keyword">open</a> <a id="2512" href="../../Notation/#13461" class="Module">Notation.Updates</a> <a id="2529" class="Keyword">using</a> <a id="2535" class="Symbol">(</a><a id="2536" href="../../Notation/#13505" class="Record">Eq</a><a id="2538" class="Symbol">;</a> <a id="2540" href="../../Notation/#13536" class="Field Operator">_==_</a><a id="2544" class="Symbol">;</a> <a id="2546" href="../../Notation/#13583" class="Function Operator">_[_/_]</a><a id="2552" class="Symbol">)</a> <a id="2554" class="Keyword">public</a>
-  <a id="2563" class="Symbol">(</a><a id="2564" href="../../LC/Definitions/#628" class="InductiveConstructor">x</a> <a id="2566" href="../../LC/Definitions/#2566" class="Bound">n</a> <a id="2568" href="../../LC/Definitions/#2480" class="Function Operator">==ⱽ</a> <a id="2572" href="../../LC/Definitions/#628" class="InductiveConstructor">x</a> <a id="2574" href="../../LC/Definitions/#2574" class="Bound">n′</a><a id="2576" class="Symbol">)</a> <a id="2578" class="Symbol">=</a> <a id="2580" class="Symbol">(</a><a id="2581" href="../../LC/Definitions/#2566" class="Bound">n</a> <a id="2583" href="../../Data/Nat/Base/#1289" class="Primitive Operator">≡ᵇ</a> <a id="2586" href="../../LC/Definitions/#2574" class="Bound">n′</a><a id="2588" class="Symbol">)</a>
-  <a id="2592" class="Keyword">instance</a> <a id="Domain-Equations.eqVar"></a><a id="2601" href="../../LC/Definitions/#2601" class="Function">eqVar</a> <a id="2607" class="Symbol">:</a> <a id="2609" href="../../Notation/#13505" class="Record">Eq</a> <a id="2612" href="../../LC/Definitions/#612" class="Datatype">Var</a><a id="2615" class="Symbol">;</a> <a id="2617" href="../../Notation/#13536" class="Field Operator">_==_</a> <a id="2622" class="Symbol">{{</a><a id="2624" href="../../LC/Definitions/#2601" class="Function">eqVar</a><a id="2629" class="Symbol">}}</a> <a id="2632" class="Symbol">=</a> <a id="2634" href="../../LC/Definitions/#2480" class="Function Operator">_==ⱽ_</a>
+<pre class="Agda"><code class="Agda">  <a id="2501" class="Keyword">open</a> <a id="2506" href="../../Notation/#7685" class="Module">Notation.Flat.Booleans</a> <a id="2529" class="Keyword">using</a> <a id="2535" class="Symbol">(</a><a id="2536" href="../../Agda/Builtin/Bool/#173" class="Datatype">Bool</a><a id="2540" class="Symbol">)</a>
+  <a id="Domain-Equations._==ⱽ_"></a><a id="2544" href="../../LC/Definitions/#2544" class="Function Operator">_==ⱽ_</a> <a id="2550" class="Symbol">:</a> <a id="2552" href="../../LC/Definitions/#676" class="Datatype">Var</a> <a id="2556" class="Symbol">→</a> <a id="2558" href="../../LC/Definitions/#676" class="Datatype">Var</a> <a id="2562" class="Symbol">→</a> <a id="2564" href="../../Agda/Builtin/Bool/#173" class="Datatype">Bool</a>
+  <a id="2571" class="Keyword">open</a> <a id="2576" class="Keyword">import</a> <a id="2583" href="../../Data/Nat/Base/" class="Module">Data.Nat.Base</a> <a id="2597" class="Keyword">using</a> <a id="2603" class="Symbol">(</a><a id="2604" href="../../Data/Nat/Base/#1289" class="Primitive Operator">_≡ᵇ_</a><a id="2608" class="Symbol">)</a> <a id="2610" class="Keyword">public</a>
+  <a id="2619" class="Keyword">open</a> <a id="2624" href="../../Notation/#13113" class="Module">Notation.Updates</a> <a id="2641" class="Keyword">using</a> <a id="2647" class="Symbol">(</a><a id="2648" href="../../Notation/#13157" class="Record">Eq</a><a id="2650" class="Symbol">;</a> <a id="2652" href="../../Notation/#13188" class="Field Operator">_==_</a><a id="2656" class="Symbol">;</a> <a id="2658" href="../../Notation/#13235" class="Function Operator">_[_/_]</a><a id="2664" class="Symbol">)</a> <a id="2666" class="Keyword">public</a>
+  <a id="2675" class="Symbol">(</a><a id="2676" href="../../LC/Definitions/#692" class="InductiveConstructor">x</a> <a id="2678" href="../../LC/Definitions/#2678" class="Bound">n</a> <a id="2680" href="../../LC/Definitions/#2544" class="Function Operator">==ⱽ</a> <a id="2684" href="../../LC/Definitions/#692" class="InductiveConstructor">x</a> <a id="2686" href="../../LC/Definitions/#2686" class="Bound">n′</a><a id="2688" class="Symbol">)</a> <a id="2690" class="Symbol">=</a> <a id="2692" class="Symbol">(</a><a id="2693" href="../../LC/Definitions/#2678" class="Bound">n</a> <a id="2695" href="../../Data/Nat/Base/#1289" class="Primitive Operator">≡ᵇ</a> <a id="2698" href="../../LC/Definitions/#2686" class="Bound">n′</a><a id="2700" class="Symbol">)</a>
+  <a id="2704" class="Keyword">instance</a> <a id="Domain-Equations.eqVar"></a><a id="2713" href="../../LC/Definitions/#2713" class="Function">eqVar</a> <a id="2719" class="Symbol">:</a> <a id="2721" href="../../Notation/#13157" class="Record">Eq</a> <a id="2724" href="../../LC/Definitions/#676" class="Datatype">Var</a><a id="2727" class="Symbol">;</a> <a id="2729" href="../../Notation/#13188" class="Field Operator">_==_</a> <a id="2734" class="Symbol">{{</a><a id="2736" href="../../LC/Definitions/#2713" class="Function">eqVar</a><a id="2741" class="Symbol">}}</a> <a id="2744" class="Symbol">=</a> <a id="2746" href="../../LC/Definitions/#2544" class="Function Operator">_==ⱽ_</a>
 </code></pre>
 <h2 id="semantic-functions">Semantic functions</h2>
 <p>The semantic equations below correspond closely to those found in textbooks
 on denotational semantics. (The inverse functions <code>unfold</code> and <code>fold</code> between
 domains and their definitions reflect that solutions of domain equations are
 up to isomorphism, and are conventionally elided.)</p>
-<pre class="Agda"><code class="Agda"><a id="2959" class="Keyword">module</a> <a id="Semantic-Functions"></a><a id="2966" href="../../LC/Definitions/#2966" class="Module">Semantic-Functions</a> <a id="2985" class="Keyword">where</a>
-  <a id="2993" class="Keyword">open</a> <a id="2998" href="../../LC/Definitions/#436" class="Module">Abstract-Syntax</a>
-  <a id="3016" class="Keyword">open</a> <a id="3021" href="../../LC/Definitions/#1704" class="Module">Domain-Equations</a>
-  <a id="Semantic-Functions.⟦_⟧"></a><a id="3040" href="../../LC/Definitions/#3040" class="Function Operator">⟦_⟧</a> <a id="3044" class="Symbol">:</a> <a id="3046" href="../../LC/Definitions/#1054" class="Datatype">Exp</a> <a id="3050" class="Symbol">→</a> <a id="3052" href="../../LC/Definitions/#2224" class="Function">Env</a> <a id="3056" class="Symbol">→</a> <a id="3058" href="../../Notation/#1312" class="Postulate Operator">⟪</a> <a id="3060" href="../../LC/Definitions/#1821" class="Postulate">D∞</a> <a id="3063" href="../../Notation/#1312" class="Postulate Operator">⟫</a>
-  <a id="3067" href="../../LC/Definitions/#3040" class="Function Operator">⟦</a> <a id="3069" href="../../LC/Definitions/#1074" class="InductiveConstructor Operator">val</a>  <a id="3074" href="../../LC/Definitions/#3074" class="Bound">v</a> <a id="3076" href="../../LC/Definitions/#3040" class="Function Operator">⟧</a> <a id="3078" href="../../LC/Definitions/#3078" class="Bound">ρ</a>   <a id="3082" class="Symbol">=</a> <a id="3084" href="../../LC/Definitions/#3078" class="Bound">ρ</a> <a id="3086" href="../../LC/Definitions/#3074" class="Bound">v</a>
-  <a id="3090" href="../../LC/Definitions/#3040" class="Function Operator">⟦</a> <a id="3092" href="../../LC/Definitions/#1096" class="InductiveConstructor Operator">ƛ</a> <a id="3094" href="../../LC/Definitions/#3094" class="Bound">v</a> <a id="3096" href="../../LC/Definitions/#1096" class="InductiveConstructor Operator">␣</a> <a id="3098" href="../../LC/Definitions/#3098" class="Bound">e</a> <a id="3100" href="../../LC/Definitions/#3040" class="Function Operator">⟧</a> <a id="3102" href="../../LC/Definitions/#3102" class="Bound">ρ</a>  <a id="3105" class="Symbol">=</a> <a id="3107" href="../../Notation/#6070" class="Postulate">fold</a> <a id="3112" class="Symbol">(</a> <a id="3114" class="Symbol">λ</a> <a id="3116" href="../../LC/Definitions/#3116" class="Bound">d</a> <a id="3118" class="Symbol">→</a> <a id="3120" href="../../LC/Definitions/#3040" class="Function Operator">⟦</a> <a id="3122" href="../../LC/Definitions/#3098" class="Bound">e</a> <a id="3124" href="../../LC/Definitions/#3040" class="Function Operator">⟧</a> <a id="3126" class="Symbol">(</a><a id="3127" href="../../LC/Definitions/#3102" class="Bound">ρ</a> <a id="3129" href="../../Notation/#13583" class="Function Operator">[</a> <a id="3131" href="../../LC/Definitions/#3116" class="Bound">d</a> <a id="3133" href="../../Notation/#13583" class="Function Operator">/</a> <a id="3135" href="../../LC/Definitions/#3094" class="Bound">v</a> <a id="3137" href="../../Notation/#13583" class="Function Operator">]</a><a id="3138" class="Symbol">)</a> <a id="3140" class="Symbol">)</a>
-  <a id="3144" href="../../LC/Definitions/#3040" class="Function Operator">⟦</a> <a id="3146" href="../../LC/Definitions/#3146" class="Bound">e₁</a> <a id="3149" href="../../LC/Definitions/#1124" class="InductiveConstructor Operator">␣</a> <a id="3151" href="../../LC/Definitions/#3151" class="Bound">e₂</a> <a id="3154" href="../../LC/Definitions/#3040" class="Function Operator">⟧</a> <a id="3156" href="../../LC/Definitions/#3156" class="Bound">ρ</a>  <a id="3159" class="Symbol">=</a> <a id="3161" href="../../Notation/#6017" class="Postulate">unfold</a> <a id="3168" class="Symbol">(</a> <a id="3170" href="../../LC/Definitions/#3040" class="Function Operator">⟦</a> <a id="3172" href="../../LC/Definitions/#3146" class="Bound">e₁</a> <a id="3175" href="../../LC/Definitions/#3040" class="Function Operator">⟧</a> <a id="3177" href="../../LC/Definitions/#3156" class="Bound">ρ</a> <a id="3179" class="Symbol">)</a> <a id="3181" class="Symbol">(</a> <a id="3183" href="../../LC/Definitions/#3040" class="Function Operator">⟦</a> <a id="3185" href="../../LC/Definitions/#3151" class="Bound">e₂</a> <a id="3188" href="../../LC/Definitions/#3040" class="Function Operator">⟧</a> <a id="3190" href="../../LC/Definitions/#3156" class="Bound">ρ</a> <a id="3192" class="Symbol">)</a>
+<pre class="Agda"><code class="Agda"><a id="3071" class="Keyword">module</a> <a id="Semantic-Functions"></a><a id="3078" href="../../LC/Definitions/#3078" class="Module">Semantic-Functions</a> <a id="3097" class="Keyword">where</a>
+  <a id="3105" class="Keyword">open</a> <a id="3110" href="../../LC/Definitions/#436" class="Module">Abstract-Syntax</a>
+  <a id="3128" class="Keyword">open</a> <a id="3133" href="../../LC/Definitions/#1768" class="Module">Domain-Equations</a>
+  <a id="Semantic-Functions.⟦_⟧"></a><a id="3152" href="../../LC/Definitions/#3152" class="Function Operator">⟦_⟧</a> <a id="3156" class="Symbol">:</a> <a id="3158" href="../../LC/Definitions/#1118" class="Datatype">Exp</a> <a id="3162" class="Symbol">→</a> <a id="3164" href="../../LC/Definitions/#2288" class="Function">Env</a> <a id="3168" class="Symbol">→</a> <a id="3170" href="../../Notation/#1143" class="Postulate Operator">⟪</a> <a id="3172" href="../../LC/Definitions/#1885" class="Postulate">D∞</a> <a id="3175" href="../../Notation/#1143" class="Postulate Operator">⟫</a>
+  <a id="3179" href="../../LC/Definitions/#3152" class="Function Operator">⟦</a> <a id="3181" href="../../LC/Definitions/#1138" class="InductiveConstructor Operator">val</a>  <a id="3186" href="../../LC/Definitions/#3186" class="Bound">v</a> <a id="3188" href="../../LC/Definitions/#3152" class="Function Operator">⟧</a> <a id="3190" href="../../LC/Definitions/#3190" class="Bound">ρ</a>   <a id="3194" class="Symbol">=</a> <a id="3196" href="../../LC/Definitions/#3190" class="Bound">ρ</a> <a id="3198" href="../../LC/Definitions/#3186" class="Bound">v</a>
+  <a id="3202" href="../../LC/Definitions/#3152" class="Function Operator">⟦</a> <a id="3204" href="../../LC/Definitions/#1160" class="InductiveConstructor Operator">ƛ</a> <a id="3206" href="../../LC/Definitions/#3206" class="Bound">v</a> <a id="3208" href="../../LC/Definitions/#1160" class="InductiveConstructor Operator">␣</a> <a id="3210" href="../../LC/Definitions/#3210" class="Bound">e</a> <a id="3212" href="../../LC/Definitions/#3152" class="Function Operator">⟧</a> <a id="3214" href="../../LC/Definitions/#3214" class="Bound">ρ</a>  <a id="3217" class="Symbol">=</a> <a id="3219" href="../../Notation/#6015" class="Postulate">fold</a> <a id="3224" class="Symbol">(</a> <a id="3226" class="Symbol">λ</a> <a id="3228" href="../../LC/Definitions/#3228" class="Bound">d</a> <a id="3230" class="Symbol">→</a> <a id="3232" href="../../LC/Definitions/#3152" class="Function Operator">⟦</a> <a id="3234" href="../../LC/Definitions/#3210" class="Bound">e</a> <a id="3236" href="../../LC/Definitions/#3152" class="Function Operator">⟧</a> <a id="3238" class="Symbol">(</a><a id="3239" href="../../LC/Definitions/#3214" class="Bound">ρ</a> <a id="3241" href="../../Notation/#13235" class="Function Operator">[</a> <a id="3243" href="../../LC/Definitions/#3228" class="Bound">d</a> <a id="3245" href="../../Notation/#13235" class="Function Operator">/</a> <a id="3247" href="../../LC/Definitions/#3206" class="Bound">v</a> <a id="3249" href="../../Notation/#13235" class="Function Operator">]</a><a id="3250" class="Symbol">)</a> <a id="3252" class="Symbol">)</a>
+  <a id="3256" href="../../LC/Definitions/#3152" class="Function Operator">⟦</a> <a id="3258" href="../../LC/Definitions/#3258" class="Bound">e₁</a> <a id="3261" href="../../LC/Definitions/#1188" class="InductiveConstructor Operator">␣</a> <a id="3263" href="../../LC/Definitions/#3263" class="Bound">e₂</a> <a id="3266" href="../../LC/Definitions/#3152" class="Function Operator">⟧</a> <a id="3268" href="../../LC/Definitions/#3268" class="Bound">ρ</a>  <a id="3271" class="Symbol">=</a> <a id="3273" href="../../Notation/#5979" class="Postulate">unfold</a> <a id="3280" class="Symbol">(</a> <a id="3282" href="../../LC/Definitions/#3152" class="Function Operator">⟦</a> <a id="3284" href="../../LC/Definitions/#3258" class="Bound">e₁</a> <a id="3287" href="../../LC/Definitions/#3152" class="Function Operator">⟧</a> <a id="3289" href="../../LC/Definitions/#3268" class="Bound">ρ</a> <a id="3291" class="Symbol">)</a> <a id="3293" class="Symbol">(</a> <a id="3295" href="../../LC/Definitions/#3152" class="Function Operator">⟦</a> <a id="3297" href="../../LC/Definitions/#3263" class="Bound">e₂</a> <a id="3300" href="../../LC/Definitions/#3152" class="Function Operator">⟧</a> <a id="3302" href="../../LC/Definitions/#3268" class="Bound">ρ</a> <a id="3304" class="Symbol">)</a>
 </code></pre>
 <p>See the <a href="../Tests/">Tests</a> module for some examples of abstract syntax terms and
 equivalence proofs.</p>
