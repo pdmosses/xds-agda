@@ -186,8 +186,8 @@ Adding a `⊥` element to an arbitrary set `A` forms the 'flat' domain `A +⊥`.
 (The conventional notation for the lifted domain formed from $A$ is $A_⊥$, but
 Agda does not support such a subscript.) 
 
-The 'floor' notation `⌊ a ⌋` introduced below seems reasonably suggestive for
-the inclusion of the non-`⊥` elements in `A +⊥`. (In theoretical treatments of
+The notation `↑ a` introduced below seems reasonably suggestive for the
+inclusion of the non-`⊥` elements in `A +⊥`. (In theoretical treatments of
 monads, `η a` is commonly used, but that conflicts with the convention of using
 single lowercase Greek letters as bound variables.)
 
@@ -202,14 +202,14 @@ module Flat where
 
   postulate
     _+⊥  : Set → Domain
-    ⌊_⌋  : ⟪ A →ˢ A +⊥ ⟫
+    ↑    : ⟪ A →ˢ A +⊥ ⟫
     _♯   : ⟪ (A →ˢ D) →ᶜ A +⊥ →ᶜ D ⟫
   infix 10 _+⊥
 ```
 
 ```agda
   postulate
-    elim-♯-η  : (f : ⟪ A →ˢ D ⟫) (a : A) →  (f ♯) (⌊ a ⌋)  ≡ f a
+    elim-♯-↑  : (f : ⟪ A →ˢ D ⟫) (a : A) →  (f ♯) (↑ a)  ≡ f a
     elim-♯-⊥  : (f : ⟪ A →ˢ D ⟫) →          (f ♯) ⊥       ≡ ⊥
 ```
 
@@ -230,8 +230,8 @@ argument is `⊥`.
 ```agda
     variable δ₁ δ₂ : ⟪ D ⟫
     postulate
-      true-cond    : (⌊ true ⌋ ⟶ δ₁ , δ₂)   ≡ δ₁
-      false-cond   : (⌊ false ⌋ ⟶ δ₁ , δ₂)  ≡ δ₂
+      true-cond    : (↑ true ⟶ δ₁ , δ₂)   ≡ δ₁
+      false-cond   : (↑ false ⟶ δ₁ , δ₂)  ≡ δ₂
       bottom-cond  : (⊥ ⟶ δ₁ , δ₂)          ≡ ⊥
 ```
 
@@ -257,7 +257,7 @@ using `zero` and `suc`.
     postulate instance eq⊥Nat⊥ : Eq⊥ Nat⊥
     variable n₁ n₂ : Nat
     postulate
-      ==⊥≡ᵇ : (⌊ n₁ ⌋ ==⊥ ⌊ n₂ ⌋) ≡ ⌊ n₁ ≡ᵇ n₂ ⌋
+      ==⊥≡ᵇ : (↑ n₁ ==⊥ ↑ n₂) ≡ ↑ (n₁ ≡ᵇ n₂)
 ```
 
 ### Strings
@@ -332,10 +332,10 @@ binary products, and iterated for products of more than two domains.
 ```agda
 module Products where
   postulate
-    _×_   : Domain → Domain → Domain
-    _,_   : ⟪ D →ᶜ E →ᶜ D × E ⟫
-    _↓²1  : ⟪ D × E →ᶜ D ⟫
-    _↓²2  : ⟪ D × E →ᶜ E ⟫
+    _×_  : Domain → Domain → Domain
+    _,_  : ⟪ D →ᶜ E →ᶜ D × E ⟫
+    _↓₁  : ⟪ D × E →ᶜ D ⟫
+    _↓₂  : ⟪ D × E →ᶜ E ⟫
   infixr 2 _×_
   infixr 4 _,_
 ```

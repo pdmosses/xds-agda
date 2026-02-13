@@ -183,17 +183,17 @@ case analysis, which is not supported in this Agda formalisation
 (partly because it can express non-continuous functions).
 
 ```agda
-  open Notation.Flat using (⌊_⌋; _♯)
+  open Notation.Flat using (↑; _♯)
   open Notation.Flat.Booleans using (_⟶_,_; _==⊥_; false; true)
   𝒜⟦_⟧ : ℒᴬ σ → ⟪ 𝒟 σ ⟫
-  𝒜⟦ tt ⟧    =  ⌊ true ⌋
-  𝒜⟦ ff ⟧    =  ⌊ false ⌋
+  𝒜⟦ tt ⟧    =  ↑ true
+  𝒜⟦ ff ⟧    =  ↑ false
   𝒜⟦ ⊃ ⟧     =  λ β δ₁ δ₂ → (β ⟶ δ₁ , δ₂)
   𝒜⟦ Y ⟧     =  fix
-  𝒜⟦ k n ⟧   =  ⌊ n ⌋
-  𝒜⟦ ⦅+1⦆ ⟧  =  (λ n → ⌊ n + 1 ⌋) ♯
-  𝒜⟦ ⦅-1⦆ ⟧  =  (λ n → (⌊ n ⌋ ==⊥ ⌊ 0 ⌋) ⟶ ⊥ , ⌊ n ∸ 1 ⌋) ♯
-  𝒜⟦ Z ⟧     =  (λ n → (⌊ n ⌋ ==⊥ ⌊ 0 ⌋)) ♯
+  𝒜⟦ k n ⟧   =  ↑ n
+  𝒜⟦ ⦅+1⦆ ⟧  =  (λ n → ↑ (n + 1)) ♯
+  𝒜⟦ ⦅-1⦆ ⟧  =  (λ n → (↑ n ==⊥ ↑ 0) ⟶ ⊥ , ↑ (n ∸ 1)) ♯
+  𝒜⟦ Z ⟧     =  (λ n → (↑ n ==⊥ ↑ 0)) ♯
 ```
 
 ### Terms

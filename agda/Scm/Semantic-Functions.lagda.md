@@ -9,7 +9,7 @@ open import Scm.Auxiliary-Functions
 import Notation
 open Notation.Domains using (⟪_⟫)
 open Notation.Functions using (_→ᶜ_; _→ˢ_)
-open Notation.Flat using (⌊_⌋)
+open Notation.Flat using (↑)
 open Notation.Flat.Booleans using (_⟶_,_; _==⊥_; true; false)
 open Notation.Sums using (_in⊥_; _|⊥_)
 open Notation.Products.Sequences using (⟨⟩; ⟨_⟩; _§_)
@@ -20,9 +20,9 @@ open Notation.Updates using (_[_/_])
 
 ```agda
 𝒦⟦_⟧   :  ⟪ Con →ˢ 𝐄 ⟫
-𝒦⟦ int Z ⟧  = ⌊ Z ⌋ in⊥ 𝐄
-𝒦⟦ #t ⟧     = ⌊ true ⌋ in⊥ 𝐄
-𝒦⟦ #f ⟧     = ⌊ false ⌋ in⊥ 𝐄
+𝒦⟦ int Z ⟧  = ↑ Z in⊥ 𝐄
+𝒦⟦ #t ⟧     = ↑ true in⊥ 𝐄
+𝒦⟦ #f ⟧     = ↑ false in⊥ 𝐄
 
 ℰ⟦_⟧   :  ⟪ Exp →ˢ 𝐔 →ᶜ (𝐄 →ᶜ 𝐂) →ᶜ 𝐂 ⟫
 ℰ⋆⟦_⟧  :  ⟪ Exp⋆ →ˢ 𝐔 →ᶜ (𝐄⋆ →ᶜ 𝐂) →ᶜ 𝐂 ⟫
@@ -37,7 +37,7 @@ open Notation.Updates using (_[_/_])
 ℰ⟦ ⦅if E ␣ E₁ ␣ E₂ ⦆ ⟧ ρ κ =
   ℰ⟦ E ⟧ ρ (λ ϵ → truish ϵ ⟶ ℰ⟦ E₁ ⟧ ρ κ , ℰ⟦ E₂ ⟧ ρ κ)
 ℰ⟦ ⦅set! I ␣ E ⦆ ⟧ ρ κ =
-  ℰ⟦ E ⟧ ρ (λ ϵ → assign (ρ I) ϵ (κ (⌊ unspecified ⌋ in⊥ 𝐄)))
+  ℰ⟦ E ⟧ ρ (λ ϵ → assign (ρ I) ϵ (κ (↑ unspecified in⊥ 𝐄)))
 
 ℰ⋆⟦ ␣␣␣ ⟧ ρ κ = κ ⟨⟩
 ℰ⋆⟦ E ␣␣ E⋆ ⟧ ρ κ = ℰ⟦ E ⟧ ρ (λ ϵ → ℰ⋆⟦ E⋆ ⟧ ρ (λ ϵ⋆ → κ (⟨ ϵ ⟩ § ϵ⋆)))
