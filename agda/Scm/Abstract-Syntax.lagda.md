@@ -24,29 +24,29 @@ variable K : Con
 ## Expressions
 
 ```agda
-data Exp⋆ : Set
-data Exp : Set where
-  con          : Con → Exp
-  ide          : Ide → Exp
-  ⦅_␣_⦆        : Exp → Exp⋆ → Exp
-  ⦅lambda_␣_⦆  : Ide → Exp → Exp
-  ⦅if_␣_␣_⦆    : Exp → Exp → Exp → Exp
-  ⦅set!_␣_⦆    : Ide → Exp → Exp
-data Exp⋆ where
-  ␣␣␣ : Exp⋆; _␣␣_ : Exp → Exp⋆ → Exp⋆
+mutual
+  data Exp : Set where
+    con          : Con → Exp
+    ide          : Ide → Exp
+    ⦅_␣_⦆        : Exp → Exp⋆ → Exp
+    ⦅lambda_␣_⦆  : Ide → Exp → Exp
+    ⦅if_␣_␣_⦆    : Exp → Exp → Exp → Exp
+    ⦅set!_␣_⦆    : Ide → Exp → Exp
+  data Exp⋆ : Set where
+    ␣␣␣ : Exp⋆; _␣␣_ : Exp → Exp⋆ → Exp⋆
 variable E : Exp; E⋆ : Exp⋆
 ```
 
 ## Definitions and Programs
 
 ```agda
-data Body⁺ : Set
-data Body : Set where
-  ␣␣_          : Exp → Body
-  ⦅define_␣_⦆  : Ide → Exp → Body
-  ⦅begin_⦆     : Body⁺ → Body
-data Body⁺ where
-  ␣␣_ : Body → Body⁺; _␣␣_ : Body → Body⁺ → Body⁺
+mutual
+  data Body : Set where
+    ␣␣_          : Exp → Body
+    ⦅define_␣_⦆  : Ide → Exp → Body
+    ⦅begin_⦆     : Body⁺ → Body
+  data Body⁺ : Set where
+    ␣␣_ : Body → Body⁺; _␣␣_ : Body → Body⁺ → Body⁺
 data Prog : Set where
   ␣␣␣ : Prog; ␣␣_ : Body⁺ → Prog
 variable B : Body; B⁺ : Body⁺; Π : Prog
