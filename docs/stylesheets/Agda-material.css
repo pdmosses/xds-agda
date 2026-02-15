@@ -26,6 +26,10 @@ code.Agda {
   font-weight: bold;
 }
 
+/* KaTeX */
+
+.katex { font-size: 1em; }
+
 /* Search */
 
 /* Hide the previews, as recommended in a discussion answer
