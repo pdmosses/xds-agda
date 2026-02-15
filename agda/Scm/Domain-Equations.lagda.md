@@ -1,5 +1,9 @@
 # Domain Equations
 
+The domains for Scm are significantly simpler than for the denotational
+semantics of the full Scheme language, but still involve almost all of
+the domain constructors formalised in the `Notation` module.
+
 ```agda
 {-# OPTIONS --rewriting --confluence-check --lossy-unification #-}
 module Scm.Domain-Equations where
@@ -15,6 +19,10 @@ open Notation.Products using (_×_)
 open Notation.Products.Sequences using (_⋆)
 ```
 
+Agda allows non-recursive type definitions to be written simply as equations.
+This avoids the need for the `fold` and `unfold` functions used in connection
+with postulated domain equivalences `D ≡ E`.
+
 ```agda
 postulate Loc : Set
 𝐋  =  Loc +⊥
@@ -25,19 +33,46 @@ postulate Loc : Set
 𝐔  =  Ide →ˢ 𝐋
 data Misc : Set where null unallocated undefined unspecified : Misc
 𝐌  =  Misc +⊥
+```
+
+The remaining domains are mutually recursive: the domain `𝐄` is supposed to be
+the sum `𝐓 ⊕ 𝐑 ⊕ 𝐏 ⊕ 𝐌 ⊕ 𝐅`, where `𝐅` is a domain involving `𝐄` (directly, and
+indirectly through `𝐄⋆` and `𝐂`). In conventional denotational semantics,
+mutually recursive groups of domain equations have well-defined solutions.
+However, defining both `𝐄` and `𝐅` by type equations on Agda would prevent the
+type checker from terminating. Postulating one (or both) of these domains
+avoids non-termination; postulating `𝐄` has the advantage that the embeddings
+and projections for its summands incorporate the bijection between `𝐄` and its
+intended structure. 
+
+```agda
 postulate 𝐄 : Domain
 𝐒  =  𝐋 →ᶜ 𝐄
 postulate 𝐀 : Domain
 𝐂  =  𝐒 →ᶜ 𝐀
 𝐄⋆ =  𝐄 ⋆
 𝐅  =  𝐄⋆ →ᶜ (𝐄 →ᶜ 𝐂) →ᶜ 𝐂
+```
+
+The following postulates instantiate the emebdding, inspection, and projection
+operations for each summand of `𝐄`.
+
+```agda
 postulate instance
   E+=T : 𝐓 ⇌ 𝐄
   E+=R : 𝐑 ⇌ 𝐄
   E+=P : 𝐏 ⇌ 𝐄
   E+=M : 𝐌 ⇌ 𝐄
   E+=F : 𝐅 ⇌ 𝐄
+```
+
+Conventional denotational definitions declare Greek lowercase letters as
+(meta-)variables ranging over specified domains, allowing subscripts and primes
+to be added. The following variable declarations in Agda look similar, but
+they appear to be ignored by the type checker.
+
+```agda
 variable
-  α : ⟪ 𝐋 ⟫;  ρ : ⟪ 𝐔 ⟫;  μ : ⟪ 𝐌 ⟫;   σ : ⟪ 𝐒 ⟫
-  θ : ⟪ 𝐂 ⟫;  ϵ : ⟪ 𝐄 ⟫;  ϵ⋆ : ⟪ 𝐄⋆ ⟫;  φ : ⟪ 𝐅 ⟫
+  α : ⟪ 𝐋 ⟫;  ρ : ⟪ 𝐔 ⟫;  μ  : ⟪ 𝐌 ⟫;  ϵ : ⟪ 𝐄 ⟫
+  σ : ⟪ 𝐒 ⟫;  θ : ⟪ 𝐂 ⟫;  ϵ⋆ : ⟪ 𝐄⋆ ⟫;  φ : ⟪ 𝐅 ⟫
 ```

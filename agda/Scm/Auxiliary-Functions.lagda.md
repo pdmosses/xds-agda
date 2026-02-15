@@ -18,6 +18,10 @@ open Notation.Updates using (Eq; _[_/_]⊥)
 
 ## Operations
 
+The following postulates instantiate the operation `_--⊥_` on the flat
+domains `𝐋`, `𝐌`, and `𝐑`, and illustrate declaration of further
+operations on `𝐑` and `𝐓`.
+
 ```agda
 postulate instance
   eqL : Eq⊥ 𝐋
@@ -31,13 +35,28 @@ postulate
 
 ## Environments
 
+An environment `ρ` is a function from the defined type `Ide` to the carrier of
+the domain `𝐋`. The instance `Eq Ide` supports the conventional notation
+`ρ [ α / I ]` for updating `ρ` to map `I` to location `α`.
+
 ```agda
 postulate instance eqIde : Eq Ide
-postulate unknown : ⟪ 𝐋 ⟫
+postulate unknown : Loc
 postulate initial-env : ⟪ 𝐔 ⟫
 ```
 
+The `initial-env` could map predefined identifiers to initialised locations
+in the initial store, and all other identifiers to `unknown`. 
+
 ## Stores
+
+A store `σ` is a function from the flat domain `𝐋` of locations to the
+postulated domain `𝐄`. The instance `Eq⊥ 𝐋` (declared above) supports the
+notation `σ [ ϵ / α ]⊥` for updating `σ` to map `α` to `ϵ`.[^update]
+
+[^update]:
+    In conventional denotational definitions, the notation for updating
+    a store `σ` is the same as that for updating an environment `ρ`.
 
 ```agda
 assign : ⟪ 𝐋 →ᶜ 𝐄 →ᶜ 𝐂 →ᶜ 𝐂 ⟫
@@ -45,19 +64,36 @@ assign α ϵ θ σ = θ (σ [ ϵ / α ]⊥)
 
 hold : ⟪ 𝐋 →ᶜ (𝐄 →ᶜ 𝐂) →ᶜ 𝐂 ⟫
 hold α κ σ = κ (σ α) σ
+```
 
+The function `new` is for use in continuation-passing style. An application
+`new κ σ` should apply `κ` to a location `α` mapped to `↑ unallocated` in `σ`;
+if all locations have already been allocated, it should discard `κ`.
+
+```agda
 postulate new : ⟪ (𝐋 →ᶜ 𝐂) →ᶜ 𝐂 ⟫
 
 alloc : ⟪ 𝐄 →ᶜ (𝐋 →ᶜ 𝐂) →ᶜ 𝐂 ⟫
 alloc ϵ κ = new (λ α → assign α ϵ (κ α))
 
-initial-store : ⟪ 𝐒 ⟫
-initial-store α = ↑ unallocated in⊥ 𝐄
-
-postulate finished : ⟪ 𝐂 ⟫
+postulate initial-store : ⟪ 𝐒 ⟫
 ```
 
+The `initial-store` could map initialised locations to their values, and all
+other locations to `↑ unallocated`. 
+
+```agda
+postulate finished : ⟪ 𝐒 →ᶜ 𝐀 ⟫
+```
+
+The continuation `finished` maps the final store to an element of the
+postulated domain `𝐀` of answers.
+
 ## Truth Values
+
+`truish ϵ` is false when `ϵ` is false, and `true` for all other non-⊥ values.
+As `𝐄` is not a flat domain, the definition has to check `ϵ ∈⊥ 𝐓` before
+testing for equality. 
 
 ```agda
 truish : ⟪ 𝐄 →ᶜ 𝐓 ⟫
@@ -68,16 +104,24 @@ truish ϵ =
 
 ## Lists
 
+The following definitions of standard Scheme functions for list processing
+use conventional notation for pairs `(α₁ , α₂)` and sequences `⟨ ϵ⋆ ⟩`.
+
 ```agda
 cons : ⟪ 𝐅 ⟫
 cons ϵ⋆ κ =
   (# ϵ⋆ ==⊥ ↑ 2) ⟶
     alloc (ϵ⋆ ↓ 1) (λ α₁ → alloc (ϵ⋆ ↓ 2) (λ α₂ → κ ((α₁ , α₂) in⊥ 𝐄))) ,
   ⊥
+```
 
+The recursive definition of the `list` function requires an explicit fixed
+point in Agda:
+
+```agda
 list : ⟪ 𝐅 ⟫
 list =
-  fix {D = 𝐅} λ list′ → λ ϵ⋆ κ →
+  fix λ (list′ : ⟪ 𝐅 ⟫) → λ ϵ⋆ κ →
     (# ϵ⋆ ==⊥ ↑ 0) ⟶ κ (↑ null in⊥ 𝐄) ,
     list′ (ϵ⋆ † 1) (λ ϵ → cons ⟨ (ϵ⋆ ↓ 1) , ϵ ⟩ κ)
 

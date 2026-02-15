@@ -16,16 +16,16 @@ open Notation.Products.Sequences using (⟨⟩; ⟨_⟩; _§_)
 open Notation.Updates using (_[_/_])
 ```
 
-## Expressions
+## Constants and expressions
 
 ```agda
 𝒦⟦_⟧   :  ⟪ Con →ˢ 𝐄 ⟫
+ℰ⟦_⟧   :  ⟪ Exp →ˢ 𝐔 →ᶜ (𝐄 →ᶜ 𝐂) →ᶜ 𝐂 ⟫
+ℰ⋆⟦_⟧  :  ⟪ Exp⋆ →ˢ 𝐔 →ᶜ (𝐄⋆ →ᶜ 𝐂) →ᶜ 𝐂 ⟫
+
 𝒦⟦ int Z ⟧  = ↑ Z in⊥ 𝐄
 𝒦⟦ #t ⟧     = ↑ true in⊥ 𝐄
 𝒦⟦ #f ⟧     = ↑ false in⊥ 𝐄
-
-ℰ⟦_⟧   :  ⟪ Exp →ˢ 𝐔 →ᶜ (𝐄 →ᶜ 𝐂) →ᶜ 𝐂 ⟫
-ℰ⋆⟦_⟧  :  ⟪ Exp⋆ →ˢ 𝐔 →ᶜ (𝐄⋆ →ᶜ 𝐂) →ᶜ 𝐂 ⟫
 
 ℰ⟦ con K ⟧ ρ κ = κ (𝒦⟦ K ⟧)
 ℰ⟦ ide I ⟧ ρ κ = hold (ρ I) κ
@@ -48,10 +48,11 @@ open Notation.Updates using (_[_/_])
 ```agda
 ℬ⟦_⟧   :  ⟪ Body →ˢ 𝐔 →ᶜ (𝐔 →ᶜ 𝐂) →ᶜ 𝐂 ⟫
 ℬ⁺⟦_⟧  :  ⟪ Body⁺ →ˢ 𝐔 →ᶜ (𝐔 →ᶜ 𝐂) →ᶜ 𝐂 ⟫
+𝒫⟦_⟧   :  ⟪ Prog →ˢ 𝐀 ⟫
 
 ℬ⟦ ␣␣ E ⟧ ρ κ = ℰ⟦ E ⟧ ρ (λ ϵ → κ ρ)
 ℬ⟦ ⦅define I ␣ E ⦆ ⟧ ρ κ =
-  ℰ⟦ E ⟧ ρ (λ ϵ → (ρ I ==⊥ unknown) ⟶
+  ℰ⟦ E ⟧ ρ (λ ϵ → (ρ I ==⊥ ↑ unknown) ⟶
     alloc ϵ (λ α → κ (ρ [ α / I ])),
   assign (ρ I) ϵ (κ ρ))
 ℬ⟦ ⦅begin B⁺ ⦆ ⟧ ρ κ = ℬ⁺⟦ B⁺ ⟧ ρ κ
@@ -59,7 +60,6 @@ open Notation.Updates using (_[_/_])
 ℬ⁺⟦ ␣␣ B ⟧ ρ κ = ℬ⟦ B ⟧ ρ κ
 ℬ⁺⟦ B ␣␣ B⁺ ⟧ ρ κ = ℬ⟦ B ⟧ ρ (λ ρ′ → ℬ⁺⟦ B⁺ ⟧ ρ′ κ)
 
-𝒫⟦_⟧   :  ⟪ Prog →ˢ 𝐀 ⟫
 𝒫⟦ ␣␣␣ ⟧ = finished initial-store
 𝒫⟦ ␣␣ B⁺ ⟧ = ℬ⁺⟦ B⁺ ⟧ initial-env (λ ρ → finished) initial-store
 ```
