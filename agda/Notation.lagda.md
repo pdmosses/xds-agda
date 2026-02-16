@@ -197,7 +197,6 @@ However, it is difficult to support such conventions in Agda.)
 
 ```agda
 module Flat where
-
   postulate
     _+⊥  : Set → Domain
     ↑    : ⟪ A →ˢ A +⊥ ⟫
@@ -350,19 +349,19 @@ and extensively used by Strachey and his colleagues in the early 1970s.
 (The single angle-brackets `⟨...⟩` used to form sequences are unrelated to the
 double angle-brackets `⟪ D ⟫` used for the carrier of domain `D`.)
 
-```
+```agda
   module Sequences where
     open Flat.Naturals
     open Tuples
     variable n : Nat
     postulate
-      _⋆     : Domain → Domain         -- finite sequences 
-      ⟨⟩     : ⟪ D ⋆ ⟫                 -- empty sequence
-      ⟨_⟩    : ⟪ (D ^ suc n) →ᶜ D ⋆ ⟫  -- non-empty sequence
-      #      : ⟪ D ⋆ →ᶜ Nat⊥ ⟫         -- sequence length
-      _§_    : ⟪ D ⋆ →ᶜ D ⋆ →ᶜ D ⋆ ⟫   -- concatenation
-      _↓_    : ⟪ D ⋆ →ᶜ Nat →ˢ D ⟫     -- nth component
-      _†_    : ⟪ D ⋆ →ᶜ Nat →ˢ D ⋆ ⟫   -- nth tail
+      _⋆     : Domain → Domain
+      ⟨⟩     : ⟪ D ⋆ ⟫
+      ⟨_⟩    : ⟪ (D ^ suc n) →ᶜ D ⋆ ⟫
+      #      : ⟪ D ⋆ →ᶜ Nat⊥ ⟫
+      _§_    : ⟪ D ⋆ →ᶜ D ⋆ →ᶜ D ⋆ ⟫
+      _↓_    : ⟪ D ⋆ →ᶜ Nat →ˢ D ⟫
+      _†_    : ⟪ D ⋆ →ᶜ Nat →ˢ D ⋆ ⟫
 ```
 
 ## Updates
@@ -397,10 +396,8 @@ truth value:
 ```agda
   open import Data.Maybe.Base using (Maybe; just; nothing) public
   open import Relation.Binary.PropositionalEquality.Core using (_≡_; refl) public
-
   record EqMaybe (A : Set) : Set where field _==?_ : (a a′ : A) → Maybe (a ≡ a′)
   open EqMaybe {{...}} public
-  
   _[_←_] :  {X : Set} → {Y : X → Set} → {{EqMaybe X}} → 
             (∀ (x′) → Y x′) → (x : X) → Y x → (∀ (x′) → Y x′)
   _[_←_] {X} {Y} m x y = λ x′ → h x′ (x ==? x′) where
