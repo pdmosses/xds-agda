@@ -322,6 +322,8 @@ gen-md: clean-md
 		;; \
 	  esac; \
 	  \
+	  sd '^[ ]*\{-tex .*-\}\n' '' $$t; \
+	  \
 	  sd '(href="[^:"]+)\.html' '$$1/' $$t; \
 	  \
 	  while grep -q 'href="[^:".][^:".]*\.' $$t; do \
@@ -499,8 +501,8 @@ LAGDA := agda $(addprefix --include-path=, $(LDIR))
 LAGDA-QUIET   := $(LAGDA) --trace-imports=0
 LAGDA-VERBOSE := $(LAGDA) --trace-imports=3
 
-.PHONY: gen-latex
-gen-latex: clean-latex
+.PHONY: latex
+latex: clean-latex
 	@for m in $(LAGDA-MD-FILES); do \
 	    t=$(LDIR)/$${m#$(DIR)/*}; \
 	    d=$${t%*/*.lagda.md}; mkdir -p $$d; \
@@ -509,10 +511,31 @@ gen-latex: clean-latex
 	    sd '\\begin\{verbatim\}' '\\begin{code}' $$t; \
 	    sd '\\end\{verbatim\}' '\\end{code}' $$t; \
 	    sd '\\texttt\{' '\\AgdaFontStyle{' $$t; \
+	    sd '\\href\{[^:\}]+\}' '' $$t; \
 	done
 	@for t in $(LAGDA-TEX-FILES); do \
 	    $(LAGDA-QUIET) --latex --latex-dir=$(LATEX) $$t; \
 	done
+
+.PHONY: code
+code: clean-latex
+	@for m in $(LAGDA-MD-FILES); do \
+	    t=$(LDIR)/$${m#$(DIR)/*}; \
+	    d=$${t%*/*.lagda.md}; mkdir -p $$d; \
+	    t=$${t%*.lagda.md}.lagda.tex; \
+	    cp -f $$m $$t; \
+	    sd '```agda' '%begin{code}' $$t; \
+	    sd '```' '%end{code}' $$t; \
+	    sd '%end\{code\}[^%]*%begin\{code\}' '' $$t; \
+	    sd '\A[^%]*%begin\{code\}' '%begin{AgdaAlign}\n%begin{code}' $$t; \
+	    sd '%end\{code\}[^%]*\z' '%end{code}\n%end{AgdaAlign}' $$t; \
+	    sd '\n[ ]*\n%end\{code\}' '\n%end{code}' $$t; \
+	    sd '%' '\\' $$t; \
+	done
+	@for t in $(LAGDA-TEX-FILES); do \
+	    $(LAGDA-QUIET) --latex --latex-dir=$(LATEX) $$t; \
+	done
+# 	    sd '\n([ ]*)module' '\n%end{code}\n\n%begin{code}\n$${1}module' $$t; \
 
 .PHONY: clean-latex
 clean-latex:
