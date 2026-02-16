@@ -6,7 +6,9 @@ direct use of λ-notation for defining functions between domains.
 
 ```agda
 {-# OPTIONS --rewriting --confluence-check --lossy-unification #-}
+
 module Notation where
+
 variable A B C : Set
 ```
 
@@ -36,6 +38,7 @@ module Domains where
     ⊥ : {D : Domain} → ⟪ D ⟫
     𝟙 : Domain
   variable D E F : Domain
+
 open Domains public
 ```
 
@@ -64,7 +67,6 @@ The notation for each domain constructor is generally declared in a separate
 submodule.
 
 !!! info
-
     The [Properties] module postulates equational properties of the postulated
     operations on elements of domains, and declares them as rewrite rules.
 
