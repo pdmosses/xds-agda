@@ -8,7 +8,9 @@ formalisation of [function domains] in Agda.
 
 ```agda
 {-# OPTIONS --rewriting --confluence-check --lossy-unification #-}
+
 module LC.Definitions where
+
 open import Notation
 ```
 
@@ -25,7 +27,8 @@ variables – it is *not* a De Bruin index.
 
 ```agda
   open import Data.Nat.Base renaming (ℕ to Nat) using () public
-  data Var : Set where x : Nat → Var
+  data Var : Set where
+    x : Nat → Var
   variable v : Var
 ```
 
@@ -62,8 +65,9 @@ the domain of all continuous endofunctions on `D∞`. (Simply defining
 module Domain-Equations where
   open Abstract-Syntax
   open Notation.Recursion using (_≅_; fold; unfold) public
-  postulate D∞ : Domain
-  postulate instance eqD∞ : D∞ ≅ (D∞ →ᶜ D∞)
+  postulate
+    D∞ : Domain
+    instance eqD∞ : D∞ ≅ (D∞ →ᶜ D∞)
 ```
 
 The one-point domain `𝟙` is a trivial solution for the above domain equation.

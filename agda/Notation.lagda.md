@@ -83,8 +83,22 @@ the domain are continuous functions.
 
 ```agda
 module Functions where
-  postulate _→ᶜ_ : Domain → Domain → Domain
+  open import Agda.Builtin.Equality using (_≡_) public
+  open import Agda.Builtin.Equality.Rewrite using ()
+  postulate
+    _→ᶜ_ : Domain → Domain → Domain
   infixr 0 _→ᶜ_
+```
+
+In conventional denotational semantics, functions between domains are
+*automatically* continuous when defined in terms of λ-abstraction and
+application from primitive continuous functions associated with specific
+domain constructors. And continuous *endofunctions* `f` in `D →ᶜ D` have
+(least) fixed points, given by `fix f`:
+
+```agda
+  postulate
+    fix : ⟪ (D →ᶜ D) →ᶜ D ⟫
 ```
 
 The carrier `⟪ D →ᶜ E ⟫` of a function domain `D →ᶜ E` should consist of just
@@ -105,20 +119,9 @@ domains, the type `⟪ D →ᶜ E ⟫` is *rewritten*[^rewrite] to the Agda type
     but resulted in slow type-checking when used in *all* modules).
 
 ```agda
-  open import Agda.Builtin.Equality using (_≡_) public
-  open import Agda.Builtin.Equality.Rewrite using ()
-  postulate dom-cts : ⟪ D →ᶜ E ⟫ ≡ (⟪ D ⟫ → ⟪ E ⟫)
+  postulate
+    dom-cts : ⟪ D →ᶜ E ⟫ ≡ (⟪ D ⟫ → ⟪ E ⟫)
   {-# REWRITE dom-cts #-}
-```
-
-In conventional denotational semantics, functions between domains are
-*automatically* continuous when defined in terms of λ-abstraction and
-application from primitive continuous functions associated with specific
-domain constructors. And continuous *endofunctions* `f` in `D →ᶜ D` have
-(least) fixed points, given by `fix f`:
-
-```agda
-  postulate fix : ⟪ (D →ᶜ D) →ᶜ D ⟫
 ```
 
 It would be possible to declare an analogous type of *predomains*,[^pre]
@@ -131,14 +134,16 @@ when ordered pointwise).
     A predomain is like a domain, but its carrier need not have a `⊥` element.
 
 ```agda
-  postulate _→ˢ_ : Set → Domain → Domain
+  postulate
+    _→ˢ_ : Set → Domain → Domain
   infixr 0 _→ˢ_
 ```
 
 The type `⟪ A →ˢ D ⟫` is *rewritten* to the Agda type `A → ⟪ D ⟫`:
 
 ```agda
-  postulate set-cts : ⟪ A →ˢ D ⟫ ≡ (A → ⟪ D ⟫)
+  postulate
+    set-cts : ⟪ A →ˢ D ⟫ ≡ (A → ⟪ D ⟫)
   {-# REWRITE set-cts #-}
 ```
 
@@ -163,8 +168,8 @@ to map values from a postulated domain to its structure and *vice versa*.
 module Recursion where
   postulate
     _≅_ : Domain → Domain → Set
-    unfold : {{D ≅ E}} → ⟪ D →ᶜ E ⟫
-    fold :   {{D ≅ E}} → ⟪ E →ᶜ D ⟫
+    unfold :  {{D ≅ E}} → ⟪ D →ᶜ E ⟫
+    fold :    {{D ≅ E}} → ⟪ E →ᶜ D ⟫
 ```
 
 The *instance parameter* `{{D ≅ E}}` of the above operations restricts them
@@ -176,8 +181,9 @@ is simply as follows.
 
 ```agda
   module D-infinity where
-    postulate D∞ : Domain
-    postulate instance _ : D∞ ≅ (D∞ →ᶜ D∞)
+    postulate
+      D∞ : Domain
+      instance _ : D∞ ≅ (D∞ →ᶜ D∞)
 ```
 
 ## Flat domains
@@ -214,9 +220,10 @@ argument is `⊥`.
 
 ```agda
   module Booleans where
-    open import Data.Bool.Base using (Bool; false; true; if_then_else_; _∧_) public
+    open import Data.Bool.Base using (Bool; false; true; if_then_else_) public
     Bool⊥ = Bool +⊥
-    postulate _⟶_,_ : ⟪ Bool⊥ →ᶜ D →ᶜ D →ᶜ D ⟫
+    postulate
+      _⟶_,_ : ⟪ Bool⊥ →ᶜ D →ᶜ D →ᶜ D ⟫
     infixr 20 _⟶_,_
 ```
 
@@ -225,9 +232,10 @@ the operation only for flat domains `D` with `instance _ : Eq⊥ D`.
 (Equality is unavailable on non-flat domains because it is not continuous.)
 
 ```agda
-    postulate Eq⊥ : Domain → Set
-    postulate _==⊥_ : {{Eq⊥ (A +⊥)}} → ⟪ A +⊥ →ᶜ A +⊥ →ᶜ Bool⊥ ⟫
-    postulate instance eq⊥Bool⊥ : Eq⊥ Bool⊥
+    postulate
+      Eq⊥ : Domain → Set
+      _==⊥_ : {{Eq⊥ (A +⊥)}} → ⟪ A +⊥ →ᶜ A +⊥ →ᶜ Bool⊥ ⟫
+      instance eq⊥Bool⊥ : Eq⊥ Bool⊥
 ```
 
 ### Naturals
@@ -240,7 +248,8 @@ using `zero` and `suc`.
     open import Data.Nat.Base renaming (ℕ to Nat) using (suc; _+_; _∸_; _≡ᵇ_) public
     Nat⊥ = Nat +⊥
     open Booleans
-    postulate instance eq⊥Nat⊥ : Eq⊥ Nat⊥
+    postulate
+      instance eq⊥Nat⊥ : Eq⊥ Nat⊥
 ```
 
 ### Strings
@@ -252,7 +261,8 @@ Agda allows literal strings enclosed in double quotation marks `"..."`.
     open import Data.String.Base using (String) public
     String⊥ = String +⊥
     open Booleans
-    postulate instance _ : Eq⊥ String⊥
+    postulate
+      instance _ : Eq⊥ String⊥
 ```
 
 ## Sum domains

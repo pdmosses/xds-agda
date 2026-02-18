@@ -2,18 +2,19 @@
 
 ```agda
 {-# OPTIONS --rewriting --confluence-check --lossy-unification #-}
+
 module Scm.Auxiliary-Functions where
-open import Scm.Abstract-Syntax
-open import Scm.Domain-Equations
-import Notation
-open Notation.Domains using (⟪_⟫; ⊥)
-open Notation.Functions using (_→ᶜ_; fix)
-open Notation.Flat using (↑)
-open Notation.Flat.Booleans using (_⟶_,_; Eq⊥; _==⊥_; true; false)
-open Notation.Sums using (_⇌_; _in⊥_; _∈⊥_; _|⊥_)
-open Notation.Products using (_,_; _↓₁; _↓₂)
-open Notation.Products.Sequences using (⟨_⟩; #; _↓_; _†_)
-open Notation.Updates using (Eq; _[_/_]⊥)
+  open import Scm.Abstract-Syntax
+  open import Scm.Domain-Equations
+  import Notation
+  open Notation.Domains using (⟪_⟫; ⊥)
+  open Notation.Functions using (_→ᶜ_; fix)
+  open Notation.Flat using (↑)
+  open Notation.Flat.Booleans using (_⟶_,_; Eq⊥; _==⊥_; true; false)
+  open Notation.Sums using (_⇌_; _in⊥_; _∈⊥_; _|⊥_)
+  open Notation.Products using (_,_; _↓₁; _↓₂)
+  open Notation.Products.Sequences using (⟨_⟩; #; _↓_; _†_)
+  open Notation.Updates using (Eq; _[_/_]⊥)
 ```
 
 ## Operations
@@ -23,14 +24,14 @@ domains `𝐋`, `𝐌`, and `𝐑`, and illustrate declaration of further
 operations on `𝐑` and `𝐓`.
 
 ```agda
-postulate instance
-  eqL : Eq⊥ 𝐋
-  eqM : Eq⊥ 𝐌
-  eqR : Eq⊥ 𝐑
-postulate
-  _<ᴿ_   : ⟪ 𝐑 →ᶜ 𝐑 →ᶜ 𝐓 ⟫
-  _+ᴿ_   : ⟪ 𝐑 →ᶜ 𝐑 →ᶜ 𝐑 ⟫
-  _∧ᵀ_   : ⟪ 𝐓 →ᶜ 𝐓 →ᶜ 𝐓 ⟫
+  postulate instance
+    eqL : Eq⊥ 𝐋
+    eqM : Eq⊥ 𝐌
+    eqR : Eq⊥ 𝐑
+  postulate
+    _<ᴿ_   : ⟪ 𝐑 →ᶜ 𝐑 →ᶜ 𝐓 ⟫
+    _+ᴿ_   : ⟪ 𝐑 →ᶜ 𝐑 →ᶜ 𝐑 ⟫
+    _∧ᵀ_   : ⟪ 𝐓 →ᶜ 𝐓 →ᶜ 𝐓 ⟫
 ```
 
 ## Environments
@@ -40,9 +41,9 @@ the domain `𝐋`. The instance `Eq Ide` supports the conventional notation
 `ρ [ α / I ]` for updating `ρ` to map `I` to location `α`.
 
 ```agda
-postulate instance eqIde : Eq Ide
-postulate unknown : Loc
-postulate initial-env : ⟪ 𝐔 ⟫
+  postulate instance eqIde : Eq Ide
+  postulate unknown : Loc
+  postulate initial-env : ⟪ 𝐔 ⟫
 ```
 
 The `initial-env` could map predefined identifiers to initialised locations
@@ -59,11 +60,11 @@ notation `σ [ ϵ / α ]⊥` for updating `σ` to map `α` to `ϵ`.[^update]
     a store `σ` is the same as that for updating an environment `ρ`.
 
 ```agda
-assign : ⟪ 𝐋 →ᶜ 𝐄 →ᶜ 𝐂 →ᶜ 𝐂 ⟫
-assign α ϵ θ σ = θ (σ [ ϵ / α ]⊥)
+  assign : ⟪ 𝐋 →ᶜ 𝐄 →ᶜ 𝐂 →ᶜ 𝐂 ⟫
+  assign α ϵ θ σ = θ (σ [ ϵ / α ]⊥)
 
-hold : ⟪ 𝐋 →ᶜ (𝐄 →ᶜ 𝐂) →ᶜ 𝐂 ⟫
-hold α κ σ = κ (σ α) σ
+  hold : ⟪ 𝐋 →ᶜ (𝐄 →ᶜ 𝐂) →ᶜ 𝐂 ⟫
+  hold α κ σ = κ (σ α) σ
 ```
 
 The function `new` is for use in continuation-passing style. An application
@@ -71,19 +72,19 @@ The function `new` is for use in continuation-passing style. An application
 if all locations have already been allocated, it should discard `κ`.
 
 ```agda
-postulate new : ⟪ (𝐋 →ᶜ 𝐂) →ᶜ 𝐂 ⟫
+  postulate new : ⟪ (𝐋 →ᶜ 𝐂) →ᶜ 𝐂 ⟫
 
-alloc : ⟪ 𝐄 →ᶜ (𝐋 →ᶜ 𝐂) →ᶜ 𝐂 ⟫
-alloc ϵ κ = new (λ α → assign α ϵ (κ α))
+  alloc : ⟪ 𝐄 →ᶜ (𝐋 →ᶜ 𝐂) →ᶜ 𝐂 ⟫
+  alloc ϵ κ = new (λ α → assign α ϵ (κ α))
 
-postulate initial-store : ⟪ 𝐒 ⟫
+  postulate initial-store : ⟪ 𝐒 ⟫
 ```
 
 The `initial-store` could map initialised locations to their values, and all
 other locations to `↑ unallocated`. 
 
 ```agda
-postulate finished : ⟪ 𝐒 →ᶜ 𝐀 ⟫
+  postulate finished : ⟪ 𝐒 →ᶜ 𝐀 ⟫
 ```
 
 The continuation `finished` maps the final store to an element of the
@@ -96,10 +97,10 @@ As `𝐄` is not a flat domain, the definition has to check `ϵ ∈⊥ 𝐓` bef
 testing for equality. 
 
 ```agda
-truish : ⟪ 𝐄 →ᶜ 𝐓 ⟫
-truish ϵ =
-  (ϵ ∈⊥ 𝐓) ⟶ (((ϵ |⊥ 𝐓) ==⊥ ↑ false) ⟶ ↑ false , ↑ true) ,
-  ↑ true
+  truish : ⟪ 𝐄 →ᶜ 𝐓 ⟫
+  truish ϵ =
+    (ϵ ∈⊥ 𝐓) ⟶ (((ϵ |⊥ 𝐓) ==⊥ ↑ false) ⟶ ↑ false , ↑ true) ,
+    ↑ true
 ```
 
 ## Lists
@@ -108,38 +109,38 @@ The following definitions of standard Scheme functions for list processing
 use conventional notation for pairs `(α₁ , α₂)` and sequences `⟨ ϵ⋆ ⟩`.
 
 ```agda
-cons : ⟪ 𝐅 ⟫
-cons ϵ⋆ κ =
-  (# ϵ⋆ ==⊥ ↑ 2) ⟶
-    alloc (ϵ⋆ ↓ 1) (λ α₁ → alloc (ϵ⋆ ↓ 2) (λ α₂ → κ ((α₁ , α₂) in⊥ 𝐄))) ,
-  ⊥
+  cons : ⟪ 𝐅 ⟫
+  cons ϵ⋆ κ =
+    (# ϵ⋆ ==⊥ ↑ 2) ⟶
+      alloc (ϵ⋆ ↓ 1) (λ α₁ → alloc (ϵ⋆ ↓ 2) (λ α₂ → κ ((α₁ , α₂) in⊥ 𝐄))) ,
+    ⊥
 ```
 
 The recursive definition of the `list` function requires an explicit fixed
 point in Agda:
 
 ```agda
-list : ⟪ 𝐅 ⟫
-list =
-  fix λ (list′ : ⟪ 𝐅 ⟫) → λ ϵ⋆ κ →
-    (# ϵ⋆ ==⊥ ↑ 0) ⟶ κ (↑ null in⊥ 𝐄) ,
-    list′ (ϵ⋆ † 1) (λ ϵ → cons ⟨ (ϵ⋆ ↓ 1) , ϵ ⟩ κ)
+  list : ⟪ 𝐅 ⟫
+  list =
+    fix λ (list′ : ⟪ 𝐅 ⟫) → λ ϵ⋆ κ →
+      (# ϵ⋆ ==⊥ ↑ 0) ⟶ κ (↑ null in⊥ 𝐄) ,
+      list′ (ϵ⋆ † 1) (λ ϵ → cons ⟨ (ϵ⋆ ↓ 1) , ϵ ⟩ κ)
 
-car : ⟪ 𝐅 ⟫
-car ϵ⋆ κ = (# ϵ⋆ ==⊥ ↑ 1) ⟶ hold (((ϵ⋆ ↓ 1) |⊥ 𝐏) ↓₁) κ , ⊥
+  car : ⟪ 𝐅 ⟫
+  car ϵ⋆ κ = (# ϵ⋆ ==⊥ ↑ 1) ⟶ hold (((ϵ⋆ ↓ 1) |⊥ 𝐏) ↓₁) κ , ⊥
 
-cdr : ⟪ 𝐅 ⟫
-cdr ϵ⋆ κ = (# ϵ⋆ ==⊥ ↑ 1) ⟶ hold (((ϵ⋆ ↓ 1) |⊥ 𝐏) ↓₂) κ , ⊥
+  cdr : ⟪ 𝐅 ⟫
+  cdr ϵ⋆ κ = (# ϵ⋆ ==⊥ ↑ 1) ⟶ hold (((ϵ⋆ ↓ 1) |⊥ 𝐏) ↓₂) κ , ⊥
 
-setcar : ⟪ 𝐅 ⟫
-setcar ϵ⋆ κ =
-  (# ϵ⋆ ==⊥ ↑ 2) ⟶
-    assign (((ϵ⋆ ↓ 1) |⊥ 𝐏) ↓₁) (ϵ⋆ ↓ 2) (κ (↑ unspecified in⊥ 𝐄)) ,
-  ⊥
+  setcar : ⟪ 𝐅 ⟫
+  setcar ϵ⋆ κ =
+    (# ϵ⋆ ==⊥ ↑ 2) ⟶
+      assign (((ϵ⋆ ↓ 1) |⊥ 𝐏) ↓₁) (ϵ⋆ ↓ 2) (κ (↑ unspecified in⊥ 𝐄)) ,
+    ⊥
 
-setcdr : ⟪ 𝐅 ⟫
-setcdr ϵ⋆ κ =
-  (# ϵ⋆ ==⊥ ↑ 2) ⟶
-    assign (((ϵ⋆ ↓ 1) |⊥ 𝐏) ↓₂) (ϵ⋆ ↓ 2) (κ (↑ unspecified in⊥ 𝐄)) ,
-  ⊥
+  setcdr : ⟪ 𝐅 ⟫
+  setcdr ϵ⋆ κ =
+    (# ϵ⋆ ==⊥ ↑ 2) ⟶
+      assign (((ϵ⋆ ↓ 1) |⊥ 𝐏) ↓₂) (ϵ⋆ ↓ 2) (κ (↑ unspecified in⊥ 𝐄)) ,
+    ⊥
 ```

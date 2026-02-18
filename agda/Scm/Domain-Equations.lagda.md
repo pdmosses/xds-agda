@@ -6,17 +6,18 @@ the domain constructors formalised in the `Notation` module.
 
 ```agda
 {-# OPTIONS --rewriting --confluence-check --lossy-unification #-}
+
 module Scm.Domain-Equations where
-open import Scm.Abstract-Syntax using (Ide; Int)
-import Notation
-open Notation.Domains using (Domain; ⟪_⟫)
-open Notation.Functions using (_→ᶜ_; _→ˢ_)
-open Notation.Flat using (_+⊥)
-open Notation.Flat.Booleans using (Bool⊥)
-open Notation.Flat.Naturals using (Nat⊥)
-open Notation.Sums using (_⇌_)
-open Notation.Products using (_×_)
-open Notation.Products.Sequences using (_⋆)
+  open import Scm.Abstract-Syntax using (Ide; Int)
+  import Notation
+  open Notation.Domains using (Domain; ⟪_⟫)
+  open Notation.Functions using (_→ᶜ_; _→ˢ_)
+  open Notation.Flat using (_+⊥)
+  open Notation.Flat.Booleans using (Bool⊥)
+  open Notation.Flat.Naturals using (Nat⊥)
+  open Notation.Sums using (_⇌_)
+  open Notation.Products using (_×_)
+  open Notation.Products.Sequences using (_⋆)
 ```
 
 Agda allows non-recursive type definitions to be written simply as equations.
@@ -24,15 +25,16 @@ This avoids the need for the `fold` and `unfold` functions used in connection
 with postulated domain equivalences `D ≡ E`.
 
 ```agda
-postulate Loc : Set
-𝐋  =  Loc +⊥
-𝐍  =  Nat⊥
-𝐓  =  Bool⊥
-𝐑  =  Int +⊥
-𝐏  =  𝐋 × 𝐋
-𝐔  =  Ide →ˢ 𝐋
-data Misc : Set where null unallocated undefined unspecified : Misc
-𝐌  =  Misc +⊥
+  postulate Loc : Set
+  𝐋  =  Loc +⊥
+  𝐍  =  Nat⊥
+  𝐓  =  Bool⊥
+  𝐑  =  Int +⊥
+  𝐏  =  𝐋 × 𝐋
+  𝐔  =  Ide →ˢ 𝐋
+  data Misc : Set where
+    null unallocated undefined unspecified : Misc
+  𝐌  =  Misc +⊥
 ```
 
 The remaining domains are mutually recursive: the domain `𝐄` is supposed to be
@@ -46,24 +48,24 @@ and projections for its summands incorporate the bijection between `𝐄` and it
 intended structure. 
 
 ```agda
-postulate 𝐄 : Domain
-𝐒  =  𝐋 →ᶜ 𝐄
-postulate 𝐀 : Domain
-𝐂  =  𝐒 →ᶜ 𝐀
-𝐄⋆ =  𝐄 ⋆
-𝐅  =  𝐄⋆ →ᶜ (𝐄 →ᶜ 𝐂) →ᶜ 𝐂
+  postulate 𝐄 : Domain
+  𝐒  =  𝐋 →ᶜ 𝐄
+  postulate 𝐀 : Domain
+  𝐂  =  𝐒 →ᶜ 𝐀
+  𝐄⋆ =  𝐄 ⋆
+  𝐅  =  𝐄⋆ →ᶜ (𝐄 →ᶜ 𝐂) →ᶜ 𝐂
 ```
 
 The following postulates instantiate the emebdding, inspection, and projection
 operations for each summand of `𝐄`.
 
 ```agda
-postulate instance
-  E+=T : 𝐓 ⇌ 𝐄
-  E+=R : 𝐑 ⇌ 𝐄
-  E+=P : 𝐏 ⇌ 𝐄
-  E+=M : 𝐌 ⇌ 𝐄
-  E+=F : 𝐅 ⇌ 𝐄
+  postulate instance
+    E+=T : 𝐓 ⇌ 𝐄
+    E+=R : 𝐑 ⇌ 𝐄
+    E+=P : 𝐏 ⇌ 𝐄
+    E+=M : 𝐌 ⇌ 𝐄
+    E+=F : 𝐅 ⇌ 𝐄
 ```
 
 Conventional denotational definitions declare Greek lowercase letters as
@@ -72,7 +74,7 @@ to be added. The following variable declarations in Agda look similar, but
 they appear to be ignored by the type checker.
 
 ```agda
-variable
-  α : ⟪ 𝐋 ⟫;  ρ : ⟪ 𝐔 ⟫;  μ  : ⟪ 𝐌 ⟫;  ϵ : ⟪ 𝐄 ⟫
-  σ : ⟪ 𝐒 ⟫;  θ : ⟪ 𝐂 ⟫;  ϵ⋆ : ⟪ 𝐄⋆ ⟫;  φ : ⟪ 𝐅 ⟫
+  variable
+    α : ⟪ 𝐋 ⟫;  ρ : ⟪ 𝐔 ⟫;  μ  : ⟪ 𝐌 ⟫;  ϵ : ⟪ 𝐄 ⟫
+    σ : ⟪ 𝐒 ⟫;  θ : ⟪ 𝐂 ⟫;  ϵ⋆ : ⟪ 𝐄⋆ ⟫;  φ : ⟪ 𝐅 ⟫
 ```

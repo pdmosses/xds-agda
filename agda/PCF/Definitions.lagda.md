@@ -11,6 +11,7 @@ formalisation of [function domains] in Agda.
 
 ```agda
 {-# OPTIONS --rewriting --confluence-check --lossy-unification #-}
+
 module PCF.Definitions where
 open import Notation
 ```
@@ -30,7 +31,9 @@ mixfix notation, but ordinary arrows and parentheses are reserved symbols;
 the Agda formalisation of PCF types uses `σ ⇒ τ` instead of `(σ → τ)`:
 
 ```agda
-  data Types : Set where ι o : Types ; _⇒_  : Types → Types → Types
+  data Types : Set where
+    ι o  : Types
+    _⇒_  : Types → Types → Types
   infixr 1 _⇒_
   variable σ τ : Types
 ```
@@ -47,7 +50,8 @@ index.
 
 ```agda
   open import Data.Nat.Base renaming (ℕ to Nat) using () public
-  data 𝒱 : Types → Set where α : Nat → (σ : Types) → 𝒱 σ
+  data 𝒱 : Types → Set where
+    α : Nat → (σ : Types) → 𝒱 σ
   variable i : Nat
 ```
 
@@ -58,13 +62,13 @@ written $\mathcal L_A$ in ([Plotkin 1977]).
 
 ```agda
   data ℒᴬ : Types → Set where
-    tt ff     : ℒᴬ o
-    ⊃         : ℒᴬ (o ⇒ σ ⇒ σ ⇒ σ)
-    Y         : ℒᴬ ((σ ⇒ σ) ⇒ σ)
-    k         : Nat → ℒᴬ ι
+    tt ff      : ℒᴬ o
+    ⊃          : ℒᴬ (o ⇒ σ ⇒ σ ⇒ σ)
+    Y          : ℒᴬ ((σ ⇒ σ) ⇒ σ)
+    k          : Nat → ℒᴬ ι
     ⦅+1⦆ ⦅-1⦆  : ℒᴬ (ι ⇒ ι)
-    Z         : ℒᴬ (ι ⇒ o)
-  variable c  : ℒᴬ σ
+    Z          : ℒᴬ (ι ⇒ o)
+  variable c   : ℒᴬ σ
 ```
 
 In ([Plotkin 1977]) the constants `⊃` and `Y` are subscripted by their types;
