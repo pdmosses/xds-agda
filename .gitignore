@@ -3,6 +3,7 @@
 /docs/md/
 /lagda/
 /latex/
+/code/
 .DS_Store
 site
 bin
