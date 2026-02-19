@@ -15,7 +15,7 @@ module Scm.Domain-Equations where
   open Notation.Flat using (_+⊥)
   open Notation.Flat.Booleans using (Bool⊥)
   open Notation.Flat.Naturals using (Nat⊥)
-  open Notation.Sums using (_⇌_)
+  open Notation.Sums using (_≳_↦_)
   open Notation.Products using (_×_)
   open Notation.Products.Sequences using (_⋆)
 ```
@@ -61,11 +61,11 @@ operations for each summand of `𝐄`.
 
 ```agda
   postulate instance
-    E+=T : 𝐓 ⇌ 𝐄
-    E+=R : 𝐑 ⇌ 𝐄
-    E+=P : 𝐏 ⇌ 𝐄
-    E+=M : 𝐌 ⇌ 𝐄
-    E+=F : 𝐅 ⇌ 𝐄
+    E+=T : 𝐄 ≳ 1 ↦ 𝐓
+    E+=R : 𝐄 ≳ 2 ↦ 𝐑
+    E+=P : 𝐄 ≳ 3 ↦ 𝐏
+    E+=M : 𝐄 ≳ 4 ↦ 𝐌
+    E+=F : 𝐄 ≳ 5 ↦ 𝐅
 ```
 
 Conventional denotational definitions declare Greek lowercase letters as

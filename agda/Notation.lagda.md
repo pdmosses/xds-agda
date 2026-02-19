@@ -298,20 +298,22 @@ for these operations (after adding `⊥` as a suffix to avoid reserved symbols):
 
 However, instead of defining the summands `D` of a coalesced sum domain `E` by
 an equation `E = ... + D + ...`, the domain `E` is merely *postulated*, and
-each summand is declared separately by `instance _ : D ⇌ E`. This also avoids
+each summand is declared separately by `instance _ : E ≳ n ↦ D` (where `n`
+should be a different natural number for each summand). This also avoids
 non-termination due to indirect recursion in groups of type definitions.
 
 The inherently *dependent* types of the above operations are as follows.
 The argument `{D : Domain}` is implicit, and inferred from the other arguments;
-the instance argument `{{D ⇌ E}}` is also inferred.
+the instance argument `{{E ≳ n ↦ D}}` is also inferred.
 
 ```agda
+  open import Data.Nat.Base renaming (ℕ to Nat)
   open Flat.Booleans
   postulate
-    _⇌_   : Domain → Domain → Set
-    _in⊥_ : {D : Domain} → ⟪ D ⟫ → (E : Domain) → {{D ⇌ E}} → ⟪ E ⟫
-    _|⊥_  : {E : Domain} → ⟪ E ⟫ → (D : Domain) → {{D ⇌ E}} → ⟪ D ⟫
-    _∈⊥_  : {E : Domain} → ⟪ E ⟫ → (D : Domain) → {{D ⇌ E}} → ⟪ Bool⊥ ⟫
+    _≳_↦_ : Domain → Nat → Domain → Set
+    _in⊥_ : {D : Domain} → {n : Nat} → ⟪ D ⟫ → (E : Domain) → {{E ≳ n ↦ D}} → ⟪ E ⟫
+    _|⊥_  : {E : Domain} → {n : Nat} → ⟪ E ⟫ → (D : Domain) → {{E ≳ n ↦ D}} → ⟪ D ⟫
+    _∈⊥_  : {E : Domain} → {n : Nat} → ⟪ E ⟫ → (D : Domain) → {{E ≳ n ↦ D}} → ⟪ Bool⊥ ⟫
 ```
 
 ## Product domains

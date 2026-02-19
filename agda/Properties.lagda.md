@@ -70,6 +70,22 @@ module Flat where
 
 ## Sum domains
 
+```agda
+module Sums where
+  open Notation.Flat
+  open Notation.Flat.Booleans
+  open Notation.Sums
+  open import Relation.Binary.PropositionalEquality.Core using (_≢_)
+  variable n n′ : Nat
+  postulate
+    elim-∈⊥    :  {{_ : E ≳ n ↦ D}} → {D′ : Domain} → {{_ : E ≳ n′ ↦ D′}} → (δ : ⟪ D ⟫) →
+                  (δ in⊥ E) ∈⊥ D′ ≡ ↑ (n ≡ᵇ n′)
+    elim-|⊥    :  {{_ : E ≳ n ↦ D}} → (δ : ⟪ D ⟫) → (δ in⊥ E) |⊥ D ≡ δ
+    elim-∈⊥-⊥  :  {{_ : E ≳ n ↦ D}} → {D′ : Domain} → {{_ : E ≳ n′ ↦ D′}} → (δ : ⟪ D ⟫) →
+                  {n ≢ n′} → (δ in⊥ E) |⊥ D′ ≡ ⊥
+  {-# REWRITE elim-∈⊥ elim-|⊥ #-} 
+```
+
 ## Product domains
 
 ### Tuples

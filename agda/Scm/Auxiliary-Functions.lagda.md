@@ -11,7 +11,7 @@ module Scm.Auxiliary-Functions where
   open Notation.Functions using (_→ᶜ_; fix)
   open Notation.Flat using (↑)
   open Notation.Flat.Booleans using (_⟶_,_; Eq⊥; _==⊥_; true; false)
-  open Notation.Sums using (_⇌_; _in⊥_; _∈⊥_; _|⊥_)
+  open Notation.Sums using (_in⊥_; _∈⊥_; _|⊥_)
   open Notation.Products using (_,_; _↓₁; _↓₂)
   open Notation.Products.Sequences using (⟨_⟩; #; _↓_; _†_)
   open Notation.Updates using (Eq; _[_/_]⊥)
