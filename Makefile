@@ -264,6 +264,8 @@ endif
 # All URLs that do not include a colon are assumed to be links to modules, and
 # get replaced by directory URLs (also in the prose parts).
 
+# Moreover, single-line comments `{-tex ... -}` and `--[hide]` are globally removed.
+
 gen-md: clean-md
 	@rm -rf $(TEMP)
 	@for r in $(ROOT-FILES); do \
@@ -323,6 +325,8 @@ gen-md: clean-md
 	  esac; \
 	  \
 	  sd '^[ ]*\{-tex .*-\}\n' '' $$t; \
+	  \
+	  sd '^<a id="[^"]*" class="Comment">--[hide]</a>\n' '' $$t; \
 	  \
 	  sd '(href="[^:"]+)\.html' '$$1/' $$t; \
 	  \
@@ -488,6 +492,7 @@ endif
 # Assumption: DIR is a single directory
 
 LATEX := latex
+CODE := code
 LDIR := lagda
 
 LAGDA-MD-FILES := $(sort $(shell find $(DIR) -name '*.lagda.md'))
@@ -530,17 +535,18 @@ code: clean-latex
 	    sd '\A[^%]*%begin\{code\}' '%begin{AgdaAlign}\n%begin{code}' $$t; \
 	    sd '%end\{code\}[^%]*\z' '%end{code}\n%end{AgdaAlign}' $$t; \
 	    sd '\n[ ]*\n%end\{code\}' '\n%end{code}' $$t; \
+	    sd '%begin\{code\}\n--[hide]\n' '%begin{code}[hide]\n' $$t; \
 	    sd '%' '\\' $$t; \
 	done
 	@for t in $(LAGDA-TEX-FILES); do \
-	    $(LAGDA-QUIET) --latex --latex-dir=$(LATEX) $$t; \
+	    $(LAGDA-QUIET) --latex --latex-dir=$(CODE) $$t; \
 	done
-# 	    sd '\n([ ]*)module' '\n%end{code}\n\n%begin{code}\n$${1}module' $$t; \
 
 .PHONY: clean-latex
 clean-latex:
 	@rm -rf $(LDIR)
 	@rm -rf $(LATEX)
+	@rm -rf $(CODE)
 
 ##############################################################################
 # HELPFUL TEXTS
