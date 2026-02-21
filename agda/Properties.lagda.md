@@ -18,8 +18,8 @@ variable A B C : Set
 module Functions where
   open Notation.Functions
   postulate
-    fix-fix : (f : ⟪ D →ᶜ D ⟫) → fix f ≡ f (fix f)
-  {-# REWRITE fix-fix #-} 
+    apply-fix : {f : ⟪ D →ᶜ D ⟫} → fix f ≡ f (fix f)
+  {-# REWRITE apply-fix #-} 
 ```
 
 ## Recursive domains
@@ -28,8 +28,8 @@ module Functions where
 module Recursion where
   open Notation.Recursion
   postulate
-    unfold-fold-elim : {{_ : D ≅ E}} → {e : ⟪ E ⟫} → unfold (fold e) ≡ e
-  {-# REWRITE unfold-fold-elim #-}
+    elim-unfold-fold : {{_ : D ≅ E}} → {e : ⟪ E ⟫} → unfold (fold e) ≡ e
+  {-# REWRITE elim-unfold-fold #-}
 ```
 
 ## Flat domains
@@ -37,9 +37,10 @@ module Recursion where
 ```agda
 module Flat where
   open Notation.Flat using (↑; _♯) public
+  variable f : A → ⟪ D ⟫; a′ : A
   postulate
-    elim-♯-↑  : (f : ⟪ A →ˢ D ⟫) (a : A) →  (f ♯) (↑ a)  ≡ f a
-    elim-♯-⊥  : (f : ⟪ A →ˢ D ⟫) →          (f ♯) ⊥       ≡ ⊥
+    elim-♯-↑  : (f ♯) (↑ a′)  ≡ f a′
+    elim-♯-⊥  : (f ♯) ⊥      ≡ ⊥
   {-# REWRITE elim-♯-↑ elim-♯-⊥ #-} 
 ```
 
@@ -50,10 +51,10 @@ module Flat where
     open Notation.Flat.Booleans
     variable δ₁ δ₂ : ⟪ D ⟫
     postulate
-      true-cond    : (↑ true ⟶ δ₁ , δ₂)   ≡ δ₁
-      false-cond   : (↑ false ⟶ δ₁ , δ₂)  ≡ δ₂
-      bottom-cond  : (⊥ ⟶ δ₁ , δ₂)        ≡ ⊥
-    {-# REWRITE true-cond false-cond #-} 
+      elim-true-⟶    : (↑ true ⟶ δ₁ , δ₂)   ≡ δ₁
+      elim-false-⟶   : (↑ false ⟶ δ₁ , δ₂)  ≡ δ₂
+      elim-bottom-⟶  : (⊥ ⟶ δ₁ , δ₂)        ≡ ⊥
+    {-# REWRITE elim-true-⟶ elim-false-⟶ #-} 
 ```
 
 ### Naturals
@@ -64,8 +65,8 @@ module Flat where
     open Notation.Flat.Naturals
     variable n₁ n₂ : Nat
     postulate
-      ==⊥≡ᵇ : (↑ n₁ ==⊥ ↑ n₂) ≡ ↑ (n₁ ≡ᵇ n₂)
-    {-# REWRITE ==⊥≡ᵇ #-} 
+      elim-==⊥ : (↑ n₁ ==⊥ ↑ n₂) ≡ ↑ (n₁ ≡ᵇ n₂)
+    {-# REWRITE elim-==⊥ #-} 
 ```
 
 ## Sum domains
@@ -76,12 +77,12 @@ module Sums where
   open Notation.Flat.Booleans
   open Notation.Sums
   open import Relation.Binary.PropositionalEquality.Core using (_≢_)
-  variable n′ : Nat
+  variable D′ : Domain; n′ : Nat
   postulate
-    elim-∈⊥    :  {{_ : E ≳ n ↦ D}} → {D′ : Domain} → {{_ : E ≳ n′ ↦ D′}} → (δ : ⟪ D ⟫) →
+    elim-∈⊥    :  {{_ : E ≳ n ↦ D}} → {{_ : E ≳ n′ ↦ D′}} → (δ : ⟪ D ⟫) →
                   (δ in⊥ E) ∈⊥ D′ ≡ ↑ (n ≡ᵇ n′)
     elim-|⊥    :  {{_ : E ≳ n ↦ D}} → (δ : ⟪ D ⟫) → (δ in⊥ E) |⊥ D ≡ δ
-    elim-∈⊥-⊥  :  {{_ : E ≳ n ↦ D}} → {D′ : Domain} → {{_ : E ≳ n′ ↦ D′}} → (δ : ⟪ D ⟫) →
+    elim-∈⊥-⊥  :  {{_ : E ≳ n ↦ D}} → {{_ : E ≳ n′ ↦ D′}} → (δ : ⟪ D ⟫) →
                   {n ≢ n′} → (δ in⊥ E) |⊥ D′ ≡ ⊥
   {-# REWRITE elim-∈⊥ elim-|⊥ #-} 
 ```

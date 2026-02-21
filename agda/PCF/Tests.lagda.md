@@ -14,7 +14,7 @@ open Properties.Flat.Booleans
 open Properties.Flat.Naturals
 
 -- Variables
-f  = α 0 ι
+e  = α 0 ι
 g  = α 1 (ι ⇒ ι)
 h  = α 2 (ι ⇒ ι ⇒ ι)
 a  = α 3 ι
@@ -49,8 +49,8 @@ check-if-zero = refl
 check-if-nonzero : 𝓐′⟦ ⦅ ⦅ ⦅ 𝐿 ⊃ ␣ ⦅ 𝐿 Z  ␣ 𝐿 k 42 ⦆ ⦆ ␣ 𝐿 k 0 ⦆ ␣ 𝐿 k 42 ⦆ ⟧ ρ⊥ ≡ ↑ 42
 check-if-nonzero = refl
 
-check-fix-const : 𝓐′⟦ ⦅ 𝐿 Y ␣ ⦅λ f ␣ 𝐿 k 42 ⦆ ⦆ ⟧ ρ⊥ ≡ ↑ 42
-check-fix-const = fix-fix (λ x → ↑ 42)
+check-fix-const : 𝓐′⟦ ⦅ 𝐿 Y ␣ ⦅λ e ␣ 𝐿 k 42 ⦆ ⦆ ⟧ ρ⊥ ≡ ↑ 42
+check-fix-const = refl
 
 -- fix (λg. λa. 42) 2 ≡ 42
 check-fix-lambda : 𝓐′⟦ ⦅ ⦅ 𝐿 Y ␣ ⦅λ g ␣ ⦅λ a ␣ 𝐿 k 42 ⦆ ⦆ ⦆ ␣ 𝐿 k 2 ⦆ ⟧ ρ⊥ ≡ ↑ 42
