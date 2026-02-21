@@ -76,7 +76,7 @@ module Sums where
   open Notation.Flat.Booleans
   open Notation.Sums
   open import Relation.Binary.PropositionalEquality.Core using (_≢_)
-  variable n n′ : Nat
+  variable n′ : Nat
   postulate
     elim-∈⊥    :  {{_ : E ≳ n ↦ D}} → {D′ : Domain} → {{_ : E ≳ n′ ↦ D′}} → (δ : ⟪ D ⟫) →
                   (δ in⊥ E) ∈⊥ D′ ≡ ↑ (n ≡ᵇ n′)

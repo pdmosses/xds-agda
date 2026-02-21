@@ -309,11 +309,12 @@ the instance argument `{{E ≳ n ↦ D}}` is also inferred.
 ```agda
   open import Data.Nat.Base renaming (ℕ to Nat)
   open Flat.Booleans
+  variable n : Nat
   postulate
     _≳_↦_  : Domain → Nat → Domain → Set
-    _in⊥_  : {D : Domain} → {n : Nat} → ⟪ D ⟫ → (E : Domain) → {{E ≳ n ↦ D}} → ⟪ E ⟫
-    _|⊥_   : {E : Domain} → {n : Nat} → ⟪ E ⟫ → (D : Domain) → {{E ≳ n ↦ D}} → ⟪ D ⟫
-    _∈⊥_   : {E : Domain} → {n : Nat} → ⟪ E ⟫ → (D : Domain) → {{E ≳ n ↦ D}} → ⟪ Bool⊥ ⟫
+    _in⊥_  : ⟪ D ⟫ → (E : Domain) → {{E ≳ n ↦ D}} → ⟪ E ⟫
+    _|⊥_   : ⟪ E ⟫ → (D : Domain) → {{E ≳ n ↦ D}} → ⟪ D ⟫
+    _∈⊥_   : ⟪ E ⟫ → (D : Domain) → {{E ≳ n ↦ D}} → ⟪ Bool⊥ ⟫
 ```
 
 ## Product domains
