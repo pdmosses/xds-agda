@@ -33,7 +33,7 @@ element of the trivial domain `𝟙` is `⊥`.[^bottom]
 ```agda
 module Domains where
   postulate
-    Domain : Set₁
+    Domain : Set
     ⟪_⟫ : Domain → Set
     ⊥ : {D : Domain} → ⟪ D ⟫
     𝟙 : Domain
@@ -310,10 +310,10 @@ the instance argument `{{E ≳ n ↦ D}}` is also inferred.
   open import Data.Nat.Base renaming (ℕ to Nat)
   open Flat.Booleans
   postulate
-    _≳_↦_ : Domain → Nat → Domain → Set
-    _in⊥_ : {D : Domain} → {n : Nat} → ⟪ D ⟫ → (E : Domain) → {{E ≳ n ↦ D}} → ⟪ E ⟫
-    _|⊥_  : {E : Domain} → {n : Nat} → ⟪ E ⟫ → (D : Domain) → {{E ≳ n ↦ D}} → ⟪ D ⟫
-    _∈⊥_  : {E : Domain} → {n : Nat} → ⟪ E ⟫ → (D : Domain) → {{E ≳ n ↦ D}} → ⟪ Bool⊥ ⟫
+    _≳_↦_  : Domain → Nat → Domain → Set
+    _in⊥_  : {D : Domain} → {n : Nat} → ⟪ D ⟫ → (E : Domain) → {{E ≳ n ↦ D}} → ⟪ E ⟫
+    _|⊥_   : {E : Domain} → {n : Nat} → ⟪ E ⟫ → (D : Domain) → {{E ≳ n ↦ D}} → ⟪ D ⟫
+    _∈⊥_   : {E : Domain} → {n : Nat} → ⟪ E ⟫ → (D : Domain) → {{E ≳ n ↦ D}} → ⟪ Bool⊥ ⟫
 ```
 
 ## Product domains
