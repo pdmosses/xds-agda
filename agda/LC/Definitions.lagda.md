@@ -56,7 +56,7 @@ are finite, and semantic functions are defined inductively.
 ## Domain equations
 
 The domain equation `D∞ ≅ (D∞ →ᶜ D∞)` below declares the functions
-`unfold : ⟪ D∞ →ᶜ (D∞ →ᶜ D∞) ⟫ and `fold : ⟪ (D∞ →ᶜ D∞) →ᶜ D∞ ⟫`,
+`unfold : ⟪ D∞ →ᶜ (D∞ →ᶜ D∞) ⟫` and `fold : ⟪ (D∞ →ᶜ D∞) →ᶜ D∞ ⟫`,
 corresponging to a bijection between the postulated domain `D∞` and
 the domain of all continuous endofunctions on `D∞`. (Simply defining
 `D∞ = (D∞ →ᶜ D∞)` would lead to non-termination of the Agda type-checker.)
