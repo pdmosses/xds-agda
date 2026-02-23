@@ -382,26 +382,26 @@ double angle-brackets `⟪ D ⟫` used for the carrier of domain `D`.)
 ## Updates
 
 When an ordinary Agda type `A` has an equality operation `_==_ : A → A → Bool`,
-functions `f : A → B` can be "updated" (i.e., extended or overridden) using the
-conventional notation `f [ b / a ]`, defined as follows.
+environments `ρ : ⟪ A →ˢ D ⟫` can be "updated" (i.e., extended or overridden) using the
+conventional notation `ρ [ δ / a ]`, defined as follows.
 
 ```agda
 module Updates where
+  open Flat
   open Flat.Booleans
   record Eq (A : Set) : Set where field _==_ : A → A → Bool
   open Eq {{...}} public
-  _[_/_] : {{Eq A}} → (A → B) → B → A → (A → B)
-  f [ b / a ] = λ a′ → if a == a′ then b else f a′
+  _[_/_] : {{Eq A}} → ⟪ (A →ˢ D) →ᶜ D →ᶜ A →ˢ (A →ˢ D) ⟫
+  ρ [ δ / a ] = λ a′ → if a == a′ then δ else ρ a′
 ```
 
-The same notation can be used for updating `f : ⟪ A →ˢ D ⟫`, since
-`⟪ A →ˢ D ⟫` is rewritten to `A → ⟪ D ⟫`. For `f : ⟪ A +⊥ →ᶜ D ⟫`, however,
-an equality operation `_==⊥_ : ⟪ A +⊥ →ᶜ A +⊥ →ᶜ Bool⊥ ⟫` is required:
+For stores `σ : ⟪ A +⊥ →ᶜ D ⟫`, however, an equality operation
+`_==⊥_ : ⟪ A +⊥ →ᶜ A +⊥ →ᶜ Bool⊥ ⟫` on the flat domain is required:
 
 ```agda
   open Flat
   _[_/_]⊥ : {{Eq⊥ (A +⊥)}} → ⟪ (A +⊥ →ᶜ D) →ᶜ D →ᶜ A +⊥ →ᶜ (A +⊥ →ᶜ D) ⟫
-  φ [ δ / α ]⊥ = λ α′ → (α ==⊥ α′) ⟶ δ , φ α′
+  σ [ δ / α ]⊥ = λ α′ → (α ==⊥ α′) ⟶ δ , σ α′
 ```
 
 Defining extension or overriding of *dependent* maps is less straightforward,

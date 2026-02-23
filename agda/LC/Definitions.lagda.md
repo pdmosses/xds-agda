@@ -79,12 +79,12 @@ domain `D∞`. The type `Env` could be treated as a domain by ordering the maps
 pointwise.
 
 ```agda
-  Env = Var → ⟪ D∞ ⟫
-  variable ρ : Env
+  Env = Var →ˢ D∞
+  variable ρ : ⟪ Env ⟫
 ```
 
-The following definitions instantiate the conventional notation `ρ [ d / v ]`
-for the environment that maps `v` to `d`, and maps other arguments as `ρ` does. 
+The following definitions instantiate the conventional notation `ρ [ δ / v ]`
+for the environment that maps `v` to `δ`, and maps other arguments as `ρ` does. 
 
 ```agda
   open Notation.Flat.Booleans using (Bool)
@@ -106,9 +106,9 @@ up to isomorphism, and are conventionally elided.)
 module Semantic-Functions where
   open Abstract-Syntax
   open Domain-Equations
-  ⟦_⟧ : Exp → Env → ⟪ D∞ ⟫
+  ⟦_⟧ : Exp → ⟪ Env →ᶜ D∞ ⟫
   ⟦ val v ⟧ ρ        = ρ v
-  ⟦ ⦅λ v ␣ e ⦆ ⟧ ρ   = fold ( λ d → ⟦ e ⟧ (ρ [ d / v ]) )
+  ⟦ ⦅λ v ␣ e ⦆ ⟧ ρ   = fold ( λ δ → ⟦ e ⟧ (ρ [ δ / v ]) )
   ⟦ ⦅ e₁ ␣ e₂ ⦆ ⟧ ρ  = unfold ( ⟦ e₁ ⟧ ρ ) ( ⟦ e₂ ⟧ ρ )
 ```
 
