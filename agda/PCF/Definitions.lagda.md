@@ -42,7 +42,7 @@ As usual, `σ₁ ⇒ σ₂ ⇒ τ` is implicitly grouped to the right: `σ₁ �
 
 ### Variables
 
-A variable in `𝒱 σ` is written `α i σ`; in ([Plotkin 1977]) variables are
+A variable in `Vars σ` is written `α i σ`; in ([Plotkin 1977]) variables are
 written $\alpha_i^\sigma$, and the set of variables is not named.
 
 The argument `i` merely distinguishes between variables – it is *not* a De Bruin
@@ -50,14 +50,14 @@ index.
 
 ```agda
   open import Data.Nat.Base renaming (ℕ to Nat) using () public
-  data 𝒱 : Types → Set where
-    α : Nat → (σ : Types) → 𝒱 σ
+  data Vars : Types → Set where
+    α : Nat → (σ : Types) → Vars σ
   variable i : Nat
 ```
 
 ### Constants
 
-The PCF language `ℒ` includes `ℒᴬ`, the set of *standard* constants for arithmetic,
+The PCF term language includes `ℒᴬ`, the set of *standard* constants for arithmetic,
 written $\mathcal L_A$ in ([Plotkin 1977]). 
 
 ```agda
@@ -66,7 +66,7 @@ written $\mathcal L_A$ in ([Plotkin 1977]).
     ⊃          : ℒᴬ (o ⇒ σ ⇒ σ ⇒ σ)
     Y          : ℒᴬ ((σ ⇒ σ) ⇒ σ)
     k          : Nat → ℒᴬ ι
-    ⦅+1⦆ ⦅-1⦆  : ℒᴬ (ι ⇒ ι)
+    ⦅+1⦆ ⦅−1⦆  : ℒᴬ (ι ⇒ ι)
     Z          : ℒᴬ (ι ⇒ o)
   variable c   : ℒᴬ σ
 ```
@@ -76,7 +76,7 @@ in Agda, it is simpler to leave `σ` as an *implicit* argument.
 
 ### Terms
 
-For each type `σ` the terms in `ℒ σ` are *[intrinsically-typed]*: all their
+For each type `σ` the terms in `Terms σ` are *[intrinsically-typed]*: all their
 subterms are *well-typed*.
 
 The term constructor `𝑉` below merely includes variables in terms;
@@ -89,12 +89,12 @@ space) as a separator. Following ([Plotkin 1977]), both terms are
 parenthesised, but using `⦅…⦆` instead of ordinary parentheses.
 
 ```agda
-  data ℒ : Types → Set where
-    𝑉_      : 𝒱 σ → ℒ σ
-    𝐿_      : ℒᴬ σ → ℒ σ
-    ⦅_␣_⦆   : ℒ (σ ⇒ τ) → ℒ σ → ℒ τ
-    ⦅λ_␣_⦆  : 𝒱 σ → ℒ τ → ℒ (σ ⇒ τ)
-  variable M N : ℒ σ
+  data Terms : Types → Set where
+    𝑉_      : Vars σ → Terms σ
+    𝐿_      : ℒᴬ σ → Terms σ
+    ⦅_␣_⦆   : Terms (σ ⇒ τ) → Terms σ → Terms τ
+    ⦅λ_␣_⦆  : Vars σ → Terms τ → Terms (σ ⇒ τ)
+  variable M N : Terms σ
 ```
 
 ## Domain equations
@@ -120,11 +120,11 @@ module Domain-Equations where
 
 Environments `ρ` are type-preserving maps from variables to values. They are
 naturally modeled by a dependent type: `Env σ` consists of type-preserving maps
-from variables in `𝒱 σ` to their values in the carrier of the domain `𝒟 σ`.
+from variables in `Vars σ` to their values in the carrier of the domain `𝒟 σ`.
 The environment `ρ⊥` maps all variables to `⊥`.
 
 ```agda
-  Env = (σ : Types) → 𝒱 σ → ⟪ 𝒟 σ ⟫
+  Env = (σ : Types) → Vars σ → ⟪ 𝒟 σ ⟫
   variable ρ : Env
   ρ⊥ : Env
   ρ⊥ = λ _ → λ _ → ⊥
@@ -136,11 +136,11 @@ in Agda.
 
 ```agda
   open Notation.Updates using (Eq; _==_; _[_/_])
-  _==ⱽ_ : 𝒱 σ → 𝒱 σ → Bool
+  _==ⱽ_ : Vars σ → Vars σ → Bool
   open import Data.Nat.Base using (_≡ᵇ_) public
   (α i σ ==ⱽ α i′ σ)  =  (i ≡ᵇ i′)
   instance
-    eqV : Eq (𝒱 σ)
+    eqV : Eq (Vars σ)
     _==_ {{eqV}} = _==ⱽ_
   open Notation.Updates using (EqMaybe; _==?_; just; nothing; refl; _[_←_])
   instance
@@ -159,7 +159,7 @@ The definition of `ρ [ x / v ]′` is essentially the composition of two levels
 of extension:
 
 ```agda
-  _[_/_]′ : Env → ⟪ 𝒟 σ ⟫ → 𝒱 σ → Env
+  _[_/_]′ : Env → ⟪ 𝒟 σ ⟫ → Vars σ → Env
   _[_/_]′ {σ} ρ x v = ρ [ σ ← ρ σ [ x / v ] ]
 ```
 
@@ -177,7 +177,7 @@ The notation `ρ ⟦ α i σ ⟧` gives the value of the variable `α i σ` in `
 applying `ρ σ` to the variable.
 
 ```agda
-  _⟦_⟧ : ⟪ Env →ˢ 𝒱 σ →ˢ 𝒟 σ ⟫
+  _⟦_⟧ : Env → Vars σ → ⟪ 𝒟 σ ⟫
   ρ ⟦ α i σ ⟧ = ρ σ (α i σ)
 ```
 
@@ -199,7 +199,7 @@ case analysis, which is not supported in this Agda formalisation
   𝒜⟦ Y ⟧     =  fix
   𝒜⟦ k n ⟧   =  ↑ n
   𝒜⟦ ⦅+1⦆ ⟧  =  (λ n → ↑ (n + 1)) ♯
-  𝒜⟦ ⦅-1⦆ ⟧  =  (λ n → (↑ n ==⊥ ↑ 0) ⟶ ⊥ , ↑ (n ∸ 1)) ♯
+  𝒜⟦ ⦅−1⦆ ⟧  =  (λ n → (↑ n ==⊥ ↑ 0) ⟶ ⊥ , ↑ (n ∸ 1)) ♯
   𝒜⟦ Z ⟧     =  (λ n → (↑ n ==⊥ ↑ 0)) ♯
 ```
 
@@ -210,7 +210,7 @@ $\hat{\mathcal A} \llbracket M \rrbracket$ in ([Plotkin 1977]). It gives the
 denotation of the term `M` as a function of the environment `ρ`.
 
 ```agda
-  𝓐′⟦_⟧ : ℒ σ → ⟪ Env →ˢ 𝒟 σ ⟫
+  𝓐′⟦_⟧ : Terms σ → Env → ⟪ 𝒟 σ ⟫
   𝓐′⟦ 𝑉 α i σ ⟧ ρ           =  ρ ⟦ α i σ ⟧
   𝓐′⟦ 𝐿 c ⟧ ρ               =  𝒜⟦ c ⟧
   𝓐′⟦ ⦅ M ␣ N ⦆ ⟧ ρ         =  𝓐′⟦ M ⟧ ρ (𝓐′⟦ N ⟧ ρ) 

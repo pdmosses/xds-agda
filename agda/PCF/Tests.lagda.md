@@ -24,7 +24,7 @@ b  = α 4 ι
 check-41+1 : 𝓐′⟦ ⦅ 𝐿 ⦅+1⦆ ␣ 𝐿 k 41 ⦆ ⟧ ρ⊥ ≡ ↑ 42
 check-41+1 = refl
 
-check-43-1 : 𝓐′⟦ ⦅ 𝐿 ⦅-1⦆ ␣ 𝐿 k 43 ⦆ ⟧ ρ⊥ ≡ ↑ 42
+check-43-1 : 𝓐′⟦ ⦅ 𝐿 ⦅−1⦆ ␣ 𝐿 k 43 ⦆ ⟧ ρ⊥ ≡ ↑ 42
 check-43-1 = refl
 
 -- Binding
@@ -40,7 +40,7 @@ check-ki = refl
 check-suc-41 : 𝓐′⟦ ⦅ ⦅λ a ␣ ⦅ 𝐿 ⦅+1⦆ ␣ 𝑉 a ⦆ ⦆ ␣ 𝐿 k 41 ⦆ ⟧ ρ⊥ ≡ ↑ 42
 check-suc-41 = refl
 
-check-pred-42 : 𝓐′⟦ ⦅ ⦅λ a ␣ ⦅ 𝐿 ⦅-1⦆ ␣ 𝑉 a ⦆ ⦆ ␣ 𝐿 k 43 ⦆ ⟧ ρ⊥ ≡ ↑ 42
+check-pred-42 : 𝓐′⟦ ⦅ ⦅λ a ␣ ⦅ 𝐿 ⦅−1⦆ ␣ 𝑉 a ⦆ ⦆ ␣ 𝐿 k 43 ⦆ ⟧ ρ⊥ ≡ ↑ 42
 check-pred-42 = refl
 
 check-if-zero : 𝓐′⟦ ⦅ ⦅ ⦅ 𝐿 ⊃ ␣ ⦅ 𝐿 Z  ␣ 𝐿 k 0 ⦆ ⦆ ␣ 𝐿 k 42 ⦆ ␣ 𝐿 k 0 ⦆ ⟧ ρ⊥ ≡ ↑ 42
@@ -59,7 +59,7 @@ check-fix-lambda = refl
 -- fix (λg. λa. ifz a then 42 else g (pred a)) 5 ≡ 42
 check-countdown :
   𝓐′⟦ ⦅ ⦅ 𝐿 Y ␣ ⦅λ g ␣ ⦅λ a ␣
-              ⦅ ⦅ ⦅ 𝐿 ⊃ ␣ ⦅ 𝐿 Z  ␣ 𝑉 a ⦆ ⦆ ␣ 𝐿 k 42 ⦆ ␣ ⦅ 𝑉 g ␣ ⦅ 𝐿 ⦅-1⦆ ␣ 𝑉 a ⦆ ⦆ ⦆ ⦆ ⦆ ⦆
+              ⦅ ⦅ ⦅ 𝐿 ⊃ ␣ ⦅ 𝐿 Z  ␣ 𝑉 a ⦆ ⦆ ␣ 𝐿 k 42 ⦆ ␣ ⦅ 𝑉 g ␣ ⦅ 𝐿 ⦅−1⦆ ␣ 𝑉 a ⦆ ⦆ ⦆ ⦆ ⦆ ⦆
       ␣ 𝐿 k 5 ⦆ ⟧ ρ⊥ ≡ ↑ 42
 check-countdown = refl
 
@@ -67,7 +67,7 @@ check-countdown = refl
 check-sum-42 :
   𝓐′⟦ ⦅ ⦅ ⦅ 𝐿 Y ␣ ⦅λ h ␣ ⦅λ a ␣ ⦅λ b ␣
                   ⦅ ⦅ ⦅ 𝐿 ⊃ ␣ ⦅ 𝐿 Z  ␣ 𝑉 a ⦆ ⦆ ␣ 𝑉 b ⦆ ␣ 
-                    ⦅ ⦅ 𝑉 h ␣ ⦅ 𝐿 ⦅-1⦆ ␣ 𝑉 a ⦆ ⦆ ␣ ⦅ 𝐿 ⦅+1⦆ ␣ 𝑉 b ⦆ ⦆ ⦆ ⦆ ⦆ ⦆ ⦆
+                    ⦅ ⦅ 𝑉 h ␣ ⦅ 𝐿 ⦅−1⦆ ␣ 𝑉 a ⦆ ⦆ ␣ ⦅ 𝐿 ⦅+1⦆ ␣ 𝑉 b ⦆ ⦆ ⦆ ⦆ ⦆ ⦆ ⦆
       ␣ 𝐿 k 4 ⦆ ␣ 𝐿 k 38 ⦆ ⟧ ρ⊥ ≡ ↑ 42
 check-sum-42 = refl
 ```
