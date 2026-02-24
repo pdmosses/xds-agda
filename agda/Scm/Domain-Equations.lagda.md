@@ -33,7 +33,7 @@ with postulated domain equivalences `D ≡ E`.
   𝐏  =  𝐋 × 𝐋
   𝐔  =  Ide →ˢ 𝐋
   data Misc : Set where
-    null unallocated undefined unspecified : Misc
+     null unallocated undefined unspecified : Misc
   𝐌  =  Misc +⊥
 ```
 
@@ -61,11 +61,11 @@ operations for each summand of `𝐄`.
 
 ```agda
   postulate instance
-    E+=T : 𝐄 ≳ 1 ↦ 𝐓
-    E+=R : 𝐄 ≳ 2 ↦ 𝐑
-    E+=P : 𝐄 ≳ 3 ↦ 𝐏
-    E+=M : 𝐄 ≳ 4 ↦ 𝐌
-    E+=F : 𝐄 ≳ 5 ↦ 𝐅
+    E+=T  : 𝐄 ≳ 1 ↦ 𝐓
+    E+=R  : 𝐄 ≳ 2 ↦ 𝐑
+    E+=P  : 𝐄 ≳ 3 ↦ 𝐏
+    E+=M  : 𝐄 ≳ 4 ↦ 𝐌
+    E+=F  : 𝐄 ≳ 5 ↦ 𝐅
 ```
 
 Conventional denotational definitions declare Greek lowercase letters as

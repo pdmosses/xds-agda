@@ -25,13 +25,13 @@ operations on `𝐑` and `𝐓`.
 
 ```agda
   postulate instance
-    eqL : Eq⊥ 𝐋
-    eqM : Eq⊥ 𝐌
-    eqR : Eq⊥ 𝐑
+    eqL   : Eq⊥ 𝐋
+    eqM   : Eq⊥ 𝐌
+    eqR   : Eq⊥ 𝐑
   postulate
-    _<ᴿ_   : ⟪ 𝐑 →ᶜ 𝐑 →ᶜ 𝐓 ⟫
-    _+ᴿ_   : ⟪ 𝐑 →ᶜ 𝐑 →ᶜ 𝐑 ⟫
-    _∧ᵀ_   : ⟪ 𝐓 →ᶜ 𝐓 →ᶜ 𝐓 ⟫
+    _<ᴿ_  : ⟪ 𝐑 →ᶜ 𝐑 →ᶜ 𝐓 ⟫
+    _+ᴿ_  : ⟪ 𝐑 →ᶜ 𝐑 →ᶜ 𝐑 ⟫
+    _∧ᵀ_  : ⟪ 𝐓 →ᶜ 𝐓 →ᶜ 𝐓 ⟫
 ```
 
 ## Environments

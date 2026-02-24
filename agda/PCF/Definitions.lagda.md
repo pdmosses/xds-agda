@@ -31,9 +31,9 @@ mixfix notation, but ordinary arrows and parentheses are reserved symbols;
 the Agda formalisation of PCF types uses `σ ⇒ τ` instead of `(σ → τ)`:
 
 ```agda
-  data Types : Set where
-    ι o     : Types
-    _⇒_     : Types → Types → Types
+  data Types  : Set where
+    ι o       : Types
+    _⇒_       : Types → Types → Types
   infixr 1 _⇒_
   variable σ τ : Types
 ```
@@ -50,9 +50,9 @@ index.
 
 ```agda
   open import Data.Nat.Base renaming (ℕ to Nat) using () public
-  data Vars : Types → Set where
-    α       : Nat → (σ : Types) → Vars σ
-  variable i : Nat
+  data Vars   : Types → Set where
+    α         : Nat → (σ : Types) → Vars σ
+  variable i  : Nat
 ```
 
 ### Constants
@@ -61,15 +61,15 @@ The PCF term language includes `ℒᴬ`, the set of *standard* constants for ari
 written $\mathcal L_A$ in ([Plotkin 1977]). 
 
 ```agda
-  data ℒᴬ : Types → Set where
-    tt ff   : ℒᴬ o
-    ⊃       : ℒᴬ (o ⇒ σ ⇒ σ ⇒ σ)
-    Y       : ℒᴬ ((σ ⇒ σ) ⇒ σ)
-    k       : Nat → ℒᴬ ι
-    ⦅+1⦆    : ℒᴬ (ι ⇒ ι)
-    ⦅−1⦆    : ℒᴬ (ι ⇒ ι)
-    Z       : ℒᴬ (ι ⇒ o)
-  variable c   : ℒᴬ σ
+  data ℒᴬ     : Types → Set where
+    tt ff     : ℒᴬ o
+    ⊃         : ℒᴬ (o ⇒ σ ⇒ σ ⇒ σ)
+    Y         : ℒᴬ ((σ ⇒ σ) ⇒ σ)
+    k         : Nat → ℒᴬ ι
+    ⦅+1⦆      : ℒᴬ (ι ⇒ ι)
+    ⦅−1⦆      : ℒᴬ (ι ⇒ ι)
+    Z         : ℒᴬ (ι ⇒ o)
+  variable c  : ℒᴬ σ
 ```
 
 In ([Plotkin 1977]) the constants `⊃` and `Y` are subscripted by their types;
@@ -90,11 +90,11 @@ space) as a separator. Following ([Plotkin 1977]), both terms are
 parenthesised, but using `⦅…⦆` instead of ordinary parentheses.
 
 ```agda
-  data Terms : Types → Set where
-    𝑉_      : Vars σ → Terms σ
-    𝐿_      : ℒᴬ σ → Terms σ
-    ⦅_␣_⦆   : Terms (σ ⇒ τ) → Terms σ → Terms τ
-    ⦅λ_␣_⦆  : Vars σ → Terms τ → Terms (σ ⇒ τ)
+  data Terms  : Types → Set where
+    𝑉_        : Vars σ → Terms σ
+    𝐿_        : ℒᴬ σ → Terms σ
+    ⦅_␣_⦆     : Terms (σ ⇒ τ) → Terms σ → Terms τ
+    ⦅λ_␣_⦆    : Vars σ → Terms τ → Terms (σ ⇒ τ)
   variable M N : Terms σ
 ```
 
@@ -113,9 +113,9 @@ module Domain-Equations where
   open Notation.Flat.Booleans using (Bool; Bool⊥)
   open Notation.Flat.Naturals using (Nat⊥; eq⊥Nat⊥)
   𝒟 : Types → Domain
-  𝒟 ι = Nat⊥
-  𝒟 o = Bool⊥
-  𝒟 (σ ⇒ τ) = 𝒟 σ →ᶜ 𝒟 τ
+  𝒟 ι        = Nat⊥
+  𝒟 o        = Bool⊥
+  𝒟 (σ ⇒ τ)  = 𝒟 σ →ᶜ 𝒟 τ
   variable x y z : ⟪ 𝒟 σ ⟫
 ```
 
