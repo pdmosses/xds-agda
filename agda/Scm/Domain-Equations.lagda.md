@@ -39,7 +39,7 @@ with postulated domain equivalences `D ≡ E`.
 
 The remaining domains are mutually recursive: the domain `𝐄` is supposed to be
 the sum `𝐓 ⊕ 𝐑 ⊕ 𝐏 ⊕ 𝐌 ⊕ 𝐅`, where `𝐅` is a domain involving `𝐄` (directly, and
-indirectly through `𝐄⋆` and `𝐂`). In conventional denotational semantics,
+indirectly through `𝐄 ⋆` and `𝐂`). In conventional denotational semantics,
 mutually recursive groups of domain equations have well-defined solutions.
 However, defining both `𝐄` and `𝐅` by type equations on Agda would prevent the
 type checker from terminating. Postulating one (or both) of these domains
@@ -52,8 +52,7 @@ intended structure.
   𝐒  =  𝐋 →ᶜ 𝐄
   postulate 𝐀 : Domain
   𝐂  =  𝐒 →ᶜ 𝐀
-  𝐄⋆ =  𝐄 ⋆
-  𝐅  =  𝐄⋆ →ᶜ (𝐄 →ᶜ 𝐂) →ᶜ 𝐂
+  𝐅  =  𝐄 ⋆ →ᶜ (𝐄 →ᶜ 𝐂) →ᶜ 𝐂
 ```
 
 The following postulates instantiate the emebdding, inspection, and projection
@@ -75,6 +74,6 @@ they appear to be ignored by the type checker.
 
 ```agda
   variable
-    α : ⟪ 𝐋 ⟫;  ρ : ⟪ 𝐔 ⟫;  μ  : ⟪ 𝐌 ⟫;  ϵ : ⟪ 𝐄 ⟫
-    σ : ⟪ 𝐒 ⟫;  θ : ⟪ 𝐂 ⟫;  ϵ⋆ : ⟪ 𝐄⋆ ⟫;  φ : ⟪ 𝐅 ⟫
+    α : ⟪ 𝐋 ⟫;  ρ : ⟪ 𝐔 ⟫;  μ  : ⟪ 𝐌 ⟫;   ϵ : ⟪ 𝐄 ⟫
+    σ : ⟪ 𝐒 ⟫;  θ : ⟪ 𝐂 ⟫;  ϵ⋆ : ⟪ 𝐄 ⋆ ⟫;  φ : ⟪ 𝐅 ⟫
 ```

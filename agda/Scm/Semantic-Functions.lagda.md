@@ -13,7 +13,7 @@ module Scm.Semantic-Functions where
   open Notation.Flat using (↑)
   open Notation.Flat.Booleans using (_⟶_,_; _==⊥_; true; false)
   open Notation.Sums using (_in⊥_; _|⊥_)
-  open Notation.Products.Sequences using (⟨⟩; ⟨_⟩; _§_)
+  open Notation.Products.Sequences using (_⋆; ⟨⟩; ⟨_⟩; _§_)
   open Notation.Updates using (_[_/_])
 ```
 
@@ -22,7 +22,7 @@ module Scm.Semantic-Functions where
 ```agda
   𝒦⟦_⟧   :  ⟪ Con →ˢ 𝐄 ⟫
   ℰ⟦_⟧   :  ⟪ Exp →ˢ 𝐔 →ᶜ (𝐄 →ᶜ 𝐂) →ᶜ 𝐂 ⟫
-  ℰ⋆⟦_⟧  :  ⟪ Exp⋆ →ˢ 𝐔 →ᶜ (𝐄⋆ →ᶜ 𝐂) →ᶜ 𝐂 ⟫
+  ℰ⋆⟦_⟧  :  ⟪ Exp⋆ →ˢ 𝐔 →ᶜ (𝐄 ⋆ →ᶜ 𝐂) →ᶜ 𝐂 ⟫
 
   𝒦⟦ int Z ⟧  = ↑ Z in⊥ 𝐄
   𝒦⟦ #t ⟧     = ↑ true in⊥ 𝐄
