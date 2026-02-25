@@ -207,9 +207,8 @@ However, it is difficult to support such conventions in Agda.)
 module Flat where
   postulate
     _+⊥  : Set → Domain
-    ↑    : ⟪ A →ˢ A +⊥ ⟫
-    _♯   : ⟪ (A →ˢ D) →ᶜ A +⊥ →ᶜ D ⟫
-  infix 10 _+⊥
+    ↑    : ⟪ A →ˢ (A +⊥) ⟫
+    _♯   : ⟪ (A →ˢ D) →ᶜ (A +⊥) →ᶜ D ⟫
 ```
 
 ### Booleans
@@ -234,7 +233,7 @@ the operation only for flat domains `D` with `instance _ : Eq⊥ D`.
 ```agda
     postulate
       Eq⊥ : Domain → Set
-      _==⊥_ : {{Eq⊥ (A +⊥)}} → ⟪ A +⊥ →ᶜ A +⊥ →ᶜ Bool⊥ ⟫
+      _==⊥_ : {{Eq⊥ (A +⊥)}} → ⟪ (A +⊥) →ᶜ (A +⊥) →ᶜ Bool⊥ ⟫
       instance eq⊥Bool⊥ : Eq⊥ Bool⊥
 ```
 
@@ -279,10 +278,9 @@ for domains with more than two summands.
 module Sums where
   postulate
     _⊕_    : Domain → Domain → Domain
-    inj₁   : ⟪ D →ᶜ D ⊕ E ⟫
-    inj₂   : ⟪ E →ᶜ D ⊕ E ⟫
-    [_,_]  : ⟪ (D →ᶜ F) →ᶜ (E →ᶜ F) →ᶜ (D ⊕ E →ᶜ F) ⟫
-  infixr 1 _⊕_
+    inj₁   : ⟪ D →ᶜ (D ⊕ E) ⟫
+    inj₂   : ⟪ E →ᶜ (D ⊕ E) ⟫
+    [_,_]  : ⟪ (D →ᶜ F) →ᶜ (E →ᶜ F) →ᶜ ((D ⊕ E) →ᶜ F) ⟫
 ```
 
 In published examples of denotational semantics, injection of $\delta$ from
@@ -329,9 +327,9 @@ binary products, and iterated for products of more than two domains.
 module Products where
   postulate
     _×_  : Domain → Domain → Domain
-    _,_  : ⟪ D →ᶜ E →ᶜ D × E ⟫
-    _↓₁  : ⟪ D × E →ᶜ D ⟫
-    _↓₂  : ⟪ D × E →ᶜ E ⟫
+    _,_  : ⟪ D →ᶜ E →ᶜ (D × E) ⟫
+    _↓₁  : ⟪ (D × E) →ᶜ D ⟫
+    _↓₂  : ⟪ (D × E) →ᶜ E ⟫
   infixr 2 _×_
   infixr 4 _,_
 ```
@@ -348,7 +346,6 @@ written $D^n$, but Agda does not support the use of variables as superscripts.
     D ^ 0            = 𝟙 
     D ^ 1            = D
     D ^ suc (suc n)  = D × (D ^ suc n)
-    infix 8 _^_
 ```
 
 Making `D ^ 2` definitionally equal to `D × D` in Agda supports type-checking
@@ -395,12 +392,12 @@ module Updates where
   ρ [ δ / a ] = λ a′ → if a == a′ then δ else ρ a′
 ```
 
-For stores `σ : ⟪ A +⊥ →ᶜ D ⟫`, however, an equality operation
-`_==⊥_ : ⟪ A +⊥ →ᶜ A +⊥ →ᶜ Bool⊥ ⟫` on the flat domain is required:
+For stores `σ : ⟪ (A +⊥) →ᶜ D ⟫`, however, an equality operation
+`_==⊥_ : ⟪ (A +⊥) →ᶜ (A +⊥) →ᶜ Bool⊥ ⟫` on the flat domain is required:
 
 ```agda
   open Flat
-  _[_/_]⊥ : {{Eq⊥ (A +⊥)}} → ⟪ (A +⊥ →ᶜ D) →ᶜ D →ᶜ A +⊥ →ᶜ (A +⊥ →ᶜ D) ⟫
+  _[_/_]⊥ : {{Eq⊥ (A +⊥)}} → ⟪ ((A +⊥) →ᶜ D) →ᶜ D →ᶜ (A +⊥) →ᶜ ((A +⊥) →ᶜ D) ⟫
   σ [ δ / α ]⊥ = λ α′ → (α ==⊥ α′) ⟶ δ , σ α′
 ```
 
