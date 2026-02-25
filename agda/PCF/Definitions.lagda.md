@@ -206,16 +206,16 @@ case analysis, which is not supported in this Agda formalisation
 
 ### Terms
 
-The semantic function `𝓐′⟦ M ⟧` is written
+The semantic function `𝒜′⟦ M ⟧` is written
 $\hat{\mathcal A} \llbracket M \rrbracket$ in ([Plotkin 1977]). It gives the
 denotation of the term `M` as a function of the environment `ρ`.
 
 ```agda
-  𝓐′⟦_⟧ : Terms σ → ⟪ Env →ˢ 𝒟 σ ⟫
-  𝓐′⟦ 𝑉 α i σ ⟧ ρ           =  ρ ⟦ α i σ ⟧
-  𝓐′⟦ 𝐿 c ⟧ ρ               =  𝒜⟦ c ⟧
-  𝓐′⟦ ⦅ M ␣ N ⦆ ⟧ ρ         =  𝓐′⟦ M ⟧ ρ (𝓐′⟦ N ⟧ ρ) 
-  𝓐′⟦ ⦅λ α i σ ␣ M ⦆ ⟧ ρ x  =  𝓐′⟦ M ⟧ (ρ [ x / α i σ ]′)
+  𝒜′⟦_⟧ : Terms σ → ⟪ Env →ˢ 𝒟 σ ⟫
+  𝒜′⟦ 𝑉 α i σ ⟧ ρ           =  ρ ⟦ α i σ ⟧
+  𝒜′⟦ 𝐿 c ⟧ ρ               =  𝒜⟦ c ⟧
+  𝒜′⟦ ⦅ M ␣ N ⦆ ⟧ ρ         =  𝒜′⟦ M ⟧ ρ (𝒜′⟦ N ⟧ ρ) 
+  𝒜′⟦ ⦅λ α i σ ␣ M ⦆ ⟧ ρ x  =  𝒜′⟦ M ⟧ (ρ [ x / α i σ ]′)
 ```
 
 See the [Tests] module for some examples of abstract syntax terms and
