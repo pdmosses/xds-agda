@@ -30,15 +30,11 @@ module Scm.Semantic-Functions where
 
   ℰ⟦ con K ⟧ ρ κ = κ (𝒦⟦ K ⟧)
   ℰ⟦ ide I ⟧ ρ κ = hold (ρ I) κ
-  ℰ⟦ ⦅ E ␣ E⋆ ⦆ ⟧ ρ κ =
-    ℰ⟦ E ⟧ ρ (λ ϵ → ℰ⋆⟦ E⋆ ⟧ ρ (λ ϵ⋆ → (ϵ |⊥ 𝐅) ϵ⋆ κ))
+  ℰ⟦ ⦅ E ␣ E⋆ ⦆ ⟧ ρ κ = ℰ⟦ E ⟧ ρ (λ ϵ → ℰ⋆⟦ E⋆ ⟧ ρ (λ ϵ⋆ → (ϵ |⊥ 𝐅) ϵ⋆ κ))
   ℰ⟦ ⦅lambda I ␣ E ⦆ ⟧ ρ κ =
-    κ (  (λ ϵ⋆ κ′ → list ϵ⋆ (λ ϵ → alloc ϵ (λ α → ℰ⟦ E ⟧ (ρ [ α / I ]) κ′)))
-          in⊥ 𝐄 )
-  ℰ⟦ ⦅if E ␣ E₁ ␣ E₂ ⦆ ⟧ ρ κ =
-    ℰ⟦ E ⟧ ρ (λ ϵ → truish ϵ ⟶ ℰ⟦ E₁ ⟧ ρ κ , ℰ⟦ E₂ ⟧ ρ κ)
-  ℰ⟦ ⦅set! I ␣ E ⦆ ⟧ ρ κ =
-    ℰ⟦ E ⟧ ρ (λ ϵ → assign (ρ I) ϵ (κ (↑ unspecified in⊥ 𝐄)))
+    κ ( (λ ϵ⋆ κ′ → list ϵ⋆ (λ ϵ → alloc ϵ (λ α → ℰ⟦ E ⟧ (ρ [ α / I ]) κ′))) in⊥ 𝐄 )
+  ℰ⟦ ⦅if E ␣ E₁ ␣ E₂ ⦆ ⟧ ρ κ = ℰ⟦ E ⟧ ρ (λ ϵ → truish ϵ ⟶ ℰ⟦ E₁ ⟧ ρ κ , ℰ⟦ E₂ ⟧ ρ κ)
+  ℰ⟦ ⦅set! I ␣ E ⦆ ⟧ ρ κ = ℰ⟦ E ⟧ ρ (λ ϵ → assign (ρ I) ϵ (κ (↑ unspecified in⊥ 𝐄)))
 
   ℰ⋆⟦ ␣␣␣ ⟧ ρ κ = κ ⟨⟩
   ℰ⋆⟦ E ␣␣ E⋆ ⟧ ρ κ = ℰ⟦ E ⟧ ρ (λ ϵ → ℰ⋆⟦ E⋆ ⟧ ρ (λ ϵ⋆ → κ (⟨ ϵ ⟩ § ϵ⋆)))
@@ -53,8 +49,7 @@ module Scm.Semantic-Functions where
 
   ℬ⟦ ␣␣ E ⟧ ρ κ = ℰ⟦ E ⟧ ρ (λ ϵ → κ ρ)
   ℬ⟦ ⦅define I ␣ E ⦆ ⟧ ρ κ =
-    ℰ⟦ E ⟧ ρ (λ ϵ → (ρ I ==⊥ ↑ unknown) ⟶
-      alloc ϵ (λ α → κ (ρ [ α / I ])),
+    ℰ⟦ E ⟧ ρ (λ ϵ → (ρ I ==⊥ ↑ unknown) ⟶ alloc ϵ (λ α → κ (ρ [ α / I ])) ,
     assign (ρ I) ϵ (κ ρ))
   ℬ⟦ ⦅begin B⁺ ⦆ ⟧ ρ κ = ℬ⁺⟦ B⁺ ⟧ ρ κ
 
