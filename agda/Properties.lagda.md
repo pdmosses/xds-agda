@@ -2,6 +2,7 @@
 
 ```agda
 {-# OPTIONS --rewriting --confluence-check --lossy-unification #-}
+
 module Properties where
 open import Agda.Builtin.Equality using (_≡_; refl) public
 open import Agda.Builtin.Equality.Rewrite using ()
@@ -77,6 +78,12 @@ module Sums where
   open Notation.Flat.Booleans
   open Notation.Sums
   open import Relation.Binary.PropositionalEquality.Core using (_≢_)
+  variable φ : ⟪ D →ᶜ F ⟫; ψ : ⟪ E →ᶜ F ⟫; δ : ⟪ D ⟫; ε : ⟪ E ⟫
+  postulate
+    elim-inj₁  :  [ φ , ψ ] (inj₁ δ)  ≡  φ δ
+    elim-inj₂  :  [ φ , ψ ] (inj₂ ε)  ≡  ψ ε
+    elim-[]-⊥  :  [ φ , ψ ] ⊥         ≡  ⊥
+  {-# REWRITE elim-inj₁ elim-inj₂ #-} 
   variable D′ : Domain; n′ : Nat
   postulate
     elim-∈⊥    :  {{_ : E ≳ n ↦ D}} → {{_ : E ≳ n′ ↦ D′}} → (δ : ⟪ D ⟫) →
@@ -87,12 +94,20 @@ module Sums where
   {-# REWRITE elim-∈⊥ elim-|⊥ #-} 
 ```
 
-Note that `elim-∈⊥` does not hold when `E` is a coalesced sum.
+Note that `elim-∈⊥ ⊥` would not hold if `E` was a *coalesced* sum.
 
 ## Product domains
 
-### Tuples
+```agda
+module Products where
+  open Notation.Products
+  variable δ : ⟪ D ⟫; ε : ⟪ E ⟫
+  postulate
+    elim-↓₁  :  ( δ , ε ) ↓₁  ≡  δ
+    elim-↓₂  :  ( δ , ε ) ↓₂  ≡  ε
+  {-# REWRITE elim-↓₁ elim-↓₂ #-} 
+```
 
 ### Sequences
 
-## Updates
+TODO
