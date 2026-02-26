@@ -87,6 +87,8 @@ module Sums where
   {-# REWRITE elim-∈⊥ elim-|⊥ #-} 
 ```
 
+Note that `elim-∈⊥` does not hold when `E` is a coalesced sum.
+
 ## Product domains
 
 ### Tuples

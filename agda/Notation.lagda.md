@@ -266,43 +266,43 @@ Agda allows literal strings enclosed in double quotation marks `"..."`.
 
 ## Sum domains
 
-The coalesced sum `D ⊕ E` of two domains corresponds to lifting the disjoint
-union of the non-`⊥` elements of their carrier sets. It is associative (in
-contrast to the separated sum, which lifts the disjoint union of the complete
-carrier sets).
-
-The following operations can be used directly for binary sums, and iterated
-for domains with more than two summands.
+The separated sum `D + E` of two domains corresponds to lifting the disjoint
+union of their carrier sets. 
+The following operations can be used directly for binary sums,
+and iterated for domains with more than two summands.
 
 ```agda
 module Sums where
   postulate
-    _⊕_    : Domain → Domain → Domain
-    inj₁   : ⟪ D →ᶜ (D ⊕ E) ⟫
-    inj₂   : ⟪ E →ᶜ (D ⊕ E) ⟫
-    [_,_]  : ⟪ (D →ᶜ F) →ᶜ (E →ᶜ F) →ᶜ ((D ⊕ E) →ᶜ F) ⟫
+    _+_    : Domain → Domain → Domain
+    inj₁   : ⟪ D →ᶜ (D + E) ⟫
+    inj₂   : ⟪ E →ᶜ (D + E) ⟫
+    [_,_]  : ⟪ (D →ᶜ F) →ᶜ (E →ᶜ F) →ᶜ ((D + E) →ᶜ F) ⟫
 ```
 
 In published examples of denotational semantics, injection of $\delta$ from
 a summand of a domain $E$ can be written $\delta \textsf{ in } E$ (but is
 usually left implicit), and case analysis on $\epsilon$ is written by composing
-the test $\epsilon \in \textsf{D}$ with the McCarthy conditional and projection
-$\epsilon \mid \textsf{D}$. Agda supports type-checking the conventional notation
+the test $\epsilon \in D$ with the McCarthy conditional and projection
+$\epsilon \mid D$. 
+
+Agda supports type-checking the conventional notation
 for these operations (after adding `⊥` as a suffix to avoid reserved symbols):
 
 - When `δ : D`, `δ in⊥ E` is its injection into `E`.
 - When `ε : E`, `ε |⊥ D` is its projection onto `D`,
   and `ε ∈⊥ D` tests whether `ε` is the injection of an element of `D`.
 
-However, instead of defining the summands `D` of a coalesced sum domain `E` by
+However, instead of defining the summands `D` of a separated sum domain `E` by
 an equation `E = ... + D + ...`, the domain `E` is merely *postulated*, and
 each summand is declared separately by `instance _ : E ≳ n ↦ D` (where `n`
 should be a different natural number for each summand). This also avoids
 non-termination due to indirect recursion in groups of type definitions.
 
 The inherently *dependent* types of the above operations are as follows.
-The argument `{D : Domain}` is implicit, and inferred from the other arguments;
-the instance argument `{{E ≳ n ↦ D}}` is also inferred.
+The inferred instance argument `{{E ≳ n ↦ D}}` determines `D` and `E`.
+(The notation `D →ᶜ E` cannot be used for dependent types, but for fixed domains
+the unary functions are known to be continuous when `E` is a sum domain.)
 
 ```agda
   open import Data.Nat.Base renaming (ℕ to Nat)
