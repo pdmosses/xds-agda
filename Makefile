@@ -549,6 +549,32 @@ clean-latex:
 	@rm -rf $(CODE)
 
 ##############################################################################
+# GENERATE PLAIN AGDA
+
+# Assumption: DIR is a single directory
+
+PLAIN = plain
+
+.PHONY: plain
+plain: clean-plain
+	@for m in $(LAGDA-MD-FILES); do \
+	    t=$(PLAIN)/$${m#$(DIR)/*}; \
+	    d=$${t%*/*.lagda.md}; mkdir -p $$d; \
+	    t=$${t%*.lagda.md}.agda; \
+	    cp -f $$m $$t; \
+	    sd '```agda' '%agda' $$t; \
+	    sd '```' '%/agda' $$t; \
+	    sd '%/agda[^%]*%agda' '\n' $$t; \
+	    sd '\A[^%]*%agda' '' $$t; \
+	    sd '%/agda[^%]*\z' '' $$t; \
+	done
+
+.PHONY: clean-plain
+clean-plain:
+	@rm -rf $(PLAIN)
+
+
+##############################################################################
 # HELPFUL TEXTS
 
 define HELP
