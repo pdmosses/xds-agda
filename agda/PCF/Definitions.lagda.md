@@ -111,7 +111,7 @@ not involving bijections or embeddings.
 module Domain-Equations where
   open Abstract-Syntax
   open Notation.Flat.Booleans using (Bool; Bool⊥)
-  open Notation.Flat.Naturals using (Nat⊥; eq⊥Nat⊥)
+  open Notation.Flat.Naturals using (Nat⊥; eqNat)
   𝒟 : Types → Domain
   𝒟 ι        = Nat⊥
   𝒟 o        = Bool⊥
@@ -136,7 +136,8 @@ for both variables and types. The definition of the latter is somewhat tedious
 in Agda.
 
 ```agda
-  open Notation.Updates using (Eq; _==_; _[_/_])
+  open Notation.Flat.Booleans using (Eq; _==_)
+  open Notation.Updates using (_[_/_])
   _==ⱽ_ : Vars σ → Vars σ → Bool
   open import Data.Nat.Base using (_≡ᵇ_) public
   (α i σ ==ⱽ α i′ σ)  =  (i ≡ᵇ i′)

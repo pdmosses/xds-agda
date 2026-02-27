@@ -58,6 +58,8 @@ module Flat where
 
   module Booleans where
     open import Data.Bool.Base using (Bool; false; true; if_then_else_) public
+    record Eq (A : Set) : Set where field _==_ : A → A → Bool
+    open Eq {{...}} public
     Bool⊥ = Bool +⊥
     postulate
       _⟶_,_ : ⟪ Bool⊥ →ᶜ D →ᶜ D →ᶜ D ⟫
@@ -65,22 +67,22 @@ module Flat where
 
     postulate
       Eq⊥ : Domain → Set
-      _==⊥_ : {{Eq⊥ (A +⊥)}} → ⟪ (A +⊥) →ᶜ (A +⊥) →ᶜ Bool⊥ ⟫
-      instance eq⊥Bool⊥ : Eq⊥ Bool⊥
+      _==⊥_ : {{Eq A}} → ⟪ (A +⊥) →ᶜ (A +⊥) →ᶜ Bool⊥ ⟫
+      instance eqBool : Eq Bool
 
   module Naturals where
     open import Data.Nat.Base renaming (ℕ to Nat) using (suc; _+_; _∸_; _≡ᵇ_) public
     Nat⊥ = Nat +⊥
     open Booleans
     postulate
-      instance eq⊥Nat⊥ : Eq⊥ Nat⊥
+      instance eqNat : Eq Nat
 
   module Strings where
     open import Data.String.Base using (String) public
     String⊥ = String +⊥
     open Booleans
     postulate
-      instance _ : Eq⊥ String⊥
+      instance _ : Eq String
 
 module Sums where
   postulate
@@ -130,13 +132,11 @@ module Products where
 module Updates where
   open Flat
   open Flat.Booleans
-  record Eq (A : Set) : Set where field _==_ : A → A → Bool
-  open Eq {{...}} public
   _[_/_] : {{Eq A}} → ⟪ (A →ˢ D) →ᶜ D →ᶜ A →ˢ (A →ˢ D) ⟫
   ρ [ δ / a ] = λ a′ → if a == a′ then δ else ρ a′
 
   open Flat
-  _[_/_]⊥ : {{Eq⊥ (A +⊥)}} → ⟪ ((A +⊥) →ᶜ D) →ᶜ D →ᶜ (A +⊥) →ᶜ ((A +⊥) →ᶜ D) ⟫
+  _[_/_]⊥ : {{Eq A}} → ⟪ ((A +⊥) →ᶜ D) →ᶜ D →ᶜ (A +⊥) →ᶜ ((A +⊥) →ᶜ D) ⟫
   σ [ δ / α ]⊥ = λ α′ → (α ==⊥ α′) ⟶ δ , σ α′
 
   open import Data.Maybe.Base using (Maybe; just; nothing) public

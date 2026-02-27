@@ -28,10 +28,10 @@ module Domain-Equations where
   Env = Var →ˢ D∞
   variable ρ : ⟪ Env ⟫
 
-  open Notation.Flat.Booleans using (Bool)
+  open Notation.Flat.Booleans using (Bool; Eq; _==_)
   _==ⱽ_ : Var → Var → Bool
   open import Data.Nat.Base using (_≡ᵇ_) public
-  open Notation.Updates using (Eq; _==_; _[_/_]) public
+  open Notation.Updates using (_[_/_]) public
   (x n ==ⱽ x n′) = (n ≡ᵇ n′)
   instance eqVar : Eq Var; _==_ {{eqVar}} = _==ⱽ_
 

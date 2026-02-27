@@ -220,6 +220,8 @@ argument is `⊥`.
 ```agda
   module Booleans where
     open import Data.Bool.Base using (Bool; false; true; if_then_else_) public
+    record Eq (A : Set) : Set where field _==_ : A → A → Bool
+    open Eq {{...}} public
     Bool⊥ = Bool +⊥
     postulate
       _⟶_,_ : ⟪ Bool⊥ →ᶜ D →ᶜ D →ᶜ D ⟫
@@ -227,14 +229,14 @@ argument is `⊥`.
 ```
 
 The instance parameter of the strict equality test `δ₁ ==⊥ δ₂` below declares
-the operation only for flat domains `D` with `instance _ : Eq⊥ D`.
+the operation only for flat domains `A +⊥` with `instance _ : Eq A`.
 (Equality is unavailable on non-flat domains because it is not continuous.)
 
 ```agda
     postulate
       Eq⊥ : Domain → Set
-      _==⊥_ : {{Eq⊥ (A +⊥)}} → ⟪ (A +⊥) →ᶜ (A +⊥) →ᶜ Bool⊥ ⟫
-      instance eq⊥Bool⊥ : Eq⊥ Bool⊥
+      _==⊥_ : {{Eq A}} → ⟪ (A +⊥) →ᶜ (A +⊥) →ᶜ Bool⊥ ⟫
+      instance eqBool : Eq Bool
 ```
 
 ### Naturals
@@ -248,7 +250,7 @@ using `zero` and `suc`.
     Nat⊥ = Nat +⊥
     open Booleans
     postulate
-      instance eq⊥Nat⊥ : Eq⊥ Nat⊥
+      instance eqNat : Eq Nat
 ```
 
 ### Strings
@@ -261,7 +263,7 @@ Agda allows literal strings enclosed in double quotation marks `"..."`.
     String⊥ = String +⊥
     open Booleans
     postulate
-      instance _ : Eq⊥ String⊥
+      instance _ : Eq String
 ```
 
 ## Sum domains
@@ -386,8 +388,6 @@ conventional notation `ρ [ δ / a ]`, defined as follows.
 module Updates where
   open Flat
   open Flat.Booleans
-  record Eq (A : Set) : Set where field _==_ : A → A → Bool
-  open Eq {{...}} public
   _[_/_] : {{Eq A}} → ⟪ (A →ˢ D) →ᶜ D →ᶜ A →ˢ (A →ˢ D) ⟫
   ρ [ δ / a ] = λ a′ → if a == a′ then δ else ρ a′
 ```
@@ -397,7 +397,7 @@ For stores `σ : ⟪ (A +⊥) →ᶜ D ⟫`, however, an equality operation
 
 ```agda
   open Flat
-  _[_/_]⊥ : {{Eq⊥ (A +⊥)}} → ⟪ ((A +⊥) →ᶜ D) →ᶜ D →ᶜ (A +⊥) →ᶜ ((A +⊥) →ᶜ D) ⟫
+  _[_/_]⊥ : {{Eq A}} → ⟪ ((A +⊥) →ᶜ D) →ᶜ D →ᶜ (A +⊥) →ᶜ ((A +⊥) →ᶜ D) ⟫
   σ [ δ / α ]⊥ = λ α′ → (α ==⊥ α′) ⟶ δ , σ α′
 ```
 
