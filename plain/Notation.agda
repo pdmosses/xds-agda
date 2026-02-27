@@ -5,7 +5,6 @@ module Notation where
 
 variable A B C : Set
 
-
 module Domains where
   postulate
     Domain : Set
@@ -16,7 +15,6 @@ module Domains where
 
 open Domains public
 
-
 module Functions where
   open import Agda.Builtin.Equality using (_≡_) public
   open import Agda.Builtin.Equality.Rewrite using ()
@@ -24,28 +22,22 @@ module Functions where
     _→ᶜ_ : Domain → Domain → Domain
   infixr 0 _→ᶜ_
 
-
   postulate
     fix : ⟪ (D →ᶜ D) →ᶜ D ⟫
-
 
   postulate
     dom-cts : ⟪ D →ᶜ E ⟫ ≡ (⟪ D ⟫ → ⟪ E ⟫)
   {-# REWRITE dom-cts #-}
 
-
   postulate
     _→ˢ_ : Set → Domain → Domain
   infixr 0 _→ˢ_
-
 
   postulate
     set-cts : ⟪ A →ˢ D ⟫ ≡ (A → ⟪ D ⟫)
   {-# REWRITE set-cts #-}
 
-
 open Functions public
-
 
 module Recursion where
   postulate
@@ -53,19 +45,16 @@ module Recursion where
     unfold :  {{D ≅ E}} → ⟪ D →ᶜ E ⟫
     fold :    {{D ≅ E}} → ⟪ E →ᶜ D ⟫
 
-
   module D-infinity where
     postulate
       D∞ : Domain
       instance _ : D∞ ≅ (D∞ →ᶜ D∞)
-
 
 module Flat where
   postulate
     _+⊥  : Set → Domain
     ↑    : ⟪ A →ˢ (A +⊥) ⟫
     _♯   : ⟪ (A →ˢ D) →ᶜ (A +⊥) →ᶜ D ⟫
-
 
   module Booleans where
     open import Data.Bool.Base using (Bool; false; true; if_then_else_) public
@@ -74,12 +63,10 @@ module Flat where
       _⟶_,_ : ⟪ Bool⊥ →ᶜ D →ᶜ D →ᶜ D ⟫
     infixr 20 _⟶_,_
 
-
     postulate
       Eq⊥ : Domain → Set
       _==⊥_ : {{Eq⊥ (A +⊥)}} → ⟪ (A +⊥) →ᶜ (A +⊥) →ᶜ Bool⊥ ⟫
       instance eq⊥Bool⊥ : Eq⊥ Bool⊥
-
 
   module Naturals where
     open import Data.Nat.Base renaming (ℕ to Nat) using (suc; _+_; _∸_; _≡ᵇ_) public
@@ -88,7 +75,6 @@ module Flat where
     postulate
       instance eq⊥Nat⊥ : Eq⊥ Nat⊥
 
-
   module Strings where
     open import Data.String.Base using (String) public
     String⊥ = String +⊥
@@ -96,14 +82,12 @@ module Flat where
     postulate
       instance _ : Eq⊥ String⊥
 
-
 module Sums where
   postulate
     _+_    : Domain → Domain → Domain
     inj₁   : ⟪ D →ᶜ (D + E) ⟫
     inj₂   : ⟪ E →ᶜ (D + E) ⟫
     [_,_]  : ⟪ (D →ᶜ F) →ᶜ (E →ᶜ F) →ᶜ ((D + E) →ᶜ F) ⟫
-
 
   open import Data.Nat.Base renaming (ℕ to Nat)
   open Flat.Booleans
@@ -114,7 +98,6 @@ module Sums where
     _|⊥_   : ⟪ E ⟫ → (D : Domain) → {{E ≳ n ↦ D}} → ⟪ D ⟫
     _∈⊥_   : ⟪ E ⟫ → (D : Domain) → {{E ≳ n ↦ D}} → ⟪ Bool⊥ ⟫
 
-
 module Products where
   postulate
     _×_  : Domain → Domain → Domain
@@ -124,14 +107,12 @@ module Products where
   infixr 2 _×_
   infixr 4 _,_
 
-
   module Tuples where
     open import Data.Nat.Base renaming (ℕ to Nat) using (suc) public
     _^_ : Domain → Nat → Domain
     D ^ 0            = 𝟙 
     D ^ 1            = D
     D ^ suc (suc n)  = D × (D ^ suc n)
-
 
   module Sequences where
     open Flat.Naturals
@@ -146,7 +127,6 @@ module Products where
       _↓_    : ⟪ D ⋆ →ᶜ Nat →ˢ D ⟫
       _†_    : ⟪ D ⋆ →ᶜ Nat →ˢ D ⋆ ⟫
 
-
 module Updates where
   open Flat
   open Flat.Booleans
@@ -155,11 +135,9 @@ module Updates where
   _[_/_] : {{Eq A}} → ⟪ (A →ˢ D) →ᶜ D →ᶜ A →ˢ (A →ˢ D) ⟫
   ρ [ δ / a ] = λ a′ → if a == a′ then δ else ρ a′
 
-
   open Flat
   _[_/_]⊥ : {{Eq⊥ (A +⊥)}} → ⟪ ((A +⊥) →ᶜ D) →ᶜ D →ᶜ (A +⊥) →ᶜ ((A +⊥) →ᶜ D) ⟫
   σ [ δ / α ]⊥ = λ α′ → (α ==⊥ α′) ⟶ δ , σ α′
-
 
   open import Data.Maybe.Base using (Maybe; just; nothing) public
   open import Relation.Binary.PropositionalEquality.Core using (_≡_; refl) public

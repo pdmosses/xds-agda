@@ -3,18 +3,15 @@
 
 module Scm.Abstract-Syntax where
 
-
   open import Data.String.Base using (String) public
   Ide = String
   variable I : Ide
-
 
   open import Data.Integer.Base renaming (ℤ to Int) using () public
   data Con  : Set where
     int     : Int → Con
     #t #f   : Con
   variable K : Con
-
 
   mutual
     data Exp       : Set where
@@ -28,7 +25,6 @@ module Scm.Abstract-Syntax where
       ␣␣␣          : Exp⋆
       _␣␣_         : Exp → Exp⋆ → Exp⋆
   variable E : Exp; E⋆ : Exp⋆
-
 
   mutual
     data Body      : Set where

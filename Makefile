@@ -564,7 +564,7 @@ plain: clean-plain
 	    cp -f $$m $$t; \
 	    sd '```agda' '%agda' $$t; \
 	    sd '```' '%/agda' $$t; \
-	    sd '%/agda[^%]*%agda' '\n' $$t; \
+	    sd '%/agda[^%]*%agda' '' $$t; \
 	    sd '\A[^%]*%agda' '' $$t; \
 	    sd '%/agda[^%]*\z' '' $$t; \
 	done

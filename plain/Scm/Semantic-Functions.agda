@@ -14,7 +14,6 @@ module Scm.Semantic-Functions where
   open Notation.Products.Sequences using (_⋆; ⟨⟩; ⟨_⟩; _§_)
   open Notation.Updates using (_[_/_])
 
-
   𝒦⟦_⟧   :  ⟪ Con →ˢ 𝐄 ⟫
   ℰ⟦_⟧   :  ⟪ Exp →ˢ 𝐔 →ᶜ (𝐄 →ᶜ 𝐂) →ᶜ 𝐂 ⟫
   ℰ⋆⟦_⟧  :  ⟪ Exp⋆ →ˢ 𝐔 →ᶜ (𝐄 ⋆ →ᶜ 𝐂) →ᶜ 𝐂 ⟫
@@ -33,7 +32,6 @@ module Scm.Semantic-Functions where
 
   ℰ⋆⟦ ␣␣␣ ⟧ ρ κ = κ ⟨⟩
   ℰ⋆⟦ E ␣␣ E⋆ ⟧ ρ κ = ℰ⟦ E ⟧ ρ (λ ϵ → ℰ⋆⟦ E⋆ ⟧ ρ (λ ϵ⋆ → κ (⟨ ϵ ⟩ § ϵ⋆)))
-
 
   ℬ⟦_⟧   :  ⟪ Body →ˢ 𝐔 →ᶜ (𝐔 →ᶜ 𝐂) →ᶜ 𝐂 ⟫
   ℬ⁺⟦_⟧  :  ⟪ Body⁺ →ˢ 𝐔 →ᶜ (𝐔 →ᶜ 𝐂) →ᶜ 𝐂 ⟫

@@ -13,7 +13,6 @@ module Scm.Domain-Equations where
   open Notation.Products using (_×_)
   open Notation.Products.Sequences using (_⋆)
 
-
   postulate Loc : Set
   𝐋  =  Loc +⊥
   𝐍  =  Nat⊥
@@ -25,13 +24,11 @@ module Scm.Domain-Equations where
      null unallocated undefined unspecified : Misc
   𝐌  =  Misc +⊥
 
-
   postulate 𝐄 : Domain
   𝐒  =  𝐋 →ᶜ 𝐄
   postulate 𝐀 : Domain
   𝐂  =  𝐒 →ᶜ 𝐀
   𝐅  =  𝐄 ⋆ →ᶜ (𝐄 →ᶜ 𝐂) →ᶜ 𝐂
-
 
   postulate instance
     E+=T  : 𝐄 ≳ 1 ↦ 𝐓
@@ -39,7 +36,6 @@ module Scm.Domain-Equations where
     E+=P  : 𝐄 ≳ 3 ↦ 𝐏
     E+=M  : 𝐄 ≳ 4 ↦ 𝐌
     E+=F  : 𝐄 ≳ 5 ↦ 𝐅
-
 
   variable
     α : ⟪ 𝐋 ⟫;  ρ : ⟪ 𝐔 ⟫;  μ  : ⟪ 𝐌 ⟫;   ϵ : ⟪ 𝐄 ⟫

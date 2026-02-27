@@ -4,9 +4,7 @@
 module PCF.Definitions where
 open import Notation
 
-
 module Abstract-Syntax where
-
 
   data Types  : Set where
     ι o       : Types
@@ -14,12 +12,10 @@ module Abstract-Syntax where
   infixr 1 _⇒_
   variable σ τ : Types
 
-
   open import Data.Nat.Base renaming (ℕ to Nat) using () public
   data Vars   : Types → Set where
     α         : Nat → (σ : Types) → Vars σ
   variable i  : Nat
-
 
   data ℒᴬ     : Types → Set where
     tt ff     : ℒᴬ o
@@ -31,14 +27,12 @@ module Abstract-Syntax where
     Z         : ℒᴬ (ι ⇒ o)
   variable c  : ℒᴬ σ
 
-
   data Terms  : Types → Set where
     𝑉_        : Vars σ → Terms σ
     𝐿_        : ℒᴬ σ → Terms σ
     ⦅_␣_⦆     : Terms (σ ⇒ τ) → Terms σ → Terms τ
     ⦅λ_␣_⦆    : Vars σ → Terms τ → Terms (σ ⇒ τ)
   variable M N : Terms σ
-
 
 module Domain-Equations where
   open Abstract-Syntax
@@ -50,12 +44,10 @@ module Domain-Equations where
   𝒟 (σ ⇒ τ)  = 𝒟 σ →ᶜ 𝒟 τ
   variable x y z : ⟪ 𝒟 σ ⟫
 
-
   Env = (σ : Types) → ⟪ Vars σ →ˢ 𝒟 σ ⟫
   variable ρ : Env
   ρ⊥ : Env
   ρ⊥ = λ _ → λ _ → ⊥
-
 
   open Notation.Updates using (Eq; _==_; _[_/_])
   _==ⱽ_ : Vars σ → Vars σ → Bool
@@ -76,19 +68,15 @@ module Domain-Equations where
     _==?_ {{eqT}} (σ ⇒ τ) (.σ ⇒ .τ)    | just refl    | just refl = just refl
     _==?_ {{eqT}} _ _ = nothing
 
-
   _[_/_]′ : Env → ⟪ 𝒟 σ ⟫ → Vars σ → Env
   _[_/_]′ {σ} ρ x v = ρ [ σ ← ρ σ [ x / v ] ]
-
 
 module Semantic-Functions where
   open Abstract-Syntax
   open Domain-Equations
 
-
   _⟦_⟧ : Env → Vars σ → ⟪ 𝒟 σ ⟫
   ρ ⟦ α i σ ⟧ = ρ σ (α i σ)
-
 
   open Notation.Flat using (↑; _♯)
   open Notation.Flat.Booleans using (_⟶_,_; _==⊥_; false; true)
@@ -102,7 +90,6 @@ module Semantic-Functions where
   𝒜⟦ ⦅+1⦆ ⟧  =  (λ n → ↑ (n + 1)) ♯
   𝒜⟦ ⦅−1⦆ ⟧  =  (λ n → (↑ n ==⊥ ↑ 0) ⟶ ⊥ , ↑ (n ∸ 1)) ♯
   𝒜⟦ Z ⟧     =  (λ n → (↑ n ==⊥ ↑ 0)) ♯
-
 
   𝒜′⟦_⟧ : Terms σ → ⟪ Env →ˢ 𝒟 σ ⟫
   𝒜′⟦ 𝑉 α i σ ⟧ ρ           =  ρ ⟦ α i σ ⟧

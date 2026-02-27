@@ -10,20 +10,17 @@ open Notation.Domains
 open Notation.Functions
 variable A B C : Set
 
-
 module Functions where
   open Notation.Functions
   postulate
     apply-fix : {f : ⟪ D →ᶜ D ⟫} → fix f ≡ f (fix f)
   {-# REWRITE apply-fix #-} 
 
-
 module Recursion where
   open Notation.Recursion
   postulate
     elim-unfold-fold : {{_ : D ≅ E}} → {e : ⟪ E ⟫} → unfold (fold e) ≡ e
   {-# REWRITE elim-unfold-fold #-}
-
 
 module Flat where
   open Notation.Flat using (↑; _♯) public
@@ -32,7 +29,6 @@ module Flat where
     elim-♯-↑  : (f ♯) (↑ a′)  ≡ f a′
     elim-♯-⊥  : (f ♯) ⊥      ≡ ⊥
   {-# REWRITE elim-♯-↑ elim-♯-⊥ #-} 
-
 
   module Booleans where
     open Notation.Flat.Booleans
@@ -43,7 +39,6 @@ module Flat where
       elim-bottom-⟶  : (⊥ ⟶ δ₁ , δ₂)        ≡ ⊥
     {-# REWRITE elim-true-⟶ elim-false-⟶ #-} 
 
-
   module Naturals where
     open Notation.Flat.Booleans
     open Notation.Flat.Naturals
@@ -51,7 +46,6 @@ module Flat where
     postulate
       elim-==⊥ : (↑ n₁ ==⊥ ↑ n₂) ≡ ↑ (n₁ ≡ᵇ n₂)
     {-# REWRITE elim-==⊥ #-} 
-
 
 module Sums where
   open Notation.Flat
@@ -72,7 +66,6 @@ module Sums where
     elim-∈⊥-⊥  :  {{_ : E ≳ n ↦ D}} → {{_ : E ≳ n′ ↦ D′}} → (δ : ⟪ D ⟫) →
                   {n ≢ n′} → (δ in⊥ E) |⊥ D′ ≡ ⊥
   {-# REWRITE elim-∈⊥ elim-|⊥ #-} 
-
 
 module Products where
   open Notation.Products
