@@ -147,14 +147,12 @@ in Agda.
   open Notation.Updates using (EqMaybe; _==?_; just; nothing; refl; _[_←_])
   instance
     eqT : EqMaybe Types
-    _==?_ {{eqT}} ι ι = just refl
-    _==?_ {{eqT}} o o = just refl
-    _==?_ {{eqT}} (σ ⇒ τ) (σ₁ ⇒ τ₁) with σ ==? σ₁
-    _==?_ {{eqT}} (σ ⇒ τ) (σ₁ ⇒ τ₁)    | nothing = nothing
-    _==?_ {{eqT}} (σ ⇒ τ) (.σ ⇒ τ₁)    | just refl with τ ==? τ₁
-    _==?_ {{eqT}} (σ ⇒ τ) (.σ ⇒ τ₁)    | just refl    | nothing   = nothing
-    _==?_ {{eqT}} (σ ⇒ τ) (.σ ⇒ .τ)    | just refl    | just refl = just refl
-    _==?_ {{eqT}} _ _ = nothing
+    eqT ._==?_ ι ι = just refl
+    eqT ._==?_ o o = just refl
+    eqT ._==?_ (σ ⇒ τ) (σ₁ ⇒ τ₁) with σ ==? σ₁  | τ ==? τ₁
+    eqT ._==?_ (σ ⇒ τ) (σ₁ ⇒ τ₁)    | just refl | just refl = just refl
+    eqT ._==?_ (σ ⇒ τ) (σ₁ ⇒ τ₁)    | _         | _         = nothing
+    eqT ._==?_ _ _ = nothing
 ```
 
 The definition of `ρ [ x / v ]′` is essentially the composition of two levels

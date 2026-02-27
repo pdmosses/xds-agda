@@ -58,13 +58,13 @@ module Flat where
 
   module Booleans where
     open import Data.Bool.Base using (Bool; false; true; if_then_else_) public
-    record Eq (A : Set) : Set where field _==_ : A → A → Bool
-    open Eq {{...}} public
     Bool⊥ = Bool +⊥
     postulate
       _⟶_,_ : ⟪ Bool⊥ →ᶜ D →ᶜ D →ᶜ D ⟫
     infixr 20 _⟶_,_
 
+    record Eq (A : Set) : Set where field _==_ : A → A → Bool
+    open Eq {{...}} public
     postulate
       _==⊥_ : {{Eq A}} → ⟪ (A +⊥) →ᶜ (A +⊥) →ᶜ Bool⊥ ⟫
       instance eqBool : Eq Bool
