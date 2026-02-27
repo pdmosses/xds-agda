@@ -66,7 +66,6 @@ module Flat where
     infixr 20 _⟶_,_
 
     postulate
-      Eq⊥ : Domain → Set
       _==⊥_ : {{Eq A}} → ⟪ (A +⊥) →ᶜ (A +⊥) →ᶜ Bool⊥ ⟫
       instance eqBool : Eq Bool
 

@@ -234,7 +234,6 @@ the operation only for flat domains `A +⊥` with `instance _ : Eq A`.
 
 ```agda
     postulate
-      Eq⊥ : Domain → Set
       _==⊥_ : {{Eq A}} → ⟪ (A +⊥) →ᶜ (A +⊥) →ᶜ Bool⊥ ⟫
       instance eqBool : Eq Bool
 ```
