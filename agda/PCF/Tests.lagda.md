@@ -10,7 +10,7 @@ open Semantic-Functions
 open import Properties
 open Properties.Functions
 open Properties.Flat
-open Properties.Flat.Booleans
+-- open Properties.Flat.Booleans
 open Properties.Flat.Naturals
 
 -- Variables

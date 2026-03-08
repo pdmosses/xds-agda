@@ -26,7 +26,7 @@ A variable  is written `x n`. The argument `n` merely distinguishes between
 variables – it is *not* a De Bruin index.
 
 ```agda
-  open import Data.Nat.Base renaming (ℕ to Nat) using () public
+  open import Agda.Builtin.Nat public using (Nat)
   data Var : Set where
     x : Nat → Var
   variable v : Var
@@ -44,9 +44,9 @@ space) as a separator. Application terms are also parenthesised, but using
 
 ```agda
   data Exp : Set where
-    val_    : Var → Exp
-    ⦅λ_␣_⦆  : Var → Exp → Exp
-    ⦅_␣_⦆   : Exp → Exp → Exp
+    var_    : Var → Exp        -- variable reference
+    ⦅λ_␣_⦆  : Var → Exp → Exp  -- function abstraction
+    ⦅_␣_⦆   : Exp → Exp → Exp  -- function application
   variable e e₁ e₂ : Exp
 ```
 
@@ -68,6 +68,7 @@ module Domain-Equations where
   postulate
     D∞ : Domain
     instance eqD∞ : D∞ ≅ (D∞ →ᶜ D∞)
+  variable δ : ⟪ D∞ ⟫
 ```
 
 The one-point domain `𝟙` is a trivial solution for the above domain equation.
@@ -79,7 +80,7 @@ domain `D∞`. The type `Env` could be treated as a domain by ordering the maps
 pointwise.
 
 ```agda
-  Env = Var →ˢ D∞
+  Env = Var →ˢ D∞  -- environments
   variable ρ : ⟪ Env ⟫
 ```
 
@@ -88,10 +89,11 @@ for the environment that maps `v` to `δ`, and maps other arguments as `ρ` does
 
 ```agda
   open Notation.Flat.Booleans using (Bool; Eq; _==_)
+  open Notation.Flat.Naturals using (eqNat)
   _==ⱽ_ : Var → Var → Bool
-  open import Data.Nat.Base using (_≡ᵇ_) public
+  open import Agda.Builtin.Nat renaming (_==_ to _==ᴺ_) public
   open Notation.Updates using (_[_/_]) public
-  (x n ==ⱽ x n′) = (n ≡ᵇ n′)
+  (x n ==ⱽ x n′) = (n ==ᴺ n′)
   instance eqVar : Eq Var; _==_ {{eqVar}} = _==ⱽ_
 ```
 
@@ -107,7 +109,7 @@ module Semantic-Functions where
   open Abstract-Syntax
   open Domain-Equations
   ⟦_⟧ : Exp → ⟪ Env →ᶜ D∞ ⟫
-  ⟦ val v ⟧ ρ        = ρ v
+  ⟦ var v ⟧ ρ        = ρ v
   ⟦ ⦅λ v ␣ e ⦆ ⟧ ρ   = fold ( λ δ → ⟦ e ⟧ (ρ [ δ / v ]) )
   ⟦ ⦅ e₁ ␣ e₂ ⦆ ⟧ ρ  = unfold ( ⟦ e₁ ⟧ ρ ) ( ⟦ e₂ ⟧ ρ )
 ```

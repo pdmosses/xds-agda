@@ -4,9 +4,9 @@
 {-# OPTIONS --rewriting --confluence-check --lossy-unification #-}
 
 module Properties where
-open import Agda.Builtin.Equality using (_≡_; refl) public
+open import Agda.Builtin.Equality public using (_≡_; refl)
 open import Agda.Builtin.Equality.Rewrite using ()
-open import Data.Nat.Base renaming (ℕ to Nat) using (_≡ᵇ_) public
+open import Agda.Builtin.Nat public using (Nat) renaming (_==_ to _==ᴺ_) 
 import Notation
 open Notation.Domains
 open Notation.Functions
@@ -37,25 +37,12 @@ module Recursion where
 
 ```agda
 module Flat where
-  open Notation.Flat using (↑; _♯) public
+  open Notation.Flat public using (↑; _♯)
   variable f : A → ⟪ D ⟫; a′ : A
   postulate
     elim-♯-↑  : (f ♯) (↑ a′)  ≡ f a′
     elim-♯-⊥  : (f ♯) ⊥      ≡ ⊥
   {-# REWRITE elim-♯-↑ elim-♯-⊥ #-} 
-```
-
-### Booleans
-
-```agda
-  module Booleans where
-    open Notation.Flat.Booleans
-    variable δ₁ δ₂ : ⟪ D ⟫
-    postulate
-      elim-true-⟶    : (↑ true ⟶ δ₁ , δ₂)   ≡ δ₁
-      elim-false-⟶   : (↑ false ⟶ δ₁ , δ₂)  ≡ δ₂
-      elim-bottom-⟶  : (⊥ ⟶ δ₁ , δ₂)        ≡ ⊥
-    {-# REWRITE elim-true-⟶ elim-false-⟶ #-} 
 ```
 
 ### Naturals
@@ -66,7 +53,7 @@ module Flat where
     open Notation.Flat.Naturals
     variable n₁ n₂ : Nat
     postulate
-      elim-==⊥ : (↑ n₁ ==⊥ ↑ n₂) ≡ ↑ (n₁ ≡ᵇ n₂)
+      elim-==⊥ : (↑ n₁ ==⊥ ↑ n₂) ≡ ↑ (n₁ ==ᴺ n₂)
     {-# REWRITE elim-==⊥ #-} 
 ```
 
@@ -87,7 +74,7 @@ module Sums where
   variable D′ : Domain; n′ : Nat
   postulate
     elim-∈⊥    :  {{_ : E ≳ n ↦ D}} → {{_ : E ≳ n′ ↦ D′}} → (δ : ⟪ D ⟫) →
-                  (δ in⊥ E) ∈⊥ D′ ≡ ↑ (n ≡ᵇ n′)
+                  (δ in⊥ E) ∈⊥ D′ ≡ ↑ (n ==ᴺ n′)
     elim-|⊥    :  {{_ : E ≳ n ↦ D}} → (δ : ⟪ D ⟫) → (δ in⊥ E) |⊥ D ≡ δ
     elim-∈⊥-⊥  :  {{_ : E ≳ n ↦ D}} → {{_ : E ≳ n′ ↦ D′}} → (δ : ⟪ D ⟫) →
                   {n ≢ n′} → (δ in⊥ E) |⊥ D′ ≡ ⊥

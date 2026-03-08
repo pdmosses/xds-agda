@@ -18,7 +18,7 @@ The notation used in conventional denotational definitions does not depend
 on the details of the mathematical structure of domains.[^domains] The only
 essential feature of domains is that each domain `D` has a distinguished
 element `⊥` (pronounced "bottom") that represents undefinedness. The only
-element of the trivial domain `𝟙` is `⊥`.[^bottom]
+element of the unit domain `𝟙` is `⊥`.[^bottom]
 
 [^domains]:
     A Scott domain is an algebraic, bounded-complete and directed-complete
@@ -30,13 +30,20 @@ element of the trivial domain `𝟙` is `⊥`.[^bottom]
     The built-in Agda notation for the only element of a 1-element type `⊤`
     is `tt`.
 
+!!! warning
+    The specified postulates declare types and functions for domains.
+    They are used only for type-checking denotational semantics in Agda.
+    They do *not* define the conventional mathematical structure of domains,
+    nor the algebraic and universal properties of the associated functions.
+
 ```agda
 module Domains where
+
   postulate
-    Domain : Set
-    ⟪_⟫ : Domain → Set
-    ⊥ : {D : Domain} → ⟪ D ⟫
-    𝟙 : Domain
+    Domain : Set              -- Domain is the type of all domains
+    ⟪_⟫ : Domain → Set        -- ⟪ D ⟫ is the type of elements of D
+    ⊥ : {D : Domain} → ⟪ D ⟫  -- ⊥{D} is the bottom element of D
+    𝟙 : Domain                -- 𝟙 is a unit domain
   variable D E F : Domain
 
 open Domains public
@@ -83,10 +90,11 @@ the domain are continuous functions.
 
 ```agda
 module Functions where
-  open import Agda.Builtin.Equality using (_≡_) public
+  open import Agda.Builtin.Equality public using (_≡_)
   open import Agda.Builtin.Equality.Rewrite using ()
   postulate
     _→ᶜ_ : Domain → Domain → Domain
+    -- D →ᶜ E is the domain of continuous functions from D to E
   infixr 0 _→ᶜ_
 ```
 
@@ -99,6 +107,7 @@ domain constructors. And continuous *endofunctions* `f` in `D →ᶜ D` have
 ```agda
   postulate
     fix : ⟪ (D →ᶜ D) →ᶜ D ⟫
+    -- fix f is the least fixed point of the continuous function f
 ```
 
 The carrier `⟪ D →ᶜ E ⟫` of a function domain `D →ᶜ E` should consist of just
@@ -136,6 +145,7 @@ when ordered pointwise).
 ```agda
   postulate
     _→ˢ_ : Set → Domain → Domain
+  -- A →ˢ D is the domain of all functions from A to D
   infixr 0 _→ˢ_
 ```
 
@@ -168,6 +178,7 @@ to map values from a postulated domain to its structure and *vice versa*.
 module Recursion where
   postulate
     _≅_ : Domain → Domain → Set
+    -- an instance of D ≅ E declares that the structure of D is the same as E
     unfold :  {{D ≅ E}} → ⟪ D →ᶜ E ⟫
     fold :    {{D ≅ E}} → ⟪ E →ᶜ D ⟫
 ```
@@ -186,6 +197,9 @@ is simply as follows.
       instance _ : D∞ ≅ (D∞ →ᶜ D∞)
 ```
 
+The least domain `D` with `D ≅ (D →ᶜ D)` is the unit domain.
+For any domain `D₀` there is a domain `D` that includes `D₀` with `D ≅ (D →ᶜ D)`.
+
 ## Flat domains
 
 Adding a `⊥` element to an arbitrary set `A` forms the 'flat' domain `A +⊥`.
@@ -195,7 +209,7 @@ Agda does not support such a subscript.)
 The notation `↑ a` introduced below seems reasonably suggestive for the
 inclusion of the non-`⊥` elements in `A +⊥`. (In theoretical treatments of
 monads, `η a` is commonly used, but that conflicts with the convention of using
-single lowercase Greek letters as bound variables.)
+single lower-case Greek letters as bound variables.)
 
 When `D` is a flat domain and `f` is a function from `A` to `D`, the notation
 `f ♯` corresponds to the Kleisli extension of `f` to a function from `A +⊥`
@@ -206,23 +220,22 @@ However, it is difficult to support such conventions in Agda.)
 ```agda
 module Flat where
   postulate
-    _+⊥  : Set → Domain
-    ↑    : ⟪ A →ˢ (A +⊥) ⟫
-    _♯   : ⟪ (A →ˢ D) →ᶜ (A +⊥) →ᶜ D ⟫
+    _+⊥  : Set → Domain                 -- A +⊥ constructs a flat domain from A
+    ↑    : ⟪ A →ˢ (A +⊥) ⟫              -- (↑ a) injects a into A +⊥
+    _♯   : ⟪ (A →ˢ D) →ᶜ (A +⊥) →ᶜ D ⟫  -- f ♯ extends f to map ⊥ to ⊥
 ```
 
 ### Booleans
 
 The McCarthy conditional operation `β ⟶ δ₁ , δ₂` extends the usual ternary
-conditional choice to domains. It is supposed to return `⊥` whenever its first
-argument is `⊥`.
+conditional choice to domains. It returns `⊥` whenever its first argument is `⊥`.
 
 ```agda
   module Booleans where
-    open import Data.Bool.Base using (Bool; false; true; if_then_else_) public
+    open import Data.Bool.Base public using (Bool; false; true; if_then_else_)
     Bool⊥ = Bool +⊥
-    postulate
-      _⟶_,_ : ⟪ Bool⊥ →ᶜ D →ᶜ D →ᶜ D ⟫
+    _⟶_,_ : ⟪ Bool⊥ →ᶜ D →ᶜ D →ᶜ D ⟫             -- β ⟶ δ₁ , δ₂ is conditional choice
+    _⟶_,_ = (λ b δ₁ δ₂ → if b then δ₁ else δ₂)♯  
     infixr 20 _⟶_,_
 ```
 
@@ -235,6 +248,7 @@ the operation only for flat domains `A +⊥` with `instance _ : Eq A`.
     open Eq {{...}} public
     postulate
       _==⊥_ : {{Eq A}} → ⟪ (A +⊥) →ᶜ (A +⊥) →ᶜ Bool⊥ ⟫
+      -- δ₁ ==⊥ δ₂ is ⊥ when either operand is ⊥
       instance eqBool : Eq Bool
 ```
 
@@ -245,24 +259,11 @@ using `zero` and `suc`.
 
 ```agda
   module Naturals where
-    open import Data.Nat.Base renaming (ℕ to Nat) using (suc; _+_; _∸_; _≡ᵇ_) public
+    open import Agda.Builtin.Nat public using (Nat; suc; _+_; _-_) renaming (_==_ to _==ᴺ_)
     Nat⊥ = Nat +⊥
     open Booleans
-    postulate
+    postulate 
       instance eqNat : Eq Nat
-```
-
-### Strings
-
-Agda allows literal strings enclosed in double quotation marks `"..."`.
-
-```agda
-  module Strings where
-    open import Data.String.Base using (String) public
-    String⊥ = String +⊥
-    open Booleans
-    postulate
-      instance _ : Eq String
 ```
 
 ## Sum domains
@@ -275,10 +276,11 @@ and iterated for domains with more than two summands.
 ```agda
 module Sums where
   postulate
-    _+_    : Domain → Domain → Domain
+    _+_    : Domain → Domain → Domain   -- D + E is the separated sum domain
     inj₁   : ⟪ D →ᶜ (D + E) ⟫
     inj₂   : ⟪ E →ᶜ (D + E) ⟫
     [_,_]  : ⟪ (D →ᶜ F) →ᶜ (E →ᶜ F) →ᶜ ((D + E) →ᶜ F) ⟫
+    -- [ φ , ψ ] applies φ to arguments in D, and ψ to arguments in E
 ```
 
 In published examples of denotational semantics, injection of $\delta$ from
@@ -292,7 +294,10 @@ for these operations (after adding `⊥` as a suffix to avoid reserved symbols):
 
 - When `δ : D`, `δ in⊥ E` is its injection into `E`.
 - When `ε : E`, `ε |⊥ D` is its projection onto `D`,
-  and `ε ∈⊥ D` tests whether `ε` is the injection of an element of `D`.
+  and `ε ∈⊥ D` (`ε ∈⊥ E`) tests whether `ε` is
+  the injection of an element of `D` (resp. `E`).
+
+This notation is independent of the order of the summands.
 
 However, instead of defining the summands `D` of a separated sum domain `E` by
 an equation `E = ... + D + ...`, the domain `E` is merely *postulated*, and
@@ -306,7 +311,7 @@ The inferred instance argument `{{E ≳ n ↦ D}}` determines `D` and `E`.
 the unary functions are known to be continuous when `E` is a sum domain.)
 
 ```agda
-  open import Data.Nat.Base renaming (ℕ to Nat)
+  open import Agda.Builtin.Nat using (Nat)
   open Flat.Booleans
   variable n : Nat
   postulate
@@ -327,10 +332,10 @@ binary products, and iterated for products of more than two domains.
 ```agda
 module Products where
   postulate
-    _×_  : Domain → Domain → Domain
-    _,_  : ⟪ D →ᶜ E →ᶜ (D × E) ⟫
-    _↓₁  : ⟪ (D × E) →ᶜ D ⟫
-    _↓₂  : ⟪ (D × E) →ᶜ E ⟫
+    _×_  : Domain → Domain → Domain  -- D × E is the cartesian product domain
+    _,_  : ⟪ D →ᶜ E →ᶜ (D × E) ⟫     -- (δ , ε) is the pair of elements
+    _↓₁  : ⟪ (D × E) →ᶜ D ⟫          -- (δ , ε)↓₁ is δ
+    _↓₂  : ⟪ (D × E) →ᶜ E ⟫          -- (δ , ε)↓₂ is ε
   infixr 2 _×_
   infixr 4 _,_
 ```
@@ -342,8 +347,8 @@ written $D^n$, but Agda does not support the use of variables as superscripts.
 
 ```agda
   module Tuples where
-    open import Data.Nat.Base renaming (ℕ to Nat) using (suc) public
-    _^_ : Domain → Nat → Domain
+    open import Agda.Builtin.Nat public using (Nat; suc)
+    _^_ : Domain → Nat → Domain         -- D ^ n is the domain of n-tuples (n ≥ 0)
     D ^ 0            = 𝟙 
     D ^ 1            = D
     D ^ suc (suc n)  = D × (D ^ suc n)
@@ -368,13 +373,13 @@ double angle-brackets `⟪ D ⟫` used for the carrier of domain `D`.)
     open Tuples
     variable n : Nat
     postulate
-      _⋆     : Domain → Domain
-      ⟨⟩     : ⟪ D ⋆ ⟫
-      ⟨_⟩    : ⟪ (D ^ suc n) →ᶜ D ⋆ ⟫
-      #      : ⟪ D ⋆ →ᶜ Nat⊥ ⟫
-      _§_    : ⟪ D ⋆ →ᶜ D ⋆ →ᶜ D ⋆ ⟫
-      _↓_    : ⟪ D ⋆ →ᶜ Nat →ˢ D ⟫
-      _†_    : ⟪ D ⋆ →ᶜ Nat →ˢ D ⋆ ⟫
+      _⋆     : Domain → Domain          -- D ⋆ is the finite sequence domain
+      ⟨⟩     : ⟪ D ⋆ ⟫                  -- ⟨⟩ is the empty sequence
+      ⟨_⟩    : ⟪ (D ^ suc n) →ᶜ D ⋆ ⟫   -- ⟨ δ₁ , ... ⟩ is a non-empty sequence
+      #      : ⟪ D ⋆ →ᶜ Nat⊥ ⟫          -- # δ⋆ is the length of the sequence
+      _§_    : ⟪ D ⋆ →ᶜ D ⋆ →ᶜ D ⋆ ⟫    -- δ⋆₁ § δ⋆₂ is sequence concatenation
+      _↓_    : ⟪ D ⋆ →ᶜ Nat →ˢ D ⟫      -- δ⋆ ↓ n is the nth element of a sequence
+      _†_    : ⟪ D ⋆ →ᶜ Nat →ˢ D ⋆ ⟫    -- δ⋆ † n is the nth tail of a sequence
 ```
 
 ## Updates
@@ -388,6 +393,7 @@ module Updates where
   open Flat
   open Flat.Booleans
   _[_/_] : {{Eq A}} → ⟪ (A →ˢ D) →ᶜ D →ᶜ A →ˢ (A →ˢ D) ⟫
+  -- ρ [ δ / a ] maps a to δ, and other arguments a′ to ρ a′
   ρ [ δ / a ] = λ a′ → if a == a′ then δ else ρ a′
 ```
 
@@ -397,6 +403,7 @@ For stores `σ : ⟪ (A +⊥) →ᶜ D ⟫`, however, an equality operation
 ```agda
   open Flat
   _[_/_]⊥ : {{Eq A}} → ⟪ ((A +⊥) →ᶜ D) →ᶜ D →ᶜ (A +⊥) →ᶜ ((A +⊥) →ᶜ D) ⟫
+  -- σ [ δ / α ]⊥ maps α to δ, and other arguments α′ to σ α′
   σ [ δ / α ]⊥ = λ α′ → (α ==⊥ α′) ⟶ δ , σ α′
 ```
 
@@ -405,12 +412,12 @@ as it involves a function that returns an *equivalence proof* instead of a
 truth value: 
 
 ```agda
-  open import Data.Maybe.Base using (Maybe; just; nothing) public
-  open import Relation.Binary.PropositionalEquality.Core using (_≡_; refl) public
-  record EqMaybe (A : Set) : Set where field _==?_ : (a a′ : A) → Maybe (a ≡ a′)
-  open EqMaybe {{...}} public
-  _[_←_] :  {X : Set} → {Y : X → Set} → {{EqMaybe X}} → 
-            (∀ (x′) → Y x′) → (x : X) → Y x → (∀ (x′) → Y x′)
+  open import Data.Maybe.Base public using (Maybe; just; nothing)
+  open import Relation.Binary.PropositionalEquality.Core public using (_≡_; refl)
+  record MaybeEq (A : Set) : Set where field _==?_ : (a a′ : A) → Maybe (a ≡ a′)
+  open MaybeEq {{...}} public
+  variable X : Set; Y : X → Set
+  _[_←_] :  {{MaybeEq X}} → (∀ x′ → Y x′) → (x : X) → Y x → (∀ x′ → Y x′)
   _[_←_] {X} {Y} m x y = λ x′ → h x′ (x ==? x′) where
     h : (x′ : X) → Maybe (x ≡ x′) → Y x′
     h x′ (just refl) = y

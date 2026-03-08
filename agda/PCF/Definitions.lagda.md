@@ -13,6 +13,7 @@ formalisation of [function domains] in Agda.
 {-# OPTIONS --rewriting --confluence-check --lossy-unification #-}
 
 module PCF.Definitions where
+
 open import Notation
 ```
 
@@ -32,8 +33,9 @@ the Agda formalisation of PCF types uses `σ ⇒ τ` instead of `(σ → τ)`:
 
 ```agda
   data Types  : Set where
-    ι o       : Types
-    _⇒_       : Types → Types → Types
+    ι         : Types                 -- individuals
+    o         : Types                 -- truth-values
+    _⇒_       : Types → Types → Types -- functions
   infixr 1 _⇒_
   variable σ τ : Types
 ```
@@ -49,8 +51,8 @@ The argument `i` merely distinguishes between variables – it is *not* a De Bru
 index.
 
 ```agda
-  open import Data.Nat.Base renaming (ℕ to Nat) using () public
-  data Vars   : Types → Set where
+  open import Agda.Builtin.Nat public using (Nat)
+  data Vars   : Types → Set where           -- variables
     α         : Nat → (σ : Types) → Vars σ
   variable i  : Nat
 ```
@@ -61,14 +63,15 @@ The PCF term language includes `ℒᴬ`, the set of *standard* constants for ari
 written $\mathcal L_A$ in ([Plotkin 1977]). 
 
 ```agda
-  data ℒᴬ     : Types → Set where
-    tt ff     : ℒᴬ o
-    ⊃         : ℒᴬ (o ⇒ σ ⇒ σ ⇒ σ)
-    Y         : ℒᴬ ((σ ⇒ σ) ⇒ σ)
-    k         : Nat → ℒᴬ ι
-    ⦅+1⦆      : ℒᴬ (ι ⇒ ι)
-    ⦅−1⦆      : ℒᴬ (ι ⇒ ι)
-    Z         : ℒᴬ (ι ⇒ o)
+  data ℒᴬ     : Types → Set where   -- constants
+    tt        : ℒᴬ o                -- true
+    ff        : ℒᴬ o                -- false
+    ⊃         : ℒᴬ (o ⇒ σ ⇒ σ ⇒ σ)  -- conditional
+    Y         : ℒᴬ ((σ ⇒ σ) ⇒ σ)    -- fixed point
+    k         : Nat → ℒᴬ ι          -- numerals
+    ⦅+1⦆      : ℒᴬ (ι ⇒ ι)          -- successor
+    ⦅−1⦆      : ℒᴬ (ι ⇒ ι)          -- predecessor
+    Z         : ℒᴬ (ι ⇒ o)          -- zero test
   variable c  : ℒᴬ σ
 ```
 
@@ -91,10 +94,10 @@ parenthesised, but using `⦅…⦆` instead of ordinary parentheses.
 
 ```agda
   data Terms  : Types → Set where
-    𝑉_        : Vars σ → Terms σ
-    𝐿_        : ℒᴬ σ → Terms σ
-    ⦅_␣_⦆     : Terms (σ ⇒ τ) → Terms σ → Terms τ
-    ⦅λ_␣_⦆    : Vars σ → Terms τ → Terms (σ ⇒ τ)
+    𝑉_        : Vars σ → Terms σ                   -- variable
+    𝐿_        : ℒᴬ σ → Terms σ                     -- constant
+    ⦅_␣_⦆     : Terms (σ ⇒ τ) → Terms σ → Terms τ  -- function application
+    ⦅λ_␣_⦆    : Vars σ → Terms τ → Terms (σ ⇒ τ)   -- function abstraction
   variable M N : Terms σ
 ```
 
@@ -112,10 +115,10 @@ module Domain-Equations where
   open Abstract-Syntax
   open Notation.Flat.Booleans using (Bool; Bool⊥)
   open Notation.Flat.Naturals using (Nat⊥; eqNat)
-  𝒟 : Types → Domain
-  𝒟 ι        = Nat⊥
-  𝒟 o        = Bool⊥
-  𝒟 (σ ⇒ τ)  = 𝒟 σ →ᶜ 𝒟 τ
+  𝒟 : Types → Domain       -- standard domains
+  𝒟 ι        = Nat⊥        -- natural numbers
+  𝒟 o        = Bool⊥       -- truth-values
+  𝒟 (σ ⇒ τ)  = 𝒟 σ →ᶜ 𝒟 τ  -- functions
   variable x y z : ⟪ 𝒟 σ ⟫
 ```
 
@@ -125,10 +128,10 @@ from variables in `Vars σ` to their values in the carrier of the domain `𝒟 �
 The environment `ρ⊥` maps all variables to `⊥`.
 
 ```agda
-  Env = (σ : Types) → ⟪ Vars σ →ˢ 𝒟 σ ⟫
+  Env = (σ : Types) → ⟪ Vars σ →ˢ 𝒟 σ ⟫  -- environments
   variable ρ : Env
-  ρ⊥ : Env
-  ρ⊥ = λ _ → λ _ → ⊥
+  ρ⊥ : Env    -- initial environment
+  ρ⊥ _ _ = ⊥
 ```
 
 Extension or overriding environments requires instances of the equality tests
@@ -139,14 +142,14 @@ in Agda.
   open Notation.Flat.Booleans using (Eq; _==_)
   open Notation.Updates using (_[_/_])
   _==ⱽ_ : Vars σ → Vars σ → Bool
-  open import Data.Nat.Base using (_≡ᵇ_) public
-  (α i σ ==ⱽ α i′ σ)  =  (i ≡ᵇ i′)
+  open import Agda.Builtin.Nat renaming (_==_ to _==ᴺ_) public
+  (α i σ ==ⱽ α i′ σ)  =  (i ==ᴺ i′)
   instance
     eqV : Eq (Vars σ)
     _==_ {{eqV}} = _==ⱽ_
-  open Notation.Updates using (EqMaybe; _==?_; just; nothing; refl; _[_←_])
+  open Notation.Updates using (MaybeEq; _==?_; just; nothing; refl; _[_←_])
   instance
-    eqT : EqMaybe Types
+    eqT : MaybeEq Types
     eqT ._==?_ ι ι = just refl
     eqT ._==?_ o o = just refl
     eqT ._==?_ (σ ⇒ τ) (σ₁ ⇒ τ₁) with σ ==? σ₁  | τ ==? τ₁
@@ -160,6 +163,7 @@ of extension:
 
 ```agda
   _[_/_]′ : Env → ⟪ 𝒟 σ ⟫ → Vars σ → Env
+  -- ρ [ v / x ]′ maps x to v, and other x′ to ρ x′
   _[_/_]′ {σ} ρ x v = ρ [ σ ← ρ σ [ x / v ] ]
 ```
 
@@ -177,7 +181,7 @@ The notation `ρ ⟦ α i σ ⟧` gives the value of the variable `α i σ` in `
 applying `ρ σ` to the variable.
 
 ```agda
-  _⟦_⟧ : Env → Vars σ → ⟪ 𝒟 σ ⟫
+  _⟦_⟧ : Env → Vars σ → ⟪ 𝒟 σ ⟫  -- variable denotations
   ρ ⟦ α i σ ⟧ = ρ σ (α i σ)
 ```
 
@@ -191,16 +195,16 @@ case analysis, which is not supported in this Agda formalisation
 ```agda
   open Notation.Flat using (↑; _♯)
   open Notation.Flat.Booleans using (_⟶_,_; _==⊥_; false; true)
-  open Notation.Flat.Naturals using (_+_; _∸_)
-  𝒜⟦_⟧ : ℒᴬ σ → ⟪ 𝒟 σ ⟫
+  open Notation.Flat.Naturals using (_+_; _-_)
+  𝒜⟦_⟧ : ℒᴬ σ → ⟪ 𝒟 σ ⟫  -- constant denotations
   𝒜⟦ tt ⟧    =  ↑ true
   𝒜⟦ ff ⟧    =  ↑ false
   𝒜⟦ ⊃ ⟧     =  λ β δ₁ δ₂ → (β ⟶ δ₁ , δ₂)
   𝒜⟦ Y ⟧     =  fix
   𝒜⟦ k n ⟧   =  ↑ n
   𝒜⟦ ⦅+1⦆ ⟧  =  (λ n → ↑ (n + 1)) ♯
-  𝒜⟦ ⦅−1⦆ ⟧  =  (λ n → (↑ n ==⊥ ↑ 0) ⟶ ⊥ , ↑ (n ∸ 1)) ♯
-  𝒜⟦ Z ⟧     =  (λ n → (↑ n ==⊥ ↑ 0)) ♯
+  𝒜⟦ ⦅−1⦆ ⟧  =  (λ n → ↑ (n ==ᴺ 0) ⟶ ⊥ , ↑ (n - 1)) ♯
+  𝒜⟦ Z ⟧     =  (λ n → ↑ (n ==ᴺ 0)) ♯
 ```
 
 ### Terms
@@ -210,7 +214,7 @@ $\hat{\mathcal A} \llbracket M \rrbracket$ in ([Plotkin 1977]). It gives the
 denotation of the term `M` as a function of the environment `ρ`.
 
 ```agda
-  𝒜′⟦_⟧ : Terms σ → ⟪ Env →ˢ 𝒟 σ ⟫
+  𝒜′⟦_⟧ : Terms σ → ⟪ Env →ˢ 𝒟 σ ⟫  -- term denotations
   𝒜′⟦ 𝑉 α i σ ⟧ ρ           =  ρ ⟦ α i σ ⟧
   𝒜′⟦ 𝐿 c ⟧ ρ               =  𝒜⟦ c ⟧
   𝒜′⟦ ⦅ M ␣ N ⦆ ⟧ ρ         =  𝒜′⟦ M ⟧ ρ (𝒜′⟦ N ⟧ ρ) 
