@@ -34,7 +34,7 @@ variables – it is *not* a De Bruin index.
 
 ### Terms
 
-The term constructor `val` below merely includes variables in terms.
+The term constructor `var` below merely includes variables in terms.
 
 In Agda, mixfix notation requires arguments to be separated by characters
 other than spaces. Below, the notation for application `⦅ e₁ ␣ e₂ ⦆` and

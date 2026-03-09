@@ -32,10 +32,10 @@ mixfix notation, but ordinary arrows and parentheses are reserved symbols;
 the Agda formalisation of PCF types uses `σ ⇒ τ` instead of `(σ → τ)`:
 
 ```agda
-  data Types  : Set where                   -- type terms
-    ι         : Types                       -- individuals
-    o         : Types                       -- truth-values
-    _⇒_       : Types → Types → Types       -- functions
+  data Types  : Set where                          -- type terms
+    ι         : Types                              -- individuals
+    o         : Types                              -- truth-values
+    _⇒_       : Types → Types → Types              -- functions
   infixr 1 _⇒_
   variable σ τ : Types
 ```
@@ -52,8 +52,8 @@ index.
 
 ```agda
   open import Agda.Builtin.Nat public using (Nat)
-  data Vars   : Types → Set where           -- typed variables
-    α         : Nat → (σ : Types) → Vars σ  -- α i σ is a variable of type σ
+  data Vars   : Types → Set where                  -- typed variables
+    α         : Nat → (σ : Types) → Vars σ         -- α i σ is a variable of type σ
   variable i  : Nat
 ```
 
@@ -63,15 +63,15 @@ The PCF term language includes `ℒᴬ`, the set of *standard* constants for ari
 written $\mathcal L_A$ in ([Plotkin 1977]). 
 
 ```agda
-  data ℒᴬ     : Types → Set where      -- typed constants
-    tt        : ℒᴬ o                   -- true
-    ff        : ℒᴬ o                   -- false
-    ⊃         : ℒᴬ (o ⇒ σ ⇒ σ ⇒ σ)     -- conditional
-    Y         : ℒᴬ ((σ ⇒ σ) ⇒ σ)       -- fixed point
-    k         : Nat → ℒᴬ ι             -- numerals
-    ⦅+1⦆      : ℒᴬ (ι ⇒ ι)             -- successor
-    ⦅−1⦆      : ℒᴬ (ι ⇒ ι)             -- predecessor
-    Z         : ℒᴬ (ι ⇒ o)             -- zero test
+  data ℒᴬ     : Types → Set where                  -- typed constants
+    tt        : ℒᴬ o                               -- true
+    ff        : ℒᴬ o                               -- false
+    ⊃         : ℒᴬ (o ⇒ σ ⇒ σ ⇒ σ)                 -- conditional
+    Y         : ℒᴬ ((σ ⇒ σ) ⇒ σ)                   -- fixed point
+    k         : Nat → ℒᴬ ι                         -- numerals
+    ⦅+1⦆      : ℒᴬ (ι ⇒ ι)                         -- successor
+    ⦅−1⦆      : ℒᴬ (ι ⇒ ι)                         -- predecessor
+    Z         : ℒᴬ (ι ⇒ o)                         -- zero test
   variable c  : ℒᴬ σ
 ```
 

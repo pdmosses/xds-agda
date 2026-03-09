@@ -37,7 +37,7 @@ element of the unit domain `𝟙` is `⊥`.[^bottom]
 !!! warning
     The specified postulates that declare types and functions for domains
     are used only for type-checking denotational semantics in Agda.
-    They do *not* define the conventional mathematical structure of domains,
+    They do *not* define the mathematical structure of domains,
     nor the algebraic and universal properties of the associated functions.
     Postulated equivalences are used for testing denotations of terms,
     and added as rewrite rules to allow their use to be implicit.
@@ -79,12 +79,6 @@ Agda then requires domains `D` to be distinguished from their carrier sets
 The notation for each domain constructor is generally declared in a separate
 submodule.
 
-!!! info
-    The [Properties] module postulates equational properties of the postulated
-    operations on elements of domains, and declares them as rewrite rules.
-
-[Properties]: ../Properties/index.md
-
 ## Function domains
 
 The conventional notation in denotational definitions for the domain of all
@@ -113,7 +107,7 @@ In Agda, however, that would require pairing all λ-abstractions with explicit
 proofs of their continuity (and explicitly discarding the proofs when applying
 functions), which is quite impractical.
 
-To support direct use of conventional λ-notation for defining functions between
+To support type-checking direct use of conventional λ-notation for defining functions between
 domains, the type `⟪ D →ᶜ E ⟫` is *rewritten*[^rewrite] to the Agda type
 `⟪ D ⟫ → ⟪ E ⟫`:
 
@@ -133,7 +127,7 @@ domains, the type `⟪ D →ᶜ E ⟫` is *rewritten*[^rewrite] to the Agda type
 It would be possible to declare an analogous type of *predomains*,[^pre]
 together with notation for types of continuous functions between predomains.
 An ordinary set `A` is a special case of a predomain. The domain `A →ˢ D`
-include *all* functions from `A` to `D` (which are trivially continuous
+includes *all* functions from `A` to `D` (which are trivially continuous
 when ordered pointwise).
 
 [^pre]:
@@ -439,8 +433,7 @@ module Updates where
   ρ [ δ / a ] = λ a′ → if a == a′ then δ else ρ a′
 ```
 
-For stores `σ : ⟪ (A +⊥) →ᶜ D ⟫`, however, an equality operation
-`_==⊥_ : ⟪ (A +⊥) →ᶜ (A +⊥) →ᶜ Bool⊥ ⟫` on the flat domain is required:
+Similarly for stores `σ : ⟪ (A +⊥) →ᶜ D ⟫`:
 
 ```agda
   open Flat
