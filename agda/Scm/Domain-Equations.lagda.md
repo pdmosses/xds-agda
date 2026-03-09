@@ -5,7 +5,7 @@ semantics of the full Scheme language, but still involve almost all of
 the domain constructors formalised in the `Notation` module.
 
 ```agda
-{-# OPTIONS --rewriting --confluence-check --lossy-unification #-}
+{-# OPTIONS --rewriting --confluence-check #-}
 
 module Scm.Domain-Equations where
   open import Scm.Abstract-Syntax using (Ide; Int)

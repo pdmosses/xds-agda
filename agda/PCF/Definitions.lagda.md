@@ -32,10 +32,10 @@ mixfix notation, but ordinary arrows and parentheses are reserved symbols;
 the Agda formalisation of PCF types uses `σ ⇒ τ` instead of `(σ → τ)`:
 
 ```agda
-  data Types  : Set where
-    ι         : Types                 -- individuals
-    o         : Types                 -- truth-values
-    _⇒_       : Types → Types → Types -- functions
+  data Types  : Set where                   -- type terms
+    ι         : Types                       -- individuals
+    o         : Types                       -- truth-values
+    _⇒_       : Types → Types → Types       -- functions
   infixr 1 _⇒_
   variable σ τ : Types
 ```
@@ -52,8 +52,8 @@ index.
 
 ```agda
   open import Agda.Builtin.Nat public using (Nat)
-  data Vars   : Types → Set where           -- variables
-    α         : Nat → (σ : Types) → Vars σ
+  data Vars   : Types → Set where           -- typed variables
+    α         : Nat → (σ : Types) → Vars σ  -- α i σ is a variable of type σ
   variable i  : Nat
 ```
 
@@ -63,15 +63,15 @@ The PCF term language includes `ℒᴬ`, the set of *standard* constants for ari
 written $\mathcal L_A$ in ([Plotkin 1977]). 
 
 ```agda
-  data ℒᴬ     : Types → Set where   -- constants
-    tt        : ℒᴬ o                -- true
-    ff        : ℒᴬ o                -- false
-    ⊃         : ℒᴬ (o ⇒ σ ⇒ σ ⇒ σ)  -- conditional
-    Y         : ℒᴬ ((σ ⇒ σ) ⇒ σ)    -- fixed point
-    k         : Nat → ℒᴬ ι          -- numerals
-    ⦅+1⦆      : ℒᴬ (ι ⇒ ι)          -- successor
-    ⦅−1⦆      : ℒᴬ (ι ⇒ ι)          -- predecessor
-    Z         : ℒᴬ (ι ⇒ o)          -- zero test
+  data ℒᴬ     : Types → Set where      -- typed constants
+    tt        : ℒᴬ o                   -- true
+    ff        : ℒᴬ o                   -- false
+    ⊃         : ℒᴬ (o ⇒ σ ⇒ σ ⇒ σ)     -- conditional
+    Y         : ℒᴬ ((σ ⇒ σ) ⇒ σ)       -- fixed point
+    k         : Nat → ℒᴬ ι             -- numerals
+    ⦅+1⦆      : ℒᴬ (ι ⇒ ι)             -- successor
+    ⦅−1⦆      : ℒᴬ (ι ⇒ ι)             -- predecessor
+    Z         : ℒᴬ (ι ⇒ o)             -- zero test
   variable c  : ℒᴬ σ
 ```
 
@@ -93,7 +93,7 @@ space) as a separator. Following ([Plotkin 1977]), both terms are
 parenthesised, but using `⦅…⦆` instead of ordinary parentheses.
 
 ```agda
-  data Terms  : Types → Set where
+  data Terms  : Types → Set where                  -- typed terms
     𝑉_        : Vars σ → Terms σ                   -- variable
     𝐿_        : ℒᴬ σ → Terms σ                     -- constant
     ⦅_␣_⦆     : Terms (σ ⇒ τ) → Terms σ → Terms τ  -- function application
@@ -128,9 +128,9 @@ from variables in `Vars σ` to their values in the carrier of the domain `𝒟 �
 The environment `ρ⊥` maps all variables to `⊥`.
 
 ```agda
-  Env = (σ : Types) → ⟪ Vars σ →ˢ 𝒟 σ ⟫  -- environments
+  Env = (σ : Types) → ⟪ Vars σ →ˢ 𝒟 σ ⟫  -- typed environments
   variable ρ : Env
-  ρ⊥ : Env    -- initial environment
+  ρ⊥ : Env                               -- initial environment
   ρ⊥ _ _ = ⊥
 ```
 
@@ -181,7 +181,7 @@ The notation `ρ ⟦ α i σ ⟧` gives the value of the variable `α i σ` in `
 applying `ρ σ` to the variable.
 
 ```agda
-  _⟦_⟧ : Env → Vars σ → ⟪ 𝒟 σ ⟫  -- variable denotations
+  _⟦_⟧ : Env → Vars σ → ⟪ 𝒟 σ ⟫     -- typed variable denotations
   ρ ⟦ α i σ ⟧ = ρ σ (α i σ)
 ```
 
@@ -196,7 +196,7 @@ case analysis, which is not supported in this Agda formalisation
   open Notation.Flat using (↑; _♯)
   open Notation.Flat.Booleans using (_⟶_,_; _==⊥_; false; true)
   open Notation.Flat.Naturals using (_+_; _-_)
-  𝒜⟦_⟧ : ℒᴬ σ → ⟪ 𝒟 σ ⟫  -- constant denotations
+  𝒜⟦_⟧ : ℒᴬ σ → ⟪ 𝒟 σ ⟫             -- typed constant denotations
   𝒜⟦ tt ⟧    =  ↑ true
   𝒜⟦ ff ⟧    =  ↑ false
   𝒜⟦ ⊃ ⟧     =  λ β δ₁ δ₂ → (β ⟶ δ₁ , δ₂)
@@ -214,7 +214,7 @@ $\hat{\mathcal A} \llbracket M \rrbracket$ in ([Plotkin 1977]). It gives the
 denotation of the term `M` as a function of the environment `ρ`.
 
 ```agda
-  𝒜′⟦_⟧ : Terms σ → ⟪ Env →ˢ 𝒟 σ ⟫  -- term denotations
+  𝒜′⟦_⟧ : Terms σ → ⟪ Env →ˢ 𝒟 σ ⟫  -- typed term denotations
   𝒜′⟦ 𝑉 α i σ ⟧ ρ           =  ρ ⟦ α i σ ⟧
   𝒜′⟦ 𝐿 c ⟧ ρ               =  𝒜⟦ c ⟧
   𝒜′⟦ ⦅ M ␣ N ⦆ ⟧ ρ         =  𝒜′⟦ M ⟧ ρ (𝒜′⟦ N ⟧ ρ) 

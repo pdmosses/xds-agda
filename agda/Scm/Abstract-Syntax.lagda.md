@@ -1,7 +1,7 @@
 # Abstract Syntax
 
 ```agda
-{-# OPTIONS --rewriting --confluence-check --lossy-unification #-}
+{-# OPTIONS --rewriting --confluence-check #-}
 
 module Scm.Abstract-Syntax where
 ```
@@ -13,7 +13,7 @@ can be almost arbitrary sequences of characters. For abstract syntax in Agda,
 it is convenient to represent identifiers as strings.
 
 ```agda
-  open import Data.String.Base using (String) public
+  open import Data.String.Base public using (String)
   Ide = String      -- identifiers
   variable I : Ide
 ```
@@ -26,7 +26,7 @@ integers as ASTs in `Con`, and the standard Scheme notation `#t` and `#f` for
 the truth values.
 
 ```agda
-  open import Data.Integer.Base renaming (ℤ to Int) using () public
+  open import Data.Integer.Base public renaming (ℤ to Int) using ()
   data Con  : Set where  -- constants
     int     : Int → Con  -- integer numerals
     #t      : Con        -- true

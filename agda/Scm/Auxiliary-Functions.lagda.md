@@ -74,7 +74,7 @@ if all locations have already been allocated, it should discard `κ`.
 ```agda
   postulate new : ⟪ (𝐋 →ᶜ 𝐂) →ᶜ 𝐂 ⟫  -- new gives an unallocated location
 
-  alloc : ⟪ 𝐄 →ᶜ (𝐋 →ᶜ 𝐂) →ᶜ 𝐂 ⟫     -- alloc ϵ allocates a location initialised to ϵ
+  alloc : ⟪ 𝐄 →ᶜ (𝐋 →ᶜ 𝐂) →ᶜ 𝐂 ⟫     -- alloc ϵ allocates a location for ϵ
   alloc ϵ κ = new (λ α → assign α ϵ (κ α))
 
   postulate initial-store : ⟪ 𝐒 ⟫    -- may have initialised locations
@@ -97,7 +97,7 @@ As `𝐄` is not a flat domain, the definition has to check `ϵ ∈⊥ 𝐓` bef
 testing for equality. 
 
 ```agda
-  truish : ⟪ 𝐄 →ᶜ 𝐓 ⟫                -- truish ε for all ε except false
+  truish : ⟪ 𝐄 →ᶜ 𝐓 ⟫  -- truish ε is true for all ε except false
   truish ϵ =  (ϵ ∈⊥ 𝐓) ⟶ (((ϵ |⊥ 𝐓) ==⊥ ↑ false) ⟶ ↑ false , ↑ true) ,
               ↑ true
 ```
@@ -108,9 +108,10 @@ The following definitions of standard Scheme functions for list processing
 use conventional notation for pairs `α₁ , α₂` and sequences `⟨ ϵ⋆ ⟩`.
 
 ```agda
-  cons : ⟪ 𝐅 ⟫                       -- cons ⟨ ϵ₁ , ϵ₂ ⟩ allocates and initialises a pair
+  cons : ⟪ 𝐅 ⟫         -- cons ⟨ ϵ₁ , ϵ₂ ⟩ allocates and initialises a pair
   cons ϵ⋆ κ =  (# ϵ⋆ ==⊥ ↑ 2) ⟶
-                 alloc (ϵ⋆ ↓ 1) (λ α₁ → alloc (ϵ⋆ ↓ 2) (λ α₂ → κ ((α₁ , α₂) in⊥ 𝐄))) ,
+                 alloc (ϵ⋆ ↓ 1) (λ α₁ →
+                   alloc (ϵ⋆ ↓ 2) (λ α₂ → κ ((α₁ , α₂) in⊥ 𝐄))) ,
                ⊥
 ```
 
@@ -118,24 +119,26 @@ The recursive definition of the `list` function requires an explicit fixed
 point in Agda:
 
 ```agda
-  list : ⟪ 𝐅 ⟫                       -- list ϵ⋆ allocates and initialises a list
+  list : ⟪ 𝐅 ⟫         -- list ϵ⋆ allocates and initialises a list
   list =  fix λ (list′ : ⟪ 𝐅 ⟫) → λ ϵ⋆ κ →
             (# ϵ⋆ ==⊥ ↑ 0) ⟶ κ (↑ null in⊥ 𝐄) ,
             list′ (ϵ⋆ † 1) (λ ϵ → cons ⟨ (ϵ⋆ ↓ 1) , ϵ ⟩ κ)
 
-  car : ⟪ 𝐅 ⟫                        -- car ⟨ ϵ ⟩ gives the head of the list ϵ
+  car : ⟪ 𝐅 ⟫          -- car ⟨ ϵ ⟩ gives the head of the list ϵ
   car ϵ⋆ κ = (# ϵ⋆ ==⊥ ↑ 1) ⟶ hold (((ϵ⋆ ↓ 1) |⊥ 𝐏) ↓₁) κ , ⊥
 
-  cdr : ⟪ 𝐅 ⟫                        -- cdr ⟨ ϵ ⟩ gives the tail of the list ϵ
+  cdr : ⟪ 𝐅 ⟫          -- cdr ⟨ ϵ ⟩ gives the tail of the list ϵ
   cdr ϵ⋆ κ = (# ϵ⋆ ==⊥ ↑ 1) ⟶ hold (((ϵ⋆ ↓ 1) |⊥ 𝐏) ↓₂) κ , ⊥
 
-  setcar : ⟪ 𝐅 ⟫                     -- setcar ⟨ ϵ₁ , ϵ₂ ⟩ stores ϵ₂ in the head of list ϵ₁
-  setcar ϵ⋆ κ =  (# ϵ⋆ ==⊥ ↑ 2) ⟶
-                   assign (((ϵ⋆ ↓ 1) |⊥ 𝐏) ↓₁) (ϵ⋆ ↓ 2) (κ (↑ unspecified in⊥ 𝐄)) ,
-                 ⊥
+  setcar : ⟪ 𝐅 ⟫       -- setcar ⟨ ϵ₁ , ϵ₂ ⟩ stores ϵ₂ in the head of list ϵ₁
+  setcar ϵ⋆ κ =
+    (# ϵ⋆ ==⊥ ↑ 2) ⟶
+      assign (((ϵ⋆ ↓ 1) |⊥ 𝐏) ↓₁) (ϵ⋆ ↓ 2) (κ (↑ unspecified in⊥ 𝐄)) ,
+    ⊥
 
-  setcdr : ⟪ 𝐅 ⟫                     -- setcdr ⟨ ϵ₁ , ϵ₂ ⟩ stores ϵ₂ in the tail of list ϵ₁
-  setcdr ϵ⋆ κ =  (# ϵ⋆ ==⊥ ↑ 2) ⟶
-                   assign (((ϵ⋆ ↓ 1) |⊥ 𝐏) ↓₂) (ϵ⋆ ↓ 2) (κ (↑ unspecified in⊥ 𝐄)) ,
-                 ⊥
+  setcdr : ⟪ 𝐅 ⟫       -- setcdr ⟨ ϵ₁ , ϵ₂ ⟩ stores ϵ₂ in the tail of list ϵ₁
+  setcdr ϵ⋆ κ =
+    (# ϵ⋆ ==⊥ ↑ 2) ⟶
+      assign (((ϵ⋆ ↓ 1) |⊥ 𝐏) ↓₂) (ϵ⋆ ↓ 2) (κ (↑ unspecified in⊥ 𝐄)) ,
+    ⊥
 ```

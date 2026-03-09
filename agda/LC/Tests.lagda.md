@@ -4,12 +4,11 @@
 {-# OPTIONS --rewriting --confluence-check #-}
 module LC.Tests where
 
+open import Notation
 open import LC.Definitions
 open Abstract-Syntax
 open Domain-Equations
 open Semantic-Functions
-
-open import Properties
 
 check-id : -- (λx1.x1)x42 = x42
   ⟦ ⦅ ⦅λ x 1 ␣ var x 1 ⦆ ␣ var x 42 ⦆ ⟧ ≡ ⟦ var x 42 ⟧

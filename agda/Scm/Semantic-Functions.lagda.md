@@ -22,7 +22,7 @@ module Scm.Semantic-Functions where
 ```agda
   𝒦⟦_⟧   :  ⟪ Con →ˢ 𝐄 ⟫                      -- constant denotations
   ℰ⟦_⟧   :  ⟪ Exp →ˢ 𝐔 →ᶜ (𝐄 →ᶜ 𝐂) →ᶜ 𝐂 ⟫     -- expression denotations
-  ℰ⋆⟦_⟧  :  ⟪ Exp⋆ →ˢ 𝐔 →ᶜ (𝐄 ⋆ →ᶜ 𝐂) →ᶜ 𝐂 ⟫  -- expression sequence denotations
+  ℰ⋆⟦_⟧  :  ⟪ Exp⋆ →ˢ 𝐔 →ᶜ (𝐄 ⋆ →ᶜ 𝐂) →ᶜ 𝐂 ⟫  -- sequence denotations
 
   𝒦⟦ int Z ⟧  = ↑ Z in⊥ 𝐄
   𝒦⟦ #t ⟧     = ↑ true in⊥ 𝐄
@@ -49,7 +49,7 @@ module Scm.Semantic-Functions where
 
 ```agda
   ℬ⟦_⟧   :  ⟪ Body →ˢ 𝐔 →ᶜ (𝐔 →ᶜ 𝐂) →ᶜ 𝐂 ⟫    -- body denotations
-  ℬ⁺⟦_⟧  :  ⟪ Body⁺ →ˢ 𝐔 →ᶜ (𝐔 →ᶜ 𝐂) →ᶜ 𝐂 ⟫   -- body sequence denotations
+  ℬ⁺⟦_⟧  :  ⟪ Body⁺ →ˢ 𝐔 →ᶜ (𝐔 →ᶜ 𝐂) →ᶜ 𝐂 ⟫   -- sequence denotations
   𝒫⟦_⟧   :  ⟪ Prog →ˢ 𝐀 ⟫                     -- program execution answers
 
   ℬ⟦ ␣␣ E ⟧ ρ κ =

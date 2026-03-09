@@ -9,6 +9,10 @@ direct use of λ-notation for defining functions between domains.
 
 module Notation where
 
+open import Agda.Builtin.Equality public using (_≡_; refl)
+open import Agda.Builtin.Equality.Rewrite using ()
+open import Agda.Builtin.Nat public using (Nat) renaming (_==_ to _==ᴺ_) 
+
 variable A B C : Set
 ```
 
@@ -31,10 +35,12 @@ element of the unit domain `𝟙` is `⊥`.[^bottom]
     is `tt`.
 
 !!! warning
-    The specified postulates declare types and functions for domains.
-    They are used only for type-checking denotational semantics in Agda.
+    The specified postulates that declare types and functions for domains
+    are used only for type-checking denotational semantics in Agda.
     They do *not* define the conventional mathematical structure of domains,
     nor the algebraic and universal properties of the associated functions.
+    Postulated equivalences are used for testing denotations of terms,
+    and added as rewrite rules to allow their use to be implicit.
 
 ```agda
 module Domains where
@@ -90,8 +96,6 @@ the domain are continuous functions.
 
 ```agda
 module Functions where
-  open import Agda.Builtin.Equality public using (_≡_)
-  open import Agda.Builtin.Equality.Rewrite using ()
   postulate
     _→ᶜ_ : Domain → Domain → Domain
     -- D →ᶜ E is the domain of continuous functions from D to E
@@ -101,14 +105,7 @@ module Functions where
 In conventional denotational semantics, functions between domains are
 *automatically* continuous when defined in terms of λ-abstraction and
 application from primitive continuous functions associated with specific
-domain constructors. And continuous *endofunctions* `f` in `D →ᶜ D` have
-(least) fixed points, given by `fix f`:
-
-```agda
-  postulate
-    fix : ⟪ (D →ᶜ D) →ᶜ D ⟫
-    -- fix f is the least fixed point of the continuous function f
-```
+domain constructors. 
 
 The carrier `⟪ D →ᶜ E ⟫` of a function domain `D →ᶜ E` should consist of just
 the (Scott-)continuous functions between the carriers `⟪ D ⟫` and `⟪ E ⟫`.
@@ -157,7 +154,18 @@ The type `⟪ A →ˢ D ⟫` is *rewritten* to the Agda type `A → ⟪ D ⟫`:
   {-# REWRITE set-cts #-}
 ```
 
-The subsequent modules all involve the above notation:
+Continuous *endofunctions* `f` in `D →ᶜ D` have (least) fixed points `fix f`:
+
+```agda
+  postulate
+    fix : ⟪ (D →ᶜ D) →ᶜ D ⟫
+    -- fix f is the least fixed point of the continuous function f
+    apply-fix : {f : ⟪ D →ᶜ D ⟫} → fix f ≡ f (fix f)
+    -- apply-fix{f} unfolds fix f once
+  {-# REWRITE apply-fix #-}
+```
+
+The above notation is implicitly imported by the remaining submodules of `Notation`:
 
 ```agda
 open Functions public
@@ -181,6 +189,8 @@ module Recursion where
     -- an instance of D ≅ E declares that the structure of D is the same as E
     unfold :  {{D ≅ E}} → ⟪ D →ᶜ E ⟫
     fold :    {{D ≅ E}} → ⟪ E →ᶜ D ⟫
+    elim-unfold-fold : {{_ : D ≅ E}} → {e : ⟪ E ⟫} → unfold (fold e) ≡ e
+  {-# REWRITE elim-unfold-fold #-}
 ```
 
 The *instance parameter* `{{D ≅ E}}` of the above operations restricts them
@@ -197,8 +207,8 @@ is simply as follows.
       instance _ : D∞ ≅ (D∞ →ᶜ D∞)
 ```
 
-The least domain `D` with `D ≅ (D →ᶜ D)` is the unit domain.
-For any domain `D₀` there is a domain `D` that includes `D₀` with `D ≅ (D →ᶜ D)`.
+The least domain `D` with `D ≅ (D →ᶜ D)` is the unit domain. For any
+domain `D₀` there is a domain `D` that includes `D₀` with `D ≅ (D →ᶜ D)`.
 
 ## Flat domains
 
@@ -220,9 +230,14 @@ However, it is difficult to support such conventions in Agda.)
 ```agda
 module Flat where
   postulate
-    _+⊥  : Set → Domain                 -- A +⊥ constructs a flat domain from A
+    _+⊥  : Set → Domain                 -- A +⊥ constructs a flat domain
     ↑    : ⟪ A →ˢ (A +⊥) ⟫              -- (↑ a) injects a into A +⊥
     _♯   : ⟪ (A →ˢ D) →ᶜ (A +⊥) →ᶜ D ⟫  -- f ♯ extends f to map ⊥ to ⊥
+  variable f : A → ⟪ D ⟫; a′ : A
+  postulate
+    elim-♯-↑  : (f ♯) (↑ a′)  ≡ f a′
+    elim-♯-⊥  : (f ♯) ⊥      ≡ ⊥
+  {-# REWRITE elim-♯-↑ elim-♯-⊥ #-} 
 ```
 
 ### Booleans
@@ -234,7 +249,7 @@ conditional choice to domains. It returns `⊥` whenever its first argument is `
   module Booleans where
     open import Data.Bool.Base public using (Bool; false; true; if_then_else_)
     Bool⊥ = Bool +⊥
-    _⟶_,_ : ⟪ Bool⊥ →ᶜ D →ᶜ D →ᶜ D ⟫             -- β ⟶ δ₁ , δ₂ is conditional choice
+    _⟶_,_ : ⟪ Bool⊥ →ᶜ D →ᶜ D →ᶜ D ⟫    -- β ⟶ δ₁ , δ₂ is conditional choice
     _⟶_,_ = (λ b δ₁ δ₂ → if b then δ₁ else δ₂)♯  
     infixr 20 _⟶_,_
 ```
@@ -259,11 +274,16 @@ using `zero` and `suc`.
 
 ```agda
   module Naturals where
-    open import Agda.Builtin.Nat public using (Nat; suc; _+_; _-_) renaming (_==_ to _==ᴺ_)
+    open import Agda.Builtin.Nat public
+      using (Nat; suc; _+_; _-_) renaming (_==_ to _==ᴺ_)
     Nat⊥ = Nat +⊥
     open Booleans
     postulate 
       instance eqNat : Eq Nat
+    variable n₁ n₂ : Nat
+    postulate
+      elim-==⊥ : (↑ n₁ ==⊥ ↑ n₂) ≡ ↑ (n₁ ==ᴺ n₂)
+    {-# REWRITE elim-==⊥ #-} 
 ```
 
 ## Sum domains
@@ -276,11 +296,17 @@ and iterated for domains with more than two summands.
 ```agda
 module Sums where
   postulate
-    _+_    : Domain → Domain → Domain   -- D + E is the separated sum domain
+    _+_    : Domain → Domain → Domain   -- D + E is separated sum
     inj₁   : ⟪ D →ᶜ (D + E) ⟫
     inj₂   : ⟪ E →ᶜ (D + E) ⟫
     [_,_]  : ⟪ (D →ᶜ F) →ᶜ (E →ᶜ F) →ᶜ ((D + E) →ᶜ F) ⟫
     -- [ φ , ψ ] applies φ to arguments in D, and ψ to arguments in E
+  variable φ : ⟪ D →ᶜ F ⟫; ψ : ⟪ E →ᶜ F ⟫; δ : ⟪ D ⟫; ε : ⟪ E ⟫
+  postulate
+    elim-inj₁  :  [ φ , ψ ] (inj₁ δ)  ≡  φ δ
+    elim-inj₂  :  [ φ , ψ ] (inj₂ ε)  ≡  ψ ε
+    elim-[]-⊥  :  [ φ , ψ ] ⊥         ≡  ⊥
+  {-# REWRITE elim-inj₁ elim-inj₂ #-} 
 ```
 
 In published examples of denotational semantics, injection of $\delta$ from
@@ -312,13 +338,24 @@ the unary functions are known to be continuous when `E` is a sum domain.)
 
 ```agda
   open import Agda.Builtin.Nat using (Nat)
+  open Flat
   open Flat.Booleans
+  open Flat.Naturals
   variable n : Nat
   postulate
     _≳_↦_  : Domain → Nat → Domain → Set
-    _in⊥_  : ⟪ D ⟫ → (E : Domain) → {{E ≳ n ↦ D}} → ⟪ E ⟫
-    _|⊥_   : ⟪ E ⟫ → (D : Domain) → {{E ≳ n ↦ D}} → ⟪ D ⟫
-    _∈⊥_   : ⟪ E ⟫ → (D : Domain) → {{E ≳ n ↦ D}} → ⟪ Bool⊥ ⟫
+    _in⊥_  : ⟪ D ⟫ → (E : Domain) → {{E ≳ n ↦ D}} → ⟪ E ⟫      -- injection
+    _|⊥_   : ⟪ E ⟫ → (D : Domain) → {{E ≳ n ↦ D}} → ⟪ D ⟫      -- projection
+    _∈⊥_   : ⟪ E ⟫ → (D : Domain) → {{E ≳ n ↦ D}} → ⟪ Bool⊥ ⟫  -- inspection
+  open import Relation.Binary.PropositionalEquality.Core using (_≢_)
+  variable D′ : Domain; n′ : Nat
+  postulate
+    elim-∈⊥    :  {{_ : E ≳ n ↦ D}} → {{_ : E ≳ n′ ↦ D′}} → (δ : ⟪ D ⟫) →
+                  (δ in⊥ E) ∈⊥ D′ ≡ ↑ (n ==ᴺ n′)
+    elim-|⊥    :  {{_ : E ≳ n ↦ D}} → (δ : ⟪ D ⟫) → (δ in⊥ E) |⊥ D ≡ δ
+    elim-∈⊥-⊥  :  {{_ : E ≳ n ↦ D}} → {{_ : E ≳ n′ ↦ D′}} → (δ : ⟪ D ⟫) →
+                  {n ≢ n′} → (δ in⊥ E) |⊥ D′ ≡ ⊥
+  {-# REWRITE elim-∈⊥ elim-|⊥ #-} 
 ```
 
 ## Product domains
@@ -332,12 +369,17 @@ binary products, and iterated for products of more than two domains.
 ```agda
 module Products where
   postulate
-    _×_  : Domain → Domain → Domain  -- D × E is the cartesian product domain
-    _,_  : ⟪ D →ᶜ E →ᶜ (D × E) ⟫     -- (δ , ε) is the pair of elements
+    _×_  : Domain → Domain → Domain  -- D × E is cartesian product
+    _,_  : ⟪ D →ᶜ E →ᶜ (D × E) ⟫     -- (δ , ε) is a pair of elements
     _↓₁  : ⟪ (D × E) →ᶜ D ⟫          -- (δ , ε)↓₁ is δ
     _↓₂  : ⟪ (D × E) →ᶜ E ⟫          -- (δ , ε)↓₂ is ε
   infixr 2 _×_
   infixr 4 _,_
+  variable δ : ⟪ D ⟫; ε : ⟪ E ⟫
+  postulate
+    elim-↓₁  :  ( δ , ε ) ↓₁  ≡  δ
+    elim-↓₂  :  ( δ , ε ) ↓₂  ≡  ε
+  {-# REWRITE elim-↓₁ elim-↓₂ #-} 
 ```
 
 ### Tuples
@@ -376,10 +418,10 @@ double angle-brackets `⟪ D ⟫` used for the carrier of domain `D`.)
       _⋆     : Domain → Domain          -- D ⋆ is the finite sequence domain
       ⟨⟩     : ⟪ D ⋆ ⟫                  -- ⟨⟩ is the empty sequence
       ⟨_⟩    : ⟪ (D ^ suc n) →ᶜ D ⋆ ⟫   -- ⟨ δ₁ , ... ⟩ is a non-empty sequence
-      #      : ⟪ D ⋆ →ᶜ Nat⊥ ⟫          -- # δ⋆ is the length of the sequence
+      #      : ⟪ D ⋆ →ᶜ Nat⊥ ⟫          -- # δ⋆ is the length of sequence δ⋆
       _§_    : ⟪ D ⋆ →ᶜ D ⋆ →ᶜ D ⋆ ⟫    -- δ⋆₁ § δ⋆₂ is sequence concatenation
-      _↓_    : ⟪ D ⋆ →ᶜ Nat →ˢ D ⟫      -- δ⋆ ↓ n is the nth element of a sequence
-      _†_    : ⟪ D ⋆ →ᶜ Nat →ˢ D ⋆ ⟫    -- δ⋆ † n is the nth tail of a sequence
+      _↓_    : ⟪ D ⋆ →ᶜ Nat →ˢ D ⟫      -- δ⋆ ↓ n is the nth element
+      _†_    : ⟪ D ⋆ →ᶜ Nat →ˢ D ⋆ ⟫    -- δ⋆ † n is the nth tail
 ```
 
 ## Updates
