@@ -148,14 +148,14 @@ The type `⟪ A →ˢ D ⟫` is *rewritten* to the Agda type `A → ⟪ D ⟫`:
   {-# REWRITE set-cts #-}
 ```
 
-Continuous *endofunctions* `f` in `D →ᶜ D` have (least) fixed points `fix f`:
+Continuous *endofunctions* `φ` in `D →ᶜ D` have (least) fixed points `fix φ`:
 
 ```agda
   postulate
     fix : ⟪ (D →ᶜ D) →ᶜ D ⟫
-    -- fix f is the least fixed point of the continuous function f
-    apply-fix : {f : ⟪ D →ᶜ D ⟫} → fix f ≡ f (fix f)
-    -- apply-fix{f} unfolds fix f once
+    -- fix φ is the least fixed point of the continuous function φ
+    apply-fix : {φ : ⟪ D →ᶜ D ⟫} → fix φ ≡ φ (fix φ)
+    -- apply-fix{φ} unfolds fix φ once
   {-# REWRITE apply-fix #-}
 ```
 
@@ -291,8 +291,8 @@ and iterated for domains with more than two summands.
 module Sums where
   postulate
     _+_    : Domain → Domain → Domain   -- D + E is separated sum
-    inj₁   : ⟪ D →ᶜ (D + E) ⟫
-    inj₂   : ⟪ E →ᶜ (D + E) ⟫
+    inj₁   : ⟪ D →ᶜ (D + E) ⟫           -- inj₁ δ is injection from D
+    inj₂   : ⟪ E →ᶜ (D + E) ⟫           -- inj₂ ε is injection from E
     [_,_]  : ⟪ (D →ᶜ F) →ᶜ (E →ᶜ F) →ᶜ ((D + E) →ᶜ F) ⟫
     -- [ φ , ψ ] applies φ to arguments in D, and ψ to arguments in E
   variable φ : ⟪ D →ᶜ F ⟫; ψ : ⟪ E →ᶜ F ⟫; δ : ⟪ D ⟫; ε : ⟪ E ⟫
@@ -338,9 +338,9 @@ the unary functions are known to be continuous when `E` is a sum domain.)
   variable n : Nat
   postulate
     _≳_↦_  : Domain → Nat → Domain → Set
-    _in⊥_  : ⟪ D ⟫ → (E : Domain) → {{E ≳ n ↦ D}} → ⟪ E ⟫      -- injection
-    _|⊥_   : ⟪ E ⟫ → (D : Domain) → {{E ≳ n ↦ D}} → ⟪ D ⟫      -- projection
-    _∈⊥_   : ⟪ E ⟫ → (D : Domain) → {{E ≳ n ↦ D}} → ⟪ Bool⊥ ⟫  -- inspection
+    _in⊥_  : ⟪ D ⟫ → (E : Domain) → {{E ≳ n ↦ D}} → ⟪ E ⟫      -- δ in⊥ E is injection from D
+    _|⊥_   : ⟪ E ⟫ → (D : Domain) → {{E ≳ n ↦ D}} → ⟪ D ⟫      -- ε |⊥ D is projection to D
+    _∈⊥_   : ⟪ E ⟫ → (D : Domain) → {{E ≳ n ↦ D}} → ⟪ Bool⊥ ⟫  -- ε ∈⊥ D tests an injection
   open import Relation.Binary.PropositionalEquality.Core using (_≢_)
   variable D′ : Domain; n′ : Nat
   postulate
