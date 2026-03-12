@@ -50,6 +50,7 @@ module Domains where
     ⟪_⟫ : Domain → Set        -- ⟪ D ⟫ is the type of elements of D
     ⊥ : {D : Domain} → ⟪ D ⟫  -- ⊥{D} is the bottom element of D
     𝟙 : Domain                -- 𝟙 is a unit domain
+
   variable D E F : Domain
 
 open Domains public
@@ -90,6 +91,7 @@ the domain are continuous functions.
 
 ```agda
 module Functions where
+
   postulate
     _→ᶜ_ : Domain → Domain → Domain
     -- D →ᶜ E is the domain of continuous functions from D to E
@@ -178,6 +180,7 @@ to map values from a postulated domain to its structure and *vice versa*.
 
 ```agda
 module Recursion where
+
   postulate
     _≅_ : Domain → Domain → Set
     -- an instance of D ≅ E declares that the structure of D is the same as E
@@ -223,6 +226,7 @@ However, it is difficult to support such conventions in Agda.)
 
 ```agda
 module Flat where
+
   postulate
     _+⊥  : Set → Domain                 -- A +⊥ constructs a flat domain
     ↑    : ⟪ A →ˢ (A +⊥) ⟫              -- (↑ a) injects a into A +⊥
@@ -241,6 +245,7 @@ conditional choice to domains. It returns `⊥` whenever its first argument is `
 
 ```agda
   module Booleans where
+
     open import Data.Bool.Base public using (Bool; false; true; if_then_else_)
     Bool⊥ = Bool +⊥
     _⟶_,_ : ⟪ Bool⊥ →ᶜ D →ᶜ D →ᶜ D ⟫    -- β ⟶ δ₁ , δ₂ is conditional choice
@@ -268,6 +273,7 @@ using `zero` and `suc`.
 
 ```agda
   module Naturals where
+
     open import Agda.Builtin.Nat public
       using (Nat; suc; _+_; _-_) renaming (_==_ to _==ᴺ_)
     Nat⊥ = Nat +⊥
@@ -289,12 +295,14 @@ and iterated for domains with more than two summands.
 
 ```agda
 module Sums where
+
   postulate
     _+_    : Domain → Domain → Domain   -- D + E is separated sum
     inj₁   : ⟪ D →ᶜ (D + E) ⟫           -- inj₁ δ is injection from D
     inj₂   : ⟪ E →ᶜ (D + E) ⟫           -- inj₂ ε is injection from E
     [_,_]  : ⟪ (D →ᶜ F) →ᶜ (E →ᶜ F) →ᶜ ((D + E) →ᶜ F) ⟫
     -- [ φ , ψ ] applies φ to arguments in D, and ψ to arguments in E
+
   variable φ : ⟪ D →ᶜ F ⟫; ψ : ⟪ E →ᶜ F ⟫; δ : ⟪ D ⟫; ε : ⟪ E ⟫
   postulate
     elim-inj₁  :  [ φ , ψ ] (inj₁ δ)  ≡  φ δ
@@ -341,6 +349,7 @@ the unary functions are known to be continuous when `E` is a sum domain.)
     _in⊥_  : ⟪ D ⟫ → (E : Domain) → {{E ≳ n ↦ D}} → ⟪ E ⟫      -- δ in⊥ E is injection from D
     _|⊥_   : ⟪ E ⟫ → (D : Domain) → {{E ≳ n ↦ D}} → ⟪ D ⟫      -- ε |⊥ D is projection to D
     _∈⊥_   : ⟪ E ⟫ → (D : Domain) → {{E ≳ n ↦ D}} → ⟪ Bool⊥ ⟫  -- ε ∈⊥ D tests an injection
+
   open import Relation.Binary.PropositionalEquality.Core using (_≢_)
   variable D′ : Domain; n′ : Nat
   postulate
@@ -362,13 +371,16 @@ binary products, and iterated for products of more than two domains.
 
 ```agda
 module Products where
+
   postulate
     _×_  : Domain → Domain → Domain  -- D × E is cartesian product
     _,_  : ⟪ D →ᶜ E →ᶜ (D × E) ⟫     -- (δ , ε) is a pair of elements
     _↓₁  : ⟪ (D × E) →ᶜ D ⟫          -- (δ , ε)↓₁ is δ
     _↓₂  : ⟪ (D × E) →ᶜ E ⟫          -- (δ , ε)↓₂ is ε
+
   infixr 2 _×_
   infixr 4 _,_
+
   variable δ : ⟪ D ⟫; ε : ⟪ E ⟫
   postulate
     elim-↓₁  :  ( δ , ε ) ↓₁  ≡  δ
@@ -383,6 +395,7 @@ written $D^n$, but Agda does not support the use of variables as superscripts.
 
 ```agda
   module Tuples where
+
     open import Agda.Builtin.Nat public using (Nat; suc)
     _^_ : Domain → Nat → Domain         -- D ^ n is the domain of n-tuples (n ≥ 0)
     D ^ 0            = 𝟙 
@@ -405,6 +418,7 @@ double angle-brackets `⟪ D ⟫` used for the carrier of domain `D`.)
 
 ```agda
   module Sequences where
+
     open Flat.Naturals
     open Tuples
     variable n : Nat
@@ -426,6 +440,7 @@ conventional notation `ρ [ δ / a ]`, defined as follows.
 
 ```agda
 module Updates where
+
   open Flat
   open Flat.Booleans
   _[_/_] : {{Eq A}} → ⟪ (A →ˢ D) →ᶜ D →ᶜ A →ˢ (A →ˢ D) ⟫

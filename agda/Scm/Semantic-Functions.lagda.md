@@ -4,6 +4,7 @@
 {-# OPTIONS --rewriting --confluence-check --lossy-unification #-}
 
 module Scm.Semantic-Functions where
+
   open import Scm.Abstract-Syntax
   open import Scm.Domain-Equations
   open import Scm.Auxiliary-Functions

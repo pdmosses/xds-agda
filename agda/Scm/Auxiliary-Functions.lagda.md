@@ -4,6 +4,7 @@
 {-# OPTIONS --rewriting --confluence-check --lossy-unification #-}
 
 module Scm.Auxiliary-Functions where
+
   open import Scm.Abstract-Syntax
   open import Scm.Domain-Equations
   import Notation
@@ -28,6 +29,7 @@ operations on `𝐑` and `𝐓`.
     eqL   : Eq Loc
     eqM   : Eq Misc
     eqR   : Eq Int
+  
   postulate
     _<ᴿ_  : ⟪ 𝐑 →ᶜ 𝐑 →ᶜ 𝐓 ⟫
     _+ᴿ_  : ⟪ 𝐑 →ᶜ 𝐑 →ᶜ 𝐑 ⟫
@@ -41,8 +43,11 @@ the domain `𝐋`. The instance `Eq Ide` supports the conventional notation
 `ρ [ α / I ]` for updating `ρ` to map `I` to location `α`.
 
 ```agda
-  postulate instance eqIde : Eq Ide
+  postulate instance
+    eqIde : Eq Ide
+
   postulate unknown : Loc
+
   postulate initial-env : ⟪ 𝐔 ⟫
 ```
 

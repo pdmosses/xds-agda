@@ -112,6 +112,7 @@ not involving bijections or embeddings.
 
 ```agda
 module Domain-Equations where
+
   open Abstract-Syntax
   open Notation.Flat.Booleans using (Bool; Bool⊥)
   open Notation.Flat.Naturals using (Nat⊥; eqNat)
@@ -171,6 +172,7 @@ of extension:
 
 ```agda
 module Semantic-Functions where
+
   open Abstract-Syntax
   open Domain-Equations
 ```

@@ -2,6 +2,7 @@
 
 ```agda
 {-# OPTIONS --rewriting --confluence-check #-}
+
 module LC.Tests where
 
 open import Notation

@@ -8,6 +8,7 @@ the domain constructors formalised in the `Notation` module.
 {-# OPTIONS --rewriting --confluence-check #-}
 
 module Scm.Domain-Equations where
+
   open import Scm.Abstract-Syntax using (Ide; Int)
   import Notation
   open Notation.Domains using (Domain; ⟪_⟫)

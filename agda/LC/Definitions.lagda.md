@@ -63,11 +63,12 @@ the domain of all continuous endofunctions on `D∞`. (Simply defining
 
 ```agda
 module Domain-Equations where
+
   open Abstract-Syntax
   open Notation.Recursion using (_≅_; fold; unfold) public
   postulate
-    D∞ : Domain
-    instance eqD∞ : D∞ ≅ (D∞ →ᶜ D∞)
+    D∞ : Domain                      -- corresponds to Scott's domain 
+    instance eqD∞ : D∞ ≅ (D∞ →ᶜ D∞)  -- bijection
   variable δ : ⟪ D∞ ⟫
 ```
 
@@ -106,6 +107,7 @@ up to isomorphism, and are conventionally elided.)
 
 ```agda
 module Semantic-Functions where
+
   open Abstract-Syntax
   open Domain-Equations
   ⟦_⟧ : Exp → ⟪ Env →ᶜ D∞ ⟫

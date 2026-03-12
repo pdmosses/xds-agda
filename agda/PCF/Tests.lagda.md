@@ -18,6 +18,7 @@ a  = α 3 ι
 b  = α 4 ι
 
 -- Arithmetic
+
 check-41+1 :
   𝒜′⟦ ⦅ 𝐿 ⦅+1⦆ ␣ 𝐿 k 41 ⦆ ⟧ ρ⊥ ≡ ↑ 42
 check-41+1 = refl
@@ -27,6 +28,7 @@ check-43-1 :
 check-43-1 = refl
 
 -- Binding
+
 check-id :
   𝒜′⟦ ⦅ ⦅λ a ␣ 𝑉 a ⦆ ␣ 𝐿 k 42 ⦆ ⟧ ρ⊥ ≡ ↑ 42
 check-id = refl
@@ -54,6 +56,8 @@ check-if-zero = refl
 check-if-nonzero :
   𝒜′⟦ ⦅ ⦅ ⦅ 𝐿 ⊃ ␣ ⦅ 𝐿 Z  ␣ 𝐿 k 42 ⦆ ⦆ ␣ 𝐿 k 0 ⦆ ␣ 𝐿 k 42 ⦆ ⟧ ρ⊥ ≡ ↑ 42
 check-if-nonzero = refl
+
+-- Fixed points
 
 check-fix-const :
   𝒜′⟦ ⦅ 𝐿 Y ␣ ⦅λ e ␣ 𝐿 k 42 ⦆ ⦆ ⟧ ρ⊥ ≡ ↑ 42
