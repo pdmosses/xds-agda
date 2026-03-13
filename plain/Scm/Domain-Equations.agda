@@ -1,7 +1,8 @@
 
-{-# OPTIONS --rewriting --confluence-check --lossy-unification #-}
+{-# OPTIONS --rewriting --confluence-check #-}
 
 module Scm.Domain-Equations where
+
   open import Scm.Abstract-Syntax using (Ide; Int)
   import Notation
   open Notation.Domains using (Domain; ⟪_⟫)
@@ -14,21 +15,21 @@ module Scm.Domain-Equations where
   open Notation.Products.Sequences using (_⋆)
 
   postulate Loc : Set
-  𝐋  =  Loc +⊥
-  𝐍  =  Nat⊥
-  𝐓  =  Bool⊥
-  𝐑  =  Int +⊥
-  𝐏  =  𝐋 × 𝐋
-  𝐔  =  Ide →ˢ 𝐋
+  𝐋  =  Loc +⊥                -- locations
+  𝐍  =  Nat⊥                  -- natural numbers
+  𝐓  =  Bool⊥                 -- booleans
+  𝐑  =  Int +⊥                -- numbers
+  𝐏  =  𝐋 × 𝐋                 -- pairs
+  𝐔  =  Ide →ˢ 𝐋              -- environments
   data Misc : Set where
-     null unallocated undefined unspecified : Misc
-  𝐌  =  Misc +⊥
+    null unallocated undefined unspecified : Misc
+  𝐌  =  Misc +⊥               -- miscellaneous
 
-  postulate 𝐄 : Domain
-  𝐒  =  𝐋 →ᶜ 𝐄
-  postulate 𝐀 : Domain
-  𝐂  =  𝐒 →ᶜ 𝐀
-  𝐅  =  𝐄 ⋆ →ᶜ (𝐄 →ᶜ 𝐂) →ᶜ 𝐂
+  postulate 𝐄 : Domain        -- expressed values
+  𝐒  =  𝐋 →ᶜ 𝐄                -- stores
+  postulate 𝐀 : Domain        -- answers
+  𝐂  =  𝐒 →ᶜ 𝐀                -- command continuations
+  𝐅  =  𝐄 ⋆ →ᶜ (𝐄 →ᶜ 𝐂) →ᶜ 𝐂  -- procedure values
 
   postulate instance
     E+=T  : 𝐄 ≳ 1 ↦ 𝐓

@@ -1,40 +1,41 @@
 
-{-# OPTIONS --rewriting --confluence-check --lossy-unification #-}
+{-# OPTIONS --rewriting --confluence-check #-}
 
 module Scm.Abstract-Syntax where
 
-  open import Data.String.Base using (String) public
-  Ide = String
+  open import Data.String.Base public using (String)
+  Ide = String      -- identifiers
   variable I : Ide
 
-  open import Data.Integer.Base renaming (ℤ to Int) using () public
-  data Con  : Set where
-    int     : Int → Con
-    #t #f   : Con
+  open import Data.Integer.Base public renaming (ℤ to Int) using ()
+  data Con  : Set where  -- constants
+    int     : Int → Con  -- integer numerals
+    #t      : Con        -- true
+    #f      : Con        -- false
   variable K : Con
 
   mutual
-    data Exp       : Set where
-      con          : Con → Exp
-      ide          : Ide → Exp
-      ⦅_␣_⦆        : Exp → Exp⋆ → Exp
-      ⦅lambda_␣_⦆  : Ide → Exp → Exp
-      ⦅if_␣_␣_⦆    : Exp → Exp → Exp → Exp
-      ⦅set!_␣_⦆    : Ide → Exp → Exp
-    data Exp⋆      : Set where
-      ␣␣␣          : Exp⋆
-      _␣␣_         : Exp → Exp⋆ → Exp⋆
+    data Exp       : Set where              -- expressions
+      con          : Con → Exp              -- constants
+      ide          : Ide → Exp              -- identifiers
+      ⦅_␣_⦆        : Exp → Exp⋆ → Exp       -- procedure application 
+      ⦅lambda_␣_⦆  : Ide → Exp → Exp        -- procedure abstraction
+      ⦅if_␣_␣_⦆    : Exp → Exp → Exp → Exp  -- conditional choice
+      ⦅set!_␣_⦆    : Ide → Exp → Exp        -- assignment
+    data Exp⋆      : Set where              -- expression sequences
+      ␣␣␣          : Exp⋆                   -- empty sequence
+      _␣␣_         : Exp → Exp⋆ → Exp⋆      -- sequence prefix
   variable E : Exp; E⋆ : Exp⋆
 
   mutual
-    data Body      : Set where
-      ␣␣_          : Exp → Body
-      ⦅define_␣_⦆  : Ide → Exp → Body
-      ⦅begin_⦆     : Body⁺ → Body
-    data Body⁺     : Set where
-      ␣␣_          : Body → Body⁺
-      _␣␣_         : Body → Body⁺ → Body⁺
-  data Prog        : Set where
-    ␣␣␣            : Prog
-    ␣␣_            : Body⁺ → Prog
+    data Body      : Set where             -- bodies
+      ␣␣_          : Exp → Body            -- expression body
+      ⦅define_␣_⦆  : Ide → Exp → Body      -- definition body
+      ⦅begin_⦆     : Body⁺ → Body          -- body sequence
+    data Body⁺     : Set where             -- body sequences
+      ␣␣_          : Body → Body⁺          -- empty sequence
+      _␣␣_         : Body → Body⁺ → Body⁺  -- sequence prefix
+  data Prog        : Set where             -- programs
+    ␣␣␣            : Prog                  -- empty program
+    ␣␣_            : Body⁺ → Prog          -- body sequence program
   variable B : Body; B⁺ : Body⁺; Π : Prog

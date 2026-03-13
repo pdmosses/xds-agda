@@ -1,17 +1,14 @@
 
 {-# OPTIONS --rewriting --confluence-check --lossy-unification #-}
+
 module PCF.Tests where
 
+open import Notation
+open Flat
 open import PCF.Definitions
 open Abstract-Syntax
 open Domain-Equations
 open Semantic-Functions
-
-open import Properties
-open Properties.Functions
-open Properties.Flat
-open Properties.Flat.Booleans
-open Properties.Flat.Naturals
 
 -- Variables
 e  = α 0 ι
@@ -21,45 +18,61 @@ a  = α 3 ι
 b  = α 4 ι
 
 -- Arithmetic
-check-41+1 : 𝒜′⟦ ⦅ 𝐿 ⦅+1⦆ ␣ 𝐿 k 41 ⦆ ⟧ ρ⊥ ≡ ↑ 42
+
+check-41+1 :
+  𝒜′⟦ ⦅ 𝐿 ⦅+1⦆ ␣ 𝐿 k 41 ⦆ ⟧ ρ⊥ ≡ ↑ 42
 check-41+1 = refl
 
-check-43-1 : 𝒜′⟦ ⦅ 𝐿 ⦅−1⦆ ␣ 𝐿 k 43 ⦆ ⟧ ρ⊥ ≡ ↑ 42
+check-43-1 :
+  𝒜′⟦ ⦅ 𝐿 ⦅−1⦆ ␣ 𝐿 k 43 ⦆ ⟧ ρ⊥ ≡ ↑ 42
 check-43-1 = refl
 
 -- Binding
-check-id : 𝒜′⟦ ⦅ ⦅λ a ␣ 𝑉 a ⦆ ␣ 𝐿 k 42 ⦆ ⟧ ρ⊥ ≡ ↑ 42
+
+check-id :
+  𝒜′⟦ ⦅ ⦅λ a ␣ 𝑉 a ⦆ ␣ 𝐿 k 42 ⦆ ⟧ ρ⊥ ≡ ↑ 42
 check-id = refl
 
-check-k : 𝒜′⟦ ⦅ ⦅ ⦅λ a ␣ ⦅λ b ␣ 𝑉 a ⦆ ⦆ ␣ 𝐿 k 42 ⦆ ␣ 𝐿 k 41 ⦆ ⟧ ρ⊥ ≡ ↑ 42
+check-k :
+  𝒜′⟦ ⦅ ⦅ ⦅λ a ␣ ⦅λ b ␣ 𝑉 a ⦆ ⦆ ␣ 𝐿 k 42 ⦆ ␣ 𝐿 k 41 ⦆ ⟧ ρ⊥ ≡ ↑ 42
 check-k = refl
 
-check-ki : 𝒜′⟦ ⦅ ⦅ ⦅λ a ␣ ⦅λ b ␣ 𝑉 b ⦆ ⦆ ␣ 𝐿 k 41 ⦆ ␣ 𝐿 k 42 ⦆ ⟧ ρ⊥ ≡ ↑ 42
+check-ki :
+  𝒜′⟦ ⦅ ⦅ ⦅λ a ␣ ⦅λ b ␣ 𝑉 b ⦆ ⦆ ␣ 𝐿 k 41 ⦆ ␣ 𝐿 k 42 ⦆ ⟧ ρ⊥ ≡ ↑ 42
 check-ki = refl
 
-check-suc-41 : 𝒜′⟦ ⦅ ⦅λ a ␣ ⦅ 𝐿 ⦅+1⦆ ␣ 𝑉 a ⦆ ⦆ ␣ 𝐿 k 41 ⦆ ⟧ ρ⊥ ≡ ↑ 42
+check-suc-41 :
+  𝒜′⟦ ⦅ ⦅λ a ␣ ⦅ 𝐿 ⦅+1⦆ ␣ 𝑉 a ⦆ ⦆ ␣ 𝐿 k 41 ⦆ ⟧ ρ⊥ ≡ ↑ 42
 check-suc-41 = refl
 
-check-pred-42 : 𝒜′⟦ ⦅ ⦅λ a ␣ ⦅ 𝐿 ⦅−1⦆ ␣ 𝑉 a ⦆ ⦆ ␣ 𝐿 k 43 ⦆ ⟧ ρ⊥ ≡ ↑ 42
+check-pred-42 :
+  𝒜′⟦ ⦅ ⦅λ a ␣ ⦅ 𝐿 ⦅−1⦆ ␣ 𝑉 a ⦆ ⦆ ␣ 𝐿 k 43 ⦆ ⟧ ρ⊥ ≡ ↑ 42
 check-pred-42 = refl
 
-check-if-zero : 𝒜′⟦ ⦅ ⦅ ⦅ 𝐿 ⊃ ␣ ⦅ 𝐿 Z  ␣ 𝐿 k 0 ⦆ ⦆ ␣ 𝐿 k 42 ⦆ ␣ 𝐿 k 0 ⦆ ⟧ ρ⊥ ≡ ↑ 42
+check-if-zero :
+  𝒜′⟦ ⦅ ⦅ ⦅ 𝐿 ⊃ ␣ ⦅ 𝐿 Z  ␣ 𝐿 k 0 ⦆ ⦆ ␣ 𝐿 k 42 ⦆ ␣ 𝐿 k 0 ⦆ ⟧ ρ⊥ ≡ ↑ 42
 check-if-zero = refl
 
-check-if-nonzero : 𝒜′⟦ ⦅ ⦅ ⦅ 𝐿 ⊃ ␣ ⦅ 𝐿 Z  ␣ 𝐿 k 42 ⦆ ⦆ ␣ 𝐿 k 0 ⦆ ␣ 𝐿 k 42 ⦆ ⟧ ρ⊥ ≡ ↑ 42
+check-if-nonzero :
+  𝒜′⟦ ⦅ ⦅ ⦅ 𝐿 ⊃ ␣ ⦅ 𝐿 Z  ␣ 𝐿 k 42 ⦆ ⦆ ␣ 𝐿 k 0 ⦆ ␣ 𝐿 k 42 ⦆ ⟧ ρ⊥ ≡ ↑ 42
 check-if-nonzero = refl
 
-check-fix-const : 𝒜′⟦ ⦅ 𝐿 Y ␣ ⦅λ e ␣ 𝐿 k 42 ⦆ ⦆ ⟧ ρ⊥ ≡ ↑ 42
+-- Fixed points
+
+check-fix-const :
+  𝒜′⟦ ⦅ 𝐿 Y ␣ ⦅λ e ␣ 𝐿 k 42 ⦆ ⦆ ⟧ ρ⊥ ≡ ↑ 42
 check-fix-const = refl
 
 -- fix (λg. λa. 42) 2 ≡ 42
-check-fix-lambda : 𝒜′⟦ ⦅ ⦅ 𝐿 Y ␣ ⦅λ g ␣ ⦅λ a ␣ 𝐿 k 42 ⦆ ⦆ ⦆ ␣ 𝐿 k 2 ⦆ ⟧ ρ⊥ ≡ ↑ 42
+check-fix-lambda :
+  𝒜′⟦ ⦅ ⦅ 𝐿 Y ␣ ⦅λ g ␣ ⦅λ a ␣ 𝐿 k 42 ⦆ ⦆ ⦆ ␣ 𝐿 k 2 ⦆ ⟧ ρ⊥ ≡ ↑ 42
 check-fix-lambda = refl
 
 -- fix (λg. λa. ifz a then 42 else g (pred a)) 5 ≡ 42
 check-countdown :
   𝒜′⟦ ⦅ ⦅ 𝐿 Y ␣ ⦅λ g ␣ ⦅λ a ␣
-              ⦅ ⦅ ⦅ 𝐿 ⊃ ␣ ⦅ 𝐿 Z  ␣ 𝑉 a ⦆ ⦆ ␣ 𝐿 k 42 ⦆ ␣ ⦅ 𝑉 g ␣ ⦅ 𝐿 ⦅−1⦆ ␣ 𝑉 a ⦆ ⦆ ⦆ ⦆ ⦆ ⦆
+              ⦅ ⦅ ⦅ 𝐿 ⊃ ␣ ⦅ 𝐿 Z  ␣ 𝑉 a ⦆ ⦆ ␣ 𝐿 k 42 ⦆ ␣
+                    ⦅ 𝑉 g ␣ ⦅ 𝐿 ⦅−1⦆ ␣ 𝑉 a ⦆ ⦆ ⦆ ⦆ ⦆ ⦆
       ␣ 𝐿 k 5 ⦆ ⟧ ρ⊥ ≡ ↑ 42
 check-countdown = refl
 
