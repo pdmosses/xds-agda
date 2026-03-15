@@ -14,7 +14,7 @@ Complete examples of denotational semantics definitions in Agda:
 
 !!! info
 
-    This website version was deployed from the `dev` branch of the repository
+    This website version was deployed from the `sub` branch of the repository
 
 ## Domains in Denotational Semantics
 
