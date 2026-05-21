@@ -3,13 +3,10 @@
 The $\lambda$-notation in the Agda definitions of semantic functions for *Scm*
 corresponds closely to that in its published denotational semantics [(Mosses2025CSE)].
 ```agda
---"hide"
 
 {-# OPTIONS --rewriting --confluence-check --lossy-unification #-}
 
---"/hide"
 module Examples.Scm.Semantic-Functions where
---"hide"
 
 open import Examples.Scm.Abstract-Syntax
 open import Examples.Scm.Domain-Equations
@@ -22,7 +19,6 @@ open Notation.Flat.Booleans using (_⟶_,_; _==⊥_; true; false)
 open Notation.Sums using (_in⊥_; _|⊥_)
 open Notation.Products.Sequences using (_⋆; ⟨⟩; ⟨_⟩; _§_)
 open Notation.Updates using (_[_/_])
---"/hide"
 
 𝒦⟦_⟧   :  ⟪ Con →ˢ 𝐄 ⟫                      -- constant denotations
 ℰ⟦_⟧   :  ⟪ Exp →ˢ 𝐔 →ᶜ (𝐄 →ᶜ 𝐂) →ᶜ 𝐂 ⟫     -- expression denotations
@@ -43,7 +39,6 @@ open Notation.Updates using (_[_/_])
 
 ℰ⋆⟦ ␣␣␣ ⟧ ρ κ      = κ ⟨⟩
 ℰ⋆⟦ E ␣␣ E⋆ ⟧ ρ κ  = ℰ⟦ E ⟧ ρ (λ ϵ → ℰ⋆⟦ E⋆ ⟧ ρ (λ ϵ⋆ → κ (⟨ ϵ ⟩ § ϵ⋆)))
---"hide"
 
 ℬ⟦_⟧   :  ⟪ Body →ˢ 𝐔 →ᶜ (𝐔 →ᶜ 𝐂) →ᶜ 𝐂 ⟫    -- body denotations
 ℬ⁺⟦_⟧  :  ⟪ Body⁺ →ˢ 𝐔 →ᶜ (𝐔 →ᶜ 𝐂) →ᶜ 𝐂 ⟫   -- sequence denotations
@@ -63,7 +58,6 @@ open Notation.Updates using (_[_/_])
 
 𝒫⟦ ␣␣␣ ⟧    = finished initial-store
 𝒫⟦ ␣␣ B⁺ ⟧  = ℬ⁺⟦ B⁺ ⟧ initial-env (λ ρ → finished) initial-store
---"/hide"
 ```
 
 [(Mosses2025CSE)]: https://doi.org/10.1145/3759427.3760369

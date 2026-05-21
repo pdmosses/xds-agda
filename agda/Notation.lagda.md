@@ -2,19 +2,12 @@
 
 This section postulates Agda notation for the domain constructors and
 associated functions used in the [illustrative examples].
-@latex
-See the accompanying website [(MFPS2026-Agda)] for hyperlinked, highlighted
-listings of the complete Agda code with the details elided here (including module
-imports, fixity declarations, and declarations of the types of meta-variables).
-In the PDF, the symbol $\Uparrow$ following a reference to a numbered section
-is a link to the corresponding page on the website.
-@/latex
+
 
 [Illustrative Examples]: Examples/index.md#illustrative-examples
 [(MFPS2026-Agda)]: https://pdmosses.github.io/mfps2026-agda/
 
 ```agda
---"hide"
 {-# OPTIONS --rewriting --confluence-check --lossy-unification #-}
 
 module Notation where
@@ -24,7 +17,6 @@ open import Agda.Builtin.Equality.Rewrite using ()
 open import Agda.Builtin.Nat public using (Nat) renaming (_==_ to _==ᴺ_) 
 
 variable A B C : Set
---"/hide"
 ```
 
 ## Domains
@@ -39,12 +31,10 @@ module Domains where
     Domain : Set              -- Domain is the type of all domains
     ⟪_⟫ : Domain → Set        -- ⟪ D ⟫ is the carrier type of D
     ⊥ : {D : Domain} → ⟪ D ⟫  -- ⊥{D} is the 'bottom' element of D
---"hide"
     𝟙 : Domain                -- 𝟙 is a unit domain
   variable D E F : Domain
 
 open Domains public
---"/hide"
 ```
 Some previous papers on embedding denotational semantics in Agda
 [(Mosses2025CDS)]\ [(Mosses2025CSE)]\ [(Mosses2025LAF)]
@@ -73,10 +63,8 @@ instead, we use the notation `D →ᶜ E` for embedding continuous function doma
 ```agda
 module Functions where
   postulate _→ᶜ_ : Domain → Domain → Domain
---"hide"
   -- D →ᶜ E is the domain of continuous functions from D to E
   infixr 0 _→ᶜ_
---"/hide"
 ```
 Both λ-abstraction and application preserve continuity.
 In conventional denotational semantics,
@@ -103,10 +91,8 @@ from an ordinary type `A` to a domain `D` (which are trivially continuous,
 ordered pointwise):
 ```agda
   postulate _→ˢ_ : Set → Domain → Domain
---"hide"
   -- A →ˢ D is the domain of all functions from A to D
   infixr 0 _→ˢ_
---"/hide"
   postulate set-cts  : ⟪ A →ˢ D ⟫ ≡ (A → ⟪ D ⟫)
   {-# REWRITE set-cts #-}
 ```
@@ -116,9 +102,7 @@ fixed points `fix φ`, with `fix` itself also being continuous:
   postulate fix : ⟪ (D →ᶜ D) →ᶜ D ⟫
 ```
 ```agda
---"hide"
 open Functions public
---"/hide"
 ```
 
 ## Recursive Domains
@@ -165,28 +149,22 @@ The McCarthy conditional operation `β ⟶ δ₁ , δ₂` extends the usual tern
 conditional choice to domains. It returns `⊥` whenever its first argument is `⊥`.
 ```agda
   module Booleans where
---"hide"
     open import Data.Bool.Base public using (Bool; false; true; if_then_else_)
---"/hide"
     Bool⊥ = Bool +⊥
     _⟶_,_ : ⟪ Bool⊥ →ᶜ D →ᶜ D →ᶜ D ⟫    -- β ⟶ δ₁ , δ₂ is conditional choice
     _⟶_,_ = (λ b δ₁ δ₂ → if b then δ₁ else δ₂) ♯  
---"hide"
     infixr 20 _⟶_,_
---"/hide"
 ```
 This module also defines `Eq A` for use as an instance parameter,
 restricting operation definitions to types `A` such that `_==_ : A → A → Bool`,
 and postulates a `Bool⊥`-valued operation `δ₁ ==⊥ δ₂` on `A +⊥`.
 ```agda
---"hide"
     record Eq (A : Set) : Set where field _==_ : A → A → Bool
     open Eq {{...}} public
     postulate
       _==⊥_ : {{Eq A}} → ⟪ (A +⊥) →ᶜ (A +⊥) →ᶜ Bool⊥ ⟫
       -- δ₁ ==⊥ δ₂ is ⊥ when either operand is ⊥
       instance eqBool : Eq Bool
---"/hide"
 ```
 
 ### Naturals
@@ -195,16 +173,12 @@ Agda allows decimal notation for natural numbers, as well as unary notation
 using `zero` and `suc`.
 ```agda
   module Naturals where
---"hide"
     open import Agda.Builtin.Nat public
       using (Nat; suc; _+_; _-_) renaming (_==_ to _==ᴺ_)
---"/hide"
     Nat⊥ = Nat +⊥
---"hide"
     open Booleans
     postulate 
       instance eqNat : Eq Nat
---"/hide"
 ```
 
 ## Sum Domains
@@ -226,13 +200,11 @@ Conventional denotational definitions of programming languages (e.g., in [(Schem
 use domain names instead of numerical indices in operations associated with separated sums.
 The inherently *dependent* types of the Agda embedding of these operations are as follows.
 ```agda
---"hide"
   open import Agda.Builtin.Nat using (Nat)
   open Flat
   open Flat.Booleans
   open Flat.Naturals
   variable n : Nat
---"/hide"
   postulate
     _≳_↦_  : Domain → Nat → Domain → Set
     _in⊥_  : ⟪ D ⟫ → (E : Domain) → {{E ≳ n ↦ D}} → ⟪ E ⟫      -- δ in⊥ E injection
@@ -264,10 +236,8 @@ module Products where
     _,_  : ⟪ D →ᶜ E →ᶜ (D × E) ⟫        -- (δ , ε) is a pair of elements
     _↓₁  : ⟪ (D × E) →ᶜ D ⟫             -- (δ , ε)↓₁ is δ
     _↓₂  : ⟪ (D × E) →ᶜ E ⟫             -- (δ , ε)↓₂ is ε
---"hide"
   infixr 2 _×_
   infixr 4 _,_
---"/hide"
 ```
 
 ### Tuples
@@ -276,15 +246,11 @@ The domain `D ^ n` of `n`-tuples of elements of a domain `D` is conventionally
 written $D^n$, but Agda does not support the use of variables as superscripts.
 ```agda
   module Tuples where
---"hide"
     open import Agda.Builtin.Nat public using (Nat; suc)
---"/hide"
     _^_ : Domain → Nat → Domain         -- D ^ n is the domain of n-tuples (n ≥ 0)
---"hide"
     D ^ 0            = 𝟙 
     D ^ 1            = D
     D ^ suc (suc n)  = D × (D ^ suc n)
---"/hide"
 ```
 
 ### Sequences
@@ -298,11 +264,9 @@ in the early 1970s, and is used in the *Scheme* semantics [(Scheme)].
 double angle-brackets `⟪ D ⟫` used for the carrier of domain `D`.)
 ```agda
   module Sequences where
---"hide"
     open Flat.Naturals
     open Tuples
     variable n : Nat
---"/hide"
     postulate
       _⋆     : Domain → Domain          -- D ⋆ is the finite sequence domain
       ⟨⟩     : ⟪ D ⋆ ⟫                  -- ⟨⟩ is the empty sequence
@@ -320,31 +284,22 @@ environments `ρ : ⟪ A →ˢ D ⟫` can be 'updated' (i.e., extended or overri
 conventional notation `ρ [ δ / a ]`, defined as follows.
 ```agda
 module Updates where
---"hide"
   open Flat
   open Flat.Booleans
---"/hide"
   _[_/_] : {{Eq A}} → ⟪ (A →ˢ D) →ᶜ D →ᶜ A →ˢ (A →ˢ D) ⟫
---"hide"
   -- ρ [ δ / a ] maps a to δ, and other arguments a′ to ρ a′
---"/hide"
   ρ [ δ / a ] = λ a′ → if a == a′ then δ else ρ a′
 ```
 Similarly for stores `σ : ⟪ (A +⊥) →ᶜ D ⟫`:
 ```agda
---"hide"
   open Flat
---"/hide"
   _[_/_]⊥ : {{Eq A}} → ⟪ ((A +⊥) →ᶜ D) →ᶜ D →ᶜ (A +⊥) →ᶜ ((A +⊥) →ᶜ D) ⟫
---"hide"
   -- σ [ δ / α ]⊥ maps α to δ, and other arguments α′ to σ α′
---"/hide"
   σ [ δ / α ]⊥ = λ α′ → (α ==⊥ α′) ⟶ δ , σ α′
 ```
 Defining an operation `m [ x ← y ]` for extension or overriding of *dependent* maps `m` is less straightforward,
 as it involves an equality test that may return an *equivalence proof*.
 ```agda
---"hide"
   open import Data.Maybe.Base public using (Maybe; just; nothing)
   open import Relation.Binary.PropositionalEquality.Core public using (_≡_; refl)
   record MaybeEq (A : Set) : Set where field _==?_ : (a a′ : A) → Maybe (a ≡ a′)
@@ -355,5 +310,4 @@ as it involves an equality test that may return an *equivalence proof*.
     h : (x′ : X) → Maybe (x ≡ x′) → Y x′
     h x′ (just refl) = y
     h x′ nothing = m x′
---"/hide"
 ```

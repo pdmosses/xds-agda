@@ -20,7 +20,6 @@ as shown by Cockx, Tabareau, and Winterhalter [(Cockx2021TRT)].
 The rewrite rules declared below support *automatic* proof of identity for all the illustrative tests:
 the proof terms are simply `refl` (i.e., reflexivity).
 ```agda
---"hide"
 {-# OPTIONS --rewriting --confluence-check --lossy-unification #-}
 
 module Properties where
@@ -35,11 +34,8 @@ module Domains where
   open Notation.Domains using (Domain; ⟪_⟫; ⊥; 𝟙; D; E; F) public
 open Domains public
 
---"/hide"
 module Functions where
---"hide"
   open Notation.Functions using (_→ᶜ_; dom-cts; _→ˢ_; set-cts; fix) public
---"/hide"
   postulate
     apply-fix : {φ : ⟪ D →ᶜ D ⟫} → fix φ ≡ φ (fix φ) -- apply-fix{φ} unfolds fix φ once
   {-# REWRITE apply-fix #-}
@@ -51,14 +47,10 @@ it only unfolds expressions to the point where the top-level constructor becomes
 In particular, it will not evaluate under a λ-abstraction
 unless it is being compared to another λ-abstraction and the bodies are not syntactically equal.
 ```agda
---"hide"
 open Functions public
 
---"/hide"
 module Recursion where
---"hide"
   open Notation.Recursion using (_≅_; unfold; fold) public
---"/hide"
   postulate
     elim-unfold-fold : {{_ : D ≅ E}} → {e : ⟪ E ⟫} → unfold (fold e) ≡ e
   {-# REWRITE elim-unfold-fold #-}
@@ -66,16 +58,13 @@ module Recursion where
 A rule for `fold (unfold d) ≡ d` could be added, but it is not needed for the current illustrative tests.
 ```agda
 module Flat where
---"hide"
   open Notation.Flat using (_+⊥; ↑; _♯) public
 
   variable f : A → ⟪ D ⟫; a′ : A
---"/hide"
   postulate
     elim-♯-↑  : (f ♯) (↑ a′)  ≡ f a′
     elim-♯-⊥  : (f ♯) ⊥      ≡ ⊥
   {-# REWRITE elim-♯-↑ elim-♯-⊥ #-}
---"hide"
 
   module Booleans where
 
@@ -84,7 +73,6 @@ module Flat where
   module Naturals where
 
     open Notation.Flat.Naturals using (Nat⊥; eqNat) public
---"/hide"
 ```
 Removing any of the above rewrite rules breaks the proof in at least one of the illustrative tests.
 In principle, all `refl` proof terms that rely on rewrite rules could be replaced by proofs
@@ -97,7 +85,6 @@ in the semantics of the LC and PCF languages;
 they will be needed when tests for equivalence of denotations of *Scm* expressions are added.
 
 ```agda
---"hide"
 module Sums where
   open Notation.Sums using (_+_; inj₁; inj₂; [_,_]) public
 
@@ -142,7 +129,6 @@ module Products where
 
 module Updates where
   open Notation.Updates using (_[_/_]; _[_/_]⊥; _[_←_]) public
---"/hide"
 ```
 Postulates of properties for our operations on tuples and sequences have not yet been developed.
 

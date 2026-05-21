@@ -7,7 +7,6 @@ the [Untyped Lambda-Calculus],
 [PCF: A Programming Language for Computable Functions], and
 [*Scm*: A Sublanguage of *Scheme*].
 ```agda
---"hide"
 {-# OPTIONS --rewriting --confluence-check --lossy-unification #-}
 
 module Examples where
@@ -15,7 +14,6 @@ module Examples where
 import Examples.LC
 import Examples.PCF
 import Examples.Scm
---"/hide"
 ```
 
 [Postulated Notation]: ../Notation.md#postulated-domain-notation

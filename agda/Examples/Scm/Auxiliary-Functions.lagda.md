@@ -3,12 +3,9 @@
 The $\lambda$-notation in the Agda definitions of auxiliary functions for *Scm*
 corresponds closely to that in its published denotational semantics [(Mosses2025CSE)].
 ```agda
---"hide"
 {-# OPTIONS --rewriting --confluence-check --lossy-unification #-}
 
---"/hide"
 module Examples.Scm.Auxiliary-Functions where
---"hide"
 
 open import Examples.Scm.Abstract-Syntax
 open import Examples.Scm.Domain-Equations
@@ -38,7 +35,6 @@ postulate instance
 postulate unknown : Loc
 
 postulate initial-env : ⟪ 𝐔 ⟫
---"/hide"
 
 assign : ⟪ 𝐋 →ᶜ 𝐄 →ᶜ 𝐂 →ᶜ 𝐂 ⟫      -- assign α ϵ stores ϵ at location α
 assign α ϵ θ σ = θ (σ [ ϵ / α ]⊥)
@@ -58,9 +54,7 @@ alloc ϵ κ = new (λ α → assign α ϵ (κ α))
 
 postulate initial-store : ⟪ 𝐒 ⟫    -- may have initialised locations
 
---"hide"
 postulate finished : ⟪ 𝐒 →ᶜ 𝐀 ⟫    -- obtain answer from the final store
---"/hide"
 ```
 Conventional denotational definitions usually leave the injection function `↑` from
 sets into flat domains implicit, in contrast to the embedding of the definition of `truish`:
@@ -88,7 +82,6 @@ list : ⟪ 𝐅 ⟫                       -- list ϵ⋆ allocates and initialise
 list =   fix λ (list′ : ⟪ 𝐅 ⟫) → λ ϵ⋆ κ →
            (# ϵ⋆ ==⊥ ↑ 0) ⟶ κ (↑ null in⊥ 𝐄) ,
            list′ (ϵ⋆ † 1) (λ ϵ → cons ⟨ (ϵ⋆ ↓ 1) , ϵ ⟩ κ)
---"hide"
 
 car : ⟪ 𝐅 ⟫                        -- car ⟨ ϵ ⟩ gives the head of the list ϵ
 car ϵ⋆ κ = (# ϵ⋆ ==⊥ ↑ 1) ⟶ hold (((ϵ⋆ ↓ 1) |⊥ 𝐏) ↓₁) κ , ⊥
@@ -107,7 +100,6 @@ setcdr ϵ⋆ κ =
   (# ϵ⋆ ==⊥ ↑ 2) ⟶
     assign (((ϵ⋆ ↓ 1) |⊥ 𝐏) ↓₂) (ϵ⋆ ↓ 2) (κ (↑ unspecified in⊥ 𝐄)) ,
   ⊥
---"/hide"
 ```
 
 [(MFPS2026-Agda)]: https://pdmosses.github.io/mfps2026-agda/

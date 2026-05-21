@@ -6,12 +6,9 @@ but still involve all our postulated domain constructors.
 Using definitional equations `D = E` instead of postulated bijections `D ≅ E`
 avoids the need for the functions `fold` and `unfold`.
 ```agda
---"hide"
 {-# OPTIONS --rewriting --confluence-check #-}
 
---"/hide"
 module Examples.Scm.Domain-Equations where
---"hide"
 
 open import Examples.Scm.Abstract-Syntax using (Ide; Int)
 import Notation
@@ -23,7 +20,6 @@ open Notation.Flat.Naturals using (Nat⊥)
 open Notation.Sums using (_≳_↦_)
 open Notation.Products using (_×_)
 open Notation.Products.Sequences using (_⋆)
---"/hide"
 
 postulate Loc : Set
 𝐋  =  Loc +⊥                -- locations
@@ -60,12 +56,10 @@ postulate instance
   E+=P  : 𝐄 ≳ 3 ↦ 𝐏
   E+=M  : 𝐄 ≳ 4 ↦ 𝐌
   E+=F  : 𝐄 ≳ 5 ↦ 𝐅
---"hide"
 
 variable
   α : ⟪ 𝐋 ⟫;  ρ : ⟪ 𝐔 ⟫;  μ  : ⟪ 𝐌 ⟫;    ϵ : ⟪ 𝐄 ⟫
   σ : ⟪ 𝐒 ⟫;  θ : ⟪ 𝐂 ⟫;  ϵ⋆ : ⟪ 𝐄 ⋆ ⟫;   φ : ⟪ 𝐅 ⟫
---"/hide"
 ```
 
 [(Mosses2025CSE)]: https://doi.org/10.1145/3759427.3760369

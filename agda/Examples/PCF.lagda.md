@@ -12,8 +12,7 @@ and terms $M, N$
 with variables $\alpha_i^\sigma$ ($i \geq 0$) and constants $c$.
 In [§ Abstract Syntax] we reflect Plotkin's presentation of PCF
 more accurately by exploiting Agda's support for dependent types.
-@latex
-@/latex
+
 $$\begin{align}
   \sigma, \tau  & ::=
     \iota \mid o \mid (\sigma \to \tau)
@@ -26,7 +25,6 @@ $$\begin{align}
     \alpha_i^\sigma \mid c \mid (M \, N) \mid (\lambda \alpha_i^\sigma M)
 \end{align}$$
 ```agda
---"hide"
 {-# OPTIONS --rewriting --confluence-check --lossy-unification #-}
 
 module Examples.PCF where
@@ -34,7 +32,6 @@ module Examples.PCF where
 import Examples.PCF.Abstract-Syntax
 import Examples.PCF.Domain-Equations
 import Examples.PCF.Semantic-Functions
---"/hide"
 ```
 
 [§ Abstract Syntax]: ../../Examples/PCF/Abstract-Syntax.md#abstract-syntax

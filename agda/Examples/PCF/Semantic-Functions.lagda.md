@@ -3,17 +3,13 @@
 The notation `ρ ⟦ α i σ ⟧` gives the value of the variable `α i σ` in `ρ` by
 applying `ρ σ` to the variable.
 ```agda
---"hide"
 {-# OPTIONS --rewriting --confluence-check --lossy-unification #-}
 
---"/hide"
 module Examples.PCF.Semantic-Functions where
---"hide"
 
 open import Notation
 open import Examples.PCF.Abstract-Syntax
 open import Examples.PCF.Domain-Equations
---"/hide"
 
 _⟦_⟧ : Env → Vars σ → ⟪ 𝒟 σ ⟫     -- typed variable denotations
 ρ ⟦ α i σ ⟧ = ρ σ (α i σ)
@@ -23,13 +19,11 @@ constant `c`. The corresponding definitions in [(Plotkin1977LCP)] use
 case analysis on the domain `𝒟 ι`, which our Agda embedding does not support
 (partly because it can express non-continuous functions).
 ```agda
---"hide"
 
 open Notation.Flat using (↑; _♯)
 open Notation.Flat.Booleans using (_⟶_,_; _==⊥_; false; true)
 open Notation.Flat.Naturals using (_+_; _-_)
 
---"/hide"
 𝒜⟦_⟧ : ℒᴬ σ → ⟪ 𝒟 σ ⟫             -- typed constant denotations
 𝒜⟦ tt ⟧    =  ↑ true
 𝒜⟦ ff ⟧    =  ↑ false
