@@ -1,6 +1,8 @@
-# Mechanising Denotational Semantics in Agda
+# Denotational Semantics in Agda
 
-Agda code accompanying a paper ([PDF]) to be [presented] at [MFPS 2026]:
+> Experiments with Agda support for Scott–Strachey denotational semantics
+
+Agda code presented in a paper ([PDF]) in the pre-proceedings of [MFPS 2026]:
 
 > Peter D. Mosses, Jesper Cockx, Bernhard Reus: *Mechanising Denotational Semantics in Agda*
 
@@ -18,7 +20,7 @@ On **wide displays**, the **top panel** of each page shows:
 - [Properties] – postulated equivalences for operations
 - [Tests] - proven equivalences of denotations of [Tests.LC] and [Tests.PCF] terms
 - [Library] – modules imported from the [standard Agda library] (v2.3)
-- [pdmosses/mfps2026-agda] – the **code repository**
+- [pdmosses/xds-agda] – the **code repository**
 - a **toggle** between light, dark, and automatic modes
 - a **search** field
 
@@ -82,26 +84,26 @@ Peter Mosses
 
 [pdmosses.github.io](https://pdmosses.github.io)
 
-[Issues]: https://github.com/pdmosses/mfps2026-agda/issues
-[Pull requests]: https://github.com/pdmosses/mfps2026-agda/pulls
-[Discussions]: https://github.com/pdmosses/mfps2026-agda/discussions
+[Issues]: https://github.com/pdmosses/xds-agda/issues
+[Pull requests]: https://github.com/pdmosses/xds-agda/pulls
+[Discussions]: https://github.com/pdmosses/xds-agda/discussions
 
-[About]: https://pdmosses.github.io/mfps2026-agda/
-[README]: https://github.com/pdmosses/mfps2026-agda/blob/main/docs/README.md
-[Background]: https://pdmosses.github.io/mfps2026-agda/Background/
-[Meta-notation]: https://pdmosses.github.io/mfps2026-agda/meta-notation/
-[Notation]: https://pdmosses.github.io/mfps2026-agda/Notation/
-[Examples]: https://pdmosses.github.io/mfps2026-agda/Examples/
-[Examples.LC]: https://pdmosses.github.io/mfps2026-agda/Examples/LC/
-[Examples.PCF]: https://pdmosses.github.io/mfps2026-agda/Examples/PCF/
-[Examples.Scm]: https://pdmosses.github.io/mfps2026-agda/Examples/Scm/
-[Properties]: https://pdmosses.github.io/mfps2026-agda/Properties/
-[Tests]: https://pdmosses.github.io/mfps2026-agda/Tests/
-[Tests.LC]: https://pdmosses.github.io/mfps2026-agda/Tests/LC/
-[Tests.PCF]: https://pdmosses.github.io/mfps2026-agda/Tests/PCF/
-[Library]: https://pdmosses.github.io/mfps2026-agda/Library/
+[About]: https://pdmosses.github.io/xds-agda/prelim/
+[README]: https://github.com/pdmosses/xds-agda/prelim/blob/prelim/docs/README.md
+[Background]: https://pdmosses.github.io/xds-agda/prelim/Background/
+[Meta-notation]: https://pdmosses.github.io/xds-agda/prelim/meta-notation/
+[Notation]: https://pdmosses.github.io/xds-agda/prelim/Notation/
+[Examples]: https://pdmosses.github.io/xds-agda/prelim/Examples/
+[Examples.LC]: https://pdmosses.github.io/xds-agda/prelim/Examples/LC/
+[Examples.PCF]: https://pdmosses.github.io/xds-agda/prelim/Examples/PCF/
+[Examples.Scm]: https://pdmosses.github.io/xds-agda/prelim/Examples/Scm/
+[Properties]: https://pdmosses.github.io/xds-agda/prelim/Properties/
+[Tests]: https://pdmosses.github.io/xds-agda/prelim/Tests/
+[Tests.LC]: https://pdmosses.github.io/xds-agda/prelim/Tests/LC/
+[Tests.PCF]: https://pdmosses.github.io/xds-agda/prelim/Tests/PCF/
+[Library]: https://pdmosses.github.io/xds-agda/prelim/Library/
 [Standard Agda library]: https://agda.github.io/agda-stdlib/v2.3/
-[pdmosses/mfps2026-agda]: https://github.com/pdmosses/mfps2026-agda/
-[agda]: https://github.com/pdmosses/mfps2026-agda/tree/main/agda
-[plain]: https://github.com/pdmosses/mfps2026-agda/tree/main/plain
-[docs]: https://github.com/pdmosses/mfps2026-agda/tree/main/docs
+[pdmosses/xds-agda]: https://github.com/pdmosses/xds-agda/prelim/
+[agda]: https://github.com/pdmosses/xds-agda/prelim/tree/prelim/agda
+[plain]: https://github.com/pdmosses/xds-agda/prelim/tree/prelim/plain
+[docs]: https://github.com/pdmosses/xds-agda/prelim/tree/prelim/docs
