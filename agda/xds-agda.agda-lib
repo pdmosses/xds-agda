@@ -1,0 +1,4 @@
+name: xds-agda
+include: .
+depend:
+  standard-library
