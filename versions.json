@@ -2,14 +2,14 @@
   {
     "version": "pre",
     "title": "pre",
-    "aliases": []
+    "aliases": [
+      "default"
+    ]
   },
   {
     "version": "0.1",
     "title": "0.1",
-    "aliases": [
-      "default"
-    ]
+    "aliases": []
   },
   {
     "version": "0.0",
