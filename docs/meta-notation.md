@@ -1,7 +1,8 @@
 # Meta-notation
 
 The current examples of denotational semantics given here use a lightweight
-shallow embedding of Scott-domains in Agda.
+shallow embedding of Scott-domains in Agda. The module [Notation] postulates
+the required domain constructors and their associated operations.
 
 For an introduction to the Agda language, see the [Agda docs] or the
 [Agda Wikipedia page].
@@ -50,9 +51,9 @@ The currently available domain constructors are:
   **`D`** to a domain **`E`**;
 - **`A →ˢ D`**, the domain of *all* functions from a set **`A`** to a domain
   **`D`**;
-- **`A +⊥`**. the flat domain constructed by adding `⊥`to a set **`A`;
-- **`D + E`**, the coalesced sum of domains **`D`** and **`E`**;
-- **`D × E`**, the cartesian product of domains **`D`** and **`E`**;
+- **`A +⊥`**. the flat domain constructed by adding `⊥`to a set **`A`**;
+- **`D + E`**, the *separated* sum of domains **`D`** and **`E`**;
+- **`D × E`**, the product of domains **`D`** and **`E`**;
 - **`D ^ n`**, the domain of n-tuples of elements of a domain **`D`**;
 - **`D ⋆`**, the domain of finite sequences of elements of a domain **`D`**.
 
@@ -64,9 +65,10 @@ Agda types can also be defined by equations, but recursion causes
 non-termination of the type-checker. A recursive definition `D = E` where `E`
 references `D` is formalised by postulating `D` as a domain, together with
 inverse functions mapping elements of `⟪ D ⟫` to elements of `⟪ E ⟫` and
-vice versa. When `E` is a domain sum, the inverse functions are subsumed by
-postulated projections and injections between domains and their summands.
-See the [Scm] semantics for an example.
+vice versa. When `E` is a separated sum domain, the inverse functions are
+subsumed by postulated projections and injections between domains and their
+summands. For example, see the postulated domain **E** in the module
+[Examples.Scm.Domain-Equations].
 
 ### Semantic Functions
 
@@ -111,14 +113,11 @@ to be separated by spaces.
 
 ### Modules
 
-Currently, the examples of denotational definitions presented here are
-independent, and there is some duplication of declarations of notation for
-domains.
-
-In a future version, all the domain notation should be specified in the module
-[Notation], with submodules for the various domain constructors.
+All the examples of denotational definitions presented here are based on
+the shallow embeding of domain notation in the module [Notation], importing
+its submodules for the required domain constructors.
 
 [Agda docs]: https://agda.readthedocs.io/en/latest/getting-started/a-taste-of-agda.html
 [Agda Wikipedia page]: https://en.wikipedia.org/wiki/Agda_(programming_language)
-[Scm]: Scm.md
-[Notation]: md/Notation/index.md
+[Notation]: Notation.md
+[Examples.Scm.Domain-Equations]: Examples/Scm/Domain-Equations.md

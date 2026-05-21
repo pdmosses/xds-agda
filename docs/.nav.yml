@@ -1,24 +1,29 @@
 nav:
   - About:
-    - index.md
-    - LC.md
-    - PCF.md
-    - Scm.md
+    - README.md
+    - Background.md
     - meta-notation.md
-  - Lambda-Calculus:
-    - md/LC/index.md
-    - md/LC/*
-  - PCF:
-    - md/PCF/index.md
-    - md/PCF/*
-  - Scm:
-    - md/Scm/index.md
-    - md/Scm/*
-  - Notation:
-    - md/Notation/index.md
+  - Notation.md
+  - Examples:
+    - Examples/index.md
+    - LC:
+      - Examples/LC/index.md
+      - Examples/LC/*
+    - PCF:
+      - Examples/PCF/index.md
+      - Examples/PCF/*
+    - Scm:
+      - Examples/Scm/index.md
+      - Examples/Scm/*
+  - Properties.md
+  - Tests:
+    - Tests/index.md
+    - Tests/LC.md
+    - Tests/PCF.md
+    - Tests/Scm.md
   - Library:
     - Library/index.md
-    - md/*
+    - '*'
   
 preserve_directory_names: true
 
