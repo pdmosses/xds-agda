@@ -87,9 +87,9 @@ Peter Mosses
 [Discussions]: https://github.com/pdmosses/xds-agda/discussions
 
 [About]: https://pdmosses.github.io/xds-agda/pre/
-[README]: https://github.com/pdmosses/xds-agda/pre/blob/pre/docs/README.md
+[README]: https://github.com/pdmosses/xds-agda/blob/pre/docs/README.md
 [Background]: https://pdmosses.github.io/xds-agda/pre/Background/
-[Meta-notation]: https://pdmosses.github.io/xds-agda/pre/meta-notation/
+[Meta-notation]: https://pdmosses.github.io/xds-agda/pre/Meta-notation/
 [Notation]: https://pdmosses.github.io/xds-agda/pre/Notation/
 [Examples]: https://pdmosses.github.io/xds-agda/pre/Examples/
 [Examples.LC]: https://pdmosses.github.io/xds-agda/pre/Examples/LC/
@@ -101,7 +101,7 @@ Peter Mosses
 [Tests.PCF]: https://pdmosses.github.io/xds-agda/pre/Tests/PCF/
 [Library]: https://pdmosses.github.io/xds-agda/pre/Library/
 [Standard Agda library]: https://agda.github.io/agda-stdlib/v2.3/
-[pdmosses/xds-agda]: https://github.com/pdmosses/xds-agda/pre/
-[agda]: https://github.com/pdmosses/xds-agda/pre/tree/pre/agda
-[plain]: https://github.com/pdmosses/xds-agda/pre/tree/pre/plain
-[docs]: https://github.com/pdmosses/xds-agda/pre/tree/pre/docs
+[pdmosses/xds-agda]: https://github.com/pdmosses/xds-agda/tree/pre/
+[agda]: https://github.com/pdmosses/xds-agda/tree/pre/agda
+[plain]: https://github.com/pdmosses/xds-agda/tree/pre/plain
+[docs]: https://github.com/pdmosses/xds-agda/tree/pre/docs
