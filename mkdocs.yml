@@ -6,9 +6,9 @@ repo_url: https://github.com/pdmosses/xds-agda
 # To deploy website versions:
 # - install mike (https://github.com/jimporter/mike/)
 # - uncomment the following lines:
-extra:
-  version:
-    provider: mike
+# extra:
+#   version:
+#     provider: mike
 
 use_directory_urls: true
 
@@ -34,6 +34,7 @@ theme:
   features:
     - content.code.copy
     # - navigation.expand
+    - navigation.footer
     - navigation.indexes
     - navigation.instant
     - navigation.instant.progress
@@ -54,11 +55,12 @@ extra_css:
   - stylesheets/Agda-md-dark.css
 
 extra_javascript:
-  - javascripts/highlight-hover.js
 # KaTeX:
   - javascripts/katex.js
   - https://unpkg.com/katex@0/dist/katex.min.js
   - https://unpkg.com/katex@0/dist/contrib/auto-render.min.js
+# Agda:
+  - javascripts/highlight-hover.js
 
 markdown_extensions:
   - admonition
