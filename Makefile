@@ -747,18 +747,16 @@ endef
 ##############################################################################
 # GENERATE PLAIN AGDA
 
-PLAIN := plain
-
-# For each *.lagda.md file, a *.lagda and a *.tex file are generated in LATEX
-
 LAGDA-MD-FILES := \
 	$(sort \
 	  $(foreach d, $(INCLUDE-PATHS), \
 	    $(shell find $d -name '*.lagda.md')))
 
+PLAIN := plain
+
 PLAIN-FILES := $(addprefix $(PLAIN)/, $(patsubst %.lagda.md,%.agda, $(LAGDA-MD-FILES)))
 
-# `make gen-plain` generates PLAIN/DIR_1/*.agda files from *.lagda.md files
+# `make gen-plain` generates PLAIN/*.agda files from *.lagda.md files
 
 .phony: gen-plain
 gen-plain: $(PLAIN-FILES)
