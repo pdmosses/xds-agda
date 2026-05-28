@@ -6,7 +6,7 @@ abstract syntax is generally first-order:
 terms are finite, totally-defined elements.
 
 A variable is written `x n`. The argument `n` merely distinguishes between variables –
-it is *not* a De Bruin index.
+it is *not* a De Bruijn index.
 The term constructor `var` below includes variables in terms.
 
 In Agda, mixfix notation requires argument positions `_` to be separated by characters other than spaces.

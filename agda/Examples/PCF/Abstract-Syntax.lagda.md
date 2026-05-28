@@ -2,7 +2,7 @@
 
 The following abstract syntax of well-formed PCF terms in Agda uses indexed datatype definitions.
 PCF function types $\sigma \to \tau$ are written `σ ⇒ τ`, and variables $\alpha_i^\sigma$ are written `α i σ`
-(where the argument `i` merely distinguishes between variables – it is *not* a De Bruin index).
+(where the argument `i` merely distinguishes between variables – it is *not* a De Bruijn index).
 ```agda
 {-# OPTIONS --rewriting --confluence-check --lossy-unification #-}
 
