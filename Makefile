@@ -605,7 +605,7 @@ ifeq ($(MD),docs)
 # 	@echo "Warning: manually remove any obsolete docs/**/*.md files"
 	@find docs -name '*.md' \
 	    ! -path 'docs/javascripts/*' ! -path 'docs/stylesheets/*' \
-	    ! -path 'docs/Library/*' ! -path 'docs/README.md' ! -path 'docs/meta-notation.md' \
+	    ! -path 'docs/Library/*' ! -path 'docs/README.md' ! -path 'docs/Meta-notation.md' \
 	    -delete
 	@find docs -type d -empty -delete
 else
