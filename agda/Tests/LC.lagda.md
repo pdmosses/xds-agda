@@ -28,7 +28,7 @@ check-convergence : -- (λx1.x42)((λx0.x0 x0)(λx0.x0 x0)) = x42
      ⦅ ⦅λ x 0 ␣ ⦅ var x 0 ␣ var x 0 ⦆ ⦆ ␣ ⦅λ x 0 ␣ ⦅ var x 0 ␣ var x 0 ⦆ ⦆ ⦆ ⦆ ⟧ ≡ ⟦ var x 42 ⟧
 check-convergence = refl
 
-check-abs : -- (λx1.x1)(λx1.x42) = λx2.x42
+check-abs : -- (λx1.x1)(λx1.x42) = λx1.x42
   ⟦ ⦅ ⦅λ x 1 ␣ var x 1 ⦆ ␣ ⦅λ x 1 ␣ var x 42 ⦆ ⦆ ⟧ ≡ ⟦ ⦅λ x 1 ␣ var x 42 ⦆ ⟧
 check-abs = refl
 
