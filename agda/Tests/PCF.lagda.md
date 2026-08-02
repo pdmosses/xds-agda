@@ -1,14 +1,17 @@
+# PCF Tests
+
 ```agda
 {-# OPTIONS --rewriting --confluence-check --lossy-unification #-}
 
-module PCF.Tests where
+module Tests.PCF where
 
 open import Notation
-open Flat
-open import PCF.Definitions
-open Abstract-Syntax
-open Domain-Equations
-open Semantic-Functions
+open import Properties
+open Notation.Flat
+open Properties.Flat
+open import Examples.PCF.Abstract-Syntax
+open import Examples.PCF.Domain-Equations
+open import Examples.PCF.Semantic-Functions
 
 -- Variables
 e  = α 0 ι
@@ -63,21 +66,16 @@ check-fix-const :
   𝒜′⟦ ⦅ 𝐿 Y ␣ ⦅λ e ␣ 𝐿 k 42 ⦆ ⦆ ⟧ ρ⊥ ≡ ↑ 42
 check-fix-const = refl
 
--- fix (λg. λa. 42) 2 ≡ 42
-check-fix-lambda :
+check-fix-lambda : -- fix (λg. λa. 42) 2 ≡ 42
   𝒜′⟦ ⦅ ⦅ 𝐿 Y ␣ ⦅λ g ␣ ⦅λ a ␣ 𝐿 k 42 ⦆ ⦆ ⦆ ␣ 𝐿 k 2 ⦆ ⟧ ρ⊥ ≡ ↑ 42
 check-fix-lambda = refl
 
--- fix (λg. λa. ifz a then 42 else g (pred a)) 5 ≡ 42
-check-countdown :
+check-countdown : -- fix (λg. λa. ifz a then 42 else g (pred a)) 5 ≡ 42
   𝒜′⟦ ⦅ ⦅ 𝐿 Y ␣ ⦅λ g ␣ ⦅λ a ␣
               ⦅ ⦅ ⦅ 𝐿 ⊃ ␣ ⦅ 𝐿 Z  ␣ 𝑉 a ⦆ ⦆ ␣ 𝐿 k 42 ⦆ ␣
-                    ⦅ 𝑉 g ␣ ⦅ 𝐿 ⦅−1⦆ ␣ 𝑉 a ⦆ ⦆ ⦆ ⦆ ⦆ ⦆
-      ␣ 𝐿 k 5 ⦆ ⟧ ρ⊥ ≡ ↑ 42
+                    ⦅ 𝑉 g ␣ ⦅ 𝐿 ⦅−1⦆ ␣ 𝑉 a ⦆ ⦆ ⦆ ⦆ ⦆ ⦆ ␣ 𝐿 k 5 ⦆ ⟧ ρ⊥ ≡ ↑ 42
 check-countdown = refl
-
--- fix (λh. λa. λb. ifz a then b else h (pred a) (𝐿 ⦅+1⦆ b)) 4 38 ≡ 42
-check-sum-42 :
+check-sum-42 : -- fix (λh. λa. λb. ifz a then b else h (pred a) (𝐿 ⦅+1⦆ b)) 4 38 ≡ 42
   𝒜′⟦ ⦅ ⦅ ⦅ 𝐿 Y ␣ ⦅λ h ␣ ⦅λ a ␣ ⦅λ b ␣
                   ⦅ ⦅ ⦅ 𝐿 ⊃ ␣ ⦅ 𝐿 Z  ␣ 𝑉 a ⦆ ⦆ ␣ 𝑉 b ⦆ ␣ 
                     ⦅ ⦅ 𝑉 h ␣ ⦅ 𝐿 ⦅−1⦆ ␣ 𝑉 a ⦆ ⦆ ␣ ⦅ 𝐿 ⦅+1⦆ ␣ 𝑉 b ⦆ ⦆ ⦆ ⦆ ⦆ ⦆ ⦆
