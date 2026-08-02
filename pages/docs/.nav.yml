@@ -1,0 +1,31 @@
+nav:
+  - About:
+    - README.md
+    - Background.md
+    - Meta-notation.md
+  - Notation.md
+  - Examples:
+    - Examples/index.md
+    - LC:
+      - Examples/LC/index.md
+      - Examples/LC/*
+    - PCF:
+      - Examples/PCF/index.md
+      - Examples/PCF/*
+    - Scm:
+      - Examples/Scm/index.md
+      - Examples/Scm/*
+  - Properties.md
+  - Tests:
+    - Tests/index.md
+    - Tests/LC.md
+    - Tests/PCF.md
+    - Tests/Scm.md
+  - Library:
+    - Library/index.md
+    - '*'
+  
+preserve_directory_names: true
+
+sort:
+  sections: mixed
