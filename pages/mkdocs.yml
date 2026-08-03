@@ -1,4 +1,4 @@
-INHERIT: ../../agda-pages/agda-pages.yml
+INHERIT: agda-pages/agda-pages.yml
 
 site_name: XDS-Agda
 site_url:  https://pdmosses.github.io/xds-agda/
