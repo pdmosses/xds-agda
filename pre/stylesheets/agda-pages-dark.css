@@ -11,7 +11,7 @@
   .Agda .PrimitiveType { color: #8080FF }
   /* .Agda .Pragma        { color: black } */
   /* .Agda .Operator      { } */
-  .Agda .Hole          { background: #B4EEB4 }
+  .Agda .Hole          { background: #606060 }
 
   /* NameKinds. */
   /* .Agda .Bound                  { color: black } */
@@ -40,11 +40,11 @@
 
   /* Standard attributes. */
   .Agda a { text-decoration: none }
-  .Agda a[href]:hover { background-color: #B4EEB4 }
-  .Agda [href].hover-highlight { background-color: #B4EEB4; }
+  .Agda a[href]:hover { background-color: #606060 }
+  .Agda [href].hover-highlight { background-color: #606060; }
 
   :root > * {
-    --md-typeset-mark-color: #B4EEB4;
+    --md-typeset-mark-color: #606060;
   }
 
 }
