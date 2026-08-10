@@ -1,0 +1,55 @@
+/*
+https://squidfunk.github.io/mkdocs-material/setup/setting-up-navigation/#content-area-width
+*/
+
+.md-grid {
+  max-width: 1440px;
+}
+
+/* Use a slanted font for non-linked expanders in the navigation panel */
+
+.md-sidebar--primary .md-nav__link,
+.md-path .md-path__item {
+  font-style: oblique;
+}
+
+/* Use the same color for links in the navigation panel as in text */
+
+.md-sidebar--primary a.md-nav__link,
+.md-path a.md-path__link {
+  font-style: normal;
+  /* color: var(--md-typeset-a-color); */
+}
+
+/* Avoid expanders having the same color as page links after clicking them */
+
+/* .md-sidebar--primary .md-nav__link:not(a):focus,
+.md-sidebar--primary .md-nav__link:not(a):hover {
+  color: var(--md-typeset-color);
+} */
+
+/* Code display */
+
+pre.Agda {
+  color: var(--md-text-fg-color);
+  background-color: var(--md-text-bg-color);
+  font-size: .65rem;
+  /* font-family: var(--md-text-font-family); */
+}
+
+code.Agda {
+  color: var(--md-code-fg-color);
+  background-color: var(--md-code-bg-color);
+  font-size: 1em;
+  /* font-family: var(--md-code-font-family); */
+}
+
+/* Search */
+
+/* Hide the page previews
+https://github.com/squidfunk/mkdocs-material/discussions/5817#discussioncomment-6662100
+*/
+
+.md-search-result__article > :not(h1, h2, div) {
+   display: none;
+}
