@@ -2,7 +2,7 @@ INHERIT: agda-pages/agda-pages.yml
 
 site_name: XDS-Agda
 site_url:  https://pdmosses.github.io/xds-agda/
-repo_name: xds-agda, dev branch
+repo_name: pdmosses/xds-agda@dev
 repo_url:  https://github.com/pdmosses/xds-agda/tree/dev
 
 extra:

@@ -12,30 +12,23 @@ Agda code accompanying the preliminary version of a paper ([PDF]) [presented] at
 
 On wide displays, the top panel of each page shows:
 
-- [About] – this page, [Background], [Meta-notation]
+- About – this page, [Background], [Meta-notation]
 - [Notation] – postulated types for domain constructors and associated operations
 - [Examples] - embedded denotational definitions [Examples.LC], [Examples.PCF], [Examples.Scm]
 - [Properties] – postulated equivalences for operations
 - [Tests] - proven equivalences of denotations of [Tests.LC] and [Tests.PCF] terms
 - [Library] – modules imported from the [standard Agda library] (v2.3)
-- [pdmosses/xds-agda] – the code repository
 - a toggle between light, dark, and automatic modes
-- a earch field
+- a search field
+- pdmosses/xds-agda@... – a link to a branch of the code repository
 
-The section navigation hierarchy is shown on the left.
-The subsections of the current page are shown on the right.
-
-On narrow displays, the window may show only the navigation hierarchy button 
-and the search button.
+The section navigation hierarchy is shown in a sidebar on the left, and
+the subsections of the current page are shown on the right. On narrow displays,
+however, the page may show buttons to access the navigation hierarchy
+and the search field.
 
 The footer of each page shows links to the previous and next pages.
-When scrolling up, a back to top button is shown near the top of the window.
-
-**Agda code blocks**
-
-- Names are links to their declarations.
-- The [agda] directory contains the complete literate Agda Markdown code.
-- The [docs] directory contains source code for generating the website.
+When scrolling up, a back-to-top button is shown near the top of the window.
 
 ## Abstract
 
@@ -96,6 +89,3 @@ Peter Mosses
 [Tests.PCF]: Tests/PCF.md
 [Library]: Library/index.md
 [Standard Agda library]: https://agda.github.io/agda-stdlib/v2.3/
-[pdmosses/xds-agda]: https://github.com/pdmosses/xds-agda/
-[agda]: https://github.com/pdmosses/xds-agda/tree/main/agda
-[docs]: https://github.com/pdmosses/xds-agda/tree/main/docs

@@ -4,10 +4,9 @@ The current examples of denotational semantics given here use a lightweight
 shallow embedding of Scott-domains in Agda. The module [Notation] postulates
 the required domain constructors and their associated operations.
 
-For an introduction to the Agda language, see the [Agda docs] or the
-[Agda Wikipedia page].
-
 ## Summary
+
+The [Background] section includes an overview of the main Agda features used here.
 
 ### Abstract Syntax
 
@@ -120,4 +119,5 @@ its submodules for the required domain constructors.
 [Agda docs]: https://agda.readthedocs.io/en/latest/getting-started/a-taste-of-agda.html
 [Agda Wikipedia page]: https://en.wikipedia.org/wiki/Agda_(programming_language)
 [Notation]: Notation.md
+[Background]: Background.md
 [Examples.Scm.Domain-Equations]: Examples/Scm/Domain-Equations.md
