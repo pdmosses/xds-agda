@@ -23,7 +23,7 @@
     
     
       
-        <title>Mechanising Denotational Semantics in Agda - XDS-Agda</title>
+        <title>Denotational Semantics in Agda - XDS-Agda</title>
       
     
     
@@ -45,13 +45,11 @@
     
       <link rel="stylesheet" href="https://unpkg.com/katex@0/dist/katex.min.css">
     
-      <link rel="stylesheet" href="stylesheets/agda-pages.css">
+      <link rel="stylesheet" href="stylesheets/Agda-material.css">
     
-      <link rel="stylesheet" href="stylesheets/agda-pages-light.css">
+      <link rel="stylesheet" href="stylesheets/Agda-md.css">
     
-      <link rel="stylesheet" href="stylesheets/agda-pages-dark.css">
-    
-      <link rel="stylesheet" href="stylesheets/custom.css">
+      <link rel="stylesheet" href="stylesheets/Agda-md-dark.css">
     
     <script>__md_scope=new URL(".",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
     
@@ -78,7 +76,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#mechanising-denotational-semantics-in-agda" class="md-skip">
+        <a href="#denotational-semantics-in-agda" class="md-skip">
           Skip to content
         </a>
       
@@ -118,7 +116,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Mechanising Denotational Semantics in Agda
+              Denotational Semantics in Agda
             
           </span>
         </div>
@@ -131,19 +129,9 @@
     
     
     
-    <input class="md-option" data-md-color-media="(prefers-color-scheme)" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_0">
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
     
-      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_1" hidden>
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9 2C5.13 2 2 5.13 2 9c0 2.38 1.19 4.47 3 5.74V17c0 .55.45 1 1 1h6c.55 0 1-.45 1-1v-2.26c1.81-1.27 3-3.36 3-5.74 0-3.87-3.13-7-7-7M6 21c0 .55.45 1 1 1h4c.55 0 1-.45 1-1v-1H6zm13-8h-2l-3.2 9h1.9l.7-2h3.2l.7 2h1.9zm-2.15 5.65L18 15l1.15 3.65z"/></svg>
-      </label>
-    
-  
-    
-    
-    
-    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_1">
-    
-      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_2" hidden>
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 2a7 7 0 0 0-7 7c0 2.38 1.19 4.47 3 5.74V17a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1v-2.26c1.81-1.27 3-3.36 3-5.74a7 7 0 0 0-7-7M9 21a1 1 0 0 0 1 1h4a1 1 0 0 0 1-1v-1H9z"/></svg>
       </label>
     
@@ -151,10 +139,20 @@
     
     
     
-    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to system preference"  type="radio" name="__palette" id="__palette_2">
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
     
-      <label class="md-header__button md-icon" title="Switch to system preference" for="__palette_0" hidden>
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_2" hidden>
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 2a7 7 0 0 1 7 7c0 2.38-1.19 4.47-3 5.74V17a1 1 0 0 1-1 1H9a1 1 0 0 1-1-1v-2.26C6.19 13.47 5 11.38 5 9a7 7 0 0 1 7-7M9 21v-1h6v1a1 1 0 0 1-1 1h-4a1 1 0 0 1-1-1m3-17a5 5 0 0 0-5 5c0 2.05 1.23 3.81 3 4.58V16h4v-2.42c1.77-.77 3-2.53 3-4.58a5 5 0 0 0-5-5"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme)" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_2">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9 2C5.13 2 2 5.13 2 9c0 2.38 1.19 4.47 3 5.74V17c0 .55.45 1 1 1h6c.55 0 1-.45 1-1v-2.26c1.81-1.27 3-3.36 3-5.74 0-3.87-3.13-7-7-7M6 21c0 .55.45 1 1 1h4c.55 0 1-.45 1-1v-1H6zm13-8h-2l-3.2 9h1.9l.7-2h3.2l.7 2h1.9zm-2.15 5.65L18 15l1.15 3.65z"/></svg>
       </label>
     
   
@@ -215,13 +213,13 @@
     
     
       <div class="md-header__source">
-        <a href="https://github.com/pdmosses/xds-agda" title="Go to repository" class="md-source" data-md-component="source">
+        <a href="https://github.com/pdmosses/xds-agda/tree/pre/" title="Go to repository" class="md-source" data-md-component="source">
   <div class="md-source__icon md-icon">
     
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
   </div>
   <div class="md-source__repository">
-    pdmosses/xds-agda
+    pdmosses/xds-agda@pre
   </div>
 </a>
       </div>
@@ -400,13 +398,13 @@
   </label>
   
     <div class="md-nav__source">
-      <a href="https://github.com/pdmosses/xds-agda" title="Go to repository" class="md-source" data-md-component="source">
+      <a href="https://github.com/pdmosses/xds-agda/tree/pre/" title="Go to repository" class="md-source" data-md-component="source">
   <div class="md-source__icon md-icon">
     
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
   </div>
   <div class="md-source__repository">
-    pdmosses/xds-agda
+    pdmosses/xds-agda@pre
   </div>
 </a>
     </div>
@@ -6310,10 +6308,10 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#navigation" class="md-nav__link">
+  <a href="#website" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Navigation
+        Website
       
     </span>
   </a>
@@ -6364,36 +6362,7 @@
           
             <div class="md-content" data-md-component="content">
               
-                <!--
-  Copyright (c) 2016-2025 Martin Donath <martin.donath@squidfunk.com>
-
-  Permission is hereby granted, free of charge, to any person obtaining a copy
-  of this software and associated documentation files (the "Software"), to
-  deal in the Software without restriction, including without limitation the
-  rights to use, copy, modify, merge, publish, distribute, sublicense, and/or
-  sell copies of the Software, and to permit persons to whom the Software is
-  furnished to do so, subject to the following conditions:
-
-  The above copyright notice and this permission notice shall be included in
-  all copies or substantial portions of the Software.
-
-  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-  FITNESS FOR A PARTICULAR PURPOSE AND NON-INFRINGEMENT. IN NO EVENT SHALL THE
-  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
-  FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS
-  IN THE SOFTWARE.
--->
-
-<!-- Copyright notice copied from:
-     https://github.com/squidfunk/mkdocs-material/blob/master/src/templates/partials/path.html
-     Code copied from:
-     https://github.com/squidfunk/mkdocs-material/blob/master/material/templates/partials/path.html
-     Edited for use in agda2pages by @pdmosses
- -->
-
-
+                
 
 
 
@@ -6408,21 +6377,24 @@
   
 
 
-<h1 id="mechanising-denotational-semantics-in-agda">Mechanising Denotational Semantics in Agda</h1>
-<p>Agda code accompanying the preliminary version of a paper (<a href="https://ul-fmf.github.io/mfps-sstt-2026/files/pdfs/mfps/MFPS26-17.pdf">PDF</a>) <a href="https://ul-fmf.github.io/mfps-sstt-2026/programme/#wednesday-june-3-mfps">presented</a> at <a href="https://ul-fmf.github.io/mfps-sstt-2026/mfps/">MFPS 2026</a>:</p>
+<h1 id="denotational-semantics-in-agda">Denotational Semantics in Agda</h1>
+<blockquote>
+<p>Experiments with Agda support for Scott–Strachey denotational semantics</p>
+</blockquote>
+<p>Agda code presented in a paper (<a href="https://ul-fmf.github.io/mfps-sstt-2026/files/pdfs/mfps/MFPS26-17.pdf">PDF</a>) in the pre-proceedings of <a href="https://ul-fmf.github.io/mfps-sstt-2026/mfps/">MFPS 2026</a>:</p>
 <blockquote>
 <p>Peter D. Mosses, Jesper Cockx, Bernhard Reus: <em>Mechanising Denotational Semantics in Agda</em></p>
 </blockquote>
-<h2 id="navigation">Navigation</h2>
+<h2 id="website">Website</h2>
 <p>On <strong>wide displays</strong>, the <strong>top panel</strong> of each page shows:</p>
 <ul>
-<li><a href="https://pdmosses.github.io/mfps2026-agda/">About</a> – this <a href="https://github.com/pdmosses/mfps2026-agda/blob/main/docs/README.md">README</a> page, <a href="https://pdmosses.github.io/mfps2026-agda/Background/">Background</a>, <a href="https://pdmosses.github.io/mfps2026-agda/meta-notation/">Meta-notation</a></li>
-<li><a href="https://pdmosses.github.io/mfps2026-agda/Notation/">Notation</a> – postulated types for domain constructors and associated operations</li>
-<li><a href="https://pdmosses.github.io/mfps2026-agda/Examples/">Examples</a> - embedded denotational definitions <a href="https://pdmosses.github.io/mfps2026-agda/Examples/LC/">Examples.LC</a>, <a href="https://pdmosses.github.io/mfps2026-agda/Examples/PCF/">Examples.PCF</a>, <a href="https://pdmosses.github.io/mfps2026-agda/Examples/Scm/">Examples.Scm</a></li>
-<li><a href="https://pdmosses.github.io/mfps2026-agda/Properties/">Properties</a> – postulated equivalences for operations</li>
-<li><a href="https://pdmosses.github.io/mfps2026-agda/Tests/">Tests</a> - proven equivalences of denotations of <a href="https://pdmosses.github.io/mfps2026-agda/Tests/LC/">Tests.LC</a> and <a href="https://pdmosses.github.io/mfps2026-agda/Tests/PCF/">Tests.PCF</a> terms</li>
-<li><a href="https://pdmosses.github.io/mfps2026-agda/Library/">Library</a> – modules imported from the <a href="https://agda.github.io/agda-stdlib/v2.3/">standard Agda library</a> (v2.3)</li>
-<li><a href="https://github.com/pdmosses/mfps2026-agda/">pdmosses/mfps2026-agda</a> – the <strong>code repository</strong></li>
+<li><a href="https://pdmosses.github.io/xds-agda/pre/">About</a> – this <a href="https://github.com/pdmosses/xds-agda/blob/pre/docs/README.md">README</a> page, <a href="https://pdmosses.github.io/xds-agda/pre/Background/">Background</a>, <a href="https://pdmosses.github.io/xds-agda/pre/Meta-notation/">Meta-notation</a></li>
+<li><a href="https://pdmosses.github.io/xds-agda/pre/Notation/">Notation</a> – postulated types for domain constructors and associated operations</li>
+<li><a href="https://pdmosses.github.io/xds-agda/pre/Examples/">Examples</a> - embedded denotational definitions <a href="https://pdmosses.github.io/xds-agda/pre/Examples/LC/">Examples.LC</a>, <a href="https://pdmosses.github.io/xds-agda/pre/Examples/PCF/">Examples.PCF</a>, <a href="https://pdmosses.github.io/xds-agda/pre/Examples/Scm/">Examples.Scm</a></li>
+<li><a href="https://pdmosses.github.io/xds-agda/pre/Properties/">Properties</a> – postulated equivalences for operations</li>
+<li><a href="https://pdmosses.github.io/xds-agda/pre/Tests/">Tests</a> - proven equivalences of denotations of <a href="https://pdmosses.github.io/xds-agda/pre/Tests/LC/">Tests.LC</a> and <a href="https://pdmosses.github.io/xds-agda/pre/Tests/PCF/">Tests.PCF</a> terms</li>
+<li><a href="https://pdmosses.github.io/xds-agda/pre/Library/">Library</a> – modules imported from the <a href="https://agda.github.io/agda-stdlib/v2.3/">standard Agda library</a> (v2.3)</li>
+<li><a href="https://github.com/pdmosses/xds-agda/tree/pre/">pdmosses/xds-agda</a> – the <strong>code repository</strong></li>
 <li>a <strong>toggle</strong> between light, dark, and automatic modes</li>
 <li>a <strong>search</strong> field</li>
 </ul>
@@ -6436,13 +6408,9 @@ When scrolling up, a <strong>back to top</strong> button is shown near the top o
 <ul>
 <li><strong>Names</strong> are links to their declarations.</li>
 <li>The <strong>top-level module</strong> on the page is a link to the original page generated by Agda.</li>
-<li>The <a href="https://github.com/pdmosses/mfps2026-agda/tree/main/agda">agda</a> directory contains the literate Agda Markdown code;
-  <code>--"hide" ... --"/hide"</code> indicates code elided in the paper.</li>
-<li>The <a href="https://github.com/pdmosses/mfps2026-agda/tree/main/complete">complete</a> directory contains the same code as <a href="https://github.com/pdmosses/mfps2026-agda/tree/main/agda">agda</a>,
-  but without the <code>--"hide"</code> and  <code>--"/hide"</code> comments.</li>
-<li>The <a href="https://github.com/pdmosses/mfps2026-agda/tree/main/plain">plain</a> directory contains the corresponding plain Agda code.</li>
-<li>The <a href="https://github.com/pdmosses/mfps2026-agda/tree/main/docs">docs</a> directory contains source code for generating the website.</li>
-<li>The <a href="https://github.com/pdmosses/mfps2026-agda/tree/main/latex">latex</a> directory contains files used for generating LaTeX sources.</li>
+<li>The <a href="https://github.com/pdmosses/xds-agda/tree/pre/agda">agda</a> directory contains the complete literate Agda Markdown code.</li>
+<li>The <a href="https://github.com/pdmosses/xds-agda/tree/pre/plain">plain</a> directory contains the corresponding plain Agda code.</li>
+<li>The <a href="https://github.com/pdmosses/xds-agda/tree/pre/docs">docs</a> directory contains source code for generating the website.</li>
 </ul>
 <h2 id="abstract">Abstract</h2>
 <p>Mechanisation of a mathematical definition (also referred to as formalisation)
@@ -6468,8 +6436,8 @@ semantics of PCF, and a semantics of a sublanguage of Scheme. In previous work,
 similar mechanisations in Agda have revealed several unsuspected wellformedness
 issues in published denotational definitions.</p>
 <h2 id="contributing">Contributing</h2>
-<p>Please report any <a href="https://github.com/pdmosses/mfps2026-agda/issues">issues</a> that you notice.</p>
-<p>Comments and suggestions for improvement are welcome, and can be added as <a href="https://github.com/pdmosses/mfps2026-agda/discussions">Discussions</a>.</p>
+<p>Please report any <a href="https://github.com/pdmosses/xds-agda/issues">issues</a> that you notice.</p>
+<p>Comments and suggestions for improvement are welcome, and can be added as <a href="https://github.com/pdmosses/xds-agda/discussions">Discussions</a>.</p>
 <h2 id="contact">Contact</h2>
 <p>Peter Mosses</p>
 <p><a href="mailto:p.d.mosses@tudelft.nl">p.d.mosses@tudelft.nl</a></p>
@@ -6504,6 +6472,30 @@ issues in published denotational definitions.</p>
       
         <footer class="md-footer">
   
+    
+      
+      <nav class="md-footer__inner md-grid" aria-label="Footer" >
+        
+        
+          
+          <a href="Background/" class="md-footer__link md-footer__link--next" aria-label="Next: Background">
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Next
+              </span>
+              <div class="md-ellipsis">
+                Background
+              </div>
+            </div>
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11z"/></svg>
+            </div>
+          </a>
+        
+      </nav>
+    
+  
   <div class="md-footer-meta md-typeset">
     <div class="md-footer-meta__inner md-grid">
       <div class="md-copyright">
@@ -6531,7 +6523,7 @@ issues in published denotational definitions.</p>
     
       
       
-      <script id="__config" type="application/json">{"annotate": null, "base": ".", "features": ["content.code.copy", "navigation.indexes", "navigation.instant", "navigation.instant.progress", "navigation.path", "navigation.tabs", "navigation.tabs.sticky", "navigation.top", "navigation.tracking", "search.highlight", "search.share", "search.suggest", "toc.follow"], "search": "assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": {"provider": "mike"}}</script>
+      <script id="__config" type="application/json">{"annotate": null, "base": ".", "features": ["content.code.copy", "navigation.footer", "navigation.indexes", "navigation.instant", "navigation.instant.progress", "navigation.path", "navigation.tabs", "navigation.tabs.sticky", "navigation.top", "search.highlight", "search.share", "search.suggest"], "search": "assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": {"provider": "mike"}}</script>
     
     
       <script src="assets/javascripts/bundle.79ae519e.min.js"></script>
@@ -6543,8 +6535,6 @@ issues in published denotational definitions.</p>
         <script src="https://unpkg.com/katex@0/dist/contrib/auto-render.min.js"></script>
       
         <script src="javascripts/highlight-hover.js"></script>
-      
-        <script src="javascripts/custom.js"></script>
       
     
   </body>
