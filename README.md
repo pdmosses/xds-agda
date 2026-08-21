@@ -2,16 +2,6 @@
 
 > Experiments with Agda support for Scott–Strachey denotational semantics
 
-The `Makefile` in this repository has the following targets:
-
-- `check`: check the Agda code;
-- `website`: generate a website for browsing the code;
-- `serve`: preview the website locally;
-- `deploy`: deploy the website to GitHub Pages; and
-- `help`: list all targets.
-
-The generated website is deployed at https://pdmosses.github.io/xds-agda/.
-
 ## About
 
 For background and motivation, see the generated [website].
@@ -22,78 +12,35 @@ For background and motivation, see the generated [website].
 - [PCF]
 - [Scm]
 
-## Repository contents
+## Website
 
-The [repository] contains the following files and directories:
+This repository illustrates the use of **[Agda-Pages]** to
+**generate websites** with **module navigation** between
+**highlighted, hyperlinked listings** of Agda code.
 
-- `agda`: directory for Agda source code of the ScmQE language
-- `docs`: directory for generating a website
-    - `docs/javascripts`: directory for added Javascript files
-    - `docs/stylesheets`: directory for added CSS files
-    - `docs/.nav.yml`: configuration file for navigation panels
-    - `docs/*.md`: Markdown sources for non-generated pages
-- `UNLICENSE`: release into the public domain
-- `Makefile`: automation of website and PDF generation
-- `mkdocs.yml`: configuration file for generated websites
+See the **[Agda-Pages About]** page for an overview of the features
+of the generated website, and for links to further examples.
 
-The repository does not contain any generated files.
+The **[Agda-Pages User Guide]** explains how to generate a website listing
+Agda code in any GitHub repository.
 
-## Software dependencies
+See the **[Agda-Pages README]** for how to install Agda-Pages,
+and for a list of its main software dependencies.
 
-- [Agda] (2.8.0)
-- [GNU Make] (3.81)
-- [sd] (1.0.0)
-- [Python 3] (3.11.3)
-- [Pip] (25.2)
-- [MkDocs] (1.6.1)
-- [Material for MkDocs] (9.7.0)
-- [Awesome-nav] (3.3.0)
-- [GitHub Pages]
+The following shell commands generated the XDS-Agda website from this branch
+of the repository, then previewed it locally:
 
-## Platform dependencies
-
-Agda-Material has been developed and tested on MacBook laptops
-with Apple M1 and M3 chips running macOS Sequoia (15.5) with CLI Tools.
-
-Please report any [issues] with using Agda-Material on other platforms,
-including all relevant details.
-
-[Pull requests] for addressing such issues are welcome. They should include the
-results of tests that demonstrate the benefit of the PR.
-
-## Getting started
-
-All `make` commands are to be run in the repository root directory.
-
-### Test the Agda code
-
-```sh
+```shell
+cd pages
 make check
-```
-
-### Generate a website listing the Agda code
-
-```sh
 make web
-```
-
-### Browse the website locally
-
-```sh
 make serve
 ```
 
-### Deploy the website on GitHub Pages
+Version `...` of the generated website is deployed on GitHub Pages by:
 
-Update the following fields in `mkdocs.yml`:
-
-- `site_name`
-- `site_url`
-- `repo_name`
-- `repo_url`
-
-```sh
-make deploy
+```shell
+make deploy VERSION=...
 ```
 
 ## Contributing
@@ -110,24 +57,17 @@ Peter Mosses
 
 [pdmosses.github.io](https://pdmosses.github.io)
 
+[website]:               https://pdmosses.github.io/xds-agda/dev/
+[Lambda-calculus]:       https://pdmosses.github.io/xds-agda/dev/LC/
+[PCF]:                   https://pdmosses.github.io/xds-agda/dev/PCF/
+[Scm]:                   https://pdmosses.github.io/xds-agda/dev/Scm/
 
-[repository]: https://github.com/pdmosses/xds-agda/
-[website]: https://pdmosses.github.io/xds-agda/
-[Lambda-calculus]: https://pdmosses.github.io/xds-agda/LC/
-[PCF]: https://pdmosses.github.io/xds-agda/PCF/
-[Scm]: https://pdmosses.github.io/xds-agda/Scm/
+[Agda-Pages]:            https://pdmosses.github.io/agda-pages/
+[Agda-Pages About]:      https://pdmosses.github.io/agda-pages/About/
+[Agda-Pages User Guide]: https://pdmosses.github.io/agda-pages/User-Guide/
+[Agda-Pages repository]: https://github.com/pdmosses/agda-pages/
+[Agda-Pages README]:     https://github.com/pdmosses/agda-pages/blob/main/README.md
 
-[Issues]: https://github.com/pdmosses/xds-agda/issues
-[Pull requests]: https://github.com/pdmosses/xds-agda/pulls
-[Discussions]: https://github.com/pdmosses/xds-agda/discussions
-
-[Home page]: index.md
-[Agda]: https://agda.readthedocs.io/en/stable/getting-started/index.html
-[GNU Make]: https://www.gnu.org/software/make/manual/make.html
-[sd]: https://github.com/chmln/sd/
-[Python 3]: https://www.python.org/downloads/
-[Pip]: https://pypi.org/project/pip/
-[MkDocs]: https://www.mkdocs.org/getting-started/
-[Material for MkDocs]: https://squidfunk.github.io/mkdocs-material/getting-started/
-[Awesome-nav]: https://lukasgeiter.github.io/mkdocs-awesome-nav/
-[GitHub Pages]: https://pages.github.com
+[Issues]:                https://github.com/pdmosses/xds-agda/issues
+[Pull requests]:         https://github.com/pdmosses/xds-agda/pulls
+[Discussions]:           https://github.com/pdmosses/xds-agda/discussions
