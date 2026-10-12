@@ -67,19 +67,19 @@ Peter Mosses
 [Pull requests]:          https://github.com/pdmosses/xds-agda/pulls
 [Discussions]:            https://github.com/pdmosses/xds-agda/discussions
 
-[About]:                  https://pdmosses.github.io/xds-agda/dev/
-[Background]:             https://pdmosses.github.io/xds-agda/dev/Background/
-[Meta-notation]:          https://pdmosses.github.io/xds-agda/dev/Meta-notation/
-[Notation]:               https://pdmosses.github.io/xds-agda/dev/Notation/
-[Examples]:               https://pdmosses.github.io/xds-agda/dev/Examples/
-[Examples.LC]:            https://pdmosses.github.io/xds-agda/dev/Examples/LC/
-[Examples.PCF]:           https://pdmosses.github.io/xds-agda/dev/Examples/PCF/
-[Examples.Scm]:           https://pdmosses.github.io/xds-agda/dev/Examples/Scm/
-[Properties]:             https://pdmosses.github.io/xds-agda/dev/Properties/
-[Tests]:                  https://pdmosses.github.io/xds-agda/dev/Tests/
-[Tests.LC]:               https://pdmosses.github.io/xds-agda/dev/Tests/LC/
-[Tests.PCF]:              https://pdmosses.github.io/xds-agda/dev/Tests/PCF/
-[Library]:                https://pdmosses.github.io/xds-agda/dev/Library/
+[About]:                  index.md
+[Background]:             Background/index.md
+[Meta-notation]:          Meta-notation.md
+[Notation]:               Notation/index.md
+[Examples]:               Examples/index.md
+[Examples.LC]:            Examples/LC/index.md
+[Examples.PCF]:           Examples/PCF/index.md
+[Examples.Scm]:           Examples/Scm/index.md
+[Properties]:             Properties/index.md
+[Tests]:                  Tests/index.md
+[Tests.LC]:               Tests/LC/index.md
+[Tests.PCF]:              Tests/PCF/index.md
+[Library]:                Library/index.md
 
 [mfps2026-agda]:          https://github.com/pdmosses/mfps2026-agda/
 
