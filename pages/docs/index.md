@@ -4,17 +4,17 @@ Agda code accompanying the **final version** of a paper [presented] at [MFPS 202
 
 > Peter D. Mosses, Jesper Cockx, Bernhard Reus: *Mechanising Denotational Semantics in Agda*
 
-[PDF]: https://ul-fmf.github.io/mfps-sstt-2026/files/pdfs/mfps/MFPS26-17.pdf
 [presented]: https://ul-fmf.github.io/mfps-sstt-2026/programme/#wednesday-june-3-mfps
 [MFPS 2026]: https://ul-fmf.github.io/mfps-sstt-2026/mfps/
 
 !!! info
 
-    The Agda code presented in the **preliminary version** of the paper ([PDF])
-    is available in the [preliminary branch] of the mfps2026-agda repository.
-    A build of the [preliminary website] generated from it has been added as a
-    subdirectory of the current website.
- 
+    The Agda code and Markdown source files used to generate this website were
+    copied from the [mfps2026-agda repository]. However, there was *ad hoc*
+    markup in the Agda code blocks, indicating lines that were hidden when
+    including the code in the paper; here, this markup has been *removed*, to
+    facilitate browsing and editing the code locally.
+
 ## Navigation
 
 In **Agda code blocks**, clicking on a name jumps to its declaration.
