@@ -1,6 +1,6 @@
 # Mechanising Denotational Semantics in Agda
 
-Agda code accompanying the preliminary version of a paper ([PDF]) [presented] at [MFPS 2026]:
+Agda code accompanying the **final version** of a paper [presented] at [MFPS 2026]:
 
 > Peter D. Mosses, Jesper Cockx, Bernhard Reus: *Mechanising Denotational Semantics in Agda*
 
@@ -8,55 +8,46 @@ Agda code accompanying the preliminary version of a paper ([PDF]) [presented] at
 [presented]: https://ul-fmf.github.io/mfps-sstt-2026/programme/#wednesday-june-3-mfps
 [MFPS 2026]: https://ul-fmf.github.io/mfps-sstt-2026/mfps/
 
+!!! info
+
+    The Agda code presented in the **preliminary version** of the paper ([PDF])
+    is available in the [preliminary branch] of the mfps2026-agda repository.
+    A build of the [preliminary website] generated from it has been added as a
+    subdirectory of the current website.
+ 
 ## Navigation
 
-On wide displays, the top panel of each page shows:
+In **Agda code blocks**, clicking on a name jumps to its declaration.
 
-- About – this page, [Background], [Meta-notation]
+When scrolling up, a **back to top** button appears.
+
+### Wide displays
+
+The **top panel** of each page shows a row of tabs:
+
+- [About] – the present page, and pages summarising [Background] and [Meta-notation]
 - [Notation] – postulated types for domain constructors and associated operations
-- [Examples] - embedded denotational definitions [Examples.LC], [Examples.PCF], [Examples.Scm]
+- [Examples] - shallow embeddings of denotational definitions
 - [Properties] – postulated equivalences for operations
-- [Tests] - proven equivalences of denotations of [Tests.LC] and [Tests.PCF] terms
+- [Tests] - some proven equivalences of denotations
 - [Library] – modules imported from the [standard Agda library] (v2.3)
-- a toggle between light, dark, and automatic modes
-- a search field
-- pdmosses/xds-agda@... – a link to a branch of the code repository
 
-The section navigation hierarchy is shown in a sidebar on the left, and
-the subsections of the current page are shown on the right. On narrow displays,
-however, the page may show buttons to access the navigation hierarchy
-and the search field.
+It also shows:
 
-The footer of each page shows links to the previous and next pages.
-When scrolling up, a back-to-top button is shown near the top of the window.
+- [pdmosses/mfps2026-agda] – a link to the **code repository**
+- a **toggle** between light, dark, and automatic modes
+- a **search** field
 
-## Abstract
+The **left sidepanel** shows the **navigation hierarchy**. 
+When there is more than one level of navigation, clicking the **expander icon**
+ `>` for a section reveals links to its next level.
 
-Mechanisation of a mathematical definition (also referred to as formalisation)
-has many benefits. Here, we focus on mechanising denotational semantic definitions
-of programming languages by embedding them in the Agda language. The Agda
-type-checker detects and reports any issues with the wellformedness and type
-correctness of the embedded definitions.
+The **right sidepanel** shows links to any **subsections** of the current page.
 
-To minimise the effort required, and to facilitate correlation of the original
-definition with its Agda embedding, mechanisation should not involve significant
-reformulation or extension. Here, we show how  to embed conventional Scott–Strachey
-denotational definitions in Agda with almost no changes to $\lambda$-notation or
-domain equations.
+### Narrow displays
 
-Agda notation for definitions of types and functions corresponds closely
-to the conventional meta-notation of denotational semantics. We have developed
-a collection of Agda modules with postulated types for commonly used domain
-constructors and their associated operations. Some of our postulates are
-inconsistent with a classical set-theoretic interpretation of Agda; we conjecture
-that they would be consistent with an interpretation of Agda in the higher-order
-intuititionistic logic used by Simpson in his work on synthetic domain theory.
-
-We illustrate our approach with mechanisations of three denotational definitions:
-Scott’s $D_\infty$ model of the untyped $\lambda$-calculus, Plotkin’s denotational
-semantics of PCF, and a semantics of a sublanguage of Scheme. In previous work,
-similar mechanisations in Agda have revealed several unsuspected wellformedness
-issues in published denotational definitions.
+The window may show only the **navigation hierarchy** button 
+and the **search** button.
 
 ## Contributing
 
@@ -72,20 +63,33 @@ Peter Mosses
 
 [pdmosses.github.io](https://pdmosses.github.io)
 
-[Issues]: https://github.com/pdmosses/xds-agda/issues
-[Pull requests]: https://github.com/pdmosses/xds-agda/pulls
-[Discussions]: https://github.com/pdmosses/xds-agda/discussions
+[Issues]:                 https://github.com/pdmosses/mfps2026-agda/issues
+[Pull requests]:          https://github.com/pdmosses/mfps2026-agda/pulls
+[Discussions]:            https://github.com/pdmosses/mfps2026-agda/discussions
 
-[Background]: Background.md
-[Meta-notation]: Meta-notation.md
-[Notation]: Notation.md
-[Examples]: Examples/index.md
-[Examples.LC]: Examples/LC/index.md
-[Examples.PCF]: Examples/PCF/index.md
-[Examples.Scm]: Examples/Scm/index.md
-[Properties]: Properties.md
-[Tests]: Tests/index.md
-[Tests.LC]: Tests/LC.md
-[Tests.PCF]: Tests/PCF.md
-[Library]: Library/index.md
-[Standard Agda library]: https://agda.github.io/agda-stdlib/v2.3/
+[About]:                  https://pdmosses.github.io/mfps2026-agda/
+[Background]:             https://pdmosses.github.io/mfps2026-agda/Background/
+[Meta-notation]:          https://pdmosses.github.io/mfps2026-agda/Meta-notation/
+[Notation]:               https://pdmosses.github.io/mfps2026-agda/Notation/
+[Examples]:               https://pdmosses.github.io/mfps2026-agda/Examples/
+[Examples.LC]:            https://pdmosses.github.io/mfps2026-agda/Examples/LC/
+[Examples.PCF]:           https://pdmosses.github.io/mfps2026-agda/Examples/PCF/
+[Examples.Scm]:           https://pdmosses.github.io/mfps2026-agda/Examples/Scm/
+[Properties]:             https://pdmosses.github.io/mfps2026-agda/Properties/
+[Tests]:                  https://pdmosses.github.io/mfps2026-agda/Tests/
+[Tests.LC]:               https://pdmosses.github.io/mfps2026-agda/Tests/LC/
+[Tests.PCF]:              https://pdmosses.github.io/mfps2026-agda/Tests/PCF/
+[Library]:                https://pdmosses.github.io/mfps2026-agda/Library/
+
+[preliminary website]:    https://pdmosses.github.io/mfps2026-agda/preliminary/
+[preliminary branch]:     https://github.com/pdmosses/mfps2026-agda/tree/preliminary
+
+[pdmosses/mfps2026-agda]: https://github.com/pdmosses/mfps2026-agda/
+[agda]:                   https://github.com/pdmosses/mfps2026-agda/tree/agda
+[complete]:               https://github.com/pdmosses/mfps2026-agda/tree/complete
+[plain]:                  https://github.com/pdmosses/mfps2026-agda/tree/plain
+[docs]:                   https://github.com/pdmosses/mfps2026-agda/tree/docs
+[README]:                 https://github.com/pdmosses/mfps2026-agda/blob/README.md
+[latex]:                  https://github.com/pdmosses/mfps2026-agda/tree/latex
+
+[Standard Agda library]:  https://agda.github.io/agda-stdlib/v2.3/

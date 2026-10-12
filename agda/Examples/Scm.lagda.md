@@ -7,16 +7,18 @@ in the presentation of the conventional denotational semantics of *Scm* [(Mosses
 they involve the notation for [sequence domains].
 
 ```agda
-{-# OPTIONS --rewriting --confluence-check --lossy-unification #-}
+--"hide"
+{-# OPTIONS --rewriting --confluence-check #-}
 
 module Examples.Scm where
 
-import Examples.Scm.Abstract-Syntax
-import Examples.Scm.Domain-Equations
-import Examples.Scm.Semantic-Functions
-import Examples.Scm.Auxiliary-Functions
+  import Examples.Scm.Abstract-Syntax
+  import Examples.Scm.Domain-Equations
+  import Examples.Scm.Semantic-Functions
+  import Examples.Scm.Auxiliary-Functions
+--"/hide"
 ```
 
-[Sequence Domains]: ../../Notation.md#sequences
+[Sequence Domains]: ../../Notation/Products/Sequences.md#sequence-domains
 [(Mosses2025CSE)]: https://doi.org/10.1145/3759427.3760369
 [(Scheme)]: https://standards.scheme.org
