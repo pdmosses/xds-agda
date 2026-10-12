@@ -5,6 +5,9 @@ site_url:  https://pdmosses.github.io/xds-agda/
 repo_name: xds-agda@dev
 repo_url:  https://github.com/pdmosses/xds-agda/tree/dev
 
+theme:
+  topbar_style: primary   # glass primary accent
+
 extra:
   version:
     provider: mike
