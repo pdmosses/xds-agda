@@ -9,12 +9,9 @@ All the `refl` proofs of the tests implicitly use the rewrite rule postulated as
 a [property of recursive domains] to eliminate compositions of `unfold` and `fold`.
 
 ```agda
---"hide"
 {-# OPTIONS --rewriting --confluence-check #-}
 
---"/hide"
 module Tests.LC where
---"hide"
   open import Notation.Domains
   open import Notation.Functions
 
@@ -25,7 +22,6 @@ module Tests.LC where
   open import Properties.Flat.Booleans
   open import Properties.Updates
   open import Properties.Recursion
---"/hide"
 ```
 
 The following trivial abbreviations improve the readbility of AST terms in the tests:

@@ -1,18 +1,14 @@
 # Function Domains
 
 ```agda
---"hide"
 {-# OPTIONS --rewriting --confluence-check --lossy-unification #-}
 
---"/hide"
 module Properties.Functions where
---"hide"
   open import Notation.Domains
   open import Notation.Functions public
   open import Agda.Builtin.Equality public using (_≡_; refl)
   open import Agda.Builtin.Equality.Rewrite using ()
 
---"/hide"
   postulate
     apply-fix : {φ : ⟪ D →ᶜ D ⟫} → fix φ ≡ φ (fix φ) -- apply-fix{φ} unfolds fix φ once
   {-# REWRITE apply-fix #-}

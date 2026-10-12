@@ -6,21 +6,15 @@ However, Agda reserves the notation `D → E` for the type of *all* (total)
 functions from type `D` to type `E`;
 here, we use the notation `D →ᶜ E` for embedding continuous function domains:
 ```agda
---"hide"
 {-# OPTIONS --rewriting --confluence-check #-}
---"/hide"
 
 module Notation.Functions where
---"hide"
   open import Notation.Domains
   open import Agda.Builtin.Equality public using (_≡_)
   open import Agda.Builtin.Equality.Rewrite using ()
---"/hide"
   postulate _→ᶜ_ : Domain → Domain → Domain
---"hide"
   -- D →ᶜ E is the domain of continuous functions from D to E
   infixr 0 _→ᶜ_
---"/hide"
 ```
 Both λ-abstraction and application preserve continuity.
 In conventional denotational semantics,
@@ -47,10 +41,8 @@ from an ordinary type `A` to a domain `D` (which are trivially continuous,
 ordered pointwise):
 ```agda
   postulate _→ˢ_ : Set → Domain → Domain
---"hide"
   -- A →ˢ D is the domain of all functions from A to D
   infixr 0 _→ˢ_
---"/hide"
   postulate set-cts  : ⟪ A →ˢ D ⟫ ≡ (A → ⟪ D ⟫)
   {-# REWRITE set-cts #-}
 ```

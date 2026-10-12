@@ -10,12 +10,9 @@ together with the rule for [eliminating injections] in arguments of
 extensions of functions to flat domains.
 
 ```agda
---"hide"
 {-# OPTIONS --rewriting --confluence-check #-}
 
---"/hide"
 module Tests.PCF where
---"hide"
   open import Notation.Domains
 
   open import Examples.PCF.Abstract-Syntax
@@ -24,7 +21,6 @@ module Tests.PCF where
 
   open import Properties.Functions
   open import Properties.Flat
---"/hide"
 ```
 
 The following trivial abbreviations improve the readbility of AST terms in the tests:

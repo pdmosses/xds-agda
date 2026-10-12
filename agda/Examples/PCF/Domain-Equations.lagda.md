@@ -6,12 +6,9 @@ As PCF is a simply-typed language, the domains `𝒟 σ` are not reflexive,
 so their embedding in Agda can use ordinary type definitions,
 not involving bijections.
 ```agda
---"hide"
 {-# OPTIONS --rewriting --confluence-check --lossy-unification #-}
 
---"/hide"
 module Examples.PCF.Domain-Equations where
---"hide"
 
   open import Examples.PCF.Abstract-Syntax
   open import Notation.Domains
@@ -20,15 +17,12 @@ module Examples.PCF.Domain-Equations where
   open import Notation.Flat.Naturals
   open import Notation.Updates
   open import Agda.Builtin.Nat renaming (_==_ to _==ᴺ_) public
---"/hide"
 
   𝒟 : Types → Domain       -- standard domains
   𝒟 ι        = Nat⊥        -- natural numbers
   𝒟 o        = Bool⊥       -- truth-values
   𝒟 (σ ⇒ τ)  = 𝒟 σ →ᶜ 𝒟 τ  -- functions
---"hide"
   variable x y z : ⟪ 𝒟 σ ⟫
---"/hide"
 ```
 
 Environments `ρ` are type-preserving maps from variables to values. They are
@@ -37,20 +31,15 @@ from variables in `Vars σ` to their values in the domain `𝒟 σ`.
 The environment `ρ⊥` maps all variables to `⊥`.
 ```agda
   Env = (σ : Types) → ⟪ Vars σ →ˢ 𝒟 σ ⟫  -- typed environments
---"hide"
   variable ρ : Env
---"/hide"
   ρ⊥ : Env                               -- initial environment
   ρ⊥ _ _ = ⊥
 ```
 Extension or overriding typed environments, written `ρ [ v / x ]′` here,
 requires instances of the equality tests
 for both variables and types. The definition of the latter is somewhat tedious:
-@latex
-it is omitted here, but can found in the Agda code repository and website [(MFPS2026-Agda)].
-@/latex
+
 ```agda
---"hide"
   _==ⱽ_ : Vars σ → Vars σ → Bool
   (α i σ ==ⱽ α i′ σ)  =  (i ==ᴺ i′)
   instance
@@ -68,7 +57,6 @@ it is omitted here, but can found in the Agda code repository and website [(MFPS
   _[_/_]′ : Env → ⟪ 𝒟 σ ⟫ → Vars σ → Env
   -- ρ [ v / x ]′ maps x to v, and other x′ to ρ x′
   _[_/_]′ {σ} ρ x v = ρ [ σ ← ρ σ [ x / v ] ]
---"/hide"
 ```
 
 [(MFPS2026-Agda)]: https://pdmosses.github.io/mfps2026-agda/

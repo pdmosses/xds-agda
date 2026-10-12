@@ -7,7 +7,6 @@ in the presentation of the conventional denotational semantics of *Scm* [(Mosses
 they involve the notation for [sequence domains].
 
 ```agda
---"hide"
 {-# OPTIONS --rewriting --confluence-check #-}
 
 module Examples.Scm where
@@ -16,7 +15,6 @@ module Examples.Scm where
   import Examples.Scm.Domain-Equations
   import Examples.Scm.Semantic-Functions
   import Examples.Scm.Auxiliary-Functions
---"/hide"
 ```
 
 [Sequence Domains]: ../../Notation/Products/Sequences.md#sequence-domains

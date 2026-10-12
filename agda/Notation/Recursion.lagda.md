@@ -9,17 +9,13 @@ leaving (one or more) domains as *postulated*.
 The following operations can then be used to map values from a postulated domain
 to its structure and *vice versa*.
 ```agda
---"hide"
 {-# OPTIONS --rewriting --confluence-check #-}
 
---"/hide"
 module Notation.Recursion where
---"hide"
   
   open import Notation.Domains
   open import Notation.Functions
 
---"/hide"
   postulate
     _≅_ : Domain → Domain → Set
     -- an instance of D ≅ E declares that the structure of D is the same as E

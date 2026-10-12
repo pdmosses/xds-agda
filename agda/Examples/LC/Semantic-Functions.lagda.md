@@ -5,12 +5,9 @@ The semantic equations below correspond closely to those found in textbooks on d
 In larger conventional definitions, `fold` and `unfold` are usually left implicit,
 but Agda does not support this.
 ```agda
---"hide"
 {-# OPTIONS --rewriting --confluence-check --lossy-unification #-}
 
---"/hide"
 module Examples.LC.Semantic-Functions where
---"hide"
 
   open import Examples.LC.Abstract-Syntax
   open import Examples.LC.Domain-Equations
@@ -19,7 +16,6 @@ module Examples.LC.Semantic-Functions where
   open import Notation.Recursion
   open import Notation.Updates
 
---"/hide"
   ⟦_⟧ : Exp → ⟪ Env →ᶜ D∞ ⟫
   ⟦ var v ⟧ ρ        = ρ v
   ⟦ ⦅λ v ␣ e ⦆ ⟧ ρ   = fold ( λ δ → ⟦ e ⟧ (ρ [ δ / v ]) )

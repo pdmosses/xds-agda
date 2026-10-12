@@ -72,9 +72,7 @@ Rewrite rules.
     non-termination cannot affect the soundness of Agda's type checker,
     only its completeness [(Cockx2021TRT)].
 ```agda
---"hide"
 module Background.Agda where
---"/hide"
 ```
 
 [(Agda-Language)]: https://agda.readthedocs.io/en/v2.8.0/language/

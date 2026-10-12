@@ -7,12 +7,9 @@ Using definitional equations `D = E` instead of postulated bijections `D ≅ E`
 for non-recursive collections of domains
 avoids the need for the functions `fold` and `unfold` in definitions of denotations.
 ```agda
---"hide"
 {-# OPTIONS --rewriting --confluence-check #-}
 
---"/hide"
 module Examples.Scm.Domain-Equations where
---"hide"
 
   open import Examples.Scm.Abstract-Syntax
   open import Notation.Domains
@@ -23,7 +20,6 @@ module Examples.Scm.Domain-Equations where
   open import Notation.Sums
   open import Notation.Products
   open import Notation.Products.Sequences
---"/hide"
 
   postulate Loc : Set
   𝐋  =  Loc +⊥                -- locations
@@ -64,7 +60,6 @@ and projection (`ε |⊥ D`) for each summand `D` of `𝐄`.
 ```
 (where the numerical indices and order of the summand declarations are arbitrary).
 ```agda
---"hide"
 
   postulate instance
     eqL   : Eq Loc
@@ -74,7 +69,6 @@ and projection (`ε |⊥ D`) for each summand `D` of `𝐄`.
   variable
     α : ⟪ 𝐋 ⟫;  ρ : ⟪ 𝐔 ⟫;  μ  : ⟪ 𝐌 ⟫;    ϵ : ⟪ 𝐄 ⟫
     σ : ⟪ 𝐒 ⟫;  θ : ⟪ 𝐂 ⟫;  ϵ⋆ : ⟪ 𝐄 ⋆ ⟫;   φ : ⟪ 𝐅 ⟫;  κ : ⟪ 𝐄 →ᶜ 𝐂 ⟫
---"/hide"
 ```
 
 [(Mosses2025CSE)]: https://doi.org/10.1145/3759427.3760369

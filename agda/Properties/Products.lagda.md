@@ -1,10 +1,8 @@
 # Product Domains
 
 ```agda
---"hide"
 {-# OPTIONS --rewriting --confluence-check --lossy-unification #-}
 
---"/hide"
 module Properties.Products where
 
   open import Notation.Domains

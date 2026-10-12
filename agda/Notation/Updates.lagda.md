@@ -4,31 +4,23 @@ When a type `A` has an equality operation `_==_ : A → A → Bool`,
 environments `ρ : ⟪ A →ˢ D ⟫` can be 'updated' (i.e., extended or overridden) using the
 conventional notation `ρ [ δ / a ]`, defined as follows.
 ```agda
---"hide"
 {-# OPTIONS --rewriting --confluence-check --lossy-unification #-}
 
---"/hide"
 module Notation.Updates where
---"hide"
 
   open import Notation.Domains
   open import Notation.Functions
   open import Notation.Flat
   open import Notation.Flat.Booleans
 
---"/hide"
   _[_/_] : {{Eq A}} → ⟪ (A →ˢ D) →ᶜ D →ᶜ A →ˢ (A →ˢ D) ⟫
---"hide"
   -- ρ [ δ / a ] maps a to δ, and other arguments a′ to ρ a′
---"/hide"
   ρ [ δ / a ] = λ a′ → if a == a′ then δ else ρ a′
 ```
 Similarly for stores `σ : ⟪ (A +⊥) →ᶜ D ⟫` (appending $\bot$ to the conventional notation):
 ```agda
   _[_/_]⊥ : {{Eq A}} → ⟪ ((A +⊥) →ᶜ D) →ᶜ D →ᶜ (A +⊥) →ᶜ ((A +⊥) →ᶜ D) ⟫
---"hide"
   -- σ [ δ / α ]⊥ maps α to δ, and other arguments α′ to σ α′
---"/hide"
   σ [ δ / α ]⊥ = λ α′ → (α ==⊥ α′) ⟶ δ , σ α′
 ```
 Defining an operation `m [ x ← y ]`

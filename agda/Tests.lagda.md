@@ -11,10 +11,8 @@ the tests also depend on the imported rewrite rules for [postulated properties].
 The success of those tests indirectly checks that the rewrite rules preserve denotations.
 (A more systematic approach would be to develop a suite of unit tests for consequences of postulated properties.)
 ```agda
---"hide"
 {-# OPTIONS --rewriting --confluence-check #-}
 
---"/hide"
 module Tests where
   import Tests.LC
   import Tests.PCF

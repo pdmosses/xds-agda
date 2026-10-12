@@ -17,10 +17,8 @@ Confluent but non-terminating rewrite rules cannot break consistency
 The rewrite rules declared in the modules imported below support *automatic* proof
 of all the illustrative tests: the proof terms are simply `refl` (i.e., reflexivity).
 ```agda
---"hide"
 {-# OPTIONS --rewriting --confluence-check #-}
 
---"/hide"
 module Properties where
   import Properties.Functions
   import Properties.Flat
@@ -37,7 +35,6 @@ that apply the postulated properties to specified subterms.
 However, we expect that it would be quite tedious to develop such proofs,
 and reading them is unlikely to provide new insights.
 ```agda
---"hide"
   import Properties.Flat.Booleans
   import Properties.Flat.Naturals
   import Properties.Sums
@@ -45,7 +42,6 @@ and reading them is unlikely to provide new insights.
   import Properties.Products.Tuples
   import Properties.Products.Sequences
   import Properties.Updates
---"/hide"
 ```
 
 [Postulated Domain Notation]: ../Notation/index.md#postulated-domain-notation

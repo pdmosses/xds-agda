@@ -8,18 +8,14 @@ in the early 1970s, and is used in the *Scheme* semantics [(Scheme)].
 (The single angle-brackets `⟨...⟩` used to form sequences are unrelated to the
 double angle-brackets `⟪ D ⟫` used for the carrier of domain `D`.)
 ```agda
---"hide"
 {-# OPTIONS --rewriting --confluence-check #-}
 
---"/hide"
 module Notation.Products.Sequences where
---"hide"
 
   open import Notation.Domains
   open import Notation.Functions
   open import Notation.Flat.Naturals
   open import Notation.Products.Tuples
---"/hide"
   variable n : Nat
 
   postulate

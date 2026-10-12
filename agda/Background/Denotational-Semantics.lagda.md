@@ -111,9 +111,7 @@ Updates.
     The domain $D$ has to be flat (with a continuous equality);
     the same notation is used when $D$ is a set.
 ```agda
---"hide"
 module Background.Denotational-Semantics where
---"/hide"
 ```
 
 [(Abramsky1995DT)]: https://achimjungbham.github.io/pub/papers/handy1.pdf

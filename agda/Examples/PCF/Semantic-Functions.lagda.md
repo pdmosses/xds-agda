@@ -3,12 +3,9 @@
 The notation `ρ ⟦ α i σ ⟧` gives the value of the variable `α i σ` in `ρ` by
 applying `ρ σ` to the variable.
 ```agda
---"hide"
 {-# OPTIONS --rewriting --confluence-check --lossy-unification #-}
 
---"/hide"
 module Examples.PCF.Semantic-Functions where
---"hide"
 
   open import Examples.PCF.Abstract-Syntax
   open import Examples.PCF.Domain-Equations
@@ -18,7 +15,6 @@ module Examples.PCF.Semantic-Functions where
   open import Notation.Flat.Booleans
   open import Notation.Flat.Naturals
 
---"/hide"
 
   _⟦_⟧ : Env → Vars σ → ⟪ 𝒟 σ ⟫  -- typed variable denotations
   ρ ⟦ α i σ ⟧ = ρ σ (α i σ)
