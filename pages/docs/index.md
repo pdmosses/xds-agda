@@ -4,6 +4,8 @@ Agda code accompanying the **final version** of a paper [presented] at [MFPS 202
 
 > Peter D. Mosses, Jesper Cockx, Bernhard Reus: *Mechanising Denotational Semantics in Agda*
 
+**Preprint:** <https://doi.org/10.48550/arXiv.2610.14898>
+
 [presented]: https://ul-fmf.github.io/mfps-sstt-2026/programme/#wednesday-june-3-mfps
 [MFPS 2026]: https://ul-fmf.github.io/mfps-sstt-2026/mfps/
 
