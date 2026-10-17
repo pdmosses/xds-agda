@@ -2,14 +2,14 @@
   {
     "version": "mfps2026",
     "title": "mfps2026",
-    "aliases": []
+    "aliases": [
+      "default"
+    ]
   },
   {
     "version": "pre",
     "title": "pre",
-    "aliases": [
-      "default"
-    ]
+    "aliases": []
   },
   {
     "version": "dev",
